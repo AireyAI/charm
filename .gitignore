@@ -1,0 +1,5 @@
+node_modules/
+temporary screenshots/
+generated-videos/
+.DS_Store
+*.log

@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Create Your Profile — Charm</title>
+  <meta name="description" content="Join Charm — the global creative platform. Create your profile to find studios, hire professionals, and connect with creators worldwide.">
+  <meta name="robots" content="noindex"><!-- signup pages shouldn't be indexed -->
+  <meta name="theme-color" content="#07070e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    :root {
+      --base: #07070e;
+      --card: #0d0d1a;
+      --elevated: #131326;
+      --float: #1a1a32;
+      --gold: #e2a84b;
+      --gold-dim: rgba(226,168,75,0.13);
+      --violet: #9d6fff;
+      --coral: #ff6b57;
+      --cyan: #00d4c8;
+      --text: #f0ece3;
+      --text-2: #9896a8;
+      --text-3: #5a586e;
+      --border: rgba(255,255,255,0.07);
+      --border-2: rgba(255,255,255,0.13);
+      --z-top: 9999;
+    }
+
+    body {
+      background: var(--base);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      height: 100vh; height: 100dvh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* iOS tap highlight */
+    * { -webkit-tap-highlight-color: transparent; }
+    /* Focus visible */
+    :focus { outline: none; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 3px; }
+    /* Cursor */
+    button, [role="button"], a, select, label[for] { cursor: pointer; }
+    :disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.5; }
+    /* Prevent iOS input zoom */
+    input, select, textarea { font-size: 16px; }
+    @media (min-width: 768px) {
+      input, select, textarea { font-size: 1rem; }
+    }
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+    /* SR only */
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    /* ══════════════════════════════
+       GRAIN
+    ══════════════════════════════ */
+    .grain {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ══════════════════════════════
+       LEFT PANEL
+    ══════════════════════════════ */
+    .panel-left {
+      width: 42%;
+      min-width: 340px;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    /* Background orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
+      transition: background 1.2s ease, transform 1.2s ease;
+    }
+    .o1 {
+      width: 90%; height: 90%;
+      top: -30%; right: -30%;
+      background: radial-gradient(circle, rgba(157,111,255,0.22) 0%, transparent 65%);
+      animation: slow-drift 18s ease-in-out infinite;
+    }
+    .o2 {
+      width: 70%; height: 70%;
+      bottom: -20%; left: -10%;
+      background: radial-gradient(circle, rgba(226,168,75,0.18) 0%, transparent 65%);
+      animation: slow-drift 22s ease-in-out infinite reverse;
+    }
+    .o3 {
+      width: 50%; height: 50%;
+      top: 50%; left: 30%;
+      background: radial-gradient(circle, rgba(0,212,200,0.12) 0%, transparent 65%);
+      animation: slow-drift 14s ease-in-out infinite 4s;
+    }
+    @keyframes slow-drift {
+      0%,100% { transform: translate(0,0); }
+      33%     { transform: translate(20px,-20px); }
+      66%     { transform: translate(-15px,15px); }
+    }
+
+    /* Grid */
+    .panel-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.024) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 80%);
+    }
+
+    /* Panel content */
+    .panel-content {
+      position: relative; z-index: 10;
+      height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 40px 48px;
+    }
+
+    .panel-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      color: var(--text); text-decoration: none;
+      display: flex; align-items: center; gap: 9px;
+    }
+    .logo-gem {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #c98830, #e2a84b, #f5d080, #c98830);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      box-shadow: 0 2px 12px rgba(226,168,75,0.3);
+    }
+
+    .panel-body {
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .panel-step-label {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      transition: opacity 0.4s ease;
+    }
+
+    .panel-headline {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
+      font-size: clamp(36px, 4vw, 52px); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--text);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .panel-desc {
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      color: var(--text-2); line-height: 1.75; margin-top: 18px;
+      max-width: 320px;
+      transition: opacity 0.4s ease;
+    }
+
+    /* Visual illustration area */
+    .panel-visual {
+      margin-top: 40px;
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .visual-pill {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+      color: var(--text-3); background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 6px 14px; letter-spacing: 0.02em;
+      opacity: 0;
+      animation: pill-in 0.5s ease forwards;
+    }
+    @keyframes pill-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel-footer {
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--text-3);
+    }
+    .panel-footer a { color: var(--text-2); text-decoration: none; transition: color 0.2s; }
+    .panel-footer a:hover { color: var(--text); }
+
+    /* ══════════════════════════════
+       RIGHT PANEL
+    ══════════════════════════════ */
+    .panel-right {
+      flex: 1;
+      background: var(--card);
+      border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+      position: relative;
+    }
+
+    .form-wrap {
+      flex: 1;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 60px 64px;
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      display: flex; gap: 6px; margin-bottom: 44px;
+    }
+    .prog-dot {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: var(--border);
+      transition: background 0.4s ease;
+      position: relative; overflow: hidden;
+    }
+    .prog-dot.done { background: rgba(226,168,75,0.4); }
+    .prog-dot.active { background: var(--gold); }
+    .prog-dot.active::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 1.5s ease infinite;
+    }
+    @keyframes shimmer {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(100%); }
+    }
+
+    /* Step header */
+    .step-num {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3);
+      margin-bottom: 10px;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif; font-weight: 800;
+      font-size: clamp(22px, 2.5vw, 30px); letter-spacing: -0.03em;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .step-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--text-2); margin-bottom: 36px; line-height: 1.6;
+    }
+
+    /* Steps container */
+    .steps { position: relative; }
+    .step { display: none; }
+    .step.active { display: block; animation: step-in 0.4s cubic-bezier(0.16,1,0.3,1); }
+    @keyframes step-in {
+      from { opacity: 0; transform: translateX(20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ── Type cards (Step 1) ── */
+    .type-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .type-card {
+      background: var(--elevated); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px 20px;
+      cursor: pointer; text-align: center;
+      transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative; overflow: hidden;
+    }
+    .type-card::before {
+      content: ''; position: absolute; inset: 0; opacity: 0;
+      transition: opacity 0.25s ease;
+      border-radius: 16px;
+    }
+    .type-card.creator::before  { background: radial-gradient(circle at 50% 0%, rgba(226,168,75,0.1) 0%, transparent 65%); }
+    .type-card.owner::before    { background: radial-gradient(circle at 50% 0%, rgba(157,111,255,0.1) 0%, transparent 65%); }
+    .type-card:hover { transform: translateY(-3px); border-color: var(--border-2); }
+    .type-card:hover::before { opacity: 1; }
+    .type-card.selected.creator { border-color: rgba(226,168,75,0.5); background: rgba(226,168,75,0.06); }
+    .type-card.selected.owner   { border-color: rgba(157,111,255,0.5); background: rgba(157,111,255,0.06); }
+    .type-card.selected::before { opacity: 1; }
+    .type-card.selected { transform: translateY(-3px); }
+
+    .type-icon {
+      font-size: 32px; margin-bottom: 14px; display: block;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .type-card:hover .type-icon, .type-card.selected .type-icon { transform: scale(1.15); }
+    .type-label {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+      color: var(--text); margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .type-desc {
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      color: var(--text-3); line-height: 1.5;
+    }
+    .type-check {
+      position: absolute; top: 12px; right: 12px;
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 1.5px solid var(--border-2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; color: transparent;
+      transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+    }
+    .type-card.selected.creator .type-check { border-color: var(--gold); background: var(--gold); color: #0f0800; }
+    .type-card.selected.owner   .type-check { border-color: var(--violet); background: var(--violet); color: #fff; }
+
+    /* ── Form fields ── */
+    .field-group { display: flex; flex-direction: column; gap: 16px; }
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 7px; }
+    .field label {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3);
+    }
+    .field input, .field select, .field textarea {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 11px; padding: 12px 16px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+      outline: none; width: 100%;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field input::placeholder, .field textarea::placeholder { color: var(--text-3); }
+    .field input:focus, .field select:focus, .field textarea:focus {
+      border-color: rgba(226,168,75,0.45);
+      background: rgba(226,168,75,0.04);
+      box-shadow: 0 0 0 3px rgba(226,168,75,0.08);
+    }
+    .field textarea { resize: none; line-height: 1.6; }
+    .field select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a586e' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 14px center;
+      padding-right: 38px;
+    }
+    .field-hint {
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      color: var(--text-3); margin-top: -4px;
+    }
+
+    /* Password strength */
+    .pw-strength {
+      display: flex; gap: 4px; margin-top: 6px;
+    }
+    .pw-bar {
+      flex: 1; height: 3px; border-radius: 2px;
+      background: var(--border);
+      transition: background 0.3s ease;
+    }
+    .pw-bar.s1 { background: var(--coral); }
+    .pw-bar.s2 { background: #f5a623; }
+    .pw-bar.s3 { background: var(--gold); }
+    .pw-bar.s4 { background: var(--cyan); }
+    .pw-label {
+      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
+      letter-spacing: 0.05em; color: var(--text-3); margin-top: 4px;
+      transition: color 0.3s ease;
+    }
+
+    /* ── Discipline pills (Step 3) ── */
+    .disciplines {
+      display: flex; flex-wrap: wrap; gap: 10px;
+    }
+    .disc-pill {
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--text-3); background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 50px;
+      padding: 9px 18px; cursor: pointer; letter-spacing: 0.01em;
+      display: flex; align-items: center; gap: 7px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      user-select: none;
+    }
+    .disc-pill:hover { color: var(--text-2); border-color: var(--border-2); transform: translateY(-1px); }
+    .disc-pill.on {
+      color: var(--gold); background: var(--gold-dim);
+      border-color: rgba(226,168,75,0.35); transform: translateY(-1px);
+    }
+    .disc-hint {
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      color: var(--text-3); margin-top: 16px;
+    }
+
+    /* ── Avatar upload (Step 5) ── */
+    .avatar-area {
+      display: flex; gap: 24px; align-items: flex-start; margin-bottom: 24px;
+    }
+    .avatar-upload {
+      width: 90px; height: 90px; border-radius: 50%;
+      border: 2px dashed rgba(255,255,255,0.14);
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; cursor: pointer; flex-shrink: 0;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      background: rgba(255,255,255,0.03);
+      position: relative; overflow: hidden;
+    }
+    .avatar-upload:hover { border-color: rgba(226,168,75,0.4); background: rgba(226,168,75,0.04); }
+    .avatar-upload input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+    .avatar-icon { font-size: 22px; margin-bottom: 4px; }
+    .avatar-lbl {
+      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3);
+    }
+    .avatar-preview { width: 100%; height: 100%; object-fit: cover; display: none; }
+    .avatar-info { padding-top: 8px; }
+    .avatar-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--text); margin-bottom: 4px; }
+    .avatar-sub { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--text-3); line-height: 1.5; }
+
+    /* ── Complete screen ── */
+    .complete-screen {
+      text-align: center; padding: 20px 0;
+    }
+    .complete-gem {
+      width: 72px; height: 72px; border-radius: 18px; margin: 0 auto 28px;
+      background: linear-gradient(135deg, #c98830, #e2a84b, #f5d080, #c98830);
+      display: flex; align-items: center; justify-content: center; font-size: 34px;
+      box-shadow: 0 4px 32px rgba(226,168,75,0.4);
+      animation: gem-pop 0.6s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes gem-pop {
+      from { transform: scale(0.5); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .complete-title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600;
+      font-size: 40px; letter-spacing: -0.02em; color: var(--text);
+      line-height: 1.1; margin-bottom: 14px;
+    }
+    .complete-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      color: var(--text-2); line-height: 1.7; max-width: 340px; margin: 0 auto 36px;
+    }
+    .complete-perks {
+      display: flex; flex-direction: column; gap: 12px;
+      text-align: left; max-width: 320px; margin: 0 auto 36px;
+    }
+    .perk {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text-2);
+    }
+    .perk-icon {
+      width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 16px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+    }
+
+    /* ── Navigation buttons ── */
+    .nav-btns {
+      display: flex; gap: 12px; align-items: center; margin-top: 32px;
+    }
+    .btn-back {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text-3); background: transparent;
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 12px 20px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .btn-back:hover { color: var(--text-2); border-color: var(--border-2); }
+    .btn-next {
+      flex: 1; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      color: #0f0800; background: var(--gold); border: none; border-radius: 10px;
+      padding: 13px 24px; cursor: pointer;
+      box-shadow: 0 4px 18px rgba(226,168,75,0.3);
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.2s ease;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-next:hover { background: #ebb850; transform: translateY(-2px); box-shadow: 0 6px 26px rgba(226,168,75,0.45); }
+    .btn-next:active { transform: translateY(0); }
+    .btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+    /* Social login */
+    .divider-row {
+      display: flex; align-items: center; gap: 14px; margin: 24px 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-text {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+      letter-spacing: 0.08em; color: var(--text-3); white-space: nowrap;
+    }
+    .social-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .btn-social {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--text-2); background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-radius: 10px;
+      padding: 11px 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 9px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .btn-social:hover { background: rgba(255,255,255,0.07); border-color: var(--border-2); color: var(--text); }
+
+    /* Sign-in link */
+    .signin-link {
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      color: var(--text-3); text-align: center; margin-top: 20px;
+    }
+    .signin-link a { color: var(--gold); text-decoration: none; transition: opacity 0.2s ease; }
+    .signin-link a:hover { opacity: 0.8; }
+
+    /* Inline validation states */
+    .field input[aria-invalid="true"],
+    .field textarea[aria-invalid="true"] {
+      border-color: rgba(255,107,87,0.5) !important;
+      background: rgba(255,107,87,0.04) !important;
+    }
+    .field-error {
+      font-family: 'DM Sans', sans-serif; font-size: 12px;
+      color: var(--coral); margin-top: -4px;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+
+    /* Password toggle wrapper */
+    .pw-wrap { position: relative; }
+    .pw-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer;
+      color: var(--text-3); font-size: 14px; padding: 4px;
+      transition: color 0.2s ease;
+    }
+    .pw-toggle:hover { color: var(--text-2); }
+    .pw-wrap input { padding-right: 40px; }
+
+    /* Terms checkbox */
+    .terms-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-top: 16px; margin-bottom: -8px;
+    }
+    .terms-row input[type="checkbox"] {
+      width: 16px; height: 16px; min-width: 16px; accent-color: var(--gold);
+      margin-top: 2px; cursor: pointer; font-size: 16px;
+    }
+    .terms-row label {
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      color: var(--text-3); line-height: 1.5; cursor: pointer;
+      text-transform: none; letter-spacing: 0;
+    }
+    .terms-row a { color: var(--gold); text-decoration: none; }
+    .terms-row a:hover { text-decoration: underline; }
+
+    /* Confetti canvas */
+    #confetti-canvas {
+      position: fixed; inset: 0; pointer-events: none; z-index: var(--z-top);
+    }
+
+    /* Honeypot */
+    .hp-field { position: absolute; left: -9999px; opacity: 0; }
+
+    /* Scrollbar */
+    .panel-right::-webkit-scrollbar { width: 4px; }
+    .panel-right::-webkit-scrollbar-track { background: transparent; }
+    .panel-right::-webkit-scrollbar-thumb { background: var(--float); border-radius: 2px; }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .panel-left { display: none; }
+      .form-wrap { padding: 48px 32px; }
+    }
+    @media (max-width: 600px) {
+      .form-wrap { padding: 40px 24px; }
+      .type-cards { grid-template-columns: 1fr; }
+      .field-row { grid-template-columns: 1fr; }
+      .social-btns { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<!-- Confetti canvas for completion celebration -->
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<!-- SR live region -->
+<div id="sr-status" aria-live="polite" aria-atomic="true" class="sr-only"></div>
+
+<!-- ══════ LEFT PANEL ══════ -->
+<div class="panel-left">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="orb o3"></div>
+  <div class="panel-grid"></div>
+
+  <div class="panel-content">
+    <a href="welcome.html" class="panel-logo">
+      <span class="logo-gem">✦</span>
+      Charm
+    </a>
+
+    <div class="panel-body">
+      <div class="panel-step-label" id="panelLabel">Getting started</div>
+      <div class="panel-headline" id="panelHeadline">Join the world's most creative community</div>
+      <p class="panel-desc" id="panelDesc">Find and book the perfect space for your next project — studios, venues, professionals, and more across 45+ countries.</p>
+      <div class="panel-visual" id="panelVisual"></div>
+    </div>
+
+    <div class="panel-footer">
+      Already have an account? <a href="#">Sign in →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════ RIGHT PANEL ══════ -->
+<div class="panel-right">
+  <div class="form-wrap">
+
+    <!-- Progress -->
+    <div class="progress-bar" id="progressBar">
+      <div class="prog-dot active"></div>
+      <div class="prog-dot"></div>
+      <div class="prog-dot"></div>
+      <div class="prog-dot"></div>
+      <div class="prog-dot"></div>
+    </div>
+
+    <!-- ── STEP 1: Account type ── -->
+    <div class="step active" id="step1">
+      <div class="step-num">Step 1 of 5</div>
+      <div class="step-title">How will you use Charm?</div>
+      <p class="step-sub">Choose your account type. You can always add the other later.</p>
+
+      <div class="type-cards">
+        <div class="type-card creator" onclick="selectType(this,'creator')">
+          <div class="type-check">✓</div>
+          <span class="type-icon">🎨</span>
+          <div class="type-label">I'm a Creator</div>
+          <div class="type-desc">Find and book studios, hire professionals, discover workshops</div>
+        </div>
+        <div class="type-card owner" onclick="selectType(this,'owner')">
+          <div class="type-check">✓</div>
+          <span class="type-icon">🏢</span>
+          <div class="type-label">I Own a Space</div>
+          <div class="type-desc">List your studio or venue and reach thousands of creators</div>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn-next" id="btn1" onclick="goTo(2)" disabled>
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+      <div class="divider-row">
+        <div class="divider-line"></div>
+        <span class="divider-text">or sign up with</span>
+        <div class="divider-line"></div>
+      </div>
+      <!-- Honeypot — hidden from real users, catches bots -->
+      <div class="hp-field" aria-hidden="true">
+        <input type="text" name="website_url" tabindex="-1" autocomplete="off" id="hp">
+      </div>
+
+      <div class="social-btns" style="grid-template-columns:1fr 1fr 1fr;">
+        <button class="btn-social" type="button" aria-label="Sign up with Google">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Google
+        </button>
+        <button class="btn-social" type="button" aria-label="Sign up with GitHub">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text-2)"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.336 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+          GitHub
+        </button>
+        <button class="btn-social" type="button" aria-label="Sign up with Apple">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--text)"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          Apple
+        </button>
+      </div>
+
+      <p class="signin-link">Already have an account? <a href="#">Sign in</a></p>
+    </div>
+
+    <!-- ── STEP 2: Details ── -->
+    <div class="step" id="step2">
+      <div class="step-num">Step 2 of 5</div>
+      <div class="step-title">Your Details</div>
+      <p class="step-sub">Set up your identity on Charm.</p>
+
+      <div class="field-group">
+        <div class="field-row">
+          <div class="field">
+            <label for="firstName">First Name</label>
+            <input type="text" placeholder="Alex" id="firstName" name="given-name"
+              autocomplete="given-name" enterkeyhint="next"
+              aria-required="true" aria-describedby="firstName-error">
+            <span class="field-error" id="firstName-error" role="alert"></span>
+          </div>
+          <div class="field">
+            <label for="lastName">Last Name</label>
+            <input type="text" placeholder="Morgan" id="lastName" name="family-name"
+              autocomplete="family-name" enterkeyhint="next"
+              aria-required="true" aria-describedby="lastName-error">
+            <span class="field-error" id="lastName-error" role="alert"></span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" placeholder="@alexmorgan" id="username" name="username"
+            autocomplete="username" autocapitalize="none" autocorrect="off"
+            enterkeyhint="next" aria-describedby="username-hint username-error"
+            oninput="debouncedUsernameCheck(this.value)">
+          <span class="field-hint" id="username-hint">charm.co/@alexmorgan</span>
+          <span class="field-error" id="username-error" role="alert"></span>
+        </div>
+        <div class="field">
+          <label for="email">Email Address</label>
+          <input type="email" placeholder="alex@studio.com" id="email" name="email"
+            autocomplete="email" inputmode="email" enterkeyhint="next"
+            aria-required="true" aria-describedby="email-error">
+          <span class="field-error" id="email-error" role="alert"></span>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="pw-wrap">
+            <input type="password" placeholder="Create a strong password" id="password" name="new-password"
+              autocomplete="new-password" enterkeyhint="done"
+              aria-required="true" aria-describedby="pw-strength-label pw-error"
+              oninput="checkPassword(this.value)">
+            <button type="button" class="pw-toggle" onclick="togglePassword()" aria-label="Show password" id="pwToggle">👁</button>
+          </div>
+          <div class="pw-strength" aria-hidden="true">
+            <div class="pw-bar" id="pb1"></div>
+            <div class="pw-bar" id="pb2"></div>
+            <div class="pw-bar" id="pb3"></div>
+            <div class="pw-bar" id="pb4"></div>
+          </div>
+          <div class="pw-label" id="pwLabel" id="pw-strength-label">Enter a password</div>
+          <span class="field-error" id="pw-error" role="alert"></span>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn-back" type="button" onclick="goTo(1)" aria-label="Go back to step 1">←</button>
+        <button class="btn-next" type="button" onclick="validateStep2()">
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 3: Disciplines ── -->
+    <div class="step" id="step3">
+      <div class="step-num">Step 3 of 5</div>
+      <div class="step-title" id="s3title">What's your creative world?</div>
+      <p class="step-sub" id="s3sub">Select all that apply. This helps us show you the most relevant spaces.</p>
+
+      <div class="disciplines" id="disciplineGrid">
+        <div class="disc-pill" onclick="toggleDisc(this)">🎧 Music Production</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎙 Podcasting</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">📷 Photography</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎬 Videography</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">💃 Dance</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎭 Theater & Performance</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎨 Visual Art</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🖌 Tattoo Art</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎓 Education & Training</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎪 Events & Experiences</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">🎸 Live Performance</div>
+        <div class="disc-pill" onclick="toggleDisc(this)">✍️ Writing & Content</div>
+      </div>
+      <p class="disc-hint" id="discHint">Select at least one to continue</p>
+
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goTo(2)">←</button>
+        <button class="btn-next" id="btn3" onclick="goTo(4)" disabled>
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 4: Location ── -->
+    <div class="step" id="step4">
+      <div class="step-num">Step 4 of 5</div>
+      <div class="step-title">Where do you create?</div>
+      <p class="step-sub">Used to show local spaces and connect you with nearby creators.</p>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Country</label>
+          <select id="country">
+            <option value="">Select your country</option>
+            <option>United Kingdom</option>
+            <option>United States</option>
+            <option>Portugal</option>
+            <option>Brazil</option>
+            <option>France</option>
+            <option>Germany</option>
+            <option>Spain</option>
+            <option>Italy</option>
+            <option>Netherlands</option>
+            <option>Canada</option>
+            <option>Australia</option>
+            <option>Japan</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="city">City</label>
+          <input type="text" placeholder="London" id="city" name="city"
+            autocomplete="address-level2" enterkeyhint="next">
+        </div>
+        <div class="field">
+          <label>Currency Preference</label>
+          <select id="currency">
+            <option value="">Select currency</option>
+            <option>GBP — British Pound £</option>
+            <option>USD — US Dollar $</option>
+            <option>EUR — Euro €</option>
+            <option>BRL — Brazilian Real R$</option>
+            <option>CAD — Canadian Dollar CA$</option>
+            <option>AUD — Australian Dollar A$</option>
+            <option>JPY — Japanese Yen ¥</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn-back" onclick="goTo(3)">←</button>
+        <button class="btn-next" onclick="goTo(5)">
+          Continue
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── STEP 5: Profile ── -->
+    <div class="step" id="step5">
+      <div class="step-num">Step 5 of 5</div>
+      <div class="step-title">Show the world who you are</div>
+      <p class="step-sub">Add a photo and bio to make your profile stand out. Both are optional.</p>
+
+      <div class="avatar-area">
+        <div class="avatar-upload" id="avatarUpload">
+          <input type="file" accept="image/*" onchange="previewAvatar(this)">
+          <img class="avatar-preview" id="avatarPreview">
+          <span class="avatar-icon" id="avatarIcon">📷</span>
+          <span class="avatar-lbl" id="avatarLbl">Upload</span>
+        </div>
+        <div class="avatar-info">
+          <div class="avatar-title">Profile Photo</div>
+          <div class="avatar-sub">JPG, PNG, or WebP.<br>At least 400×400px recommended.</div>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <div class="field">
+          <label>Short Bio</label>
+          <textarea placeholder="Tell the creative community a bit about yourself and your work..." rows="4" id="bio" maxlength="280"></textarea>
+          <span class="field-hint" id="bioCount">0 / 280</span>
+        </div>
+        <div class="field">
+          <label>Website or Portfolio <span style="color:var(--text-3); font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
+          <input type="url" placeholder="https://yourportfolio.com" id="website">
+        </div>
+      </div>
+
+      <div class="terms-row">
+        <input type="checkbox" id="terms-agree" name="terms">
+        <label for="terms-agree">
+          I agree to Charm's <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>. I'm at least 16 years old.
+        </label>
+      </div>
+
+      <div class="nav-btns">
+        <button class="btn-back" type="button" onclick="goTo(4)" aria-label="Go back to step 4">←</button>
+        <button class="btn-next" type="button" id="btn5" onclick="handleComplete()" disabled>
+          Create My Profile ✦
+        </button>
+      </div>
+    </div>
+
+    <!-- ── COMPLETE ── -->
+    <div class="step" id="stepComplete">
+      <div class="complete-screen">
+        <div class="complete-gem">✦</div>
+        <div class="complete-title" id="completeName">Welcome to Charm</div>
+        <p class="complete-sub">Your creative profile is live. Start exploring thousands of spaces, professionals, and opportunities worldwide.</p>
+
+        <div class="complete-perks">
+          <div class="perk">
+            <div class="perk-icon">🔍</div>
+            <span>Discover studios and venues tailored to your disciplines</span>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">💬</div>
+            <span>Chat directly with space owners and professionals</span>
+          </div>
+          <div class="perk">
+            <div class="perk-icon">❤️</div>
+            <span>Save your favourite spaces to your personal collection</span>
+          </div>
+        </div>
+
+        <button class="btn-next" style="max-width:320px; margin:0 auto;" onclick="window.location.href='index.html'">
+          Explore Charm
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // ─── Global error handling ──────────────────────────────────────────
+  window.onerror = (msg, src, line) => { console.error('Error:', msg, src, line); return false; };
+  window.addEventListener('unhandledrejection', e => console.error('Rejection:', e.reason));
+
+  // ─── Safe localStorage wrapper ──────────────────────────────────────
+  const store = {
+    get(k, fb = null) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch { return fb; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+    remove(k) { try { localStorage.removeItem(k); } catch {} }
+  };
+
+  // ─── Debounce utility ───────────────────────────────────────────────
+  function debounce(fn, delay = 300) {
+    let timer;
+    return (...args) => { clearTimeout(timer); timer = setTimeout(() => fn(...args), delay); };
+  }
+
+  // ─── SR announcement helper ─────────────────────────────────────────
+  function announce(msg) {
+    const el = document.getElementById('sr-status');
+    if (el) el.textContent = msg;
+  }
+
+  let currentStep = 1;
+  let accountType = null;
+  let selectedDiscs = 0;
+
+  // Panel copy per step
+  const panelData = {
+    1: {
+      label: 'Welcome to Charm',
+      headline: 'Join the world\'s most creative community',
+      desc: 'Find and book the perfect space for your next project — studios, venues, professionals, and more across 45+ countries.',
+      pills: ['🎧 12,000+ Studios', '📷 215 Photo Spaces', '💃 98 Dance Studios', '🎙 87 Podcast Suites', '🎨 63 Art Ateliers']
+    },
+    2: {
+      label: 'Your Identity',
+      headline: 'Every legend starts with a name',
+      desc: 'Your profile is your creative passport. Make it yours.',
+      pills: ['🔒 Secure & private', '✦ Verified profiles', '🌍 45+ countries']
+    },
+    3: {
+      label: 'Your Craft',
+      headline: 'What drives your creativity?',
+      desc: 'We\'ll personalise your entire Charm experience around your creative disciplines.',
+      pills: ['🎧 Music', '📷 Photography', '💃 Dance', '🎬 Film', '🎨 Art', '🎭 Theater']
+    },
+    4: {
+      label: 'Your Location',
+      headline: 'Great spaces are everywhere',
+      desc: 'We use your location to surface nearby studios and connect you with the local creative community.',
+      pills: ['📍 London', '📍 New York', '📍 Berlin', '📍 Paris', '📍 Lisbon']
+    },
+    5: {
+      label: 'Almost there',
+      headline: 'Make your first impression count',
+      desc: 'Creators with complete profiles get 3x more responses from space owners and professionals.',
+      pills: ['✦ 3x more visibility', '💬 Instant chat', '❤️ Save favourites']
+    }
+  };
+
+  function updatePanel(step) {
+    const d = panelData[step];
+    if (!d) return;
+
+    const label = document.getElementById('panelLabel');
+    const headline = document.getElementById('panelHeadline');
+    const desc = document.getElementById('panelDesc');
+    const visual = document.getElementById('panelVisual');
+
+    label.style.opacity = '0';
+    headline.style.opacity = '0';
+    desc.style.opacity = '0';
+
+    setTimeout(() => {
+      label.textContent = d.label;
+      headline.textContent = d.headline;
+      desc.textContent = d.desc;
+
+      visual.innerHTML = '';
+      d.pills.forEach((p, i) => {
+        const pill = document.createElement('div');
+        pill.className = 'visual-pill';
+        pill.style.animationDelay = (i * 0.08) + 's';
+        pill.textContent = p;
+        visual.appendChild(pill);
+      });
+
+      label.style.opacity = '1';
+      headline.style.opacity = '1';
+      desc.style.opacity = '1';
+    }, 200);
+  }
+
+  function updateProgress(step) {
+    const dots = document.querySelectorAll('.prog-dot');
+    dots.forEach((d, i) => {
+      d.classList.remove('active', 'done');
+      if (i + 1 < step) d.classList.add('done');
+      else if (i + 1 === step) d.classList.add('active');
+    });
+  }
+
+  function goTo(step) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    currentStep = step;
+    document.getElementById('step' + step).classList.add('active');
+    updateProgress(step);
+    updatePanel(step);
+    document.querySelector('.panel-right').scrollTop = 0;
+    announce('Step ' + step + ' of 5');
+    saveDraft();
+  }
+
+  function selectType(card, type) {
+    document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    accountType = type;
+    document.getElementById('btn1').disabled = false;
+
+    // Update step 3 for owner type
+    if (type === 'owner') {
+      document.getElementById('s3title').textContent = 'What type of space do you offer?';
+      document.getElementById('s3sub').textContent = 'Select your space categories to attract the right creators.';
+    } else {
+      document.getElementById('s3title').textContent = 'What\'s your creative world?';
+      document.getElementById('s3sub').textContent = 'Select all that apply. This helps us show you the most relevant spaces.';
+    }
+  }
+
+  function toggleDisc(pill) {
+    pill.classList.toggle('on');
+    selectedDiscs = document.querySelectorAll('.disc-pill.on').length;
+    const btn = document.getElementById('btn3');
+    const hint = document.getElementById('discHint');
+    btn.disabled = selectedDiscs === 0;
+    hint.textContent = selectedDiscs > 0
+      ? selectedDiscs + ' selected — looking good!'
+      : 'Select at least one to continue';
+    hint.style.color = selectedDiscs > 0 ? 'var(--gold)' : 'var(--text-3)';
+  }
+
+  function checkPassword(val) {
+    const bars = [document.getElementById('pb1'), document.getElementById('pb2'),
+                  document.getElementById('pb3'), document.getElementById('pb4')];
+    const label = document.getElementById('pwLabel');
+    bars.forEach(b => { b.className = 'pw-bar'; });
+
+    if (!val) { label.textContent = 'Enter a password'; label.style.color = ''; return; }
+
+    let score = 0;
+    if (val.length >= 8) score++;
+    if (/[A-Z]/.test(val)) score++;
+    if (/[0-9]/.test(val)) score++;
+    if (/[^A-Za-z0-9]/.test(val)) score++;
+
+    const labels = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+    const colors = ['', 'var(--coral)', '#f5a623', 'var(--gold)', 'var(--cyan)'];
+    const classes = ['', 's1', 's2', 's3', 's4'];
+
+    for (let i = 0; i < score; i++) bars[i].classList.add(classes[score]);
+    label.textContent = labels[score];
+    label.style.color = colors[score];
+  }
+
+  // ─── Password visibility toggle ─────────────────────────────────────
+  function togglePassword() {
+    const pw = document.getElementById('password');
+    const btn = document.getElementById('pwToggle');
+    const showing = pw.type === 'text';
+    pw.type = showing ? 'password' : 'text';
+    btn.textContent = showing ? '👁' : '🙈';
+    btn.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+  }
+
+  // ─── Step 2 inline validation ────────────────────────────────────────
+  function showFieldError(id, msg) {
+    const input = document.getElementById(id);
+    const errEl = document.getElementById(id + '-error');
+    if (input) input.setAttribute('aria-invalid', 'true');
+    if (errEl) { errEl.textContent = msg; errEl.classList.add('visible'); }
+  }
+  function clearFieldError(id) {
+    const input = document.getElementById(id);
+    const errEl = document.getElementById(id + '-error');
+    if (input) input.removeAttribute('aria-invalid');
+    if (errEl) { errEl.textContent = ''; errEl.classList.remove('visible'); }
+  }
+
+  function validateStep2() {
+    let valid = true;
+    // Honeypot check
+    if (document.getElementById('hp').value) return;
+
+    const first = document.getElementById('firstName').value.trim();
+    const last = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const pw = document.getElementById('password').value;
+
+    if (!first) { showFieldError('firstName', 'First name is required'); valid = false; }
+    else clearFieldError('firstName');
+
+    if (!last) { showFieldError('lastName', 'Last name is required'); valid = false; }
+    else clearFieldError('lastName');
+
+    if (!email || !email.includes('@')) { showFieldError('email', 'Please enter a valid email'); valid = false; }
+    else clearFieldError('email');
+
+    if (!pw || pw.length < 8) { showFieldError('pw', 'Password must be at least 8 characters'); valid = false; }
+    else clearFieldError('pw');
+
+    if (valid) {
+      navigator.vibrate?.([8]);
+      goTo(3);
+    } else {
+      // Scroll to first error
+      const firstErr = document.querySelector('[aria-invalid="true"]');
+      firstErr?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      announce('Please fix the errors in the form');
+      navigator.vibrate?.([30, 50, 30]);
+    }
+  }
+
+  // Inline blur validation
+  ['firstName', 'lastName', 'email'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', () => {
+      if (!el.value.trim()) showFieldError(id, 'This field is required');
+      else if (id === 'email' && !el.value.includes('@')) showFieldError(id, 'Please enter a valid email');
+      else clearFieldError(id);
+      saveDraft();
+    });
+  });
+
+  // ─── Debounced username check ─────────────────────────────────────────
+  const debouncedUsernameCheck = debounce((val) => {
+    const hint = document.getElementById('username-hint');
+    if (!val) { hint.textContent = 'charm.co/@username'; return; }
+    const clean = val.replace(/^@/, '').toLowerCase().replace(/[^a-z0-9_]/g, '');
+    hint.textContent = clean ? 'charm.co/@' + clean : 'Letters, numbers, underscores only';
+    saveDraft();
+  }, 400);
+
+  // ─── Form auto-save draft ─────────────────────────────────────────────
+  function saveDraft() {
+    store.set('charm-signup-draft', {
+      firstName: document.getElementById('firstName')?.value || '',
+      lastName: document.getElementById('lastName')?.value || '',
+      username: document.getElementById('username')?.value || '',
+      email: document.getElementById('email')?.value || '',
+      step: currentStep
+    });
+  }
+
+  function restoreDraft() {
+    const draft = store.get('charm-signup-draft');
+    if (!draft) return;
+    if (draft.firstName) document.getElementById('firstName').value = draft.firstName;
+    if (draft.lastName) document.getElementById('lastName').value = draft.lastName;
+    if (draft.username) document.getElementById('username').value = draft.username;
+    if (draft.email) document.getElementById('email').value = draft.email;
+  }
+
+  // ─── Avatar preview ──────────────────────────────────────────────────
+  function previewAvatar(input) {
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const preview = document.getElementById('avatarPreview');
+        const icon = document.getElementById('avatarIcon');
+        const lbl = document.getElementById('avatarLbl');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+        icon.style.display = 'none';
+        lbl.style.display = 'none';
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  // Bio character count
+  document.getElementById('bio').addEventListener('input', function() {
+    document.getElementById('bioCount').textContent = this.value.length + ' / 280';
+    saveDraft();
+  });
+
+  // Terms checkbox enables final button
+  document.getElementById('terms-agree').addEventListener('change', function() {
+    document.getElementById('btn5').disabled = !this.checked;
+  });
+
+  // ─── Confetti ─────────────────────────────────────────────────────────
+  function launchConfetti() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const pieces = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      r: Math.random() * 6 + 3,
+      d: Math.random() * 120 + 60,
+      color: ['#e2a84b','#9d6fff','#00d4c8','#ff6b57','#f0ece3'][Math.floor(Math.random()*5)],
+      tilt: Math.floor(Math.random() * 10) - 10,
+      tiltAngle: 0, tiltAngleIncrement: Math.random() * 0.1 + 0.04
+    }));
+
+    let angle = 0;
+    let frame;
+    let ttl = 200;
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      angle += 0.01;
+      pieces.forEach(p => {
+        p.tiltAngle += p.tiltAngleIncrement;
+        p.y += (Math.cos(angle + p.d) + 3 + p.r / 2) / 2;
+        p.x += Math.sin(angle);
+        p.tilt = Math.sin(p.tiltAngle) * 15;
+        ctx.beginPath();
+        ctx.lineWidth = p.r;
+        ctx.strokeStyle = p.color;
+        ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
+        ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 4);
+        ctx.stroke();
+      });
+      ttl--;
+      if (ttl > 0) frame = requestAnimationFrame(draw);
+      else { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+    }
+    draw();
+  }
+
+  // ─── Complete handler ────────────────────────────────────────────────
+  function handleComplete() {
+    if (document.getElementById('hp').value) return;
+    const first = document.getElementById('firstName').value || 'Creator';
+    document.getElementById('completeName').textContent = 'Welcome to Charm, ' + first + '.';
+    document.querySelectorAll('.prog-dot').forEach(d => { d.classList.remove('active'); d.classList.add('done'); });
+    document.getElementById('progressBar').style.display = 'none';
+    document.getElementById('step5').classList.remove('active');
+    document.getElementById('stepComplete').classList.add('active');
+    updatePanel(5);
+    navigator.vibrate?.([15, 50, 15, 50, 30]);
+    setTimeout(launchConfetti, 300);
+    store.remove('charm-signup-draft');
+    announce('Profile created! Welcome to Charm, ' + first);
+  }
+
+  // Init
+  restoreDraft();
+  updatePanel(1);
+</script>
+</body>
+</html>

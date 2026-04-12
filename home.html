@@ -973,20 +973,20 @@
 <!-- ════════════════ HERO ════════════════ -->
 <section class="hero" aria-labelledby="hero-heading">
   <div class="hero-glow" id="hero-glow" aria-hidden="true"></div>
-  <div class="orb orb-v" aria-hidden="true"></div>
-  <div class="orb orb-g" aria-hidden="true"></div>
-  <div class="orb orb-c" aria-hidden="true"></div>
+  <div class="orb orb-v" aria-hidden="true" data-parallax="-120"></div>
+  <div class="orb orb-g" aria-hidden="true" data-parallax="-80"></div>
+  <div class="orb orb-c" aria-hidden="true" data-parallax="-60"></div>
   <div class="hero-grid-bg" aria-hidden="true"></div>
 
   <div class="hero-inner">
     <div>
-      <h1 class="hero-hl" id="hero-heading">
-        Find Your<br>
-        <span class="gold-text">Creative</span><br>
+      <h1 class="hero-hl" id="hero-heading" data-split="words">
+        Find Your
+        Creative
         Space
       </h1>
-      <p class="hero-sub">The global ecosystem connecting creators with inspiring studios, venues, professionals, products, and communities worldwide.</p>
-      <div class="hero-tags">
+      <p class="hero-sub" data-appear data-appear-delay="0.4">The global ecosystem connecting creators with inspiring studios, venues, professionals, products, and communities worldwide.</p>
+      <div class="hero-tags" data-appear data-appear-delay="0.6">
         <span class="hero-tag">🎧 Music Studios</span>
         <span class="hero-tag">📷 Photography</span>
         <span class="hero-tag">🎭 Theater Rooms</span>
@@ -1064,15 +1064,15 @@
 <!-- ════════════════ FEATURED LISTINGS ════════════════ -->
 <section class="sec" id="explore" aria-labelledby="featured-heading">
   <div class="sec-inner">
-    <div class="sec-hd reveal">
+    <div class="sec-hd" data-reveal="fade-up">
       <div>
         <h2 class="sec-title" id="featured-heading">Featured Spaces</h2>
         <div class="sec-sub">Handpicked creative venues near you</div>
       </div>
       <a href="#" class="see-all">View all spaces →</a>
     </div>
-    <div class="listings-grid">
-      <div class="l-card reveal d1">
+    <div class="listings-grid" data-stagger-parent>
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/120d1f/e2a84b?text=🎧" alt="The Black Room — music studio interior" loading="eager" fetchpriority="high" width="560" height="360">
           <div class="l-grad"></div>
@@ -1095,7 +1095,7 @@
         </div>
       </div>
 
-      <div class="l-card reveal d2">
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/0d2010/9d6fff?text=📷" alt="Frame and Light Studio — photography studio interior" loading="lazy" width="560" height="360">
           <div class="l-grad"></div>
@@ -1118,7 +1118,7 @@
         </div>
       </div>
 
-      <div class="l-card reveal d3">
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/0d1520/00d4c8?text=🎙" alt="The Vault Podcast">
           <div class="l-grad"></div>
@@ -1141,7 +1141,7 @@
         </div>
       </div>
 
-      <div class="l-card reveal d1">
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/200d0d/ff6b57?text=💃" alt="Studio Noire">
           <div class="l-grad"></div>
@@ -1164,7 +1164,7 @@
         </div>
       </div>
 
-      <div class="l-card reveal d2">
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/180d25/e2a84b?text=🎸" alt="Resonance Rooms">
           <div class="l-grad"></div>
@@ -1187,7 +1187,7 @@
         </div>
       </div>
 
-      <div class="l-card reveal d3">
+      <div class="l-card" data-stagger-child data-tilt>
         <div class="l-img">
           <img src="https://placehold.co/560x360/1a150d/f5d284?text=🎨" alt="The Canvas Atelier">
           <div class="l-grad"></div>
@@ -1218,15 +1218,15 @@
 <!-- ════════════════ CATEGORIES ════════════════ -->
 <section class="sec">
   <div class="sec-inner">
-    <div class="sec-hd reveal">
+    <div class="sec-hd" data-reveal="fade-up">
       <div>
         <div class="sec-title">Browse by Category</div>
         <div class="sec-sub">Discover the right space for your craft</div>
       </div>
       <a href="#" class="see-all">All categories →</a>
     </div>
-    <div class="cat-grid">
-      <div class="cat-card reveal d1">
+    <div class="cat-grid" data-stagger-parent>
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/140a28/e2a84b?text=♪" alt="Music Studios" loading="lazy" width="300" height="400">
         <div class="cat-ov">
           <div class="cat-ico">🎧</div>
@@ -1235,7 +1235,7 @@
           <span class="cat-link">See more →</span>
         </div>
       </div>
-      <div class="cat-card reveal d2">
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/0a1426/00d4c8?text=◎" alt="Podcast Studios">
         <div class="cat-ov">
           <div class="cat-ico">🎙</div>
@@ -1244,7 +1244,7 @@
           <span class="cat-link">See more →</span>
         </div>
       </div>
-      <div class="cat-card reveal d3">
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/181818/f0ece3?text=◈" alt="Photography Studios">
         <div class="cat-ov">
           <div class="cat-ico">📷</div>
@@ -1253,7 +1253,7 @@
           <span class="cat-link">See more →</span>
         </div>
       </div>
-      <div class="cat-card reveal d4">
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/0a2626/9d6fff?text=◆" alt="Dance Studios">
         <div class="cat-ov">
           <div class="cat-ico">💃</div>
@@ -1262,7 +1262,7 @@
           <span class="cat-link">See more →</span>
         </div>
       </div>
-      <div class="cat-card reveal d5">
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/260a12/ff6b57?text=✿" alt="Art Spaces">
         <div class="cat-ov">
           <div class="cat-ico">🎨</div>
@@ -1271,7 +1271,7 @@
           <span class="cat-link">See more →</span>
         </div>
       </div>
-      <div class="cat-card reveal d1">
+      <div class="cat-card" data-stagger-child data-tilt>
         <img src="https://placehold.co/300x400/0a2612/e2a84b?text=✦" alt="Events & Venues">
         <div class="cat-ov">
           <div class="cat-ico">🎪</div>
@@ -1290,26 +1290,26 @@
 <!-- ════════════════ MODULES ════════════════ -->
 <section class="sec" id="marketplace">
   <div class="sec-inner">
-    <div class="sec-hd reveal">
+    <div class="sec-hd" data-reveal="fade-up">
       <div>
         <div class="sec-title">Explore the Ecosystem</div>
         <div class="sec-sub">More than spaces — a complete creative platform</div>
       </div>
     </div>
-    <div class="mod-grid">
-      <div class="mod-card mg reveal d1">
+    <div class="mod-grid" data-stagger-parent>
+      <div class="mod-card mg" data-stagger-child data-tilt>
         <div class="mod-ico ico-g">🎬</div>
         <div class="mod-title">Hire Professionals</div>
         <div class="mod-desc">Find videographers, photographers, designers, producers, and more for your next creative project.</div>
         <div class="mod-cta cta-g">Explore talent →</div>
       </div>
-      <div class="mod-card mv reveal d2">
+      <div class="mod-card mv" data-stagger-child data-tilt>
         <div class="mod-ico ico-v">🛍</div>
         <div class="mod-title">Marketplace</div>
         <div class="mod-desc">Buy, sell, and rent cameras, microphones, instruments, props, and creative equipment.</div>
         <a href="marketplace.html" class="mod-cta cta-v" style="text-decoration:none;">Browse products →</a>
       </div>
-      <div class="mod-card mc reveal d3">
+      <div class="mod-card mc" data-stagger-child data-tilt>
         <div class="mod-ico ico-c">🎓</div>
         <div class="mod-title">Training & Workshops</div>
         <div class="mod-desc">Level up with courses in music, audiovisual production, dance, photography, and more.</div>
@@ -1328,20 +1328,20 @@
 <!-- ════════════════ STATS ════════════════ -->
 <div class="stats-sec">
   <div class="stats-grid">
-    <div class="reveal">
-      <div class="stat-num">12,000+</div>
+    <div class="reveal" data-reveal="fade-up">
+      <div class="stat-num" data-counter="12000" data-counter-suffix="+" data-counter-prefix="">0</div>
       <div class="stat-label">Creative Spaces</div>
     </div>
-    <div class="reveal d1">
-      <div class="stat-num">45+</div>
+    <div class="reveal d1" data-reveal="fade-up" data-reveal-delay="0.1">
+      <div class="stat-num" data-counter="45" data-counter-suffix="+">0</div>
       <div class="stat-label">Countries</div>
     </div>
-    <div class="reveal d2">
-      <div class="stat-num">98K+</div>
+    <div class="reveal d2" data-reveal="fade-up" data-reveal-delay="0.2">
+      <div class="stat-num" data-counter="98" data-counter-suffix="K+">0</div>
       <div class="stat-label">Creators Served</div>
     </div>
-    <div class="reveal d3">
-      <div class="stat-num">4.9★</div>
+    <div class="reveal d3" data-reveal="fade-up" data-reveal-delay="0.3">
+      <div class="stat-num" data-counter="4.9" data-counter-suffix="★" data-counter-decimals="1">0</div>
       <div class="stat-label">Average Rating</div>
     </div>
   </div>
@@ -1358,8 +1358,8 @@
       <p class="cta-desc reveal d2">List your studio, venue, or creative space on Charm and connect with thousands of creators. Set your hours, prices, and rules — we handle the rest.</p>
     </div>
     <div class="cta-btns reveal d3">
-      <button class="btn-cta-primary" data-track>+ Add Your Listing</button>
-      <button class="btn-cta-sec">Learn how it works</button>
+      <button class="btn-cta-primary" data-track data-magnetic>+ Add Your Listing</button>
+      <button class="btn-cta-sec" data-magnetic>Learn how it works</button>
     </div>
   </div>
 </div>
@@ -1824,6 +1824,11 @@
     });
   });
 </script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<!-- AireyAI Animation Toolkit -->
+<script src="animations.js"></script>
 <script src="shared.js"></script>
 </body>
 </html>

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Equipment Protection — Charm</title>
+  <meta name="description" content="Protect your gear with Charm's equipment insurance. Coverage from just £2.99/rental — accidental damage, theft, and more. Rent with confidence.">
+  <meta property="og:title" content="Equipment Protection — Charm">
+  <meta property="og:description" content="Protect your gear with Charm's equipment insurance. Coverage from just £2.99/rental — accidental damage, theft, and more.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Equipment Protection — Charm">
+  <meta name="twitter:description" content="Protect your gear with Charm's equipment insurance. Rent with confidence.">
+  <link rel="canonical" href="https://charm.equipment/insurance">
+  <meta name="theme-color" content="#07070e">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-gold-dim: rgba(226,168,75,0.14);
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
+    body { background: var(--c-base); color: var(--c-text); font-family: 'DM Sans', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    * { -webkit-tap-highlight-color: transparent; }
+    :focus { outline: none; }
+    :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; border-radius: 3px; }
+    button, [role="button"], a, select, label[for] { cursor: pointer; }
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--c-base); } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    .noise { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px; }
+
+    /* NAV */
+    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 14px 48px; background: rgba(7,7,14,0.88); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border-bottom: 1px solid var(--c-border); }
+    .nav-inner { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--c-text); text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .logo-gem { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 10px rgba(226,168,75,0.35); }
+    .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; }
+    .nav-links a { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--c-text-3); text-decoration: none; padding: 7px 14px; border-radius: 8px; transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover { color: var(--c-text-2); background: rgba(255,255,255,0.04); }
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-icon-btn { font-size: 16px; color: var(--c-text-3); text-decoration: none; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 9px; border: 1px solid var(--c-border); transition: color 0.2s, background 0.2s; }
+    .nav-icon-btn:hover { color: var(--c-text-2); background: rgba(255,255,255,0.05); }
+    .btn-ghost { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--c-text-2); background: transparent; border: 1px solid var(--c-border-2); border-radius: 9px; padding: 8px 16px; text-decoration: none; transition: color 0.2s, border-color 0.2s, background 0.2s; }
+    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); }
+    .btn-gold { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 9px; padding: 9px 18px; text-decoration: none; box-shadow: 0 2px 14px rgba(226,168,75,0.28); transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, background 0.2s; }
+    .btn-gold:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 5px 22px rgba(226,168,75,0.44); }
+
+    /* HERO */
+    .ins-hero { padding: 160px 48px 100px; position: relative; overflow: hidden; border-bottom: 1px solid var(--c-border); text-align: center; }
+    .ins-hero-orb-1 { position: absolute; width: 900px; height: 900px; border-radius: 50%; top: -350px; left: 50%; transform: translateX(-50%); background: radial-gradient(circle, rgba(226,168,75,0.12) 0%, transparent 60%); pointer-events: none; filter: blur(80px); }
+    .ins-hero-orb-2 { position: absolute; width: 500px; height: 500px; border-radius: 50%; bottom: -150px; right: -100px; background: radial-gradient(circle, rgba(0,212,200,0.08) 0%, transparent 60%); pointer-events: none; filter: blur(80px); }
+    .ins-hero-inner { max-width: 720px; margin: 0 auto; position: relative; z-index: 1; }
+    .shield-icon { display: inline-flex; align-items: center; justify-content: center; width: 72px; height: 72px; border-radius: 20px; background: var(--c-gold-dim); border: 1px solid rgba(226,168,75,0.25); margin-bottom: 28px; font-size: 36px; }
+    .ins-hero-headline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700; font-size: clamp(48px, 6vw, 80px); line-height: 1.0; letter-spacing: -0.03em; color: var(--c-text); margin-bottom: 20px; }
+    .ins-hero-headline em { color: var(--c-gold); font-style: italic; }
+    .ins-hero-sub { font-family: 'DM Sans', sans-serif; font-size: 17px; color: var(--c-text-2); line-height: 1.7; max-width: 540px; margin: 0 auto 36px; }
+    .ins-hero-btn { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 12px; padding: 15px 32px; text-decoration: none; display: inline-block; box-shadow: 0 4px 20px rgba(226,168,75,0.3); transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s; }
+    .ins-hero-btn:hover { background: #ebb850; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(226,168,75,0.45); }
+
+    /* SECTION COMMON */
+    .ins-section { padding: 80px 48px; }
+    .ins-section-inner { max-width: 1200px; margin: 0 auto; }
+    .ins-section-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: clamp(32px, 4vw, 48px); letter-spacing: -0.02em; color: var(--c-text); text-align: center; margin-bottom: 12px; }
+    .ins-section-sub { font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--c-text-2); text-align: center; max-width: 520px; margin: 0 auto 48px; line-height: 1.7; }
+
+    /* PLAN CARDS */
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .plan-card { background: var(--c-card); border: 1px solid var(--c-border); border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; position: relative; transition: border-color 0.25s, transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s; }
+    .plan-card:hover { border-color: var(--c-border-2); transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
+    .plan-card.recommended { border-color: rgba(226,168,75,0.4); box-shadow: 0 0 40px rgba(226,168,75,0.08); }
+    .plan-card.recommended:hover { border-color: rgba(226,168,75,0.6); box-shadow: 0 16px 48px rgba(226,168,75,0.15); }
+    .plan-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; background: var(--c-gold); color: #0f0800; padding: 4px 16px; border-radius: 50px; }
+    .plan-name { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--c-text); margin-bottom: 8px; letter-spacing: -0.01em; }
+    .plan-price { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; color: var(--c-text); margin-bottom: 4px; letter-spacing: -0.03em; }
+    .plan-price span { font-size: 14px; font-weight: 600; color: var(--c-text-3); }
+    .plan-desc { font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--c-text-2); line-height: 1.6; margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--c-border); }
+    .plan-features { list-style: none; margin-bottom: 28px; flex: 1; }
+    .plan-features li { font-family: 'DM Sans', sans-serif; font-size: 13.5px; color: var(--c-text-2); padding: 6px 0; display: flex; align-items: flex-start; gap: 10px; line-height: 1.5; }
+    .plan-features li .check { color: var(--c-cyan); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .plan-features li .cross { color: var(--c-text-3); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+    .plan-btn { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; border: none; border-radius: 11px; padding: 13px 24px; text-align: center; text-decoration: none; display: block; transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s; }
+    .plan-btn-outline { color: var(--c-text-2); background: transparent; border: 1px solid var(--c-border-2); }
+    .plan-btn-outline:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); transform: translateY(-1px); }
+    .plan-btn-gold { color: #0f0800; background: var(--c-gold); box-shadow: 0 2px 14px rgba(226,168,75,0.28); }
+    .plan-btn-gold:hover { background: #ebb850; transform: translateY(-2px); box-shadow: 0 6px 24px rgba(226,168,75,0.4); }
+
+    /* HOW IT WORKS */
+    .hiw-section { background: var(--c-card); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border); }
+    .hiw-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .hiw-step { text-align: center; }
+    .hiw-num { width: 52px; height: 52px; border-radius: 50%; background: var(--c-gold-dim); border: 1px solid rgba(226,168,75,0.25); display: inline-flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800; color: var(--c-gold); margin-bottom: 18px; }
+    .hiw-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--c-text); margin-bottom: 8px; }
+    .hiw-desc { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-2); line-height: 1.6; }
+
+    /* ACCORDION */
+    .accordion-group { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .accordion-item { background: var(--c-card); border: 1px solid var(--c-border); border-radius: 14px; overflow: hidden; transition: border-color 0.2s; }
+    .accordion-item.open { border-color: var(--c-border-2); }
+    .accordion-trigger { width: 100%; background: none; border: none; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; text-align: left; transition: background 0.2s; }
+    .accordion-trigger:hover { background: rgba(255,255,255,0.02); }
+    .accordion-trigger-text { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--c-text); }
+    .accordion-icon { font-size: 18px; color: var(--c-text-3); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); flex-shrink: 0; }
+    .accordion-item.open .accordion-icon { transform: rotate(45deg); }
+    .accordion-panel { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.4,0,0.2,1); }
+    .accordion-panel-inner { padding: 0 24px 20px; font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--c-text-2); line-height: 1.7; }
+    .accordion-panel-inner ul { list-style: none; margin-top: 8px; }
+    .accordion-panel-inner ul li { padding: 4px 0; padding-left: 16px; position: relative; }
+    .accordion-panel-inner ul li::before { content: '•'; position: absolute; left: 0; color: var(--c-gold); }
+
+    /* STATS */
+    .stats-section { background: var(--c-card); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border); }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .stat-item { text-align: center; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: clamp(28px, 3.5vw, 42px); font-weight: 800; color: var(--c-gold); letter-spacing: -0.03em; margin-bottom: 6px; }
+    .stat-label { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-2); }
+
+    /* TRUST BADGES */
+    .trust-section { text-align: center; }
+    .trust-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 28px; }
+    .trust-logos { display: flex; align-items: center; justify-content: center; gap: 40px; flex-wrap: wrap; }
+    .trust-logo { display: flex; align-items: center; gap: 10px; padding: 14px 24px; background: var(--c-card); border: 1px solid var(--c-border); border-radius: 12px; transition: border-color 0.2s; }
+    .trust-logo:hover { border-color: var(--c-border-2); }
+    .trust-logo-icon { font-size: 22px; }
+    .trust-logo-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--c-text-2); }
+
+    /* CTA BANNER */
+    .cta-banner { padding: 80px 48px; background: linear-gradient(135deg, rgba(226,168,75,0.06) 0%, rgba(0,212,200,0.04) 100%); border-top: 1px solid var(--c-border); text-align: center; }
+    .cta-banner-inner { max-width: 600px; margin: 0 auto; }
+    .cta-banner-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: clamp(28px, 3.5vw, 42px); color: var(--c-text); margin-bottom: 12px; letter-spacing: -0.02em; }
+    .cta-banner-sub { font-family: 'DM Sans', sans-serif; font-size: 15px; color: var(--c-text-2); margin-bottom: 28px; line-height: 1.7; }
+    .cta-banner-btn { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 12px; padding: 15px 36px; text-decoration: none; display: inline-block; box-shadow: 0 4px 20px rgba(226,168,75,0.3); transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s; }
+    .cta-banner-btn:hover { background: #ebb850; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(226,168,75,0.45); }
+
+    @media (max-width: 768px) {
+      .nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .ins-hero { padding: 120px 20px 72px; }
+      .ins-section { padding: 56px 20px; }
+      .plans-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+      .hiw-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .trust-logos { gap: 16px; }
+      .cta-banner { padding: 56px 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="noise" aria-hidden="true"></div>
+
+<a href="#main" class="sr-only" style="position:absolute;top:-100%;left:1rem;background:var(--c-gold);color:#0f0800;padding:.5rem 1rem;z-index:9999;border-radius:0 0 6px 6px;font-weight:700;text-decoration:none;font-family:'Syne',sans-serif;">Skip to content</a>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="home.html" class="logo"><div class="logo-gem">✦</div>Charm</a>
+    <ul class="nav-links">
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="search.html" class="nav-icon-btn" aria-label="Search">🔍</a>
+      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">🔔</a>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="ins-hero">
+    <div class="ins-hero-orb-1" aria-hidden="true"></div>
+    <div class="ins-hero-orb-2" aria-hidden="true"></div>
+    <div class="ins-hero-inner">
+      <div class="shield-icon" aria-hidden="true">🛡️</div>
+      <h1 class="ins-hero-headline">Protect Your <em>Gear</em></h1>
+      <p class="ins-hero-sub">Peace of mind for every rental. Whether you're lending or borrowing, our equipment protection plans keep you covered from checkout to return.</p>
+      <a href="#plans" class="ins-hero-btn">View Protection Plans</a>
+    </div>
+  </section>
+
+  <!-- PROTECTION PLANS -->
+  <section class="ins-section" id="plans" aria-labelledby="plans-heading">
+    <div class="ins-section-inner">
+      <h2 class="ins-section-title" id="plans-heading">Choose Your Protection</h2>
+      <p class="ins-section-sub">Every plan is applied per rental. Cancel or change at any time before your rental starts.</p>
+      <div class="plans-grid">
+        <!-- Basic -->
+        <div class="plan-card">
+          <p class="plan-name">Basic Protection</p>
+          <p class="plan-price">Free</p>
+          <p class="plan-desc">Included with every rental. Covers minor cosmetic wear from normal use.</p>
+          <ul class="plan-features">
+            <li><span class="check" aria-hidden="true">✓</span>Minor scratches & scuffs</li>
+            <li><span class="check" aria-hidden="true">✓</span>Normal wear & tear</li>
+            <li><span class="check" aria-hidden="true">✓</span>24/7 support access</li>
+            <li><span class="cross" aria-hidden="true">✕</span><span style="color:var(--c-text-3)">Accidental damage</span></li>
+            <li><span class="cross" aria-hidden="true">✕</span><span style="color:var(--c-text-3)">Theft coverage</span></li>
+            <li><span class="cross" aria-hidden="true">✕</span><span style="color:var(--c-text-3)">Water damage</span></li>
+          </ul>
+          <a href="#" class="plan-btn plan-btn-outline">Learn More</a>
+        </div>
+
+        <!-- Standard (Recommended) -->
+        <div class="plan-card recommended">
+          <span class="plan-badge">Recommended</span>
+          <p class="plan-name">Standard Protection</p>
+          <p class="plan-price">£2.99 <span>/ rental</span></p>
+          <p class="plan-desc">Covers accidental damage up to £500 per item. Ideal for most rentals.</p>
+          <ul class="plan-features">
+            <li><span class="check" aria-hidden="true">✓</span>Everything in Basic</li>
+            <li><span class="check" aria-hidden="true">✓</span>Accidental damage up to £500</li>
+            <li><span class="check" aria-hidden="true">✓</span>Cracked screens & dents</li>
+            <li><span class="check" aria-hidden="true">✓</span>Water splash protection</li>
+            <li><span class="check" aria-hidden="true">✓</span>Priority claims processing</li>
+            <li><span class="cross" aria-hidden="true">✕</span><span style="color:var(--c-text-3)">Theft & loss coverage</span></li>
+          </ul>
+          <a href="#" class="plan-btn plan-btn-gold">Select Plan</a>
+        </div>
+
+        <!-- Premium -->
+        <div class="plan-card">
+          <p class="plan-name">Premium Protection</p>
+          <p class="plan-price">£7.99 <span>/ rental</span></p>
+          <p class="plan-desc">Full coverage including theft, loss, and damage up to £5,000. Total peace of mind.</p>
+          <ul class="plan-features">
+            <li><span class="check" aria-hidden="true">✓</span>Everything in Standard</li>
+            <li><span class="check" aria-hidden="true">✓</span>Accidental damage up to £5,000</li>
+            <li><span class="check" aria-hidden="true">✓</span>Theft & loss coverage</li>
+            <li><span class="check" aria-hidden="true">✓</span>Full water/weather damage</li>
+            <li><span class="check" aria-hidden="true">✓</span>Replacement gear while claiming</li>
+            <li><span class="check" aria-hidden="true">✓</span>Zero excess on all claims</li>
+          </ul>
+          <a href="#" class="plan-btn plan-btn-outline">Select Plan</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="ins-section hiw-section" aria-labelledby="hiw-heading">
+    <div class="ins-section-inner">
+      <h2 class="ins-section-title" id="hiw-heading">How It Works</h2>
+      <p class="ins-section-sub">Getting protected takes seconds. Here's the process from checkout to claim.</p>
+      <div class="hiw-grid">
+        <div class="hiw-step">
+          <div class="hiw-num">1</div>
+          <h3 class="hiw-title">Choose protection at checkout</h3>
+          <p class="hiw-desc">Select your preferred plan when booking any rental. You can upgrade or downgrade right up until the rental starts.</p>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">2</div>
+          <h3 class="hiw-title">Rent with confidence</h3>
+          <p class="hiw-desc">Use the equipment knowing you're covered. Shoot on location, on set, wherever the work takes you.</p>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">3</div>
+          <h3 class="hiw-title">Report any issues within 48h</h3>
+          <p class="hiw-desc">If something goes wrong, open a claim through your dashboard with photos and a description. It takes under 5 minutes.</p>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">4</div>
+          <h3 class="hiw-title">Get reimbursed within 5 days</h3>
+          <p class="hiw-desc">Approved claims are paid directly to the equipment owner. Most claims are resolved within 1-3 business days.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="ins-section stats-section" aria-labelledby="stats-heading">
+    <div class="ins-section-inner">
+      <h2 class="sr-only" id="stats-heading">Protection statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <p class="stat-num">£2.4M+</p>
+          <p class="stat-label">In claims paid out</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num">98%</p>
+          <p class="stat-label">Claim approval rate</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num">24h</p>
+          <p class="stat-label">Average response time</p>
+        </div>
+        <div class="stat-item">
+          <p class="stat-num">15,000+</p>
+          <p class="stat-label">Protected rentals</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COVERAGE DETAILS ACCORDION -->
+  <section class="ins-section" aria-labelledby="coverage-heading">
+    <div class="ins-section-inner">
+      <h2 class="ins-section-title" id="coverage-heading">Coverage Details</h2>
+      <p class="ins-section-sub">Everything you need to know about what's covered and how claims work.</p>
+      <div class="accordion-group">
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">What's covered</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">
+              Our protection plans cover a wide range of incidents that can happen during a rental period:
+              <ul>
+                <li>Accidental drops and impact damage</li>
+                <li>Cracked or shattered screens and viewfinders</li>
+                <li>Water and liquid damage (Standard: splashes; Premium: full submersion)</li>
+                <li>Electrical faults caused during normal use</li>
+                <li>Theft from a locked vehicle or premises (Premium only)</li>
+                <li>Loss during transit with tracked shipping (Premium only)</li>
+                <li>Cosmetic damage beyond normal wear</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">What's not covered</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">
+              Certain situations fall outside the scope of our protection plans:
+              <ul>
+                <li>Intentional damage or misuse of equipment</li>
+                <li>Damage caused by unauthorised modifications</li>
+                <li>Equipment left unattended in a public place</li>
+                <li>Pre-existing damage not reported at pickup</li>
+                <li>Damage from use in extreme conditions not specified in the listing</li>
+                <li>Cosmetic wear within normal use parameters (covered under Basic)</li>
+                <li>Loss of data stored on rented media/storage devices</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">How to make a claim</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">
+              Making a claim is straightforward and can be done entirely through your Charm dashboard:
+              <ul>
+                <li>Go to your rental history and select the affected booking</li>
+                <li>Click "Report an Issue" and choose "Protection Claim"</li>
+                <li>Upload clear photos of the damage from multiple angles</li>
+                <li>Describe what happened — when, where, and how the damage occurred</li>
+                <li>Submit within 48 hours of the incident or rental return</li>
+                <li>Our team will review and respond within 24 hours</li>
+                <li>For theft claims, a police report reference number is required</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Processing times</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">
+              We aim to resolve claims as quickly as possible so both parties can move forward:
+              <ul>
+                <li>Initial review: within 24 hours of submission</li>
+                <li>Additional information requests: responded within 12 hours</li>
+                <li>Claim decision: 1-3 business days for Standard, 2-5 for Premium theft claims</li>
+                <li>Payment processing: within 2 business days of approval</li>
+                <li>Replacement gear dispatch (Premium): next business day after approval</li>
+                <li>Appeals: reviewed within 5 business days by a senior claims specialist</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="ins-section" style="background: var(--c-card); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);" aria-labelledby="faq-heading">
+    <div class="ins-section-inner">
+      <h2 class="ins-section-title" id="faq-heading">Frequently Asked Questions</h2>
+      <p class="ins-section-sub">Quick answers to the most common questions about equipment protection.</p>
+      <div class="accordion-group">
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Can I add protection after I've booked?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">Yes, you can add or upgrade your protection plan any time before the rental period starts. Go to your upcoming bookings and select "Add Protection." Once the rental has begun, the plan cannot be changed.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Does protection cover multiple items in one booking?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">Protection is applied per item, not per booking. If you rent a camera, lens, and light, each item needs its own protection plan. Bundle discounts apply when you protect 3 or more items in the same booking — you'll see the discount automatically at checkout.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">What happens if my claim is denied?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">If your claim is denied, you'll receive a detailed explanation of the reason. You can appeal the decision within 14 days by providing additional evidence or context. Appeals are reviewed by a senior claims specialist who was not involved in the original decision. Our 98% approval rate means most legitimate claims are approved first time.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Is there an excess or deductible?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">Standard Protection has a £25 excess per claim. Premium Protection has zero excess on all claims — you pay nothing out of pocket beyond the plan fee. The Basic (free) plan does not process damage claims, so no excess applies.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Who receives the payout — the renter or the lender?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">The payout goes directly to the equipment owner (lender) to cover the cost of repair or replacement. The renter's liability is limited to the excess amount on their plan. This protects both parties — lenders get compensated and renters aren't hit with unexpected repair bills.</div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-trigger" aria-expanded="false">
+            <span class="accordion-trigger-text">Can lenders require a specific protection level?</span>
+            <span class="accordion-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="accordion-panel" role="region">
+            <div class="accordion-panel-inner">Yes. When creating a listing, lenders can set a minimum protection level. For example, if you're listing a £4,000 cinema camera, you can require renters to have Premium Protection before booking. This setting is found under "Listing Settings → Rental Requirements."</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST BADGES -->
+  <section class="ins-section trust-section" aria-labelledby="trust-heading">
+    <div class="ins-section-inner">
+      <h2 class="sr-only" id="trust-heading">Insurance partners</h2>
+      <p class="trust-label">Underwritten by</p>
+      <div class="trust-logos">
+        <div class="trust-logo">
+          <span class="trust-logo-icon">🏛️</span>
+          <span class="trust-logo-name">Hiscox Underwriting</span>
+        </div>
+        <div class="trust-logo">
+          <span class="trust-logo-icon">🔒</span>
+          <span class="trust-logo-name">Lloyd's of London</span>
+        </div>
+        <div class="trust-logo">
+          <span class="trust-logo-icon">✦</span>
+          <span class="trust-logo-name">AXA Partners</span>
+        </div>
+        <div class="trust-logo">
+          <span class="trust-logo-icon">🛡️</span>
+          <span class="trust-logo-name">FCA Regulated</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="cta-banner-inner">
+      <h2 class="cta-banner-title" id="cta-heading">Rent with confidence</h2>
+      <p class="cta-banner-sub">Equipment protection from just £2.99 per rental. Add it at checkout and never worry about accidents again.</p>
+      <a href="marketplace.html" class="cta-banner-btn">Browse Equipment</a>
+    </div>
+  </section>
+</main>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="shared.js"></script>
+<script>
+  // Accordion functionality
+  document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.accordion-item');
+      const panel = item.querySelector('.accordion-panel');
+      const isOpen = item.classList.contains('open');
+
+      // Close all in same group
+      const group = item.closest('.accordion-group');
+      group.querySelectorAll('.accordion-item').forEach(other => {
+        if (other !== item) {
+          other.classList.remove('open');
+          other.querySelector('.accordion-trigger').setAttribute('aria-expanded', 'false');
+          other.querySelector('.accordion-panel').style.maxHeight = '0';
+        }
+      });
+
+      // Toggle current
+      if (isOpen) {
+        item.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        panel.style.maxHeight = '0';
+      } else {
+        item.classList.add('open');
+        trigger.setAttribute('aria-expanded', 'true');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+      }
+    });
+  });
+</script>
+</body>
+</html>

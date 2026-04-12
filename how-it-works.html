@@ -747,14 +747,14 @@
     <!-- HERO -->
     <section class="hero">
       <div class="hero-bg"></div>
-      <div class="hero-eyebrow reveal">The Process</div>
-      <h1 class="hero-heading reveal reveal-delay-1">
-        How <em>Charm</em><br/>Works
+      <div class="hero-eyebrow" data-appear data-appear-delay="0.1">The Process</div>
+      <h1 class="hero-heading" data-split="words">
+        How Charm Works
       </h1>
-      <p class="hero-sub reveal reveal-delay-2">
+      <p class="hero-sub" data-appear data-appear-delay="0.5">
         From discovering the perfect lens to booking a studio downtown — Charm connects creators with everything they need to bring their vision to life.
       </p>
-      <a href="signup.html" class="hero-cta reveal reveal-delay-3">
+      <a href="signup.html" class="hero-cta" data-appear data-appear-delay="0.7" data-magnetic>
         Get started free
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
       </a>
@@ -1036,6 +1036,10 @@
 
     reveals.forEach(el => observer.observe(el));
   </script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
 <script src="shared.js"></script>
 </body>
 </html>

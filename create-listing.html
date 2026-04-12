@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Create Listing — Charm</title>
+  <meta name="description" content="List your creative equipment on Charm — cameras, audio gear, lighting, instruments, and more. Sell or rent to creators worldwide.">
+  <link rel="canonical" href="https://www.charm.space/create-listing">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Create Listing — Charm">
+  <meta property="og:description" content="List your creative equipment on Charm — sell or rent cameras, audio gear, lighting, instruments, and more.">
+  <meta property="og:image" content="https://www.charm.space/og-image.jpg">
+  <meta property="og:url" content="https://www.charm.space/create-listing">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Charm">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Create Listing — Charm">
+  <meta name="twitter:description" content="List your creative equipment on Charm — sell or rent to creators worldwide.">
+  <meta name="twitter:image" content="https://www.charm.space/og-image.jpg">
+
+  <meta name="theme-color" content="#07070e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="format-detection" content="telephone=no">
+
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-gold-dim: rgba(226,168,75,0.14);
+      --c-gold-glow: rgba(226,168,75,0.28);
+      --c-violet: #9d6fff;
+      --c-violet-dim: rgba(157,111,255,0.13);
+      --c-coral: #ff6b57;
+      --c-coral-dim: rgba(255,107,87,0.13);
+      --c-cyan: #00d4c8;
+      --c-cyan-dim: rgba(0,212,200,0.12);
+      --c-green: #36d98a;
+      --c-green-dim: rgba(54,217,138,0.13);
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+      --z-sticky: 500;
+      --z-overlay: 700;
+      --z-modal: 800;
+      --z-top: 9999;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100dvh;
+    }
+    * { -webkit-tap-highlight-color: transparent; }
+    :focus { outline: none; }
+    :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; border-radius: 3px; }
+    button, [role="button"], a, select, label[for] { cursor: pointer; }
+    :disabled { cursor: not-allowed; opacity: 0.5; }
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    img { display: block; max-width: 100%; height: auto; }
+    input, button, select, textarea { font: inherit; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--c-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--c-gold); color: #0f0800;
+      padding: 0.5rem 1rem; z-index: var(--z-top);
+      border-radius: 0 0 6px 6px; font-weight: 700;
+      text-decoration: none; font-family: 'Syne', sans-serif;
+    }
+    .skip-link:focus { top: 0; }
+
+    .noise {
+      position: fixed; inset: 0; z-index: var(--z-top);
+      pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ═══ NAV ═══ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-sticky);
+      padding: 14px 48px;
+      background: rgba(7,7,14,0.88);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; color: var(--c-text);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      flex-shrink: 0;
+    }
+    .logo-gem {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      box-shadow: 0 2px 10px rgba(226,168,75,0.35);
+    }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 6px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); text-decoration: none; padding: 8px 14px;
+      border-radius: 8px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--c-text); background: rgba(255,255,255,0.04); }
+
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-icon-btn {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+      color: var(--c-text-2); display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .nav-icon-btn:hover { color: var(--c-text); border-color: var(--c-border-2); background: rgba(255,255,255,0.06); }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 9px;
+      padding: 8px 16px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); }
+    .btn-gold {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: #0f0800; background: var(--c-gold);
+      border: none; border-radius: 9px; padding: 9px 18px;
+      box-shadow: 0 2px 14px rgba(226,168,75,0.28);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, background 0.2s;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-gold:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 5px 22px rgba(226,168,75,0.44); }
+    .btn-gold:active { transform: translateY(0); }
+    .btn-gold.active-page {
+      box-shadow: 0 0 0 2px var(--c-base), 0 0 0 4px var(--c-gold), 0 2px 14px rgba(226,168,75,0.28);
+    }
+
+    /* ═══ MOBILE NAV ═══ */
+    .mobile-menu-btn {
+      display: none; width: 44px; height: 44px; border-radius: 10px;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--c-border);
+      color: var(--c-text-2); align-items: center; justify-content: center;
+    }
+
+    /* ═══ MAIN ═══ */
+    .page-wrapper {
+      max-width: 860px; margin: 0 auto;
+      padding: 110px 32px 80px;
+    }
+
+    /* ═══ STEP INDICATOR ═══ */
+    .steps-bar {
+      display: flex; align-items: center; gap: 0; margin-bottom: 40px;
+      position: relative;
+    }
+    .step-item {
+      display: flex; align-items: center; gap: 10px;
+      flex: 1; position: relative; cursor: pointer;
+    }
+    .step-item:not(:last-child)::after {
+      content: ''; position: absolute; top: 50%; left: 40px; right: -8px;
+      height: 2px; background: var(--c-border);
+      transform: translateY(-50%);
+    }
+    .step-item.completed:not(:last-child)::after { background: var(--c-gold); opacity: 0.4; }
+    .step-circle {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      background: var(--c-elevated); border: 2px solid var(--c-border);
+      color: var(--c-text-3);
+      transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+      position: relative; z-index: 2;
+    }
+    .step-item.active .step-circle {
+      background: var(--c-gold); border-color: var(--c-gold);
+      color: #0f0800; box-shadow: 0 0 20px rgba(226,168,75,0.35);
+    }
+    .step-item.completed .step-circle {
+      background: transparent; border-color: rgba(226,168,75,0.4);
+      color: var(--c-gold);
+    }
+    .step-label {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 600;
+      color: var(--c-text-3); letter-spacing: 0.01em;
+      display: none;
+    }
+    .step-item.active .step-label { color: var(--c-text); }
+    .step-item.completed .step-label { color: var(--c-text-2); }
+
+    /* ═══ FORM SECTIONS ═══ */
+    .form-step { display: none; }
+    .form-step.active { display: block; }
+
+    .form-section-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 600;
+      letter-spacing: -0.02em; color: var(--c-text); line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .form-section-sub {
+      font-size: 14px; color: var(--c-text-2); margin-bottom: 32px; line-height: 1.7;
+    }
+
+    .form-group { margin-bottom: 24px; }
+    .form-label {
+      display: block; font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-text-2);
+      margin-bottom: 8px;
+    }
+    .form-label .required { color: var(--c-coral); margin-left: 2px; }
+
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: var(--c-elevated);
+      border: 1px solid var(--c-border); border-radius: 11px;
+      padding: 12px 16px; color: var(--c-text);
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--c-text-3); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: rgba(226,168,75,0.4);
+      background: rgba(226,168,75,0.03);
+      box-shadow: 0 0 0 3px rgba(226,168,75,0.08);
+      outline: none;
+    }
+    .form-input.error, .form-select.error, .form-textarea.error {
+      border-color: var(--c-coral);
+      box-shadow: 0 0 0 3px var(--c-coral-dim);
+    }
+    .form-error {
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-coral);
+      margin-top: 6px; display: none;
+    }
+    .form-error.show { display: block; }
+
+    .form-select {
+      appearance: none; cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%239896a8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 16px center;
+      padding-right: 40px;
+    }
+    .form-select option { background: var(--c-card); color: var(--c-text); }
+
+    .form-textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* ═══ CATEGORY GRID ═══ */
+    .category-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin-bottom: 8px;
+    }
+    .cat-option {
+      background: var(--c-elevated); border: 1px solid var(--c-border);
+      border-radius: 12px; padding: 16px 12px; text-align: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cat-option:hover { border-color: var(--c-border-2); transform: translateY(-2px); }
+    .cat-option.selected {
+      border-color: var(--c-gold); background: var(--c-gold-dim);
+      box-shadow: 0 0 20px rgba(226,168,75,0.1);
+    }
+    .cat-option input { display: none; }
+    .cat-icon { font-size: 24px; margin-bottom: 6px; display: block; }
+    .cat-name {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      color: var(--c-text-2); letter-spacing: 0.02em;
+    }
+    .cat-option.selected .cat-name { color: var(--c-gold); }
+
+    /* ═══ CONDITION / TYPE TOGGLES ═══ */
+    .toggle-group {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .toggle-btn {
+      font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600;
+      color: var(--c-text-2); background: var(--c-elevated);
+      border: 1px solid var(--c-border); border-radius: 10px;
+      padding: 10px 20px; cursor: pointer;
+      transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .toggle-btn:hover { color: var(--c-text); border-color: var(--c-border-2); }
+    .toggle-btn.selected {
+      color: var(--c-gold); background: var(--c-gold-dim);
+      border-color: rgba(226,168,75,0.35);
+    }
+    .toggle-btn input { display: none; }
+
+    /* ═══ PHOTO UPLOAD ═══ */
+    .upload-zone {
+      border: 2px dashed var(--c-border-2); border-radius: 16px;
+      padding: 48px 24px; text-align: center;
+      background: rgba(255,255,255,0.015);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      position: relative;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: rgba(226,168,75,0.4); background: rgba(226,168,75,0.03);
+    }
+    .upload-zone input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer;
+    }
+    .upload-icon {
+      width: 52px; height: 52px; margin: 0 auto 14px;
+      background: var(--c-gold-dim); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-gold); font-size: 22px;
+    }
+    .upload-title {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--c-text); margin-bottom: 4px;
+    }
+    .upload-sub { font-size: 13px; color: var(--c-text-3); }
+    .upload-sub strong { color: var(--c-gold); font-weight: 600; }
+
+    .photo-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin-top: 16px;
+    }
+    .photo-thumb {
+      aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+      background: var(--c-elevated); border: 1px solid var(--c-border);
+      position: relative;
+    }
+    .photo-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .photo-remove {
+      position: absolute; top: 6px; right: 6px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: rgba(0,0,0,0.7); border: none; color: #fff;
+      font-size: 12px; display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    .photo-thumb:hover .photo-remove { opacity: 1; }
+    .photo-primary-badge {
+      position: absolute; bottom: 6px; left: 6px;
+      font-family: 'Syne', sans-serif; font-size: 9px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      background: var(--c-gold); color: #0f0800;
+      padding: 3px 7px; border-radius: 5px;
+    }
+
+    .char-count {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+      color: var(--c-text-3); text-align: right; margin-top: 6px;
+    }
+    .char-count.warn { color: var(--c-coral); }
+
+    /* ═══ SHIPPING CHECKBOXES ═══ */
+    .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
+    .checkbox-item {
+      display: flex; align-items: center; gap: 12px;
+      cursor: pointer;
+    }
+    .checkbox-box {
+      width: 22px; height: 22px; border-radius: 6px; flex-shrink: 0;
+      background: var(--c-elevated); border: 1px solid var(--c-border-2);
+      display: flex; align-items: center; justify-content: center;
+      color: transparent; font-size: 13px;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+    .checkbox-item.checked .checkbox-box {
+      background: var(--c-gold-dim); border-color: var(--c-gold); color: var(--c-gold);
+    }
+    .checkbox-item input { display: none; }
+    .checkbox-text {
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--c-text-2);
+    }
+    .checkbox-item.checked .checkbox-text { color: var(--c-text); }
+
+    /* ═══ PRICE INPUT ═══ */
+    .price-input-wrap {
+      position: relative;
+    }
+    .price-symbol {
+      position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      color: var(--c-gold);
+    }
+    .price-input-wrap .form-input { padding-left: 36px; font-size: 18px; font-weight: 600; }
+
+    /* ═══ REVIEW PREVIEW CARD ═══ */
+    .review-card {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 18px; overflow: hidden;
+      max-width: 400px;
+    }
+    .review-card-img {
+      height: 220px; background: var(--c-elevated);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-text-3); font-size: 48px;
+      position: relative;
+    }
+    .review-card-img img { width: 100%; height: 100%; object-fit: cover; }
+    .review-card-body { padding: 18px 20px 20px; }
+    .review-card-cat {
+      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-violet); margin-bottom: 6px;
+    }
+    .review-card-title {
+      font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+      color: var(--c-text); margin-bottom: 6px; letter-spacing: -0.01em;
+    }
+    .review-card-desc {
+      font-size: 13px; color: var(--c-text-2); line-height: 1.6;
+      margin-bottom: 14px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .review-card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 14px; border-top: 1px solid var(--c-border);
+    }
+    .review-card-price {
+      font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 600;
+      color: var(--c-gold); letter-spacing: -0.02em;
+    }
+    .review-card-condition {
+      font-family: 'Syne', sans-serif; font-size: 10.5px; font-weight: 700;
+      color: var(--c-green); background: var(--c-green-dim);
+      padding: 4px 10px; border-radius: 20px;
+    }
+    .review-card-rental {
+      font-size: 12px; color: var(--c-text-3); margin-top: 2px;
+    }
+
+    .review-details {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 16px; padding: 24px; margin-top: 20px;
+    }
+    .review-detail-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 0; border-bottom: 1px solid var(--c-border);
+    }
+    .review-detail-row:last-child { border-bottom: none; }
+    .review-detail-label {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.04em; text-transform: uppercase; color: var(--c-text-3);
+    }
+    .review-detail-value { font-size: 14px; color: var(--c-text); font-weight: 500; }
+
+    /* ═══ STEP ACTIONS ═══ */
+    .step-actions {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--c-border);
+      gap: 12px;
+    }
+    .btn-back {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 10px;
+      padding: 11px 24px; display: inline-flex; align-items: center; gap: 6px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .btn-back:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+    .btn-next {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: #0f0800; background: var(--c-gold); border: none; border-radius: 10px;
+      padding: 11px 28px; display: inline-flex; align-items: center; gap: 8px;
+      box-shadow: 0 3px 16px rgba(226,168,75,0.25);
+      transition: background 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
+    }
+    .btn-next:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(226,168,75,0.4); }
+    .btn-next:active { transform: translateY(0); }
+    .btn-draft {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: var(--c-elevated);
+      border: 1px solid var(--c-border); border-radius: 10px;
+      padding: 11px 24px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .btn-draft:hover { color: var(--c-text); border-color: var(--c-border-2); }
+
+    .autosave-indicator {
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-text-3);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .autosave-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--c-green); display: inline-block;
+    }
+
+    /* ═══ MOBILE ═══ */
+    @media (max-width: 768px) {
+      .nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: flex; }
+      .page-wrapper { padding: 90px 16px 60px; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      .photo-grid { grid-template-columns: repeat(3, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .step-label { display: none !important; }
+      .review-card { max-width: 100%; }
+    }
+    @media (min-width: 769px) {
+      .step-label { display: block; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- ═══ NAV ═══ -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="logo">
+      <div class="logo-gem" aria-hidden="true">&#10022;</div>
+      Charm
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="nav-icon-btn" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Notifications">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold active-page">+ Add Listing</a>
+
+      <button class="mobile-menu-btn" aria-label="Open menu">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ MAIN CONTENT ═══ -->
+<main id="main-content">
+  <div class="page-wrapper">
+
+    <!-- Step Indicator -->
+    <div class="steps-bar" role="list" aria-label="Listing creation steps">
+      <div class="step-item active" role="listitem" data-step="1" onclick="goToStep(1)">
+        <div class="step-circle">1</div>
+        <span class="step-label">Category & Details</span>
+      </div>
+      <div class="step-item" role="listitem" data-step="2" onclick="goToStep(2)">
+        <div class="step-circle">2</div>
+        <span class="step-label">Photos & Description</span>
+      </div>
+      <div class="step-item" role="listitem" data-step="3" onclick="goToStep(3)">
+        <div class="step-circle">3</div>
+        <span class="step-label">Pricing</span>
+      </div>
+      <div class="step-item" role="listitem" data-step="4" onclick="goToStep(4)">
+        <div class="step-circle">4</div>
+        <span class="step-label">Review & Publish</span>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 1: Category & Details ═══ -->
+    <div class="form-step active" id="step-1">
+      <h1 class="form-section-title" style="font-style:italic;">Category & Details</h1>
+      <p class="form-section-sub">Choose a category for your listing and specify its condition.</p>
+
+      <div class="form-group">
+        <label class="form-label">Category <span class="required">*</span></label>
+        <div class="category-grid" role="radiogroup" aria-label="Select category">
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="cameras">
+            <span class="cat-icon">&#128247;</span>
+            <span class="cat-name">Cameras</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="audio">
+            <span class="cat-icon">&#127908;</span>
+            <span class="cat-name">Audio</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="lighting">
+            <span class="cat-icon">&#128161;</span>
+            <span class="cat-name">Lighting</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="instruments">
+            <span class="cat-icon">&#127928;</span>
+            <span class="cat-name">Instruments</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="props">
+            <span class="cat-icon">&#127917;</span>
+            <span class="cat-name">Props</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="dj">
+            <span class="cat-icon">&#127926;</span>
+            <span class="cat-name">DJ</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="studio">
+            <span class="cat-icon">&#127909;</span>
+            <span class="cat-name">Studio</span>
+          </label>
+          <label class="cat-option" onclick="selectCategory(this)">
+            <input type="radio" name="category" value="software">
+            <span class="cat-icon">&#128187;</span>
+            <span class="cat-name">Software</span>
+          </label>
+        </div>
+        <div class="form-error" id="cat-error">Please select a category</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Condition <span class="required">*</span></label>
+        <div class="toggle-group" role="radiogroup" aria-label="Item condition">
+          <label class="toggle-btn" onclick="selectToggle(this, 'condition')">
+            <input type="radio" name="condition" value="new"> New
+          </label>
+          <label class="toggle-btn" onclick="selectToggle(this, 'condition')">
+            <input type="radio" name="condition" value="like-new"> Like New
+          </label>
+          <label class="toggle-btn" onclick="selectToggle(this, 'condition')">
+            <input type="radio" name="condition" value="good"> Good
+          </label>
+          <label class="toggle-btn" onclick="selectToggle(this, 'condition')">
+            <input type="radio" name="condition" value="fair"> Fair
+          </label>
+        </div>
+        <div class="form-error" id="condition-error">Please select a condition</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Listing Type <span class="required">*</span></label>
+        <div class="toggle-group" role="radiogroup" aria-label="Listing type">
+          <label class="toggle-btn" onclick="selectToggle(this, 'listing-type')">
+            <input type="radio" name="listing-type" value="sell"> Sell
+          </label>
+          <label class="toggle-btn" onclick="selectToggle(this, 'listing-type')">
+            <input type="radio" name="listing-type" value="rent"> Rent
+          </label>
+          <label class="toggle-btn" onclick="selectToggle(this, 'listing-type')">
+            <input type="radio" name="listing-type" value="both"> Both
+          </label>
+        </div>
+        <div class="form-error" id="type-error">Please select a listing type</div>
+      </div>
+
+      <div class="step-actions">
+        <div class="autosave-indicator"><span class="autosave-dot"></span> Auto-saved</div>
+        <button class="btn-next" onclick="nextStep(1)">Continue <span aria-hidden="true">&rarr;</span></button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 2: Photos & Description ═══ -->
+    <div class="form-step" id="step-2">
+      <h2 class="form-section-title" style="font-style:italic;">Photos & Description</h2>
+      <p class="form-section-sub">Add up to 8 photos and describe your item in detail.</p>
+
+      <div class="form-group">
+        <label class="form-label">Photos <span class="required">*</span> <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--c-text-3);">Up to 8 images</span></label>
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" multiple accept="image/*" id="photo-input" aria-label="Upload photos">
+          <div class="upload-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          </div>
+          <div class="upload-title">Drag & drop your photos here</div>
+          <div class="upload-sub">or <strong>browse files</strong> &middot; JPG, PNG, WebP &middot; Max 10MB each</div>
+        </div>
+        <div class="photo-grid" id="photo-grid"></div>
+        <div class="form-error" id="photo-error">Please add at least one photo</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="listing-title">Title <span class="required">*</span></label>
+        <input type="text" id="listing-title" class="form-input" placeholder="e.g. Sony A7III Mirrorless Camera Body" maxlength="100">
+        <div class="form-error" id="title-error">Please enter a title</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="listing-desc">Description <span class="required">*</span></label>
+        <textarea id="listing-desc" class="form-textarea" placeholder="Describe the item, its features, any included accessories, and its history..." maxlength="2000" oninput="updateCharCount()"></textarea>
+        <div class="char-count" id="char-count">0 / 2,000</div>
+        <div class="form-error" id="desc-error">Please add a description (minimum 20 characters)</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label" for="listing-brand">Brand</label>
+          <input type="text" id="listing-brand" class="form-input" placeholder="e.g. Sony, Canon, Fender">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="listing-model">Model</label>
+          <input type="text" id="listing-model" class="form-input" placeholder="e.g. A7III, EOS R5, Stratocaster">
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep(2)">&larr; Back</button>
+        <div class="autosave-indicator"><span class="autosave-dot"></span> Auto-saved</div>
+        <button class="btn-next" onclick="nextStep(2)">Continue <span aria-hidden="true">&rarr;</span></button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 3: Pricing ═══ -->
+    <div class="form-step" id="step-3">
+      <h2 class="form-section-title" style="font-style:italic;">Pricing & Shipping</h2>
+      <p class="form-section-sub">Set your price and choose shipping options.</p>
+
+      <div class="form-group" id="sell-price-group">
+        <label class="form-label" for="sell-price">Sale Price <span class="required">*</span></label>
+        <div class="price-input-wrap">
+          <span class="price-symbol" aria-hidden="true">&pound;</span>
+          <input type="number" id="sell-price" class="form-input" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <div class="form-error" id="price-error">Please enter a valid price</div>
+      </div>
+
+      <div class="form-group" id="rent-price-group" style="display:none;">
+        <label class="form-label" for="rent-price">Rental Price Per Day <span class="required">*</span></label>
+        <div class="price-input-wrap">
+          <span class="price-symbol" aria-hidden="true">&pound;</span>
+          <input type="number" id="rent-price" class="form-input" placeholder="0.00" min="0" step="0.01">
+        </div>
+        <div class="form-error" id="rent-error">Please enter a rental price</div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Shipping Options</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item" onclick="toggleCheckbox(this)">
+            <input type="checkbox" name="shipping" value="free">
+            <div class="checkbox-box" aria-hidden="true">&#10003;</div>
+            <span class="checkbox-text">Free shipping</span>
+          </label>
+          <label class="checkbox-item" onclick="toggleCheckbox(this)">
+            <input type="checkbox" name="shipping" value="worldwide">
+            <div class="checkbox-box" aria-hidden="true">&#10003;</div>
+            <span class="checkbox-text">Ships worldwide</span>
+          </label>
+          <label class="checkbox-item" onclick="toggleCheckbox(this)">
+            <input type="checkbox" name="shipping" value="local">
+            <div class="checkbox-box" aria-hidden="true">&#10003;</div>
+            <span class="checkbox-text">Local pickup only</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="listing-location">Location <span class="required">*</span></label>
+        <input type="text" id="listing-location" class="form-input" placeholder="e.g. London, UK">
+        <div class="form-error" id="location-error">Please enter a location</div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep(3)">&larr; Back</button>
+        <div class="autosave-indicator"><span class="autosave-dot"></span> Auto-saved</div>
+        <button class="btn-next" onclick="nextStep(3)">Continue <span aria-hidden="true">&rarr;</span></button>
+      </div>
+    </div>
+
+    <!-- ═══ STEP 4: Review & Publish ═══ -->
+    <div class="form-step" id="step-4">
+      <h2 class="form-section-title" style="font-style:italic;">Review & Publish</h2>
+      <p class="form-section-sub">Check your listing details before going live.</p>
+
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;">
+        <!-- Preview Card -->
+        <div>
+          <label class="form-label" style="margin-bottom:12px;">Listing Preview</label>
+          <div class="review-card" id="review-card">
+            <div class="review-card-img" id="review-img">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--c-text-3);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            </div>
+            <div class="review-card-body">
+              <div class="review-card-cat" id="review-cat">Category</div>
+              <div class="review-card-title" id="review-title">Your listing title</div>
+              <div class="review-card-desc" id="review-desc">Your description will appear here...</div>
+              <div class="review-card-meta">
+                <div>
+                  <div class="review-card-price" id="review-price">&pound;0</div>
+                  <div class="review-card-rental" id="review-rental"></div>
+                </div>
+                <div class="review-card-condition" id="review-condition">New</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details Summary -->
+        <div>
+          <label class="form-label" style="margin-bottom:12px;">Details Summary</label>
+          <div class="review-details" id="review-details">
+            <div class="review-detail-row">
+              <span class="review-detail-label">Category</span>
+              <span class="review-detail-value" id="rd-category">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Condition</span>
+              <span class="review-detail-value" id="rd-condition">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Type</span>
+              <span class="review-detail-value" id="rd-type">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Brand</span>
+              <span class="review-detail-value" id="rd-brand">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Model</span>
+              <span class="review-detail-value" id="rd-model">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Price</span>
+              <span class="review-detail-value" id="rd-price">--</span>
+            </div>
+            <div class="review-detail-row" id="rd-rental-row" style="display:none;">
+              <span class="review-detail-label">Rental / Day</span>
+              <span class="review-detail-value" id="rd-rental">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Location</span>
+              <span class="review-detail-value" id="rd-location">--</span>
+            </div>
+            <div class="review-detail-row">
+              <span class="review-detail-label">Shipping</span>
+              <span class="review-detail-value" id="rd-shipping">--</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-actions">
+        <button class="btn-back" onclick="prevStep(4)">&larr; Back</button>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <button class="btn-draft" onclick="saveDraft()">Save as Draft</button>
+          <button class="btn-next" onclick="publishListing()" style="padding:12px 32px; font-size:14px;">
+            &#10022; Publish Listing
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  const STORAGE_KEY = 'charm-listing-draft';
+  let currentStep = 1;
+  let photos = [];
+
+  // ── Load saved data ──
+  function loadDraft() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (!saved) return;
+
+      // Category
+      if (saved.category) {
+        const catEl = document.querySelector(`.cat-option input[value="${saved.category}"]`);
+        if (catEl) { catEl.closest('.cat-option').click(); }
+      }
+      // Condition
+      if (saved.condition) {
+        const condEl = document.querySelector(`input[name="condition"][value="${saved.condition}"]`);
+        if (condEl) { condEl.closest('.toggle-btn').click(); }
+      }
+      // Listing type
+      if (saved['listing-type']) {
+        const typeEl = document.querySelector(`input[name="listing-type"][value="${saved['listing-type']}"]`);
+        if (typeEl) { typeEl.closest('.toggle-btn').click(); }
+      }
+      // Text fields
+      if (saved.title) document.getElementById('listing-title').value = saved.title;
+      if (saved.desc) { document.getElementById('listing-desc').value = saved.desc; updateCharCount(); }
+      if (saved.brand) document.getElementById('listing-brand').value = saved.brand;
+      if (saved.model) document.getElementById('listing-model').value = saved.model;
+      if (saved.sellPrice) document.getElementById('sell-price').value = saved.sellPrice;
+      if (saved.rentPrice) document.getElementById('rent-price').value = saved.rentPrice;
+      if (saved.location) document.getElementById('listing-location').value = saved.location;
+      // Shipping
+      if (saved.shipping) {
+        saved.shipping.forEach(v => {
+          const cb = document.querySelector(`input[name="shipping"][value="${v}"]`);
+          if (cb) { cb.closest('.checkbox-item').click(); }
+        });
+      }
+    } catch(e) {}
+  }
+
+  function saveDraftData() {
+    const data = {
+      category: getRadioValue('category'),
+      condition: getRadioValue('condition'),
+      'listing-type': getRadioValue('listing-type'),
+      title: document.getElementById('listing-title').value,
+      desc: document.getElementById('listing-desc').value,
+      brand: document.getElementById('listing-brand').value,
+      model: document.getElementById('listing-model').value,
+      sellPrice: document.getElementById('sell-price').value,
+      rentPrice: document.getElementById('rent-price').value,
+      location: document.getElementById('listing-location').value,
+      shipping: Array.from(document.querySelectorAll('input[name="shipping"]:checked')).map(c => c.value),
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // Auto-save on input
+  document.addEventListener('input', debounce(saveDraftData, 600));
+  document.addEventListener('change', debounce(saveDraftData, 300));
+
+  function debounce(fn, ms) {
+    let t; return function() { clearTimeout(t); t = setTimeout(fn, ms); };
+  }
+
+  function getRadioValue(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : '';
+  }
+
+  // ── Category selection ──
+  window.selectCategory = function(el) {
+    document.querySelectorAll('.cat-option').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+    hideError('cat-error');
+    saveDraftData();
+  };
+
+  // ── Toggle selection ──
+  window.selectToggle = function(el, name) {
+    el.closest('.toggle-group').querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    el.querySelector('input').checked = true;
+
+    if (name === 'listing-type') {
+      const val = el.querySelector('input').value;
+      const showSell = val === 'sell' || val === 'both';
+      const showRent = val === 'rent' || val === 'both';
+      document.getElementById('sell-price-group').style.display = showSell ? 'block' : 'none';
+      document.getElementById('rent-price-group').style.display = showRent ? 'block' : 'none';
+    }
+
+    hideError(name === 'condition' ? 'condition-error' : 'type-error');
+    saveDraftData();
+  };
+
+  // ── Checkbox toggle ──
+  window.toggleCheckbox = function(el) {
+    const input = el.querySelector('input');
+    // Toggle is handled by the label/input natively; just sync the class
+    setTimeout(() => {
+      el.classList.toggle('checked', input.checked);
+      saveDraftData();
+    }, 10);
+  };
+
+  // ── Character count ──
+  window.updateCharCount = function() {
+    const ta = document.getElementById('listing-desc');
+    const cc = document.getElementById('char-count');
+    const len = ta.value.length;
+    cc.textContent = len.toLocaleString() + ' / 2,000';
+    cc.classList.toggle('warn', len > 1800);
+  };
+
+  // ── Photo upload ──
+  const uploadZone = document.getElementById('upload-zone');
+  const photoInput = document.getElementById('photo-input');
+  const photoGrid = document.getElementById('photo-grid');
+
+  ['dragenter', 'dragover'].forEach(evt => {
+    uploadZone.addEventListener(evt, (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+  });
+  ['dragleave', 'drop'].forEach(evt => {
+    uploadZone.addEventListener(evt, (e) => { e.preventDefault(); uploadZone.classList.remove('dragover'); });
+  });
+  uploadZone.addEventListener('drop', (e) => {
+    const files = Array.from(e.dataTransfer.files).filter(f => f.type.startsWith('image/'));
+    addPhotos(files);
+  });
+  photoInput.addEventListener('change', () => {
+    const files = Array.from(photoInput.files).filter(f => f.type.startsWith('image/'));
+    addPhotos(files);
+    photoInput.value = '';
+  });
+
+  function addPhotos(files) {
+    const remaining = 8 - photos.length;
+    files.slice(0, remaining).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        photos.push(e.target.result);
+        renderPhotos();
+      };
+      reader.readAsDataURL(file);
+    });
+    hideError('photo-error');
+  }
+
+  function renderPhotos() {
+    photoGrid.innerHTML = '';
+    photos.forEach((src, i) => {
+      const div = document.createElement('div');
+      div.className = 'photo-thumb';
+      div.innerHTML = `
+        <img src="${src}" alt="Photo ${i + 1}" loading="lazy">
+        <button class="photo-remove" onclick="removePhoto(${i})" aria-label="Remove photo">&times;</button>
+        ${i === 0 ? '<div class="photo-primary-badge">Primary</div>' : ''}
+      `;
+      photoGrid.appendChild(div);
+    });
+  }
+
+  window.removePhoto = function(idx) {
+    photos.splice(idx, 1);
+    renderPhotos();
+  };
+
+  // ── Validation ──
+  function showError(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.add('show');
+  }
+  function hideError(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('show');
+  }
+
+  function validateStep(step) {
+    let valid = true;
+    if (step === 1) {
+      if (!getRadioValue('category')) { showError('cat-error'); valid = false; }
+      if (!getRadioValue('condition')) { showError('condition-error'); valid = false; }
+      if (!getRadioValue('listing-type')) { showError('type-error'); valid = false; }
+    } else if (step === 2) {
+      if (photos.length === 0) { showError('photo-error'); valid = false; }
+      const title = document.getElementById('listing-title').value.trim();
+      if (!title) { showError('title-error'); document.getElementById('listing-title').classList.add('error'); valid = false; }
+      else { hideError('title-error'); document.getElementById('listing-title').classList.remove('error'); }
+      const desc = document.getElementById('listing-desc').value.trim();
+      if (desc.length < 20) { showError('desc-error'); document.getElementById('listing-desc').classList.add('error'); valid = false; }
+      else { hideError('desc-error'); document.getElementById('listing-desc').classList.remove('error'); }
+    } else if (step === 3) {
+      const type = getRadioValue('listing-type');
+      if (type === 'sell' || type === 'both') {
+        const p = parseFloat(document.getElementById('sell-price').value);
+        if (!p || p <= 0) { showError('price-error'); valid = false; } else { hideError('price-error'); }
+      }
+      if (type === 'rent' || type === 'both') {
+        const r = parseFloat(document.getElementById('rent-price').value);
+        if (!r || r <= 0) { showError('rent-error'); valid = false; } else { hideError('rent-error'); }
+      }
+      if (!document.getElementById('listing-location').value.trim()) { showError('location-error'); valid = false; } else { hideError('location-error'); }
+    }
+    return valid;
+  }
+
+  // ── Step navigation ──
+  function setStep(n) {
+    currentStep = n;
+    document.querySelectorAll('.form-step').forEach((s, i) => {
+      s.classList.toggle('active', i + 1 === n);
+    });
+    document.querySelectorAll('.step-item').forEach((s, i) => {
+      const step = i + 1;
+      s.classList.remove('active', 'completed');
+      if (step === n) s.classList.add('active');
+      else if (step < n) s.classList.add('completed');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (n === 4) populateReview();
+  }
+
+  window.nextStep = function(from) {
+    if (!validateStep(from)) return;
+    saveDraftData();
+    setStep(from + 1);
+  };
+  window.prevStep = function(from) { setStep(from - 1); };
+  window.goToStep = function(n) {
+    // Only allow going to completed or current steps
+    if (n < currentStep) setStep(n);
+  };
+
+  // ── Review population ──
+  function populateReview() {
+    const cat = getRadioValue('category');
+    const cond = getRadioValue('condition');
+    const type = getRadioValue('listing-type');
+    const title = document.getElementById('listing-title').value;
+    const desc = document.getElementById('listing-desc').value;
+    const brand = document.getElementById('listing-brand').value;
+    const model = document.getElementById('listing-model').value;
+    const price = document.getElementById('sell-price').value;
+    const rent = document.getElementById('rent-price').value;
+    const loc = document.getElementById('listing-location').value;
+    const shipping = Array.from(document.querySelectorAll('input[name="shipping"]:checked')).map(c => {
+      const labels = { free: 'Free shipping', worldwide: 'Ships worldwide', local: 'Local pickup' };
+      return labels[c.value] || c.value;
+    });
+
+    const catLabels = { cameras:'Cameras', audio:'Audio', lighting:'Lighting', instruments:'Instruments', props:'Props', dj:'DJ', studio:'Studio', software:'Software' };
+    const condLabels = { 'new':'New', 'like-new':'Like New', good:'Good', fair:'Fair' };
+    const typeLabels = { sell:'For Sale', rent:'For Rent', both:'Sale & Rental' };
+
+    document.getElementById('review-cat').textContent = catLabels[cat] || cat;
+    document.getElementById('review-title').textContent = title || 'Untitled';
+    document.getElementById('review-desc').textContent = desc || 'No description';
+    document.getElementById('review-condition').textContent = condLabels[cond] || cond;
+
+    if (type === 'sell' || type === 'both') {
+      document.getElementById('review-price').innerHTML = '&pound;' + (parseFloat(price) || 0).toLocaleString('en-GB', {minimumFractionDigits: 2});
+    } else {
+      document.getElementById('review-price').innerHTML = '&pound;' + (parseFloat(rent) || 0).toLocaleString('en-GB', {minimumFractionDigits: 2}) + '<small style="font-size:14px; color:var(--c-text-3);"> /day</small>';
+    }
+
+    const rentalEl = document.getElementById('review-rental');
+    if ((type === 'rent' || type === 'both') && rent) {
+      rentalEl.innerHTML = '&pound;' + parseFloat(rent).toFixed(2) + ' /day rental';
+      rentalEl.style.display = 'block';
+    } else {
+      rentalEl.style.display = 'none';
+    }
+
+    // Preview image
+    const imgEl = document.getElementById('review-img');
+    if (photos.length) {
+      imgEl.innerHTML = `<img src="${photos[0]}" alt="Listing preview" style="width:100%;height:100%;object-fit:cover;">`;
+    }
+
+    // Details summary
+    document.getElementById('rd-category').textContent = catLabels[cat] || '--';
+    document.getElementById('rd-condition').textContent = condLabels[cond] || '--';
+    document.getElementById('rd-type').textContent = typeLabels[type] || '--';
+    document.getElementById('rd-brand').textContent = brand || '--';
+    document.getElementById('rd-model').textContent = model || '--';
+    document.getElementById('rd-price').textContent = price ? '\u00A3' + parseFloat(price).toFixed(2) : '--';
+    document.getElementById('rd-location').textContent = loc || '--';
+    document.getElementById('rd-shipping').textContent = shipping.length ? shipping.join(', ') : 'Not specified';
+
+    const rentalRow = document.getElementById('rd-rental-row');
+    if (type === 'rent' || type === 'both') {
+      rentalRow.style.display = 'flex';
+      document.getElementById('rd-rental').textContent = rent ? '\u00A3' + parseFloat(rent).toFixed(2) : '--';
+    } else {
+      rentalRow.style.display = 'none';
+    }
+  }
+
+  // ── Publish & Draft ──
+  window.publishListing = function() {
+    localStorage.removeItem(STORAGE_KEY);
+    const btn = document.querySelector('.btn-next[onclick*="publish"]');
+    btn.innerHTML = '&#10003; Published!';
+    btn.style.background = '#36d98a';
+    btn.style.pointerEvents = 'none';
+    setTimeout(() => { window.location.href = 'marketplace.html'; }, 1800);
+  };
+
+  window.saveDraft = function() {
+    saveDraftData();
+    const btn = document.querySelector('.btn-draft');
+    const origText = btn.textContent;
+    btn.textContent = 'Saved!';
+    btn.style.color = 'var(--c-green)';
+    btn.style.borderColor = 'var(--c-green)';
+    setTimeout(() => {
+      btn.textContent = origText;
+      btn.style.color = '';
+      btn.style.borderColor = '';
+    }, 1500);
+  };
+
+  // ── Init ──
+  loadDraft();
+
+})();
+</script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="shared.js"></script>
+</body>
+</html>

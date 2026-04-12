@@ -504,9 +504,9 @@
 
   <!-- Hero -->
   <section class="pricing-hero">
-    <div class="hero-eyebrow">Pricing</div>
-    <h1>Simple, <em>creator-first</em><br>pricing</h1>
-    <p>Start for free and grow at your own pace. No hidden fees, no lock-ins — just tools built for people who make things.</p>
+    <div class="hero-eyebrow" data-appear data-appear-delay="0.1">Pricing</div>
+    <h1 data-split="words">Simple, creator-first pricing</h1>
+    <p data-appear data-appear-delay="0.5">Start for free and grow at your own pace. No hidden fees, no lock-ins — just tools built for people who make things.</p>
 
     <!-- Toggle -->
     <div class="toggle-wrap" role="group" aria-label="Billing period">
@@ -831,6 +831,10 @@
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   reveals.forEach(el => observer.observe(el));
 </script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
 <script src="shared.js"></script>
 </body>
 </html>

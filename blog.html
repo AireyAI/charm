@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Charm — Creator Spotlight & Blog</title>
+  <meta name="description" content="Stories, guides, and insights from the creator community. Gear reviews, tutorials, industry news, and creator spotlights on Charm.">
+  <link rel="canonical" href="https://www.charm.space/blog">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Charm — Creator Spotlight & Blog">
+  <meta property="og:description" content="Stories, guides, and insights from the creator community. Gear reviews, tutorials, industry news, and creator spotlights.">
+  <meta property="og:image" content="https://www.charm.space/og-image.jpg">
+  <meta property="og:url" content="https://www.charm.space/blog">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Charm">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Charm — Creator Spotlight & Blog">
+  <meta name="twitter:description" content="Stories, guides, and insights from the creator community.">
+  <meta name="twitter:image" content="https://www.charm.space/og-image.jpg">
+
+  <!-- Theme & iOS -->
+  <meta name="theme-color" content="#07070e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Charm">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <!-- Resource hints -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-gold-dim: rgba(226,168,75,0.14);
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+      --z-below: -1;
+      --z-base: 0;
+      --z-raised: 10;
+      --z-sticky: 500;
+      --z-overlay: 700;
+      --z-modal: 800;
+      --z-toast: 900;
+      --z-top: 9999;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 80px;
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    body {
+      background-color: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      overscroll-behavior-y: none;
+    }
+
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    img, video, svg { display: block; max-width: 100%; }
+    img { height: auto; }
+    input, button, textarea, select { font: inherit; }
+    * { -webkit-tap-highlight-color: transparent; }
+
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    button, [role="button"], a, select, label[for], summary { cursor: pointer; }
+    :disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.5; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--c-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+    * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+    ::-moz-selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--c-gold); color: #0f0800;
+      padding: 0.5rem 1rem; z-index: var(--z-top);
+      border-radius: 0 0 6px 6px; font-weight: 700;
+      text-decoration: none; font-family: 'Syne', sans-serif;
+    }
+    .skip-link:focus { top: 0; }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    .noise {
+      position: fixed; inset: 0; z-index: var(--z-top); pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ═══════════════════════════════════════
+       NAVIGATION
+    ═══════════════════════════════════════ */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-sticky);
+      padding: 22px 48px;
+      transition: background 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
+      border-bottom: 1px solid transparent;
+    }
+    .nav.scrolled {
+      background: rgba(7,7,14,0.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      padding: 14px 48px;
+      border-color: var(--c-border);
+    }
+    .nav-inner {
+      max-width: 1320px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 21px;
+      letter-spacing: -0.02em; color: var(--c-text);
+      text-decoration: none; display: flex; align-items: center; gap: 9px;
+    }
+    .logo-gem {
+      width: 30px; height: 30px; border-radius: 7px;
+      background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 15px;
+      box-shadow: 0 2px 12px rgba(226,168,75,0.35);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 36px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif; font-size: 13.5px; font-weight: 500;
+      color: var(--c-text-2); text-decoration: none; letter-spacing: 0.005em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-links a.active { color: var(--c-gold); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    .nav-icon {
+      width: 38px; height: 38px; border-radius: 9px;
+      background: transparent; border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-text-2); text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .nav-icon:hover {
+      color: var(--c-text); border-color: var(--c-border-2);
+      background: rgba(255,255,255,0.04);
+    }
+    .nav-icon svg { width: 18px; height: 18px; }
+
+    .btn-ghost {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 9px;
+      padding: 8px 16px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-ghost:hover {
+      color: var(--c-text); border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.05);
+    }
+    .btn-gold {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: #0f0800; background: var(--c-gold);
+      border: none; border-radius: 9px; padding: 9px 20px; cursor: pointer;
+      box-shadow: 0 2px 14px rgba(226,168,75,0.28);
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.2s ease;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+    }
+    .btn-gold:hover {
+      background: #ebb850; transform: translateY(-1px);
+      box-shadow: 0 5px 22px rgba(226,168,75,0.44);
+    }
+    .btn-gold:active { transform: translateY(0); }
+
+    /* ═══════════════════════════════════════
+       HERO / FEATURED POST
+    ═══════════════════════════════════════ */
+    .blog-hero {
+      position: relative; overflow: hidden;
+      padding: 140px 48px 80px;
+      padding-top: max(140px, env(safe-area-inset-top) + 140px);
+    }
+    .blog-hero-bg {
+      position: absolute; inset: 0; z-index: var(--z-below);
+      background:
+        radial-gradient(ellipse 70% 50% at 20% 40%, rgba(157,111,255,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 60%, rgba(226,168,75,0.1) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 50% 80%, rgba(0,212,200,0.06) 0%, transparent 70%);
+    }
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(90px); pointer-events: none; z-index: var(--z-below);
+    }
+    .orb-1 { width: 400px; height: 400px; top: -100px; left: -80px; background: rgba(157,111,255,0.08); }
+    .orb-2 { width: 350px; height: 350px; bottom: -60px; right: -40px; background: rgba(226,168,75,0.07); }
+
+    .blog-hero-inner {
+      max-width: 1320px; margin: 0 auto; position: relative;
+    }
+
+    .featured-card {
+      position: relative; overflow: hidden;
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      display: grid; grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+      transition: border-color 0.3s ease;
+    }
+    .featured-card:hover { border-color: var(--c-border-2); }
+
+    .featured-img {
+      position: relative; overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(157,111,255,0.35) 0%, rgba(226,168,75,0.25) 50%, rgba(0,212,200,0.2) 100%),
+        linear-gradient(215deg, var(--c-float) 0%, var(--c-elevated) 100%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .featured-img-deco {
+      width: 180px; height: 180px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(226,168,75,0.2) 0%, transparent 70%);
+      border: 1px solid rgba(226,168,75,0.15);
+    }
+
+    .featured-content {
+      padding: 48px 52px;
+      display: flex; flex-direction: column; justify-content: center; gap: 20px;
+    }
+
+    .badge {
+      display: inline-flex; align-items: center;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 6px;
+      width: fit-content;
+    }
+    .badge-spotlight { background: rgba(157,111,255,0.14); color: var(--c-violet); }
+    .badge-review { background: rgba(255,107,87,0.14); color: var(--c-coral); }
+    .badge-tutorial { background: rgba(0,212,200,0.14); color: var(--c-cyan); }
+    .badge-news { background: var(--c-gold-dim); color: var(--c-gold); }
+    .badge-bts { background: rgba(157,111,255,0.1); color: #b794ff; }
+
+    .featured-title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 34px; font-weight: 600; line-height: 1.2;
+      letter-spacing: -0.03em; color: var(--c-text);
+    }
+
+    .featured-excerpt {
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      color: var(--c-text-2); line-height: 1.7; max-width: 440px;
+    }
+
+    .featured-meta {
+      display: flex; align-items: center; gap: 12px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3);
+    }
+    .avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      color: var(--c-text);
+    }
+    .avatar-violet { background: rgba(157,111,255,0.2); }
+    .avatar-coral { background: rgba(255,107,87,0.2); }
+    .avatar-cyan { background: rgba(0,212,200,0.2); }
+    .avatar-gold { background: var(--c-gold-dim); }
+    .meta-author { color: var(--c-text-2); font-weight: 500; }
+    .meta-dot { color: var(--c-text-3); }
+
+    .read-link {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--c-gold); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap 0.2s ease;
+    }
+    .read-link:hover { gap: 10px; }
+
+    /* ═══════════════════════════════════════
+       CATEGORY FILTER
+    ═══════════════════════════════════════ */
+    .filter-sec {
+      padding: 0 48px; max-width: 1320px; margin: 0 auto 48px;
+    }
+    .filter-pills {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 0;
+      list-style: none;
+    }
+    .pill {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      padding: 8px 20px; border-radius: 100px;
+      border: 1px solid var(--c-border-2); background: transparent;
+      color: var(--c-text-2); cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .pill:hover {
+      color: var(--c-text); border-color: rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.04);
+    }
+    .pill.active {
+      background: var(--c-gold); color: #0f0800;
+      border-color: var(--c-gold);
+    }
+    .pill.active:hover { background: #ebb850; }
+
+    /* ═══════════════════════════════════════
+       ARTICLE GRID + SIDEBAR LAYOUT
+    ═══════════════════════════════════════ */
+    .blog-body {
+      max-width: 1320px; margin: 0 auto;
+      padding: 0 48px 80px;
+      display: grid; grid-template-columns: 1fr 300px;
+      gap: 48px; align-items: start;
+    }
+
+    .article-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .article-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .article-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+      border-color: var(--c-border-2);
+    }
+    .article-card.tall { grid-row: span 2; }
+
+    .article-thumb {
+      position: relative; height: 180px; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .article-card.tall .article-thumb { height: 260px; }
+
+    .thumb-spotlight {
+      background: linear-gradient(135deg, rgba(157,111,255,0.3) 0%, rgba(157,111,255,0.08) 50%, var(--c-elevated) 100%);
+    }
+    .thumb-review {
+      background: linear-gradient(135deg, rgba(255,107,87,0.3) 0%, rgba(255,107,87,0.08) 50%, var(--c-elevated) 100%);
+    }
+    .thumb-tutorial {
+      background: linear-gradient(135deg, rgba(0,212,200,0.3) 0%, rgba(0,212,200,0.08) 50%, var(--c-elevated) 100%);
+    }
+    .thumb-news {
+      background: linear-gradient(135deg, rgba(226,168,75,0.3) 0%, rgba(226,168,75,0.08) 50%, var(--c-elevated) 100%);
+    }
+    .thumb-bts {
+      background: linear-gradient(135deg, rgba(157,111,255,0.2) 0%, rgba(226,168,75,0.15) 50%, var(--c-elevated) 100%);
+    }
+
+    .thumb-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+
+    .article-thumb .badge {
+      position: absolute; top: 14px; left: 14px;
+    }
+
+    .article-body {
+      padding: 20px 22px 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .article-card.tall .article-body {
+      flex: 1;
+    }
+
+    .article-title {
+      font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700;
+      color: var(--c-text); line-height: 1.35; letter-spacing: -0.01em;
+    }
+    .article-title a {
+      color: inherit; text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .article-title a:hover { color: var(--c-gold); }
+
+    .article-excerpt {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--c-text-2); line-height: 1.7;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .article-card.tall .article-excerpt {
+      -webkit-line-clamp: 4;
+    }
+
+    .article-meta {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: var(--c-text-3);
+      margin-top: auto; padding-top: 8px;
+    }
+    .article-meta .avatar { width: 28px; height: 28px; font-size: 10px; }
+
+    /* ═══════════════════════════════════════
+       CREATOR SPOTLIGHT SIDEBAR
+    ═══════════════════════════════════════ */
+    .sidebar {
+      position: sticky; top: 100px;
+    }
+    .sidebar-heading {
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-text-3);
+      margin-bottom: 20px;
+    }
+    .sidebar-creators {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .creator-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.2s ease;
+    }
+    .creator-card:hover { border-color: var(--c-border-2); }
+    .creator-top {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .creator-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--c-text); flex-shrink: 0;
+    }
+    .creator-info {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .creator-name {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+      color: var(--c-text);
+    }
+    .creator-discipline {
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-text-3);
+    }
+    .creator-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .creator-followers {
+      font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-text-3);
+    }
+    .follow-btn {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 8px;
+      padding: 5px 14px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    .follow-btn:hover {
+      color: var(--c-gold); border-color: rgba(226,168,75,0.3);
+      background: rgba(226,168,75,0.06);
+    }
+
+    /* ═══════════════════════════════════════
+       NEWSLETTER CTA
+    ═══════════════════════════════════════ */
+    .newsletter-sec {
+      padding: 0 48px 80px;
+      max-width: 1320px; margin: 0 auto;
+    }
+    .newsletter-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      padding: 56px 60px;
+      text-align: center;
+      position: relative; overflow: hidden;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .newsletter-card::before {
+      content: '';
+      position: absolute; inset: 0; z-index: var(--z-below);
+      background:
+        radial-gradient(ellipse 50% 60% at 30% 20%, rgba(226,168,75,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 70% 80%, rgba(157,111,255,0.05) 0%, transparent 70%);
+    }
+    .newsletter-title {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 36px; font-weight: 600; line-height: 1.2;
+      letter-spacing: -0.03em; color: var(--c-text);
+      margin-bottom: 12px;
+    }
+    .newsletter-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 15px;
+      color: var(--c-text-2); line-height: 1.7; margin-bottom: 32px;
+      max-width: 480px; margin-left: auto; margin-right: auto;
+    }
+    .newsletter-form {
+      display: flex; gap: 12px;
+      max-width: 460px; margin: 0 auto;
+    }
+    .newsletter-input {
+      flex: 1; padding: 12px 18px;
+      background: var(--c-elevated); border: 1px solid var(--c-border-2);
+      border-radius: 10px; color: var(--c-text);
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+    .newsletter-input::placeholder { color: var(--c-text-3); }
+    .newsletter-input:focus { border-color: var(--c-gold); outline: none; }
+
+    /* ═══════════════════════════════════════
+       FOOTER
+    ═══════════════════════════════════════ */
+    footer {
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      padding: 64px 48px 40px;
+      position: relative;
+    }
+    footer::before {
+      content: ''; position: absolute; top: 0; left: 48px; right: 48px; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
+    }
+    .ft-inner { max-width: 1320px; margin: 0 auto; }
+    .ft-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--c-border);
+    }
+    .ft-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      color: var(--c-text); display: flex; align-items: center; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .ft-logo-gem {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: linear-gradient(135deg, #e2a84b, #f5d080, #c98830);
+      display: flex; align-items: center; justify-content: center; font-size: 12px;
+    }
+    .ft-tagline {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--c-text-3); line-height: 1.65; max-width: 260px;
+    }
+    .ft-social { display: flex; gap: 9px; margin-top: 24px; }
+    .soc-btn {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; cursor: pointer; text-decoration: none; color: var(--c-text-2);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .soc-btn:hover { background: rgba(255,255,255,0.09); border-color: var(--c-border-2); transform: translateY(-2px); }
+    .ft-col-ttl {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 18px;
+    }
+    .ft-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .ft-links a {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--c-text-2); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .ft-links a:hover { color: var(--c-text); }
+    .ft-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px;
+    }
+    .ft-copy {
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3);
+    }
+    .ft-copy a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+    .ft-copy a:hover { color: var(--c-text-2); }
+    .ft-langs { display: flex; gap: 8px; }
+    .lang-btn {
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--c-text-3); background: transparent;
+      border: 1px solid var(--c-border); border-radius: 7px;
+      padding: 5px 11px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .lang-btn.on { color: var(--c-gold); border-color: rgba(226,168,75,0.3); }
+    .lang-btn:hover:not(.on) { color: var(--c-text-2); border-color: var(--c-border-2); }
+
+    /* ═══════════════════════════════════════
+       REVEAL
+    ═══════════════════════════════════════ */
+    .reveal {
+      opacity: 0; transform: translateY(26px);
+      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+
+    /* ═══════════════════════════════════════
+       PRINT
+    ═══════════════════════════════════════ */
+    @media print {
+      .nav, .noise, .orb { display: none !important; }
+      body { background: white; color: black; }
+      a { color: black; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
+      h1, h2, h3, img { page-break-inside: avoid; break-inside: avoid; }
+      @page { margin: 1.5cm; }
+    }
+
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 1100px) {
+      .blog-body { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+      .sidebar-creators { flex-direction: row; flex-wrap: wrap; }
+      .creator-card { flex: 1; min-width: 220px; }
+      .ft-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 900px) {
+      .article-grid { grid-template-columns: repeat(2, 1fr); }
+      .article-card.tall { grid-row: span 1; }
+      .article-card.tall .article-thumb { height: 180px; }
+      .featured-card { grid-template-columns: 1fr; }
+      .featured-img { min-height: 220px; }
+      .featured-content { padding: 32px 28px; }
+      .featured-title { font-size: 28px; }
+    }
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .nav { padding: 16px 24px; }
+      .nav.scrolled { padding: 12px 24px; }
+      .blog-hero { padding: 110px 24px 60px; }
+      .filter-sec { padding: 0 24px; margin-bottom: 36px; }
+      .blog-body { padding: 0 24px 60px; }
+      .newsletter-sec { padding: 0 24px 60px; }
+      .newsletter-card { padding: 40px 24px; }
+      .newsletter-form { flex-direction: column; }
+      footer { padding: 48px 24px 32px; }
+      footer::before { left: 24px; right: 24px; }
+      .ft-grid { grid-template-columns: 1fr; }
+      .ft-bottom { flex-direction: column; gap: 20px; }
+    }
+    @media (max-width: 600px) {
+      .article-grid { grid-template-columns: 1fr; }
+      .sidebar-creators { flex-direction: column; }
+      .creator-card { min-width: unset; }
+      .featured-title { font-size: 24px; }
+      .newsletter-title { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Skip to main content -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- SR live region -->
+<div aria-live="polite" aria-atomic="true" id="sr-status" class="sr-only"></div>
+
+<div class="noise" aria-hidden="true"></div>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="logo" aria-label="Charm — home">
+      <span class="logo-gem" aria-hidden="true">&#10022;</span>
+      Charm
+    </a>
+    <ul class="nav-links">
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="search.html" class="nav-icon" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+      <button class="nav-icon" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- ════════════════ HERO / FEATURED POST ════════════════ -->
+<section class="blog-hero" aria-labelledby="blog-heading">
+  <div class="blog-hero-bg" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+
+  <div class="blog-hero-inner">
+    <h1 id="blog-heading" class="sr-only">Charm Blog — Creator Spotlight & Stories</h1>
+
+    <article class="featured-card reveal">
+      <div class="featured-img" aria-hidden="true">
+        <div class="featured-img-deco"></div>
+      </div>
+      <div class="featured-content">
+        <span class="badge badge-spotlight">Creator Spotlight</span>
+        <h2 class="featured-title">How Sarah Built a &pound;10K/Month Camera Rental Business</h2>
+        <p class="featured-excerpt">From listing her first Canon R5 to managing a fleet of 40+ cameras, Sarah Chen shares the strategy, mistakes, and milestones behind her Charm success story.</p>
+        <div class="featured-meta">
+          <span class="avatar avatar-violet" aria-hidden="true">SC</span>
+          <span class="meta-author">Sarah Chen</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>8 Apr 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>8 min read</span>
+        </div>
+        <a href="#" class="read-link">Read Article <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ════════════════ CATEGORY FILTER ════════════════ -->
+<div class="filter-sec reveal">
+  <ul class="filter-pills" role="tablist" aria-label="Filter articles by category">
+    <li><button class="pill active" role="tab" aria-selected="true" data-filter="all">All</button></li>
+    <li><button class="pill" role="tab" aria-selected="false" data-filter="spotlight">Creator Spotlights</button></li>
+    <li><button class="pill" role="tab" aria-selected="false" data-filter="review">Gear Reviews</button></li>
+    <li><button class="pill" role="tab" aria-selected="false" data-filter="tutorial">Tutorials</button></li>
+    <li><button class="pill" role="tab" aria-selected="false" data-filter="news">Industry News</button></li>
+    <li><button class="pill" role="tab" aria-selected="false" data-filter="bts">Behind the Scenes</button></li>
+  </ul>
+</div>
+
+<!-- ════════════════ ARTICLE GRID + SIDEBAR ════════════════ -->
+<div class="blog-body">
+
+  <!-- GRID -->
+  <div class="article-grid" role="tabpanel" aria-label="Articles">
+
+    <!-- 1 — Tall card -->
+    <article class="article-card tall reveal" data-category="spotlight">
+      <div class="article-thumb thumb-spotlight">
+        <span class="badge badge-spotlight">Creator Spotlight</span>
+        <div class="thumb-icon">&#127909;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">How Sarah Built a &pound;10K/Month Camera Rental Business</a></h3>
+        <p class="article-excerpt">From listing her first Canon R5 to managing a fleet of 40+ cameras, Sarah Chen shares the strategy, mistakes, and milestones behind her incredible Charm journey that inspired thousands of creators.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-violet" aria-hidden="true">SC</span>
+          <span class="meta-author">Sarah Chen</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>8 Apr 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>8 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 2 -->
+    <article class="article-card reveal reveal-d1" data-category="review">
+      <div class="article-thumb thumb-review">
+        <span class="badge badge-review">Gear Reviews</span>
+        <div class="thumb-icon">&#127911;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Sony FX3 vs Canon R5C: The Ultimate Hybrid Showdown</a></h3>
+        <p class="article-excerpt">We put two of the most popular hybrid cameras head-to-head. Which wins for video creators in 2026?</p>
+        <div class="article-meta">
+          <span class="avatar avatar-coral" aria-hidden="true">JR</span>
+          <span class="meta-author">Jake Rivera</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>5 Apr 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>6 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 3 -->
+    <article class="article-card reveal reveal-d2" data-category="tutorial">
+      <div class="article-thumb thumb-tutorial">
+        <span class="badge badge-tutorial">Tutorials</span>
+        <div class="thumb-icon">&#128161;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Lighting on a Budget: 5 Setups Under &pound;50</a></h3>
+        <p class="article-excerpt">Professional-looking lighting doesn't need to break the bank. Here are five tried-and-tested setups.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-cyan" aria-hidden="true">EP</span>
+          <span class="meta-author">Emma Pratt</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>3 Apr 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>5 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 4 -->
+    <article class="article-card reveal" data-category="news">
+      <div class="article-thumb thumb-news">
+        <span class="badge badge-news">Industry News</span>
+        <div class="thumb-icon">&#128200;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">The Rise of Equipment Sharing in the Creator Economy</a></h3>
+        <p class="article-excerpt">How peer-to-peer gear rentals are reshaping how independent creators access professional equipment.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-gold" aria-hidden="true">LK</span>
+          <span class="meta-author">Liam Keating</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>1 Apr 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>7 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 5 -->
+    <article class="article-card reveal reveal-d1" data-category="bts">
+      <div class="article-thumb thumb-bts">
+        <span class="badge badge-bts">Behind the Scenes</span>
+        <div class="thumb-icon">&#127916;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Behind the Scenes: Filming a Music Video with Rented Gear</a></h3>
+        <p class="article-excerpt">Director Aisha Okonkwo walks us through her creative process using entirely Charm-sourced equipment.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-violet" aria-hidden="true">AO</span>
+          <span class="meta-author">Aisha Okonkwo</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>29 Mar 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>6 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 6 -->
+    <article class="article-card reveal reveal-d2" data-category="review">
+      <div class="article-thumb thumb-review">
+        <span class="badge badge-review">Gear Reviews</span>
+        <div class="thumb-icon">&#127908;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Best Microphones for YouTube in 2026</a></h3>
+        <p class="article-excerpt">From shotgun mics to lavs, we tested the top picks to find the best audio solution for every budget.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-coral" aria-hidden="true">NW</span>
+          <span class="meta-author">Nina Walker</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>26 Mar 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>5 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 7 -->
+    <article class="article-card reveal" data-category="spotlight">
+      <div class="article-thumb thumb-spotlight">
+        <span class="badge badge-spotlight">Creator Spotlight</span>
+        <div class="thumb-icon">&#9733;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">From Hobbyist to Full-Time: Marcus's Charm Journey</a></h3>
+        <p class="article-excerpt">How Marcus turned weekend drone footage into a thriving aerial photography business on Charm.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-violet" aria-hidden="true">MJ</span>
+          <span class="meta-author">Marcus James</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>22 Mar 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>7 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 8 -->
+    <article class="article-card reveal reveal-d1" data-category="tutorial">
+      <div class="article-thumb thumb-tutorial">
+        <span class="badge badge-tutorial">Tutorials</span>
+        <div class="thumb-icon">&#127912;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Understanding Colour Temperature: A Visual Guide</a></h3>
+        <p class="article-excerpt">Kelvin, white balance, and mixed lighting demystified with clear visual examples for every scenario.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-cyan" aria-hidden="true">EP</span>
+          <span class="meta-author">Emma Pratt</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>18 Mar 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>4 min read</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- 9 -->
+    <article class="article-card reveal reveal-d2" data-category="news">
+      <div class="article-thumb thumb-news">
+        <span class="badge badge-news">Industry News</span>
+        <div class="thumb-icon">&#127881;</div>
+      </div>
+      <div class="article-body">
+        <h3 class="article-title"><a href="#">Charm Hits 100,000 Active Creators</a></h3>
+        <p class="article-excerpt">A milestone moment for the platform. Here's what it means for the creator economy and what's next.</p>
+        <div class="article-meta">
+          <span class="avatar avatar-gold" aria-hidden="true">CT</span>
+          <span class="meta-author">Charm Team</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>15 Mar 2026</span>
+          <span class="meta-dot" aria-hidden="true">&middot;</span>
+          <span>3 min read</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar reveal">
+    <h2 class="sidebar-heading">This Week's Creators</h2>
+    <div class="sidebar-creators">
+
+      <div class="creator-card">
+        <div class="creator-top">
+          <span class="creator-avatar avatar-violet" aria-hidden="true">SC</span>
+          <div class="creator-info">
+            <span class="creator-name">Sarah Chen</span>
+            <span class="creator-discipline">Cinematography</span>
+          </div>
+        </div>
+        <div class="creator-bottom">
+          <span class="creator-followers">12.4K followers</span>
+          <button class="follow-btn" type="button">Follow</button>
+        </div>
+      </div>
+
+      <div class="creator-card">
+        <div class="creator-top">
+          <span class="creator-avatar avatar-coral" aria-hidden="true">MJ</span>
+          <div class="creator-info">
+            <span class="creator-name">Marcus James</span>
+            <span class="creator-discipline">Aerial Photography</span>
+          </div>
+        </div>
+        <div class="creator-bottom">
+          <span class="creator-followers">8.7K followers</span>
+          <button class="follow-btn" type="button">Follow</button>
+        </div>
+      </div>
+
+      <div class="creator-card">
+        <div class="creator-top">
+          <span class="creator-avatar avatar-cyan" aria-hidden="true">AO</span>
+          <div class="creator-info">
+            <span class="creator-name">Aisha Okonkwo</span>
+            <span class="creator-discipline">Music Video Direction</span>
+          </div>
+        </div>
+        <div class="creator-bottom">
+          <span class="creator-followers">15.2K followers</span>
+          <button class="follow-btn" type="button">Follow</button>
+        </div>
+      </div>
+
+      <div class="creator-card">
+        <div class="creator-top">
+          <span class="creator-avatar avatar-gold" aria-hidden="true">EP</span>
+          <div class="creator-info">
+            <span class="creator-name">Emma Pratt</span>
+            <span class="creator-discipline">Lighting Design</span>
+          </div>
+        </div>
+        <div class="creator-bottom">
+          <span class="creator-followers">6.1K followers</span>
+          <button class="follow-btn" type="button">Follow</button>
+        </div>
+      </div>
+
+    </div>
+  </aside>
+
+</div>
+
+<!-- ════════════════ NEWSLETTER CTA ════════════════ -->
+<section class="newsletter-sec reveal" aria-labelledby="newsletter-heading">
+  <div class="newsletter-card">
+    <h2 id="newsletter-heading" class="newsletter-title">Stay in the loop</h2>
+    <p class="newsletter-sub">Get weekly creator stories, gear reviews, and insider tips delivered to your inbox every Thursday.</p>
+    <form class="newsletter-form" action="#" method="post" aria-label="Newsletter signup">
+      <label for="newsletter-email" class="sr-only">Email address</label>
+      <input type="email" id="newsletter-email" class="newsletter-input" placeholder="you@email.com" required autocomplete="email">
+      <button type="submit" class="btn-gold">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <span class="ft-logo-gem" aria-hidden="true">&#10022;</span>
+          Charm
+        </div>
+        <p class="ft-tagline">The global platform for creators to find, book, and share creative equipment worldwide.</p>
+        <div class="ft-social">
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Platform</div>
+        <ul class="ft-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Categories</div>
+        <ul class="ft-links">
+          <li><a href="#">Cameras</a></li>
+          <li><a href="#">Audio</a></li>
+          <li><a href="#">Lighting</a></li>
+          <li><a href="#">Instruments</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Sellers</div>
+        <ul class="ft-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="#">Analytics</a></li>
+          <li><a href="create-listing.html">Create Listing</a></li>
+          <li><a href="#">Earnings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Company</div>
+        <ul class="ft-links">
+          <li><a href="#">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">&copy; <span id="copy-year"></span> Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a> &middot; <a href="#">Insurance</a></span>
+      <div class="ft-langs">
+        <button class="lang-btn on" type="button">EN</button>
+        <button class="lang-btn" type="button">PT</button>
+        <button class="lang-btn" type="button">ES</button>
+        <button class="lang-btn" type="button">FR</button>
+        <button class="lang-btn" type="button">DE</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ─── Copyright year ──────────────────────────────────────────────────
+  document.getElementById('copy-year').textContent = new Date().getFullYear();
+
+  // ─── Throttle utility ────────────────────────────────────────────────
+  function throttle(fn, limit = 100) {
+    let lastCall = 0;
+    return (...args) => {
+      const now = Date.now();
+      if (now - lastCall >= limit) { lastCall = now; fn(...args); }
+    };
+  }
+
+  // ─── Nav scroll ──────────────────────────────────────────────────────
+  const nav = document.getElementById('nav');
+  const onNavScroll = throttle(() => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  }, 50);
+  window.addEventListener('scroll', onNavScroll, { passive: true });
+
+  // ─── Reveal on scroll ────────────────────────────────────────────────
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
+  } else {
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  }
+
+  // ─── Category filter ─────────────────────────────────────────────────
+  const pills = document.querySelectorAll('.pill');
+  const cards = document.querySelectorAll('.article-card');
+
+  pills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      pills.forEach(p => { p.classList.remove('active'); p.setAttribute('aria-selected', 'false'); });
+      pill.classList.add('active');
+      pill.setAttribute('aria-selected', 'true');
+
+      const filter = pill.dataset.filter;
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Announce to screen readers
+      const status = document.getElementById('sr-status');
+      if (status) {
+        const visible = document.querySelectorAll('.article-card:not([style*="display: none"])').length;
+        status.textContent = filter === 'all'
+          ? 'Showing all articles'
+          : `Showing ${visible} ${filter} article${visible !== 1 ? 's' : ''}`;
+      }
+    });
+  });
+
+  // ─── Language buttons ────────────────────────────────────────────────
+  document.querySelectorAll('.lang-btn').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+    });
+  });
+
+  // ─── Newsletter form ─────────────────────────────────────────────────
+  const nlForm = document.querySelector('.newsletter-form');
+  if (nlForm) {
+    nlForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const btn = nlForm.querySelector('.btn-gold');
+      const input = nlForm.querySelector('.newsletter-input');
+      btn.textContent = 'Subscribed!';
+      btn.style.pointerEvents = 'none';
+      input.disabled = true;
+      input.value = '';
+      const status = document.getElementById('sr-status');
+      if (status) status.textContent = 'Successfully subscribed to the newsletter';
+    });
+  }
+
+  // ─── Analytics helper ────────────────────────────────────────────────
+  function track(event, params = {}) {
+    if (typeof gtag === 'function') gtag('event', event, params);
+  }
+
+  // Track CTA clicks
+  document.querySelectorAll('.btn-gold, .read-link').forEach(el => {
+    el.addEventListener('click', () => {
+      track('cta_click', { label: el.textContent.trim() });
+    });
+  });
+</script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="shared.js"></script>
+</body>
+</html>

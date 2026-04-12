@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Notifications — Charm</title>
+  <meta name="description" content="Stay updated with order confirmations, messages, reviews, and system alerts on Charm's creative equipment marketplace.">
+  <meta property="og:title" content="Notifications — Charm">
+  <meta property="og:description" content="Your notification centre — orders, messages, reviews, and system updates all in one place.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://charm.market/notifications.html">
+  <meta name="theme-color" content="#07070e">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-gold-dim: rgba(226,168,75,0.14);
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+      --z-sticky: 500;
+      --z-overlay: 700;
+      --z-modal: 800;
+      --z-toast: 900;
+      --z-top: 9999;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--c-base); color: var(--c-text);
+      font-family: 'DM Sans', sans-serif; line-height: 1.7;
+      overflow-x: hidden; min-height: 100dvh;
+      -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+    }
+    * { -webkit-tap-highlight-color: transparent; }
+    :focus { outline: none; }
+    :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; border-radius: 3px; }
+    button, [role="button"], a, select, label[for] { cursor: pointer; }
+    :disabled { cursor: not-allowed; opacity: 0.5; }
+    h1, h2, h3, h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    img { display: block; max-width: 100%; height: auto; }
+    input, button, select { font: inherit; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--c-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--c-gold); color: #0f0800;
+      padding: 0.5rem 1rem; z-index: var(--z-top);
+      border-radius: 0 0 6px 6px; font-weight: 700;
+      text-decoration: none; font-family: 'Syne', sans-serif;
+    }
+    .skip-link:focus { top: 0; }
+
+    .noise {
+      position: fixed; inset: 0; z-index: var(--z-top);
+      pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-sticky);
+      padding: 14px 48px;
+      background: rgba(7,7,14,0.88);
+      backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; color: var(--c-text);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      flex-shrink: 0;
+    }
+    .logo-gem {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      box-shadow: 0 2px 10px rgba(226,168,75,0.35);
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-link {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); text-decoration: none; padding: 8px 14px;
+      border-radius: 9px; transition: color 0.2s, background 0.2s;
+    }
+    .nav-link:hover { color: var(--c-text); background: rgba(255,255,255,0.05); }
+    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-ico-btn {
+      width: 34px; height: 34px; border-radius: 9px;
+      border: 1px solid var(--c-border); background: rgba(255,255,255,0.04);
+      color: var(--c-text-2); display: flex; align-items: center; justify-content: center;
+      transition: color 0.2s, border-color 0.2s, background 0.2s; position: relative;
+    }
+    .nav-ico-btn:hover { color: var(--c-text); border-color: var(--c-border-2); background: rgba(255,255,255,0.07); }
+    .nav-ico-btn .dot {
+      position: absolute; top: 5px; right: 5px; width: 7px; height: 7px;
+      border-radius: 50%; background: var(--c-coral);
+    }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 9px;
+      padding: 8px 16px; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); }
+    .btn-gold {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: #0f0800; background: var(--c-gold);
+      border: none; border-radius: 9px; padding: 9px 18px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+      box-shadow: 0 2px 14px rgba(226,168,75,0.28);
+      transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, background 0.2s;
+    }
+    .btn-gold:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 5px 22px rgba(226,168,75,0.44); }
+
+    /* PAGE HEADER */
+    .page-header {
+      padding: 100px 48px 40px;
+      border-bottom: 1px solid var(--c-border);
+      position: relative; overflow: hidden;
+    }
+    .page-header-orb {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      width: 600px; height: 600px; filter: blur(120px);
+      background: radial-gradient(circle, rgba(157,111,255,0.12) 0%, transparent 65%);
+      top: -200px; right: -100px;
+    }
+    .page-header-inner {
+      max-width: 1440px; margin: 0 auto; position: relative; z-index: 1;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+      flex-wrap: wrap;
+    }
+    .page-breadcrumb {
+      display: flex; align-items: center; gap: 8px;
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 600;
+      color: var(--c-text-3); letter-spacing: 0.04em; margin-bottom: 18px;
+      width: 100%;
+    }
+    .page-breadcrumb a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .page-breadcrumb a:hover { color: var(--c-text-2); }
+    .page-breadcrumb .sep { opacity: 0.4; }
+    .page-title {
+      font-family: 'Cormorant Garamond', serif; font-weight: 700;
+      font-size: clamp(36px, 4vw, 56px); line-height: 1.05;
+      letter-spacing: -0.03em; color: var(--c-text);
+      font-style: italic;
+    }
+    .page-title .badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 800;
+      background: var(--c-coral); color: #fff; border-radius: 20px;
+      padding: 3px 12px; vertical-align: middle; margin-left: 12px;
+      letter-spacing: 0; font-style: normal;
+    }
+    .header-actions {
+      display: flex; gap: 10px; align-items: center; flex-shrink: 0;
+    }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      max-width: 960px; margin: 0 auto; padding: 28px 48px 0;
+      display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .filter-tab {
+      font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600;
+      color: var(--c-text-3); background: transparent;
+      border: 1px solid var(--c-border); border-radius: 20px;
+      padding: 7px 18px; transition: color 0.2s, background 0.2s, border-color 0.2s;
+    }
+    .filter-tab:hover { color: var(--c-text-2); border-color: var(--c-border-2); }
+    .filter-tab.active {
+      color: #0f0800; background: var(--c-gold);
+      border-color: var(--c-gold); font-weight: 700;
+    }
+
+    /* NOTIFICATIONS LIST */
+    .notif-container {
+      max-width: 960px; margin: 0 auto; padding: 0 48px 80px;
+    }
+    .notif-group-label {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      color: var(--c-text-3); letter-spacing: 0.06em; text-transform: uppercase;
+      margin-top: 32px; margin-bottom: 12px; padding-left: 4px;
+    }
+    .notif-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 18px 20px; border-radius: 14px;
+      background: var(--c-card); border: 1px solid var(--c-border);
+      margin-bottom: 8px; cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+    .notif-card:hover {
+      background: var(--c-elevated); border-color: var(--c-border-2);
+      transform: translateY(-1px);
+    }
+    .notif-card.unread { border-left: 3px solid var(--c-gold); }
+    .notif-card.unread .notif-dot { display: block; }
+    .notif-dot {
+      display: none; position: absolute; top: 22px; right: 18px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--c-gold);
+      box-shadow: 0 0 8px rgba(226,168,75,0.5);
+    }
+    .notif-icon {
+      width: 42px; height: 42px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .notif-icon.order { background: rgba(0,212,200,0.12); color: var(--c-cyan); }
+    .notif-icon.message { background: rgba(157,111,255,0.12); color: var(--c-violet); }
+    .notif-icon.system { background: rgba(226,168,75,0.12); color: var(--c-gold); }
+    .notif-icon.review { background: rgba(255,107,87,0.12); color: var(--c-coral); }
+    .notif-body { flex: 1; min-width: 0; }
+    .notif-title {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 600;
+      color: var(--c-text); margin-bottom: 3px; line-height: 1.3;
+    }
+    .notif-desc {
+      font-size: 13.5px; color: var(--c-text-2); line-height: 1.5;
+      overflow: hidden; text-overflow: ellipsis;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    }
+    .notif-time {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 500;
+      color: var(--c-text-3); margin-top: 6px;
+    }
+
+    /* EMPTY STATE */
+    .empty-state {
+      text-align: center; padding: 80px 24px;
+    }
+    .empty-state-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: var(--c-elevated); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 28px; color: var(--c-text-3);
+    }
+    .empty-state h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 24px;
+      font-style: italic; color: var(--c-text); margin-bottom: 8px;
+    }
+    .empty-state p { font-size: 14px; color: var(--c-text-2); }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .nav { padding: 12px 16px; }
+      .nav-links { display: none; }
+      .page-header { padding: 88px 20px 28px; }
+      .page-header-inner { flex-direction: column; }
+      .header-actions { width: 100%; }
+      .filter-tabs { padding: 20px 20px 0; }
+      .notif-container { padding: 0 20px 60px; }
+      .notif-card { padding: 14px 16px; }
+      .btn-gold span.desktop { display: none; }
+    }
+    @media (max-width: 480px) {
+      .nav-right .btn-ghost, .nav-right .btn-gold span { font-size: 11px; }
+      .notif-icon { width: 36px; height: 36px; font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div aria-live="polite" aria-atomic="true" id="sr-status" class="sr-only"></div>
+<div class="noise" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="logo" aria-label="Charm — home">
+      <span class="logo-gem" aria-hidden="true">&#10022;</span>
+      Charm
+    </a>
+
+    <div class="nav-links">
+      <a href="marketplace.html" class="nav-link">Marketplace</a>
+      <a href="how-it-works.html" class="nav-link">How It Works</a>
+      <a href="pricing.html" class="nav-link">Pricing</a>
+      <a href="wishlist.html" class="nav-link">Wishlist</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="search.html" class="nav-ico-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="notifications.html" class="nav-ico-btn" aria-label="Notifications" style="color:var(--c-gold);border-color:rgba(226,168,75,0.3);">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="dot" id="nav-notif-dot"></span>
+      </a>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold">+ <span class="desktop">Add Listing</span></a>
+    </div>
+  </div>
+</nav>
+
+<main id="main-content">
+
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-orb" aria-hidden="true"></div>
+  <div class="page-header-inner">
+    <nav class="page-breadcrumb" aria-label="Breadcrumb">
+      <a href="home.html">Charm</a>
+      <span class="sep" aria-hidden="true">/</span>
+      <span aria-current="page">Notifications</span>
+    </nav>
+    <div style="flex:1;">
+      <h1 class="page-title" data-reveal="fade-up">
+        Notifications
+        <span class="badge" id="unread-badge">5</span>
+      </h1>
+    </div>
+    <div class="header-actions">
+      <a href="#preferences" class="btn-ghost" style="font-size:12px;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px;" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Preferences
+      </a>
+      <button class="btn-ghost" id="mark-all-btn" style="font-size:12px;" onclick="markAllRead()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:5px;" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Mark all as read
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- FILTER TABS -->
+<div class="filter-tabs" role="tablist" aria-label="Notification filters">
+  <button class="filter-tab active" role="tab" aria-selected="true" onclick="filterNotifs('all', this)">All</button>
+  <button class="filter-tab" role="tab" aria-selected="false" onclick="filterNotifs('unread', this)">Unread</button>
+  <button class="filter-tab" role="tab" aria-selected="false" onclick="filterNotifs('order', this)">Orders</button>
+  <button class="filter-tab" role="tab" aria-selected="false" onclick="filterNotifs('message', this)">Messages</button>
+  <button class="filter-tab" role="tab" aria-selected="false" onclick="filterNotifs('system', this)">System</button>
+</div>
+
+<!-- NOTIFICATIONS LIST -->
+<div class="notif-container" id="notif-container" role="list" aria-label="Notifications">
+  <!-- Rendered by JS -->
+</div>
+
+</main>
+
+<script>
+  // Notification data
+  const notifications = [
+    { id:1, type:'order', title:'Order confirmed', desc:'Your order #CH-4821 for "Sony A7 IV Body" has been confirmed. Seller is preparing shipment.', time:'12 minutes ago', date:'today', unread:true },
+    { id:2, type:'message', title:'New message from @LensKing', desc:'Hey! Just wanted to check if you\'re still interested in the Sigma 35mm f/1.4? I can do a bundle deal.', time:'34 minutes ago', date:'today', unread:true },
+    { id:3, type:'review', title:'You received a 5-star review', desc:'Buyer left a review: "Fantastic condition, exactly as described. Fast shipping too. Highly recommend this seller!"', time:'1 hour ago', date:'today', unread:true },
+    { id:4, type:'system', title:'Listing approved', desc:'Your listing "Rode NTG5 Shotgun Mic" has been approved and is now live on the marketplace.', time:'2 hours ago', date:'today', unread:true },
+    { id:5, type:'order', title:'Shipping update', desc:'Your order #CH-4819 has been dispatched. Tracking: RM2847561GB. Estimated delivery: 14 April.', time:'3 hours ago', date:'today', unread:true },
+    { id:6, type:'message', title:'New message from @StudioVibes', desc:'Thanks for the quick reply! I\'ll take the Aputure 300d II. Sending payment now.', time:'Yesterday at 18:42', date:'yesterday', unread:false },
+    { id:7, type:'order', title:'Payment received', desc:'You received £349.00 for "Canon RF 50mm f/1.8 STM". Funds will be available in 2 business days.', time:'Yesterday at 14:20', date:'yesterday', unread:false },
+    { id:8, type:'system', title:'Price drop alert', desc:'An item on your wishlist "DJI RS 3 Pro Gimbal" has dropped from £499 to £429.', time:'Yesterday at 11:05', date:'yesterday', unread:false },
+    { id:9, type:'review', title:'Review reminder', desc:'You purchased "Neumann U87 Ai" 7 days ago. Share your experience and help the community!', time:'Yesterday at 09:30', date:'yesterday', unread:false },
+    { id:10, type:'order', title:'Order delivered', desc:'Your order #CH-4807 for "Blackmagic Pocket 6K Pro" has been delivered. Please confirm receipt.', time:'Monday at 16:55', date:'this_week', unread:false },
+    { id:11, type:'message', title:'New message from @FilmCraft', desc:'Would you consider £220 for the tripod and head together? I can collect locally in Manchester.', time:'Monday at 10:12', date:'this_week', unread:false },
+    { id:12, type:'system', title:'Account verification complete', desc:'Your identity has been verified. You now have access to Charm Pro seller features and priority support.', time:'Sunday at 22:00', date:'this_week', unread:false },
+    { id:13, type:'order', title:'Refund processed', desc:'Your refund of £78.00 for order #CH-4795 has been processed. Expect it in your account within 3-5 days.', time:'Saturday at 15:30', date:'this_week', unread:false },
+    { id:14, type:'system', title:'New feature: Instant messaging', desc:'You can now chat directly with buyers and sellers in real-time. Check out the new Messages tab!', time:'8 April at 12:00', date:'earlier', unread:false },
+    { id:15, type:'message', title:'New message from @AudioPro', desc:'Hi there, is the Shure SM7B still available? I\'m based in London and can collect if needed.', time:'6 April at 09:45', date:'earlier', unread:false },
+    { id:16, type:'review', title:'You received a 4-star review', desc:'Buyer left a review: "Great lens, minor cosmetic wear as noted. Good communication from seller."', time:'4 April at 17:22', date:'earlier', unread:false },
+    { id:17, type:'system', title:'Weekly marketplace digest', desc:'12 new listings in your saved categories this week. 3 items on your wishlist have price changes.', time:'3 April at 08:00', date:'earlier', unread:false },
+  ];
+
+  const typeIcons = {
+    order: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>',
+    message: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    system: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>',
+    review: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  };
+
+  const dateLabels = { today: 'Today', yesterday: 'Yesterday', this_week: 'This Week', earlier: 'Earlier' };
+  let currentFilter = 'all';
+
+  function renderNotifications() {
+    const container = document.getElementById('notif-container');
+    let filtered = notifications;
+
+    if (currentFilter === 'unread') {
+      filtered = notifications.filter(n => n.unread);
+    } else if (currentFilter !== 'all') {
+      filtered = notifications.filter(n => n.type === currentFilter);
+    }
+
+    if (filtered.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          </div>
+          <h3>No notifications</h3>
+          <p>Nothing to see here yet. Check back later!</p>
+        </div>`;
+      return;
+    }
+
+    const grouped = {};
+    filtered.forEach(n => {
+      if (!grouped[n.date]) grouped[n.date] = [];
+      grouped[n.date].push(n);
+    });
+
+    let html = '';
+    const order = ['today', 'yesterday', 'this_week', 'earlier'];
+    order.forEach(dateKey => {
+      if (!grouped[dateKey]) return;
+      html += `<div class="notif-group-label">${dateLabels[dateKey]}</div>`;
+      grouped[dateKey].forEach(n => {
+        html += `
+          <div class="notif-card ${n.unread ? 'unread' : ''}" role="listitem"
+               onclick="toggleRead(${n.id})" tabindex="0"
+               onkeydown="if(event.key==='Enter')toggleRead(${n.id})">
+            <div class="notif-dot"></div>
+            <div class="notif-icon ${n.type}">${typeIcons[n.type]}</div>
+            <div class="notif-body">
+              <div class="notif-title">${n.title}</div>
+              <div class="notif-desc">${n.desc}</div>
+              <div class="notif-time">${n.time}</div>
+            </div>
+          </div>`;
+      });
+    });
+
+    container.innerHTML = html;
+  }
+
+  function toggleRead(id) {
+    const n = notifications.find(n => n.id === id);
+    if (n) {
+      n.unread = false;
+      renderNotifications();
+      updateBadge();
+    }
+  }
+
+  function markAllRead() {
+    notifications.forEach(n => n.unread = false);
+    renderNotifications();
+    updateBadge();
+    // Announce to screen readers
+    document.getElementById('sr-status').textContent = 'All notifications marked as read';
+  }
+
+  function filterNotifs(filter, btn) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    renderNotifications();
+  }
+
+  function updateBadge() {
+    const count = notifications.filter(n => n.unread).length;
+    const badge = document.getElementById('unread-badge');
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'inline-flex' : 'none';
+    // Update nav dot
+    const dot = document.getElementById('nav-notif-dot');
+    if (dot) dot.style.display = count > 0 ? 'block' : 'none';
+  }
+
+  // Init
+  renderNotifications();
+  updateBadge();
+</script>
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="shared.js"></script>
+</body>
+</html>

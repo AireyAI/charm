@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sony A7 IV Mirrorless Camera Body — Charm Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Noise overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 64px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: rgba(7,7,14,0.88);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--c-text);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+      margin-right: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      background: transparent;
+      border: 1px solid var(--c-border-2);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-ghost:hover {
+      color: var(--c-text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-ghost:active { background: rgba(255,255,255,0.08); }
+    .btn-gold {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-base);
+      background: var(--c-gold);
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(226,168,75,0.25);
+    }
+    .btn-gold:hover {
+      opacity: 0.9;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(226,168,75,0.38);
+    }
+    .btn-gold:active { transform: translateY(0); opacity: 1; }
+    .cart-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--c-text-2);
+      font-size: 16px;
+      transition: color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .cart-btn:hover { color: var(--c-text); background: var(--c-float); }
+
+    /* Page layout */
+    .page-wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Syne', sans-serif;
+      font-size: 12px;
+      color: var(--c-text-3);
+      margin-bottom: 24px;
+    }
+    .breadcrumb a {
+      color: var(--c-text-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .breadcrumb a:hover { color: var(--c-text-2); }
+    .breadcrumb span { color: var(--c-text-3); }
+
+    /* Product grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    /* Media column */
+    .media-col { position: sticky; top: 80px; }
+    .main-thumbnail {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      cursor: pointer;
+      border: 1px solid var(--c-border-2);
+    }
+    .thumb-bg {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .thumb-emoji {
+      font-size: 88px;
+      position: relative;
+      z-index: 2;
+      filter: drop-shadow(0 0 32px rgba(157,111,255,0.5));
+      transition: transform 0.3s ease;
+    }
+    .main-thumbnail:hover .thumb-emoji { transform: scale(1.06); }
+    .thumb-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      width: 60%;
+      height: 60%;
+      top: 20%;
+      left: 20%;
+      pointer-events: none;
+    }
+    .sale-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--c-coral);
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      padding: 4px 10px;
+      border-radius: 6px;
+      z-index: 3;
+    }
+    .wishlist-btn {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: rgba(13,13,26,0.85);
+      border: 1px solid var(--c-border-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 3;
+      transition: background 0.2s, transform 0.15s;
+      backdrop-filter: blur(8px);
+    }
+    .wishlist-btn:hover { background: rgba(19,19,38,0.95); transform: scale(1.05); }
+    .wishlist-btn:active { transform: scale(0.95); }
+
+    /* Gallery strip */
+    .gallery-strip {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .gallery-thumb {
+      flex: 1;
+      aspect-ratio: 1/1;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--c-border);
+      transition: border-color 0.2s, transform 0.15s;
+      position: relative;
+    }
+    .gallery-thumb:hover { transform: translateY(-2px); border-color: var(--c-border-2); }
+    .gallery-thumb.active { border-color: var(--c-violet); box-shadow: 0 0 0 1px var(--c-violet); }
+    .gallery-thumb .thumb-bg { pointer-events: none; }
+    .gallery-thumb .thumb-emoji { font-size: 22px; filter: none; }
+
+    /* Info column */
+    .info-col {}
+    .cat-tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--c-violet);
+      background: rgba(157,111,255,0.1);
+      border: 1px solid rgba(157,111,255,0.2);
+      padding: 4px 12px;
+      border-radius: 6px;
+      margin-bottom: 14px;
+    }
+    .product-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+      margin-bottom: 14px;
+    }
+    .rating-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .stars { color: var(--c-gold); font-size: 14px; letter-spacing: 1px; }
+    .rating-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-text);
+    }
+    .reviews-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--c-text-3);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .reviews-link:hover { color: var(--c-text-2); }
+    .verified-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--c-cyan);
+      background: rgba(0,212,200,0.08);
+      border: 1px solid rgba(0,212,200,0.18);
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    /* Price */
+    .price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .price-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 42px;
+      line-height: 1;
+      color: var(--c-text);
+      letter-spacing: -0.02em;
+    }
+    .price-orig {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      color: var(--c-text-3);
+      text-decoration: line-through;
+    }
+    .price-save {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--c-coral);
+      background: rgba(255,107,87,0.1);
+      border: 1px solid rgba(255,107,87,0.2);
+      padding: 3px 10px;
+      border-radius: 6px;
+    }
+
+    /* Condition */
+    .condition-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding: 14px 16px;
+      background: var(--c-card);
+      border-radius: 10px;
+      border: 1px solid var(--c-border);
+    }
+    .condition-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--c-gold);
+      margin-top: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 0 8px rgba(226,168,75,0.5);
+    }
+    .condition-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-text);
+    }
+    .condition-desc {
+      font-size: 13px;
+      color: var(--c-text-2);
+      line-height: 1.5;
+    }
+
+    /* Seller card */
+    .seller-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .seller-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--c-gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: var(--c-base);
+      flex-shrink: 0;
+    }
+    .seller-info { flex: 1; }
+    .seller-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--c-text);
+    }
+    .seller-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 3px;
+      flex-wrap: wrap;
+    }
+    .seller-meta span {
+      font-size: 12px;
+      color: var(--c-text-2);
+    }
+    .seller-badge {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      color: var(--c-cyan);
+      background: rgba(0,212,200,0.08);
+      border: 1px solid rgba(0,212,200,0.18);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+    .view-profile {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--c-violet);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .view-profile:hover { opacity: 0.75; }
+
+    /* Specs grid */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .spec-item {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+    .spec-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--c-text-3);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+    .spec-value {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 13px;
+      color: var(--c-text);
+    }
+
+    /* Description */
+    .description {
+      font-size: 14px;
+      color: var(--c-text-2);
+      line-height: 1.75;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    /* Shipping */
+    .shipping-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: var(--c-text-2);
+    }
+    .shipping-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+    }
+
+    /* CTAs */
+    .cta-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .btn-add-cart {
+      width: 100%;
+      padding: 16px;
+      background: var(--c-gold);
+      color: var(--c-base);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(226,168,75,0.3);
+    }
+    .btn-add-cart:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 32px rgba(226,168,75,0.42);
+    }
+    .btn-add-cart:active { transform: translateY(0); }
+    .btn-save {
+      width: 100%;
+      padding: 16px;
+      background: transparent;
+      color: var(--c-text-2);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      border: 1px solid var(--c-border-2);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-save:hover {
+      color: var(--c-text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Trust badges */
+    .trust-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .trust-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      padding: 12px 8px;
+      background: var(--c-card);
+      border-right: 1px solid var(--c-border);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-icon { font-size: 18px; }
+    .trust-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 10px;
+      color: var(--c-text-3);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    /* Below fold sections */
+    .section-full {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px;
+      margin-bottom: 72px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--c-text-2);
+    }
+    .see-all {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--c-violet);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .see-all:hover { opacity: 0.75; }
+
+    /* Horizontal scroll */
+    .h-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-border-2) transparent;
+    }
+    .h-scroll::-webkit-scrollbar { height: 4px; }
+    .h-scroll::-webkit-scrollbar-track { background: transparent; }
+    .h-scroll::-webkit-scrollbar-thumb { background: var(--c-border-2); border-radius: 2px; }
+
+    /* Product card */
+    .prod-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      width: 220px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .prod-card:hover {
+      border-color: var(--c-border-2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .prod-card-thumb {
+      height: 160px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .prod-card-thumb .thumb-emoji { font-size: 44px; }
+    .prod-card-body { padding: 14px; }
+    .prod-card-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .prod-card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--c-text);
+    }
+    .prod-card-seller {
+      font-size: 11px;
+      color: var(--c-text-3);
+      margin-top: 4px;
+    }
+
+    /* Grid for "might also like" */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .grid-3 .prod-card {
+      width: auto;
+      flex-shrink: unset;
+    }
+    .grid-3 .prod-card-thumb { height: 200px; }
+    .grid-3 .prod-card-thumb .thumb-emoji { font-size: 56px; }
+
+    /* Reviews section */
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .rating-summary { }
+    .rating-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 72px;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+    }
+    .rating-sub {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 6px;
+      margin-bottom: 20px;
+    }
+    .rating-bars { display: flex; flex-direction: column; gap: 7px; }
+    .rating-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bar-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      color: var(--c-text-3);
+      width: 20px;
+      text-align: right;
+    }
+    .bar-track {
+      flex: 1;
+      height: 4px;
+      background: var(--c-elevated);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--c-gold);
+      border-radius: 2px;
+      transition: width 0.8s ease;
+    }
+    .bar-pct {
+      font-size: 11px;
+      color: var(--c-text-3);
+      width: 28px;
+    }
+
+    .reviews-list { display: flex; flex-direction: column; gap: 20px; }
+    .review-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .review-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .review-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      color: var(--c-base);
+      flex-shrink: 0;
+    }
+    .review-meta { flex: 1; }
+    .review-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-text);
+    }
+    .review-date {
+      font-size: 12px;
+      color: var(--c-text-3);
+      margin-top: 1px;
+    }
+    .review-stars { color: var(--c-gold); font-size: 13px; }
+    .review-text { font-size: 14px; color: var(--c-text-2); line-height: 1.65; }
+
+    /* Footer */
+    .footer {
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      padding: 40px 48px;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .footer-brand { max-width: 260px; }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--c-text);
+      letter-spacing: -0.03em;
+      margin-bottom: 10px;
+    }
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--c-text-3);
+      line-height: 1.6;
+    }
+    .footer-links {
+      display: flex;
+      gap: 56px;
+    }
+    .footer-col {}
+    .footer-col-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+      margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      margin-bottom: 9px;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: var(--c-text); }
+    .footer-copy {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--c-border);
+      font-size: 12px;
+      color: var(--c-text-3);
+      text-align: center;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--c-float);
+      border: 1px solid var(--c-border-2);
+      color: var(--c-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 9998;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+    .toast-icon { font-size: 16px; }
+
+    /* Divider */
+    .section-divider {
+      max-width: 1440px;
+      margin: 0 auto 72px;
+      padding: 0 32px;
+      border: none;
+      border-top: 1px solid var(--c-border);
+    }
+
+    @media (max-width: 1024px) {
+      .product-grid { grid-template-columns: 1fr; gap: 40px; }
+      .media-col { position: static; }
+      .reviews-grid { grid-template-columns: 1fr; }
+      .grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 20px; }
+      .page-wrap { padding: 80px 20px 60px; }
+      .section-full { padding: 0 20px; }
+      .footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-wrap: wrap; gap: 32px; }
+      .grid-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Noise overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🛒</span>
+  <span>Added to cart!</span>
+</div>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo">✦ Charm</a>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="marketplace.html">Marketplace</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="how-it-works.html">How it Works</a>
+      <a href="wishlist.html">Wishlist</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="signup.html" class="btn-gold">Sign Up</a>
+      <a href="marketplace.html" class="cart-btn" aria-label="Cart">🛒</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Main product section -->
+<main>
+  <div class="page-wrap">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="home.html">Charm</a>
+      <span>›</span>
+      <a href="marketplace.html">Marketplace</a>
+      <span>›</span>
+      <a href="marketplace.html">Cameras &amp; Lenses</a>
+    </nav>
+
+    <!-- Product grid -->
+    <div class="product-grid">
+
+      <!-- LEFT: Media -->
+      <div class="media-col">
+        <div class="main-thumbnail" id="mainThumb">
+          <div class="thumb-bg" id="mainThumbBg" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+            <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.35) 0%, transparent 70%);"></div>
+            <span class="thumb-emoji" id="mainEmoji">📷</span>
+          </div>
+          <span class="sale-badge">SALE</span>
+          <button class="wishlist-btn" id="wishlistBtn" aria-label="Add to wishlist" onclick="toggleWishlist()">🤍</button>
+        </div>
+
+        <!-- Gallery strip -->
+        <div class="gallery-strip" role="list" aria-label="Product gallery">
+          <div class="gallery-thumb active" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0a0720, #170f36)', '📷')" aria-label="View 1">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.3) 0%, transparent 70%);"></div>
+              <span class="thumb-emoji">📷</span>
+            </div>
+          </div>
+          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0c0825, #1d1240)', '📷')" aria-label="View 2">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #0c0825, #1d1240);">
+              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.25) 0%, transparent 70%);"></div>
+              <span class="thumb-emoji">📷</span>
+            </div>
+          </div>
+          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #06041a, #120a2c)', '📷')" aria-label="View 3">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #06041a, #120a2c);">
+              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.4) 0%, transparent 70%);"></div>
+              <span class="thumb-emoji">📷</span>
+            </div>
+          </div>
+          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0e0b28, #1a143a)', '📷')" aria-label="View 4">
+            <div class="thumb-bg" style="background: linear-gradient(135deg, #0e0b28, #1a143a);">
+              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.2) 0%, transparent 70%);"></div>
+              <span class="thumb-emoji">📷</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Info -->
+      <div class="info-col">
+        <div class="cat-tag">CAMERAS &amp; LENSES</div>
+
+        <h1 class="product-title">Sony A7 IV Mirrorless Camera Body</h1>
+
+        <div class="rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-num">4.9</span>
+          <a href="#reviews" class="reviews-link">47 reviews</a>
+          <span class="verified-badge">✓ Verified Listing</span>
+        </div>
+
+        <div class="price-row">
+          <span class="price-main">£2,199</span>
+          <span class="price-orig">£2,499</span>
+          <span class="price-save">Save £300</span>
+        </div>
+
+        <!-- Condition -->
+        <div class="condition-row">
+          <div class="condition-dot"></div>
+          <div>
+            <div class="condition-label">Like new condition</div>
+            <div class="condition-desc">Barely used, original box included. Shutter count under 500. No cosmetic damage.</div>
+          </div>
+        </div>
+
+        <!-- Seller -->
+        <div class="seller-card">
+          <div class="seller-avatar">PG</div>
+          <div class="seller-info">
+            <div class="seller-name">ProGear_Rentals</div>
+            <div class="seller-meta">
+              <span>⭐ 4.9</span>
+              <span>·</span>
+              <span>152 sales</span>
+              <span class="seller-badge">Verified Seller</span>
+            </div>
+          </div>
+          <a href="#" class="view-profile">View profile →</a>
+        </div>
+
+        <!-- Specs -->
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-label">Sensor</div>
+            <div class="spec-value">33MP Full-Frame</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Mount</div>
+            <div class="spec-value">Sony E-mount</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Video</div>
+            <div class="spec-value">4K / 120p</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Stabilisation</div>
+            <div class="spec-value">5-axis IBIS</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Weight</div>
+            <div class="spec-value">659g (body)</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-label">Included</div>
+            <div class="spec-value">Body only</div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <p class="description">
+          The Sony A7 IV is a versatile full-frame mirrorless camera that excels in both photography and videography. Built around a back-illuminated 33MP Exmor R CMOS sensor, it delivers exceptional image quality across a wide dynamic range. The real-time Eye AF and subject tracking system — covering humans, animals, and birds — is among the best in its class. Combined with 4K/120p video output, 10-bit S-Log3 internal recording, and Sony's renowned 5-axis in-body stabilisation, the A7 IV is the ideal all-in-one hybrid for working creatives. This unit has seen minimal use and is in pristine like-new condition.
+        </p>
+
+        <!-- Shipping -->
+        <div class="shipping-row">
+          <div class="shipping-icon">🚚</div>
+          <span>Ships worldwide · Estimated 2–4 business days</span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="cta-stack">
+          <button class="btn-add-cart" onclick="addToCart()">Add to Cart</button>
+          <button class="btn-save">🤍 Save to Wishlist</button>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="trust-row">
+          <div class="trust-item">
+            <span class="trust-icon">🔒</span>
+            <span class="trust-label">Secure Payment</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">🛡</span>
+            <span class="trust-label">Buyer Protection</span>
+          </div>
+          <div class="trust-item">
+            <span class="trust-icon">↩️</span>
+            <span class="trust-label">Easy Returns</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Seller's other listings -->
+  <div class="section-full" style="margin-top: 80px;">
+    <div class="section-header">
+      <h2 class="section-title">Seller's <em>other listings</em></h2>
+      <a href="#" class="see-all">View all →</a>
+    </div>
+    <div class="h-scroll">
+      <!-- Tamron 28-75mm -->
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Tamron 28-75mm f/2.8 G2</div>
+          <div class="prod-card-price">£549</div>
+          <div class="prod-card-seller">ProGear_Rentals · Like new</div>
+        </div>
+      </div>
+      <!-- DJI Ronin -->
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">DJI Ronin-SC2 Gimbal</div>
+          <div class="prod-card-price">£279</div>
+          <div class="prod-card-seller">ProGear_Rentals · Good</div>
+        </div>
+      </div>
+      <!-- Peak Design strap -->
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #100618, #1c0e28);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">🎭</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Peak Design Slide Strap</div>
+          <div class="prod-card-price">£49</div>
+          <div class="prod-card-seller">ProGear_Rentals · Like new</div>
+        </div>
+      </div>
+      <!-- Sony FE 85mm -->
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Sony FE 85mm f/1.8</div>
+          <div class="prod-card-price">£449</div>
+          <div class="prod-card-seller">ProGear_Rentals · Very good</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- You might also like -->
+  <div class="section-full">
+    <div class="section-header">
+      <h2 class="section-title">You might <em>also like</em></h2>
+    </div>
+    <div class="grid-3">
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #051410, #0a2018);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,212,200,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">🎙</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Rode VideoMic Pro+</div>
+          <div class="prod-card-price">£249</div>
+          <div class="prod-card-seller">SoundGear_UK · Like new</div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #1a1100, #281a04);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(226,168,75,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">💡</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Godox SL200W LED Panel</div>
+          <div class="prod-card-price">£189</div>
+          <div class="prod-card-seller">LightingPros · Good</div>
+        </div>
+      </div>
+      <div class="prod-card">
+        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
+          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">📷</span>
+        </div>
+        <div class="prod-card-body">
+          <div class="prod-card-name">Sony A6700 APS-C Body</div>
+          <div class="prod-card-price">£999</div>
+          <div class="prod-card-seller">CameraVault · Very good</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- Reviews -->
+  <div class="section-full" id="reviews">
+    <div class="section-header">
+      <h2 class="section-title">Customer <em>reviews</em></h2>
+    </div>
+    <div class="reviews-grid">
+      <!-- Summary -->
+      <div class="rating-summary">
+        <div class="rating-big">4.9</div>
+        <div class="rating-sub">
+          <span class="stars" style="font-size:16px;">★★★★★</span>
+          <span style="font-size:13px; color: var(--c-text-3);">47 reviews</span>
+        </div>
+        <div class="rating-bars">
+          <div class="rating-bar-row">
+            <span class="bar-label">5★</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 89%;"></div></div>
+            <span class="bar-pct">89%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="bar-label">4★</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 8%; background: var(--c-text-2);"></div></div>
+            <span class="bar-pct">8%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="bar-label">3★</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 2%; background: var(--c-text-3);"></div></div>
+            <span class="bar-pct">2%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="bar-label">2★</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 1%; background: var(--c-text-3);"></div></div>
+            <span class="bar-pct">1%</span>
+          </div>
+          <div class="rating-bar-row">
+            <span class="bar-label">1★</span>
+            <div class="bar-track"><div class="bar-fill" style="width: 0%; background: var(--c-coral);"></div></div>
+            <span class="bar-pct">0%</span>
+          </div>
+        </div>
+      </div>
+      <!-- Review cards -->
+      <div class="reviews-list">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background: var(--c-violet);">TM</div>
+            <div class="review-meta">
+              <div class="review-name">TravelMatthew</div>
+              <div class="review-date">March 2025</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p class="review-text">Absolutely mint condition — couldn't tell it had been used at all. ProGear wrapped it incredibly well for shipping and it arrived in perfect shape. The A7 IV is already a stellar camera and getting one in this condition at this price point is a steal. Highly recommend this seller.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background: var(--c-cyan); color: var(--c-base);">SL</div>
+            <div class="review-meta">
+              <div class="review-name">StudioLens_Amy</div>
+              <div class="review-date">February 2025</div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <p class="review-text">Bought this for a commercial shoot. The seller was incredibly responsive and even included the original receipt. Shutter count was exactly as described. Eye AF is devastatingly good on this body — already booked three more jobs with it. Five stars without question.</p>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="review-avatar" style="background: var(--c-gold);">KR</div>
+            <div class="review-meta">
+              <div class="review-name">KieronRoss_Photo</div>
+              <div class="review-date">January 2025</div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <p class="review-text">Great camera at a great price. Shipping took a day longer than estimated but ProGear kept me updated throughout. The body itself is exactly as described — like new with all original accessories. One less star only because I expected the battery to be fully charged!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">✦ Charm</div>
+      <p class="footer-tagline">The creative marketplace for every discipline.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Platform</div>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="#">Pricing</a>
+        <a href="#">How it Works</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <a href="#">Help</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copy">© 2025 Charm.</div>
+</footer>
+
+<script>
+  // Gallery switcher
+  function switchThumb(el, bg, emoji) {
+    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    const mainBg = document.getElementById('mainThumbBg');
+    mainBg.style.background = bg;
+    document.getElementById('mainEmoji').textContent = emoji;
+  }
+
+  // Wishlist toggle
+  let wishlisted = false;
+  function toggleWishlist() {
+    wishlisted = !wishlisted;
+    const btn = document.getElementById('wishlistBtn');
+    btn.textContent = wishlisted ? '❤️' : '🤍';
+    btn.style.transform = 'scale(1.2)';
+    setTimeout(() => { btn.style.transform = ''; }, 200);
+    showToast(wishlisted ? '❤️' : '🤍', wishlisted ? 'Saved to wishlist!' : 'Removed from wishlist');
+  }
+
+  // Add to cart
+  function addToCart() {
+    showToast('🛒', 'Added to cart!');
+  }
+
+  // Toast
+  let toastTimer;
+  function showToast(icon, msg) {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2800);
+  }
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

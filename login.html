@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login — Charm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 64px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: rgba(7,7,14,0.88);
+      border-bottom: 1px solid var(--c-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1440px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--c-text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--c-gold); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      background: transparent;
+      border: 1px solid var(--c-border-2);
+      border-radius: 8px;
+      padding: 8px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-ghost:hover {
+      color: var(--c-text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-gold {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #07070e;
+      background: var(--c-gold);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-gold:active { transform: translateY(0); opacity: 0.95; }
+
+    /* Two-panel layout */
+    .login-wrapper {
+      display: flex;
+      min-height: 100vh;
+      padding-top: 64px;
+    }
+
+    /* Left decorative panel */
+    .left-panel {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: var(--c-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 56px;
+    }
+    .left-panel-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 30%, rgba(226,168,75,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 70%, rgba(157,111,255,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 10%, rgba(0,212,200,0.06) 0%, transparent 50%);
+    }
+
+    /* Animated orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      animation: orbFloat 8s ease-in-out infinite;
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(226,168,75,0.18) 0%, transparent 70%);
+      top: 10%; left: 5%;
+      animation-delay: 0s;
+    }
+    .orb-2 {
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(157,111,255,0.15) 0%, transparent 70%);
+      bottom: 15%; right: 10%;
+      animation-delay: -3s;
+    }
+    .orb-3 {
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(0,212,200,0.12) 0%, transparent 70%);
+      top: 55%; left: 30%;
+      animation-delay: -5s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      33% { transform: translateY(-28px) scale(1.04); }
+      66% { transform: translateY(18px) scale(0.97); }
+    }
+
+    .left-content {
+      position: relative;
+      z-index: 2;
+      max-width: 460px;
+    }
+    .left-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .left-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: 0.5;
+    }
+    .left-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.2;
+      color: var(--c-text);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .left-quote em {
+      color: var(--c-gold);
+      font-style: italic;
+    }
+    .left-subtext {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--c-text-2);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    /* Stat bubbles */
+    .stat-bubbles {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .stat-bubble {
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stat-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 28px;
+      color: var(--c-text);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .stat-value span { color: var(--c-gold); }
+    .stat-label {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 12px;
+      color: var(--c-text-3);
+    }
+
+    /* Right panel — form */
+    .right-panel {
+      width: 520px;
+      flex-shrink: 0;
+      background: var(--c-base);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 56px;
+    }
+    .form-container {
+      width: 100%;
+      max-width: 380px;
+    }
+    .form-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 46px;
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .form-subtext {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      color: var(--c-text-2);
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+    .form-subtext a {
+      color: var(--c-gold);
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .form-subtext a:hover { opacity: 0.8; }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--c-text-2);
+      display: block;
+      margin-bottom: 8px;
+    }
+    .input-wrap {
+      position: relative;
+    }
+    .form-input {
+      width: 100%;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--c-text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .form-input::placeholder { color: var(--c-text-3); }
+    .form-input:focus {
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(226,168,75,0.12);
+    }
+    .form-input.error {
+      border-color: var(--c-coral);
+      box-shadow: 0 0 0 3px rgba(255,107,87,0.1);
+    }
+    .error-msg {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--c-coral);
+      margin-top: 6px;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    .password-toggle {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--c-text-3);
+      display: flex;
+      align-items: center;
+      padding: 4px;
+      transition: color 0.2s;
+    }
+    .password-toggle:hover { color: var(--c-text-2); }
+    .form-input.has-toggle { padding-right: 44px; }
+
+    .forgot-link {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--c-text-3);
+      text-decoration: none;
+      display: block;
+      text-align: right;
+      margin-top: 8px;
+      transition: color 0.2s;
+    }
+    .forgot-link:hover { color: var(--c-text-2); }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--c-gold);
+      color: #07070e;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 24px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--c-border);
+    }
+    .divider-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-text-3);
+      white-space: nowrap;
+    }
+
+    .social-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+    .btn-social {
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      padding: 12px 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      color: var(--c-text-2);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      text-decoration: none;
+    }
+    .btn-social:hover {
+      border-color: var(--c-border-2);
+      background: var(--c-float);
+      color: var(--c-text);
+      transform: translateY(-1px);
+    }
+    .btn-social:active { transform: translateY(0); }
+    .btn-social:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+    .btn-social svg { flex-shrink: 0; }
+
+    /* Footer */
+    .footer {
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      padding: 32px 48px;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--c-text);
+      text-decoration: none;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .footer-logo span { color: var(--c-gold); }
+    .footer-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--c-text-3);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-text); }
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--c-text-3);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    /* Mobile responsive */
+    @media (max-width: 900px) {
+      .left-panel { display: none; }
+      .right-panel {
+        width: 100%;
+        padding: 40px 24px;
+      }
+      .nav-links { display: none; }
+      .footer-inner { flex-direction: column; gap: 24px; }
+      .footer-copy { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo"><span>✦</span> Charm</a>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="how-it-works.html">How it Works</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn-ghost">Login</a>
+        <a href="signup.html" class="btn-gold">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main two-panel layout -->
+  <div class="login-wrapper">
+
+    <!-- Left decorative panel -->
+    <div class="left-panel">
+      <div class="left-panel-bg"></div>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+
+      <div class="left-content">
+        <div class="left-eyebrow">The Creative Platform</div>
+        <h2 class="left-quote">
+          "Every great work begins with a single, <em>daring</em> act of creation."
+        </h2>
+        <p class="left-subtext">
+          Join thousands of creators renting gear, booking studios, and collaborating on the projects that matter most.
+        </p>
+
+        <div class="stat-bubbles">
+          <div class="stat-bubble">
+            <div class="stat-value">48<span>k+</span></div>
+            <div class="stat-label">Active creators</div>
+          </div>
+          <div class="stat-bubble">
+            <div class="stat-value">12<span>k</span></div>
+            <div class="stat-label">Gear listings</div>
+          </div>
+          <div class="stat-bubble">
+            <div class="stat-value">3<span>.2m</span></div>
+            <div class="stat-label">Projects created</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="right-panel">
+      <div class="form-container">
+        <h1 class="form-heading">Welcome<br/>back.</h1>
+        <p class="form-subtext">
+          New to Charm? <a href="signup.html">Create an account →</a>
+        </p>
+
+        <form id="loginForm" novalidate>
+          <!-- Email -->
+          <div class="form-group">
+            <label class="form-label" for="email">Email address</label>
+            <div class="input-wrap">
+              <input
+                class="form-input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="you@example.com"
+                autocomplete="email"
+              />
+            </div>
+            <span class="error-msg" id="emailError">Please enter a valid email address.</span>
+          </div>
+
+          <!-- Password -->
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <div class="input-wrap">
+              <input
+                class="form-input has-toggle"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="••••••••••"
+                autocomplete="current-password"
+              />
+              <button type="button" class="password-toggle" id="pwToggle" aria-label="Toggle password visibility">
+                <!-- Eye icon -->
+                <svg id="eyeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                  <circle cx="12" cy="12" r="3"/>
+                </svg>
+                <!-- Eye-off icon (hidden initially) -->
+                <svg id="eyeOffIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                  <line x1="1" y1="1" x2="23" y2="23"/>
+                </svg>
+              </button>
+            </div>
+            <span class="error-msg" id="passwordError">Password cannot be empty.</span>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit">Continue</button>
+        </form>
+
+        <!-- Divider -->
+        <div class="divider">
+          <div class="divider-line"></div>
+          <span class="divider-text">or continue with</span>
+          <div class="divider-line"></div>
+        </div>
+
+        <!-- Social buttons -->
+        <div class="social-buttons">
+          <a href="#" class="btn-social" aria-label="Continue with Google">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Google
+          </a>
+          <a href="#" class="btn-social" aria-label="Continue with GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="#" class="btn-social" aria-label="Continue with Apple">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+            </svg>
+            Apple
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <a href="home.html" class="footer-logo"><span>✦</span> Charm</a>
+        <p class="footer-tagline">The platform for creative collaboration.</p>
+      </div>
+      <div>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <p class="footer-copy">© 2025 Charm. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Password show/hide toggle
+    const pwInput = document.getElementById('password');
+    const pwToggle = document.getElementById('pwToggle');
+    const eyeIcon = document.getElementById('eyeIcon');
+    const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+    pwToggle.addEventListener('click', () => {
+      const isPassword = pwInput.type === 'password';
+      pwInput.type = isPassword ? 'text' : 'password';
+      eyeIcon.style.display = isPassword ? 'none' : 'block';
+      eyeOffIcon.style.display = isPassword ? 'block' : 'none';
+    });
+
+    // Form validation
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    function validateEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    function setError(input, errorEl, msg, show) {
+      if (show) {
+        input.classList.add('error');
+        errorEl.textContent = msg;
+        errorEl.classList.add('visible');
+      } else {
+        input.classList.remove('error');
+        errorEl.classList.remove('visible');
+      }
+    }
+
+    emailInput.addEventListener('input', () => {
+      if (emailInput.value && !validateEmail(emailInput.value)) {
+        setError(emailInput, emailError, 'Please enter a valid email address.', true);
+      } else {
+        setError(emailInput, emailError, '', false);
+      }
+    });
+
+    pwInput.addEventListener('input', () => {
+      if (pwInput.value) {
+        setError(pwInput, passwordError, '', false);
+      }
+    });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      if (!emailInput.value || !validateEmail(emailInput.value)) {
+        setError(emailInput, emailError, 'Please enter a valid email address.', true);
+        valid = false;
+      }
+      if (!pwInput.value) {
+        setError(pwInput, passwordError, 'Password cannot be empty.', true);
+        valid = false;
+      }
+
+      if (valid) {
+        // Handle login — redirect or API call would go here
+        console.log('Login submitted');
+      }
+    });
+  </script>
+<script src="shared.js"></script>
+</body>
+</html>

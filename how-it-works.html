@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — Charm</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Noise overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 64px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: rgba(7,7,14,0.88);
+      border-bottom: 1px solid var(--c-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1440px;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--c-text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--c-gold); }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-links a.active { color: var(--c-text); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      background: transparent;
+      border: 1px solid var(--c-border-2);
+      border-radius: 8px;
+      padding: 8px 18px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-ghost:hover {
+      color: var(--c-text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-gold {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: #07070e;
+      background: var(--c-gold);
+      border: none;
+      border-radius: 8px;
+      padding: 8px 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-gold:active { transform: translateY(0); }
+
+    /* Content wrapper */
+    .content {
+      padding-top: 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      padding: 120px 0 100px;
+      text-align: center;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(226,168,75,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(157,111,255,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 80% 60%, rgba(0,212,200,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .hero-eyebrow::before,
+    .hero-eyebrow::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--c-gold);
+      opacity: 0.5;
+    }
+    .hero-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(52px, 7vw, 88px);
+      letter-spacing: -0.035em;
+      color: var(--c-text);
+      line-height: 0.95;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero-heading em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--c-text-2);
+      max-width: 540px;
+      margin: 0 auto 40px;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: #07070e;
+      background: var(--c-gold);
+      border: none;
+      border-radius: 12px;
+      padding: 16px 36px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.14) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+    .hero-cta:active { transform: translateY(0); }
+    .hero-cta:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+
+    /* ── SECTION HEADERS ── */
+    .section {
+      padding: 96px 0;
+    }
+    .section-tag {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(36px, 4vw, 52px);
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+      line-height: 1.05;
+      margin-bottom: 16px;
+    }
+    .section-heading em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+    .section-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--c-text-2);
+      max-width: 480px;
+      margin-bottom: 64px;
+    }
+
+    /* ── STEPS ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+
+    /* Timeline connector line */
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 56px;
+      left: calc(16.66% + 24px);
+      right: calc(16.66% + 24px);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--c-border-2) 20%, var(--c-border-2) 80%, transparent);
+      z-index: 0;
+    }
+
+    .step-item {
+      padding: 0 28px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-item:first-child { padding-left: 0; }
+    .step-item:last-child { padding-right: 0; }
+
+    .step-number-wrap {
+      position: relative;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .step-number-bg {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: 88px;
+      line-height: 1;
+      color: var(--c-gold);
+      opacity: 0.08;
+      position: absolute;
+      top: -24px;
+      left: -8px;
+      user-select: none;
+      pointer-events: none;
+    }
+    .step-icon-circle {
+      width: 52px;
+      height: 52px;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .step-item:hover .step-icon-circle {
+      border-color: rgba(226,168,75,0.3);
+      background: var(--c-float);
+    }
+
+    .step-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 17px;
+      color: var(--c-text);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .step-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+    }
+
+    /* Buyers vs Sellers tabs */
+    .persona-tabs {
+      display: flex;
+      gap: 0;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      padding: 4px;
+      width: fit-content;
+      margin-bottom: 56px;
+    }
+    .persona-tab {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-3);
+      background: transparent;
+      border: none;
+      border-radius: 9px;
+      padding: 10px 24px;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+    .persona-tab.active {
+      color: var(--c-text);
+      background: var(--c-float);
+    }
+    .persona-tab:hover:not(.active) {
+      color: var(--c-text-2);
+    }
+
+    .steps-panel { display: none; }
+    .steps-panel.active { display: block; }
+
+    /* ── TRUST CARDS ── */
+    .trust-section {
+      padding: 96px 0;
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+      margin: 0 -32px;
+      padding-left: 32px;
+      padding-right: 32px;
+    }
+    .trust-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .trust-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    .trust-card {
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      padding: 32px 28px;
+      transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+    .trust-card:hover {
+      border-color: var(--c-border-2);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.25), 0 4px 12px rgba(226,168,75,0.04);
+    }
+    .trust-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .trust-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: var(--c-text);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .trust-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--c-text-2);
+    }
+
+    /* ── FAQ ── */
+    .faq-section {
+      padding: 96px 0;
+    }
+    .faq-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    .faq-list {
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .faq-item {
+      border: 1px solid var(--c-border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--c-card);
+      transition: border-color 0.2s;
+    }
+    .faq-item.open {
+      border-color: var(--c-border-2);
+    }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: rgba(255,255,255,0.02); }
+    .faq-q-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--c-text);
+      letter-spacing: -0.01em;
+    }
+    .faq-chevron {
+      width: 20px;
+      height: 20px;
+      color: var(--c-text-3);
+      flex-shrink: 0;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s;
+    }
+    .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+      color: var(--c-gold);
+    }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+    }
+    .faq-answer-inner {
+      padding: 0 24px 22px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--c-text-2);
+      border-top: 1px solid var(--c-border);
+      padding-top: 18px;
+    }
+
+    /* ── CTA BANNER ── */
+    .cta-section {
+      padding: 0 0 96px;
+    }
+    .cta-banner {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--c-card);
+      border: 1px solid var(--c-border-2);
+      padding: 80px 64px;
+      text-align: center;
+    }
+    .cta-banner-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 100% at 50% -20%, rgba(226,168,75,0.13) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 60% at 10% 80%, rgba(157,111,255,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 50% at 90% 80%, rgba(0,212,200,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--c-gold);
+      margin-bottom: 16px;
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(40px, 5vw, 62px);
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+      line-height: 1.05;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .cta-heading em {
+      font-style: italic;
+      color: var(--c-gold);
+    }
+    .cta-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--c-text-2);
+      max-width: 460px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+    .cta-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .btn-cta-gold {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      color: #07070e;
+      background: var(--c-gold);
+      border: none;
+      border-radius: 12px;
+      padding: 16px 36px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-cta-gold::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.13) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .btn-cta-gold:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-cta-gold:active { transform: translateY(0); }
+    .btn-cta-gold:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+    .btn-cta-ghost {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--c-text-2);
+      background: transparent;
+      border: 1px solid var(--c-border-2);
+      border-radius: 12px;
+      padding: 16px 36px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-cta-ghost:hover {
+      color: var(--c-text);
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-2px);
+    }
+    .btn-cta-ghost:active { transform: translateY(0); }
+    .btn-cta-ghost:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+    /* Footer */
+    .footer {
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      padding: 32px 48px;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--c-text);
+      text-decoration: none;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .footer-logo span { color: var(--c-gold); }
+    .footer-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--c-text-3);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--c-text); }
+    .footer-copy {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: var(--c-text-3);
+      margin-top: 4px;
+      text-align: right;
+    }
+
+    /* Responsive */
+    @media (max-width: 960px) {
+      .steps-grid { grid-template-columns: 1fr; gap: 40px; }
+      .steps-grid::before { display: none; }
+      .step-item { padding: 0; }
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .trust-grid { grid-template-columns: 1fr; }
+      .cta-banner { padding: 48px 28px; }
+      .content { padding-left: 20px; padding-right: 20px; }
+      .trust-section { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
+      .footer-inner { flex-direction: column; gap: 24px; }
+      .footer-copy { text-align: left; }
+      .cta-actions { flex-direction: column; }
+      .btn-cta-gold, .btn-cta-ghost { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="home.html" class="nav-logo"><span>✦</span> Charm</a>
+      <ul class="nav-links">
+        <li><a href="home.html">Home</a></li>
+        <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="how-it-works.html" class="active">How it Works</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn-ghost">Login</a>
+        <a href="signup.html" class="btn-gold">Sign Up</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="content">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-bg"></div>
+      <div class="hero-eyebrow reveal">The Process</div>
+      <h1 class="hero-heading reveal reveal-delay-1">
+        How <em>Charm</em><br/>Works
+      </h1>
+      <p class="hero-sub reveal reveal-delay-2">
+        From discovering the perfect lens to booking a studio downtown — Charm connects creators with everything they need to bring their vision to life.
+      </p>
+      <a href="signup.html" class="hero-cta reveal reveal-delay-3">
+        Get started free
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </a>
+    </section>
+
+    <!-- STEPS FOR BUYERS/SELLERS -->
+    <section class="section">
+      <!-- Persona tabs -->
+      <div class="reveal" style="display:flex; flex-direction:column; align-items:flex-start; gap:0;">
+        <div class="section-tag">The Journey</div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; width:100%; flex-wrap:wrap; gap:24px; margin-bottom:32px;">
+          <div>
+            <h2 class="section-heading">Simple steps to <em>create</em></h2>
+            <p class="section-desc">Whether you're here to discover gear and spaces, or to earn from what you already own — we've made every step frictionless.</p>
+          </div>
+          <div class="persona-tabs" id="personaTabs">
+            <button class="persona-tab active" data-panel="buyers">For Creators</button>
+            <button class="persona-tab" data-panel="sellers">For Listers</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buyers panel -->
+      <div class="steps-panel active reveal" id="panel-buyers">
+        <div class="steps-grid">
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">1</div>
+              <div class="step-icon-circle">🔍</div>
+            </div>
+            <h3 class="step-heading">Browse & Discover</h3>
+            <p class="step-desc">Search thousands of gear listings, studios, and creative professionals by location, category, or availability. Filter by day rate, brand, or ratings.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">2</div>
+              <div class="step-icon-circle">🛒</div>
+            </div>
+            <h3 class="step-heading">Book or Buy</h3>
+            <p class="step-desc">Reserve your gear or studio in seconds. Secure checkout, instant confirmation, and a damage deposit held safely until your rental ends.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">3</div>
+              <div class="step-icon-circle">✨</div>
+            </div>
+            <h3 class="step-heading">Create & Collaborate</h3>
+            <p class="step-desc">Show up and create. Everything is ready when you arrive. Connect with other creators on the platform and build something extraordinary.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sellers panel -->
+      <div class="steps-panel" id="panel-sellers">
+        <div class="steps-grid">
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">1</div>
+              <div class="step-icon-circle">📦</div>
+            </div>
+            <h3 class="step-heading">List your gear or space</h3>
+            <p class="step-desc">Free to list, takes under 3 minutes. Add photos, set your availability calendar, add a description, and your listing goes live immediately.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">2</div>
+              <div class="step-icon-circle">🌍</div>
+            </div>
+            <h3 class="step-heading">Get discovered</h3>
+            <p class="step-desc">Your listing reaches a global audience of filmmakers, photographers, musicians, and content creators actively searching for what you have.</p>
+          </div>
+          <div class="step-item">
+            <div class="step-number-wrap">
+              <div class="step-number-bg" aria-hidden="true">3</div>
+              <div class="step-icon-circle">💰</div>
+            </div>
+            <h3 class="step-heading">Earn on your terms</h3>
+            <p class="step-desc">You set the price, availability, and rules. Payouts hit your account 24 hours after the rental ends. No hidden fees, no middlemen.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- TRUST SECTION (full bleed) -->
+  <div class="trust-section">
+    <div class="trust-inner">
+      <div class="trust-header reveal">
+        <div class="section-tag" style="text-align:center; margin-bottom:12px;">Built on trust</div>
+        <h2 class="section-heading" style="text-align:center; margin-bottom:0;">Your safety is <em>built in</em></h2>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-card reveal reveal-delay-1">
+          <span class="trust-icon">🔒</span>
+          <h3 class="trust-heading">Secure Payments</h3>
+          <p class="trust-desc">All transactions are processed through our encrypted payment gateway. Your financial data is never stored on our servers.</p>
+        </div>
+        <div class="trust-card reveal reveal-delay-2">
+          <span class="trust-icon">✅</span>
+          <h3 class="trust-heading">Verified Listings</h3>
+          <p class="trust-desc">Every listing goes through our verification process. Gear is photographed, tested, and confirmed before going live on the marketplace.</p>
+        </div>
+        <div class="trust-card reveal reveal-delay-3">
+          <span class="trust-icon">🛡️</span>
+          <h3 class="trust-heading">Damage Protection</h3>
+          <p class="trust-desc">Our damage deposit system protects both renters and owners. Cover of up to $10,000 is available through our partner insurance program.</p>
+        </div>
+        <div class="trust-card reveal reveal-delay-4">
+          <span class="trust-icon">💬</span>
+          <h3 class="trust-heading">24/7 Support</h3>
+          <p class="trust-desc">Real humans, not bots. Our creator support team is available around the clock to resolve any issue before, during, or after your rental.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section">
+      <div class="faq-header reveal">
+        <div class="section-tag" style="text-align:center; margin-bottom:12px;">FAQ</div>
+        <h2 class="section-heading" style="text-align:center;">Common <em>questions</em></h2>
+      </div>
+
+      <div class="faq-list" id="faqList">
+
+        <div class="faq-item reveal">
+          <button class="faq-question">
+            <span class="faq-q-text">How much does it cost to list on Charm?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Listing on Charm is completely free. We take a small 5% service fee only when your gear or space is successfully rented. There are no monthly fees, no setup costs, and no hidden charges — you only pay when you earn.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question">
+            <span class="faq-q-text">How does renting gear actually work?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Browse listings and select your dates. Once you confirm and pay, the owner receives your request and can confirm or suggest changes. After confirmation, you arrange pickup or delivery directly with the owner through our in-app messaging. Return the gear in the same condition and your deposit is released within 24 hours.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question">
+            <span class="faq-q-text">What happens if gear gets damaged?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Both parties submit a condition report before and after the rental. If damage occurs, the renter's deposit is used to cover verified repair costs. For higher-value items, our damage protection program covers up to $10,000 in repairs through our partner insurance provider.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-1">
+          <button class="faq-question">
+            <span class="faq-q-text">What can I list on Charm?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Cameras, lenses, lighting, audio gear, drones, studio spaces, editing suites, rehearsal rooms, and creative services like photography, videography, or sound engineering. If it's used for creating, it belongs on Charm.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-2">
+          <button class="faq-question">
+            <span class="faq-q-text">When and how do I get paid as a lister?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Payments are processed 24 hours after the rental period ends and the renter confirms no issues. Funds transfer to your connected bank account within 2–3 business days. We support all major banks and payment rails including Stripe and ACH.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item reveal reveal-delay-3">
+          <button class="faq-question">
+            <span class="faq-q-text">How does creator verification work?</span>
+            <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Verified creators complete an ID check, link a portfolio or social profile, and maintain a minimum 4.5-star rating across their first 5 rentals. Verification unlocks higher booking limits, priority support, and a visible trust badge on your profile.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="cta-section">
+      <div class="cta-banner reveal">
+        <div class="cta-banner-bg"></div>
+        <div class="cta-eyebrow">Join Charm today</div>
+        <h2 class="cta-heading">Ready to start <em>creating?</em></h2>
+        <p class="cta-sub">Get access to thousands of listings, studios, and creative professionals. Free to join, free to browse.</p>
+        <div class="cta-actions">
+          <a href="signup.html" class="btn-cta-gold">
+            Create free account
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+          <a href="marketplace.html" class="btn-cta-ghost">
+            Browse listings
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <a href="home.html" class="footer-logo"><span>✦</span> Charm</a>
+        <p class="footer-tagline">The platform for creative collaboration.</p>
+      </div>
+      <div>
+        <ul class="footer-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="signup.html">Sign Up</a></li>
+        </ul>
+        <p class="footer-copy">© 2025 Charm. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Persona tabs
+    const tabs = document.querySelectorAll('.persona-tab');
+    const panels = document.querySelectorAll('.steps-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+      });
+    });
+
+    // FAQ accordion
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        faqItems.forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+
+    // Scroll reveal — IntersectionObserver
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+<script src="shared.js"></script>
+</body>
+</html>

@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Pricing — Charm</title>
+  <meta name="description" content="Simple, creator-first pricing. Start free, grow with Pro, or scale with Studio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-gold-dim: rgba(226,168,75,0.13);
+      --c-gold-glow: rgba(226,168,75,0.28);
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
+    body {
+      background-color: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.65;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h1,h2,h3,h4 { text-wrap: balance; }
+    p { text-wrap: pretty; }
+    * { -webkit-tap-highlight-color: transparent; }
+    :focus { outline: none; }
+    :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; border-radius: 3px; }
+    button,[role="button"],a,select { cursor: pointer; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--c-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ── Noise ── */
+    .noise {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ── Nav ── */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+      background: rgba(7,7,14,0.88);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--c-border);
+      height: 64px;
+    }
+    .nav-inner {
+      max-width: 1440px; margin: 0 auto; height: 100%;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 48px;
+    }
+    .logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      letter-spacing: -0.02em; color: var(--c-text);
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+    }
+    .logo-gem {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 14px;
+      box-shadow: 0 2px 12px rgba(226,168,75,0.35);
+    }
+    .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+    .nav-links a {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); text-decoration: none; letter-spacing: 0.01em;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--c-text); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+
+    .btn-ghost {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 9px;
+      padding: 8px 16px;
+      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); }
+    .btn-gold {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
+      color: #0f0800; background: var(--c-gold);
+      border: none; border-radius: 9px; padding: 9px 20px;
+      box-shadow: 0 2px 14px rgba(226,168,75,0.28);
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.2s ease;
+      text-decoration: none; display: inline-flex; align-items: center;
+    }
+    .btn-gold:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 5px 22px rgba(226,168,75,0.44); }
+    .btn-gold:active { transform: translateY(0); }
+
+    /* ── Page Layout ── */
+    .page-wrapper { padding-top: 64px; }
+
+    /* ── Hero ── */
+    .pricing-hero {
+      position: relative; overflow: hidden;
+      padding: 100px 48px 80px;
+      text-align: center;
+    }
+    .pricing-hero::before {
+      content: ''; position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+      width: 900px; height: 600px; border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(226,168,75,0.08) 0%, rgba(157,111,255,0.05) 50%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--c-gold); margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; width: 28px; height: 1px; background: var(--c-gold); opacity: 0.4;
+    }
+    .pricing-hero h1 {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(52px,7vw,88px);
+      font-weight: 600; line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--c-text); margin-bottom: 20px;
+    }
+    .pricing-hero h1 em {
+      font-style: italic; color: var(--c-gold);
+    }
+    .pricing-hero p {
+      font-size: 17px; color: var(--c-text-2); line-height: 1.65;
+      max-width: 520px; margin: 0 auto 44px;
+    }
+
+    /* ── Toggle ── */
+    .toggle-wrap {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 40px; padding: 6px 14px; margin-bottom: 72px;
+    }
+    .toggle-label {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
+      color: var(--c-text-2); transition: color 0.2s ease;
+    }
+    .toggle-label.active { color: var(--c-text); }
+    .toggle-track {
+      width: 44px; height: 24px; border-radius: 12px;
+      background: var(--c-elevated); border: 1px solid var(--c-border-2);
+      position: relative; cursor: pointer;
+      transition: background 0.25s ease;
+    }
+    .toggle-track.annual { background: var(--c-gold); }
+    .toggle-thumb {
+      position: absolute; top: 3px; left: 3px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--c-text-2);
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), background 0.25s ease;
+    }
+    .toggle-track.annual .toggle-thumb { transform: translateX(20px); background: #0f0800; }
+    .save-badge {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      background: rgba(0,212,200,0.15); color: var(--c-cyan);
+      border: 1px solid rgba(0,212,200,0.25); border-radius: 20px;
+      padding: 3px 9px; letter-spacing: 0.04em;
+    }
+
+    /* ── Pricing Cards ── */
+    .pricing-grid {
+      max-width: 1100px; margin: 0 auto; padding: 0 48px 80px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      align-items: start;
+    }
+    .p-card {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 20px; padding: 36px 32px 32px;
+      position: relative; overflow: hidden;
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+    .p-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    }
+    .p-card.pro {
+      background: var(--c-elevated);
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 1px rgba(226,168,75,0.15), 0 24px 80px rgba(226,168,75,0.08), inset 0 1px 0 rgba(226,168,75,0.12);
+      transform: translateY(-8px);
+    }
+    .p-card.pro:hover { transform: translateY(-14px); }
+    .p-card.pro::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(226,168,75,0.6), transparent);
+    }
+    .p-card::after {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 200px; height: 200px; border-radius: 50%;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .p-card.pro::after { background: radial-gradient(circle, rgba(226,168,75,0.06) 0%, transparent 70%); opacity: 1; }
+
+    .popular-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      background: var(--c-gold-dim); color: var(--c-gold);
+      border: 1px solid rgba(226,168,75,0.3); border-radius: 20px;
+      padding: 4px 12px; margin-bottom: 20px;
+    }
+    .plan-name {
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      color: var(--c-text-2); letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .plan-desc {
+      font-size: 13.5px; color: var(--c-text-3); line-height: 1.5; margin-bottom: 28px;
+    }
+    .plan-price {
+      display: flex; align-items: flex-end; gap: 4px; margin-bottom: 6px;
+    }
+    .price-curr {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700;
+      color: var(--c-text-2); margin-bottom: 6px;
+    }
+    .price-num {
+      font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600;
+      line-height: 1; letter-spacing: -0.03em; color: var(--c-text);
+      transition: opacity 0.2s ease;
+    }
+    .price-period {
+      font-size: 13px; color: var(--c-text-3); margin-bottom: 8px;
+    }
+    .price-billing {
+      font-size: 12px; color: var(--c-text-3); margin-bottom: 32px; min-height: 18px;
+      transition: opacity 0.2s ease;
+    }
+    .divider { height: 1px; background: var(--c-border); margin-bottom: 28px; }
+
+    .feature-list { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 11px; }
+    .feature-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--c-text-2); line-height: 1.45;
+    }
+    .feat-check {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; font-size: 10px;
+      margin-top: 1px;
+    }
+    .feat-check.gold { background: rgba(226,168,75,0.15); color: var(--c-gold); }
+    .feat-check.cyan { background: rgba(0,212,200,0.12); color: var(--c-cyan); }
+    .feat-check.muted { background: rgba(255,255,255,0.05); color: var(--c-text-3); }
+
+    .plan-cta {
+      display: block; width: 100%; padding: 13px 24px; border-radius: 12px;
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      text-align: center; text-decoration: none;
+      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.2s ease, border-color 0.2s ease;
+    }
+    .plan-cta.ghost {
+      background: transparent; color: var(--c-text-2);
+      border: 1px solid var(--c-border-2);
+    }
+    .plan-cta.ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+    .plan-cta.gold-cta {
+      background: var(--c-gold); color: #0f0800;
+      border: none;
+      box-shadow: 0 4px 20px rgba(226,168,75,0.3);
+    }
+    .plan-cta.gold-cta:hover { background: #ebb850; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(226,168,75,0.45); }
+    .plan-cta.gold-cta:active { transform: translateY(0); }
+    .plan-cta.ghost-cta {
+      background: transparent; color: var(--c-text-2);
+      border: 1px solid var(--c-border-2);
+    }
+    .plan-cta.ghost-cta:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); transform: translateY(-1px); }
+
+    /* ── Section headers ── */
+    .section-header {
+      max-width: 1100px; margin: 0 auto 40px;
+      padding: 0 48px;
+    }
+    .section-header h2 {
+      font-family: 'Cormorant Garamond', serif; font-size: clamp(34px,4vw,52px);
+      font-weight: 600; letter-spacing: -0.025em; color: var(--c-text);
+      margin-bottom: 10px;
+    }
+    .section-header p { font-size: 15px; color: var(--c-text-2); }
+
+    /* ── Comparison Table ── */
+    .comparison-section {
+      max-width: 1100px; margin: 0 auto; padding: 0 48px 100px;
+    }
+    .comp-table {
+      width: 100%; border-collapse: collapse;
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 20px; overflow: hidden;
+    }
+    .comp-table thead tr { border-bottom: 1px solid var(--c-border); }
+    .comp-table th {
+      padding: 20px 24px; text-align: left;
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-2);
+    }
+    .comp-table th.col-plan { color: var(--c-text); font-size: 13px; }
+    .comp-table th.col-pro {
+      color: var(--c-gold);
+      background: rgba(226,168,75,0.04);
+      border-left: 1px solid rgba(226,168,75,0.15);
+      border-right: 1px solid rgba(226,168,75,0.15);
+    }
+    .comp-table .cat-row td {
+      padding: 12px 24px; font-family: 'Syne', sans-serif; font-size: 11px;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--c-text-3); background: var(--c-elevated);
+      border-top: 1px solid var(--c-border);
+    }
+    .comp-table tbody tr:not(.cat-row) {
+      border-bottom: 1px solid var(--c-border);
+      transition: background 0.15s ease;
+    }
+    .comp-table tbody tr:not(.cat-row):hover { background: rgba(255,255,255,0.025); }
+    .comp-table tbody tr:last-child { border-bottom: none; }
+    .comp-table td {
+      padding: 15px 24px; font-size: 14px; color: var(--c-text-2); vertical-align: middle;
+    }
+    .comp-table td.col-pro {
+      background: rgba(226,168,75,0.03);
+      border-left: 1px solid rgba(226,168,75,0.1);
+      border-right: 1px solid rgba(226,168,75,0.1);
+    }
+    .comp-table td.feat-name { color: var(--c-text); font-size: 13.5px; }
+    .check-yes { color: var(--c-gold); font-size: 16px; }
+    .check-pro { color: var(--c-cyan); font-size: 16px; }
+    .check-no { color: var(--c-text-3); font-size: 18px; }
+    .feat-val { font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600; color: var(--c-text); }
+    .feat-val.gold { color: var(--c-gold); }
+    .feat-val.cyan { color: var(--c-cyan); }
+    .feat-val.violet { color: var(--c-violet); }
+
+    /* ── FAQ ── */
+    .faq-section {
+      max-width: 720px; margin: 0 auto; padding: 0 48px 100px;
+    }
+    .faq-item {
+      border-bottom: 1px solid var(--c-border);
+      overflow: hidden;
+    }
+    .faq-q {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 0; cursor: pointer;
+      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600;
+      color: var(--c-text); gap: 16px;
+      transition: color 0.2s ease;
+      list-style: none;
+    }
+    .faq-q:hover { color: var(--c-gold); }
+    .faq-q::-webkit-details-marker { display: none; }
+    .faq-arrow {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      background: var(--c-elevated); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; color: var(--c-text-2);
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease;
+    }
+    details[open] .faq-arrow { transform: rotate(45deg); background: var(--c-gold-dim); color: var(--c-gold); }
+    .faq-a {
+      padding: 0 0 22px;
+      font-size: 14.5px; color: var(--c-text-2); line-height: 1.7;
+    }
+    .faq-a a { color: var(--c-gold); text-decoration: none; }
+    .faq-a a:hover { text-decoration: underline; }
+
+    /* ── CTA Strip ── */
+    .cta-strip {
+      max-width: 1100px; margin: 0 auto 100px;
+      padding: 0 48px;
+    }
+    .cta-inner {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 20px; padding: 56px 64px;
+      display: flex; align-items: center; justify-content: space-between; gap: 40px;
+      position: relative; overflow: hidden;
+    }
+    .cta-inner::before {
+      content: ''; position: absolute; right: -100px; top: 50%; transform: translateY(-50%);
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(226,168,75,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-text h3 {
+      font-family: 'Cormorant Garamond', serif; font-size: 36px; font-weight: 600;
+      letter-spacing: -0.02em; color: var(--c-text); margin-bottom: 8px;
+    }
+    .cta-text p { font-size: 15px; color: var(--c-text-2); }
+    .cta-email {
+      font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
+      color: var(--c-gold); text-decoration: none;
+      padding: 14px 32px; border-radius: 12px;
+      border: 1px solid rgba(226,168,75,0.35);
+      background: rgba(226,168,75,0.07);
+      white-space: nowrap; flex-shrink: 0;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .cta-email:hover { background: rgba(226,168,75,0.14); border-color: rgba(226,168,75,0.55); transform: translateY(-1px); }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--c-card); border-top: 1px solid var(--c-border);
+      padding: 40px 48px;
+    }
+    .footer-inner {
+      max-width: 1440px; margin: 0 auto;
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 32px;
+    }
+    .footer-logo-block {}
+    .footer-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px;
+      color: var(--c-text); display: flex; align-items: center; gap: 8px;
+      text-decoration: none; margin-bottom: 8px;
+    }
+    .footer-tagline { font-size: 13px; color: var(--c-text-3); }
+    .footer-links { display: flex; gap: 28px; align-items: center; flex-wrap: wrap; }
+    .footer-links a {
+      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 500;
+      color: var(--c-text-3); text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .footer-links a:hover { color: var(--c-text-2); }
+    .footer-bottom {
+      max-width: 1440px; margin: 24px auto 0;
+      padding-top: 20px; border-top: 1px solid var(--c-border);
+      font-size: 12px; color: var(--c-text-3);
+    }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 440px; }
+      .p-card.pro { transform: none; }
+      .p-card.pro:hover { transform: translateY(-4px); }
+      .nav-links { display: none; }
+      .comparison-section, .section-header, .faq-section, .cta-strip { padding-left: 20px; padding-right: 20px; }
+      .pricing-hero { padding: 80px 20px 60px; }
+      .pricing-grid { padding: 0 20px 60px; }
+      .cta-inner { flex-direction: column; padding: 40px 28px; }
+      .comp-table th, .comp-table td { padding: 12px 14px; font-size: 12px; }
+      .footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="noise" aria-hidden="true"></div>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="Main">
+  <div class="nav-inner">
+    <a href="home.html" class="logo">
+      <span class="logo-gem">✦</span>
+      Charm
+    </a>
+    <ul class="nav-links">
+      <li><a href="home.html">Home</a></li>
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="pricing.html" class="active">Pricing</a></li>
+      <li><a href="how-it-works.html">How it Works</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="#" class="btn-ghost">Login</a>
+      <a href="signup.html" class="btn-gold">Sign Up</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+
+  <!-- Hero -->
+  <section class="pricing-hero">
+    <div class="hero-eyebrow">Pricing</div>
+    <h1>Simple, <em>creator-first</em><br>pricing</h1>
+    <p>Start for free and grow at your own pace. No hidden fees, no lock-ins — just tools built for people who make things.</p>
+
+    <!-- Toggle -->
+    <div class="toggle-wrap" role="group" aria-label="Billing period">
+      <span class="toggle-label active" id="lbl-monthly">Monthly</span>
+      <div class="toggle-track" id="billing-toggle" role="switch" aria-checked="false" tabindex="0" aria-label="Switch to annual billing">
+        <div class="toggle-thumb"></div>
+      </div>
+      <span class="toggle-label" id="lbl-annual">Annual</span>
+      <span class="save-badge">Save 20%</span>
+    </div>
+  </section>
+
+  <!-- Pricing Cards -->
+  <div class="pricing-grid">
+    <!-- Free -->
+    <div class="p-card reveal">
+      <div class="plan-name">Free</div>
+      <div class="plan-desc">The perfect starting point for curious creators.</div>
+      <div class="plan-price">
+        <span class="price-curr">£</span>
+        <span class="price-num" id="free-price">0</span>
+      </div>
+      <div class="price-period">per month</div>
+      <div class="price-billing" id="free-billing">&nbsp;</div>
+      <div class="divider"></div>
+      <ul class="feature-list">
+        <li><span class="feat-check muted">✓</span>List up to 3 items</li>
+        <li><span class="feat-check muted">✓</span>Basic search visibility</li>
+        <li><span class="feat-check muted">✓</span>Standard checkout</li>
+        <li><span class="feat-check muted">✓</span>Community access</li>
+        <li><span class="feat-check muted">✓</span>8% platform fee on sales</li>
+      </ul>
+      <a href="signup.html" class="plan-cta ghost">Get started free</a>
+    </div>
+
+    <!-- Pro -->
+    <div class="p-card pro reveal" style="transition-delay:0.1s">
+      <div class="popular-badge">★ Most Popular</div>
+      <div class="plan-name">Pro</div>
+      <div class="plan-desc">Everything a serious creator needs to grow their presence.</div>
+      <div class="plan-price">
+        <span class="price-curr">£</span>
+        <span class="price-num" id="pro-price">12</span>
+      </div>
+      <div class="price-period">per month</div>
+      <div class="price-billing" id="pro-billing">&nbsp;</div>
+      <div class="divider"></div>
+      <ul class="feature-list">
+        <li><span class="feat-check gold">✓</span>Unlimited listings</li>
+        <li><span class="feat-check gold">✓</span>Priority search placement</li>
+        <li><span class="feat-check gold">✓</span>Advanced analytics dashboard</li>
+        <li><span class="feat-check gold">✓</span>Pro seller badge</li>
+        <li><span class="feat-check gold">✓</span>Reduced 4% platform fee</li>
+        <li><span class="feat-check cyan">✓</span>Early access to new features</li>
+      </ul>
+      <a href="signup.html" class="plan-cta gold-cta">Start Pro trial</a>
+    </div>
+
+    <!-- Studio -->
+    <div class="p-card reveal" style="transition-delay:0.2s">
+      <div class="plan-name">Studio</div>
+      <div class="plan-desc">For creative teams and established studios ready to scale.</div>
+      <div class="plan-price">
+        <span class="price-curr">£</span>
+        <span class="price-num" id="studio-price">39</span>
+      </div>
+      <div class="price-period">per month</div>
+      <div class="price-billing" id="studio-billing">&nbsp;</div>
+      <div class="divider"></div>
+      <ul class="feature-list">
+        <li><span class="feat-check cyan">✓</span>Everything in Pro</li>
+        <li><span class="feat-check cyan">✓</span>Team accounts (up to 5 members)</li>
+        <li><span class="feat-check cyan">✓</span>Dedicated account manager</li>
+        <li><span class="feat-check cyan">✓</span>Custom branding on listings</li>
+        <li><span class="feat-check cyan">✓</span>2% platform fee</li>
+        <li><span class="feat-check cyan">✓</span>API access</li>
+        <li><span class="feat-check cyan">✓</span>White-glove onboarding</li>
+      </ul>
+      <a href="mailto:hello@charm.space" class="plan-cta ghost-cta">Contact sales</a>
+    </div>
+  </div>
+
+  <!-- Comparison Table -->
+  <div class="section-header reveal">
+    <h2>Full feature comparison</h2>
+    <p>See exactly what's included at each tier.</p>
+  </div>
+  <div class="comparison-section reveal">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th style="width:36%">Feature</th>
+          <th class="col-plan">Free</th>
+          <th class="col-pro col-plan">Pro</th>
+          <th class="col-plan">Studio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Listings -->
+        <tr class="cat-row"><td colspan="4">Listings</td></tr>
+        <tr>
+          <td class="feat-name">Number of listings</td>
+          <td><span class="feat-val">3 items</span></td>
+          <td class="col-pro"><span class="feat-val gold">Unlimited</span></td>
+          <td><span class="feat-val cyan">Unlimited</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Custom branding</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-no">—</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Team accounts</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-no">—</span></td>
+          <td><span class="feat-val cyan">Up to 5</span></td>
+        </tr>
+        <!-- Fees -->
+        <tr class="cat-row"><td colspan="4">Fees &amp; Payments</td></tr>
+        <tr>
+          <td class="feat-name">Platform fee</td>
+          <td><span class="feat-val">8%</span></td>
+          <td class="col-pro"><span class="feat-val gold">4%</span></td>
+          <td><span class="feat-val cyan">2%</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Standard checkout</td>
+          <td><span class="check-yes">✓</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">API access</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-no">—</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <!-- Discovery -->
+        <tr class="cat-row"><td colspan="4">Discovery</td></tr>
+        <tr>
+          <td class="feat-name">Search visibility</td>
+          <td><span class="feat-val">Standard</span></td>
+          <td class="col-pro"><span class="feat-val gold">Priority</span></td>
+          <td><span class="feat-val cyan">Priority</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Pro seller badge</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Community access</td>
+          <td><span class="check-yes">✓</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <!-- Analytics -->
+        <tr class="cat-row"><td colspan="4">Analytics</td></tr>
+        <tr>
+          <td class="feat-name">Basic stats</td>
+          <td><span class="check-yes">✓</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Advanced analytics</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Early feature access</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <!-- Support -->
+        <tr class="cat-row"><td colspan="4">Support</td></tr>
+        <tr>
+          <td class="feat-name">Community support</td>
+          <td><span class="check-yes">✓</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Priority support</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-yes">✓</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">Dedicated account manager</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-no">—</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+        <tr>
+          <td class="feat-name">White-glove onboarding</td>
+          <td><span class="check-no">—</span></td>
+          <td class="col-pro"><span class="check-no">—</span></td>
+          <td><span class="check-pro">✓</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-header reveal">
+    <h2>Frequently asked</h2>
+    <p>The things most creators want to know before committing.</p>
+  </div>
+  <div class="faq-section">
+    <details class="faq-item reveal">
+      <summary class="faq-q">
+        Can I switch plans at any time?
+        <span class="faq-arrow">+</span>
+      </summary>
+      <p class="faq-a">Yes, absolutely. You can upgrade, downgrade, or cancel your plan from your account settings at any time. If you upgrade mid-cycle, you'll only be charged the prorated difference. Downgrades take effect at the end of your current billing period.</p>
+    </details>
+    <details class="faq-item reveal" style="transition-delay:0.05s">
+      <summary class="faq-q">
+        What exactly is the platform fee?
+        <span class="faq-arrow">+</span>
+      </summary>
+      <p class="faq-a">The platform fee is a small percentage taken from each completed sale, in addition to standard payment processing fees. Free tier members pay 8%, Pro members 4%, and Studio members just 2%. This covers payment processing, fraud protection, buyer guarantees, and platform infrastructure.</p>
+    </details>
+    <details class="faq-item reveal" style="transition-delay:0.1s">
+      <summary class="faq-q">
+        Is there a free trial for Pro or Studio?
+        <span class="faq-arrow">+</span>
+      </summary>
+      <p class="faq-a">Pro comes with a 14-day free trial — no card required. Studio plans include a personalised demo and onboarding session. <a href="mailto:hello@charm.space">Contact us</a> and we'll set it up for you.</p>
+    </details>
+    <details class="faq-item reveal" style="transition-delay:0.15s">
+      <summary class="faq-q">
+        What payment methods do you accept?
+        <span class="faq-arrow">+</span>
+      </summary>
+      <p class="faq-a">We accept all major credit and debit cards (Visa, Mastercard, Amex), PayPal, Apple Pay, and Google Pay. For Studio plans, we also offer invoice-based billing and bank transfer. All transactions are securely processed via Stripe.</p>
+    </details>
+  </div>
+
+  <!-- CTA Strip -->
+  <div class="cta-strip reveal">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h3>Still unsure? Talk to us.</h3>
+        <p>Our team is happy to walk you through which plan fits your creative workflow best.</p>
+      </div>
+      <a href="mailto:hello@charm.space" class="cta-email">hello@charm.space →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-logo-block">
+      <a href="home.html" class="footer-logo">
+        <span class="logo-gem" style="width:24px;height:24px;border-radius:6px;font-size:12px">✦</span>
+        Charm
+      </a>
+      <p class="footer-tagline">The creative platform for makers.</p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="home.html">Home</a>
+      <a href="marketplace.html">Marketplace</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="#">How it Works</a>
+      <a href="#">About</a>
+      <a href="mailto:hello@charm.space">Contact</a>
+    </nav>
+  </div>
+  <div class="footer-bottom">© 2025 Charm. All rights reserved.</div>
+</footer>
+
+<script>
+  // ── Billing Toggle ──
+  const toggle = document.getElementById('billing-toggle');
+  const lblMonthly = document.getElementById('lbl-monthly');
+  const lblAnnual = document.getElementById('lbl-annual');
+  let isAnnual = false;
+
+  const prices = {
+    free:   { monthly: '0',  annual: '0'  },
+    pro:    { monthly: '12', annual: '9.60' },
+    studio: { monthly: '39', annual: '31.20' },
+  };
+
+  function updatePrices() {
+    const mode = isAnnual ? 'annual' : 'monthly';
+    document.getElementById('free-price').textContent = prices.free[mode];
+    document.getElementById('pro-price').textContent = prices.pro[mode];
+    document.getElementById('studio-price').textContent = prices.studio[mode];
+
+    const billingNote = isAnnual ? 'per month, billed annually' : '\u00a0';
+    document.getElementById('free-billing').textContent = billingNote;
+    document.getElementById('pro-billing').textContent = isAnnual ? 'per month, billed annually' : '\u00a0';
+    document.getElementById('studio-billing').textContent = isAnnual ? 'per month, billed annually' : '\u00a0';
+
+    lblMonthly.classList.toggle('active', !isAnnual);
+    lblAnnual.classList.toggle('active', isAnnual);
+    toggle.classList.toggle('annual', isAnnual);
+    toggle.setAttribute('aria-checked', String(isAnnual));
+  }
+
+  toggle.addEventListener('click', () => {
+    isAnnual = !isAnnual;
+    updatePrices();
+  });
+  toggle.addEventListener('keydown', e => {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); isAnnual = !isAnnual; updatePrices(); }
+  });
+
+  // ── Reveal on scroll ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

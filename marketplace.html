@@ -516,6 +516,13 @@
     .btn-cart:hover { background: #ebb850; transform: translateY(-1px); }
     .btn-cart.added { background: var(--c-cyan); color: #001f1e; }
     .btn-cart:active { transform: scale(0.97); }
+    .btn-compare {
+      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600;
+      color: var(--c-text-3); background: transparent; border: none;
+      padding: 4px 0 0; cursor: pointer; text-align: left;
+      transition: color 0.2s; letter-spacing: 0.02em;
+    }
+    .btn-compare:hover { color: var(--c-violet); }
 
     /* Skeleton cards */
     .p-card-skeleton {
@@ -1265,8 +1272,10 @@
     </div>
 
     <div class="nav-right">
-      <a href="home.html" class="btn-ghost">← Explore Spaces</a>
-      <button class="btn-ghost">Login</button>
+      <a href="how-it-works.html" class="btn-ghost">How It Works</a>
+      <a href="pricing.html" class="btn-ghost">Pricing</a>
+      <a href="wishlist.html" class="btn-ghost">Wishlist</a>
+      <a href="login.html" class="btn-ghost">Login</a>
       <button class="cart-btn" id="cart-trigger" onclick="openCart()" aria-label="Cart, 0 items">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
         Cart
@@ -1450,6 +1459,42 @@
       </div>
       <button class="btn-gold" style="padding:13px 28px;font-size:14px;" onclick="openSellModal()">Start selling →</button>
     </div>
+  </div>
+</div>
+
+<!-- ════════ RECENTLY VIEWED ════════ -->
+<div id="recently-viewed-section" style="max-width:1440px;margin:0 auto;padding:0 48px 56px;display:none;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <p style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--c-text-3);display:flex;align-items:center;gap:8px;">
+      <span style="display:inline-block;width:18px;height:1px;background:rgba(255,255,255,0.2);"></span>Recently Viewed
+    </p>
+    <button onclick="clearRecentlyViewed()" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--c-text-3);background:none;border:none;cursor:pointer;transition:color 0.2s;" onmouseenter="this.style.color='var(--c-coral)'" onmouseleave="this.style.color='var(--c-text-3)'">Clear</button>
+  </div>
+  <div id="recently-viewed-scroll" style="display:flex;gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;"></div>
+</div>
+
+<!-- ════════ COMPARE MODAL ════════ -->
+<div id="compare-backdrop" style="position:fixed;inset:0;z-index:700;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity 0.3s;pointer-events:none;display:none;" onclick="closeCompare()"></div>
+<div id="compare-modal" style="position:fixed;left:50%;top:50%;z-index:800;transform:translate(-50%,-50%) scale(0.92);width:min(960px,calc(100vw - 32px));max-height:calc(100vh - 40px);overflow-y:auto;background:var(--c-card);border:1px solid var(--c-border-2);border-radius:20px;padding:32px;opacity:0;transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),opacity 0.3s;pointer-events:none;display:none;">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+    <h2 style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;letter-spacing:-0.02em;color:var(--c-text);">Compare Products</h2>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span id="compare-count-label" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:600;color:var(--c-text-3);"></span>
+      <button onclick="closeCompare()" style="width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.06);border:1px solid var(--c-border);color:var(--c-text-2);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;transition:background 0.2s;" aria-label="Close compare">✕</button>
+    </div>
+  </div>
+  <div id="compare-table" style="overflow-x:auto;"></div>
+</div>
+
+<!-- Compare bar (floats at bottom when items selected) -->
+<div id="compare-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:600;background:rgba(13,13,26,0.96);border-top:1px solid var(--c-border-2);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:14px 48px;display:none;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;transform:translateY(100%);transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);">
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+    <p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--c-text);">Compare: <span id="compare-bar-count">0</span>/3 selected</p>
+    <div id="compare-bar-items" style="display:flex;gap:10px;"></div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button onclick="clearCompare()" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:600;color:var(--c-text-2);background:transparent;border:1px solid var(--c-border-2);border-radius:9px;padding:9px 18px;cursor:pointer;transition:color 0.2s;">Clear</button>
+    <button onclick="openCompare()" id="compare-btn" style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:9px;padding:9px 20px;cursor:pointer;opacity:0.4;transition:opacity 0.2s;" disabled>Compare now</button>
   </div>
 </div>
 
@@ -1714,6 +1759,8 @@
               ${inCart ? '✓ Added' : p.type === 'rent' ? '🗓 Rent' : 'Add to cart'}
             </button>
           </div>
+          <button class="btn-compare" onclick="event.stopPropagation();toggleCompare(${p.id})"
+            aria-label="Compare ${p.name}">⊞ Compare</button>
         </div>
       </article>`;
   }
@@ -2186,12 +2233,154 @@
       </button>`).join('');
   }
 
+  // ─── Recently Viewed ─────────────────────────────────────────────────
+  let recentlyViewed = store.get('charm-recently-viewed', []);
+
+  function trackView(id) {
+    recentlyViewed = [id, ...recentlyViewed.filter(x => x !== id)].slice(0, 8);
+    store.set('charm-recently-viewed', recentlyViewed);
+    renderRecentlyViewed();
+  }
+
+  function renderRecentlyViewed() {
+    const section = document.getElementById('recently-viewed-section');
+    const scroll = document.getElementById('recently-viewed-scroll');
+    const items = recentlyViewed.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+    if (items.length === 0) { section.style.display = 'none'; return; }
+    section.style.display = 'block';
+    scroll.innerHTML = items.map(p => `
+      <div style="flex-shrink:0;width:180px;background:var(--c-card);border:1px solid var(--c-border);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="openQuickView(${p.id})" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='var(--c-border)';this.style.transform=''">
+        <div class="p-thumb p-thumb-${p.cat}" style="height:120px;position:relative;overflow:hidden;">
+          <div class="p-thumb-glow" aria-hidden="true"></div>
+          <div style="font-size:32px;position:relative;z-index:2;">${p.icon}</div>
+        </div>
+        <div style="padding:10px 12px;">
+          <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--c-text);line-height:1.3;margin-bottom:4px;">${p.name.split(' ').slice(0,3).join(' ')}</p>
+          <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--c-gold);">${p.priceLabel}</p>
+        </div>
+      </div>`).join('');
+  }
+
+  function clearRecentlyViewed() {
+    recentlyViewed = [];
+    store.set('charm-recently-viewed', []);
+    document.getElementById('recently-viewed-section').style.display = 'none';
+  }
+
+  // Track view when quick view opens — patch openQuickView
+  const _origOpenQV = openQuickView;
+  window.openQuickView = function(id) { _origOpenQV(id); trackView(id); };
+
+  // ─── Compare ─────────────────────────────────────────────────────────
+  let compareList = [];
+
+  function toggleCompare(id) {
+    const idx = compareList.indexOf(id);
+    if (idx > -1) {
+      compareList.splice(idx, 1);
+    } else {
+      if (compareList.length >= 3) { showToast('Max 3 items to compare'); return; }
+      compareList.push(id);
+    }
+    updateCompareBar();
+    // Update button state on card
+    document.querySelectorAll(`[data-id="${id}"] .btn-compare`).forEach(btn => {
+      const added = compareList.includes(id);
+      btn.style.color = added ? 'var(--c-violet)' : '';
+      btn.textContent = added ? '⊞ Added' : '⊞ Compare';
+    });
+  }
+
+  function updateCompareBar() {
+    const bar = document.getElementById('compare-bar');
+    const countEl = document.getElementById('compare-bar-count');
+    const itemsEl = document.getElementById('compare-bar-items');
+    const btn = document.getElementById('compare-btn');
+    countEl.textContent = compareList.length;
+    if (compareList.length === 0) {
+      bar.style.transform = 'translateY(100%)';
+      setTimeout(() => { bar.style.display = 'none'; }, 320);
+    } else {
+      bar.style.display = 'flex';
+      requestAnimationFrame(() => requestAnimationFrame(() => { bar.style.transform = 'translateY(0)'; }));
+    }
+    btn.disabled = compareList.length < 2;
+    btn.style.opacity = compareList.length >= 2 ? '1' : '0.4';
+    itemsEl.innerHTML = compareList.map(id => {
+      const p = PRODUCTS.find(x => x.id === id);
+      return `<div style="display:flex;align-items:center;gap:7px;background:var(--c-elevated);border:1px solid var(--c-border);border-radius:8px;padding:5px 10px;">
+        <span style="font-size:14px;">${p.icon}</span>
+        <span style="font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;color:var(--c-text);">${p.name.split(' ').slice(0,2).join(' ')}</span>
+        <button onclick="toggleCompare(${id})" style="background:none;border:none;color:var(--c-text-3);font-size:14px;cursor:pointer;line-height:1;" aria-label="Remove">×</button>
+      </div>`;
+    }).join('');
+  }
+
+  function clearCompare() {
+    compareList.forEach(id => {
+      document.querySelectorAll(`[data-id="${id}"] .btn-compare`).forEach(btn => { btn.style.color = ''; btn.textContent = '⊞ Compare'; });
+    });
+    compareList = [];
+    updateCompareBar();
+  }
+
+  function openCompare() {
+    if (compareList.length < 2) return;
+    const items = compareList.map(id => PRODUCTS.find(p => p.id === id));
+    const rows = [
+      { label: 'Item', fn: p => `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="font-size:36px;">${p.icon}</div><p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--c-text);text-align:center;line-height:1.3;">${p.name}</p></div>` },
+      { label: 'Price', fn: p => `<span style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${p.wasPrice?'var(--c-gold)':'var(--c-text)'};">${p.priceLabel}</span>${p.wasPrice?`<br><del style="color:var(--c-text-3);font-size:12px;">${p.wasPrice}</del>`:''}` },
+      { label: 'Condition', fn: p => p.condition },
+      { label: 'Rating', fn: p => `${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))} ${p.rating} (${p.reviews})` },
+      { label: 'Type', fn: p => p.type === 'rent' ? '🗓 For Rent' : '🛒 For Sale' },
+      { label: 'Seller', fn: p => p.seller },
+      { label: 'Shipping', fn: p => p.shipping.map(s=>s.replace(/-/g,' ')).join(', ') },
+      { label: 'Category', fn: p => p.cat.replace(/-/g,' ') },
+    ];
+    const colStyle = `style="flex:1;min-width:180px;padding:16px;text-align:center;border-right:1px solid var(--c-border);"`;
+    const rowStyle = `style="display:flex;border-bottom:1px solid var(--c-border);"`;
+    const labelStyle = `style="font-family:'Syne',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--c-text-3);padding:14px 16px;width:120px;flex-shrink:0;display:flex;align-items:center;border-right:1px solid var(--c-border);"`;
+    const cellStyle = `style="font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--c-text-2);display:flex;align-items:center;justify-content:center;flex:1;min-width:0;padding:14px;text-align:center;border-right:1px solid var(--c-border);"`;
+
+    document.getElementById('compare-count-label').textContent = `${items.length} items`;
+    document.getElementById('compare-table').innerHTML = `
+      <div style="background:var(--c-elevated);border:1px solid var(--c-border);border-radius:14px;overflow:hidden;">
+        ${rows.map(row => `
+          <div ${rowStyle}>
+            <span ${labelStyle}>${row.label}</span>
+            ${items.map(p => `<div ${cellStyle}>${row.fn(p)}</div>`).join('')}
+          </div>`).join('')}
+        <div ${rowStyle}>
+          <span ${labelStyle}>Action</span>
+          ${items.map(p => `<div ${cellStyle}>
+            <button onclick="addToCart(${p.id});showToast('✓ Added to cart')" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:8px;padding:8px 16px;cursor:pointer;">${p.type==='rent'?'Rent':'Add to cart'}</button>
+          </div>`).join('')}
+        </div>
+      </div>`;
+    const modal = document.getElementById('compare-modal');
+    const backdrop = document.getElementById('compare-backdrop');
+    modal.style.display = 'block'; backdrop.style.display = 'block';
+    requestAnimationFrame(() => requestAnimationFrame(() => { modal.style.opacity='1'; modal.style.transform='translate(-50%,-50%) scale(1)'; modal.style.pointerEvents='auto'; backdrop.style.opacity='1'; backdrop.style.pointerEvents='auto'; }));
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeCompare() {
+    const modal = document.getElementById('compare-modal');
+    const backdrop = document.getElementById('compare-backdrop');
+    modal.style.opacity='0'; modal.style.transform='translate(-50%,-50%) scale(0.92)'; modal.style.pointerEvents='none';
+    backdrop.style.opacity='0'; backdrop.style.pointerEvents='none';
+    document.body.style.overflow = '';
+    setTimeout(() => { modal.style.display='none'; backdrop.style.display='none'; }, 350);
+  }
+
   // ─── Init ────────────────────────────────────────────────────────────
   // cart button states are set inside productCardHTML (checks cart.some())
   // wishlist states are restored inside renderProducts timeout callback
   renderProducts(filteredProducts);
   updateCartUI();
   initFeatured();
+  renderRecentlyViewed();
 </script>
+<script src="shared.js"></script>
 </body>
 </html>

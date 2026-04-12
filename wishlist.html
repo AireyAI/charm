@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Wishlist — Charm Marketplace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #5a586e;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* Noise overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      opacity: 0.028;
+      pointer-events: none;
+      z-index: 9999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 64px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      background: rgba(7,7,14,0.88);
+      border-bottom: 1px solid var(--c-border);
+    }
+    .nav-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      height: 100%;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--c-text);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+      margin-right: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text-2);
+      background: transparent;
+      border: 1px solid var(--c-border-2);
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: inline-flex;
+      align-items: center;
+    }
+    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.25); background: rgba(255,255,255,0.04); }
+    .btn-ghost:active { background: rgba(255,255,255,0.08); }
+    .btn-gold {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-base);
+      background: var(--c-gold);
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(226,168,75,0.25);
+    }
+    .btn-gold:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 6px 28px rgba(226,168,75,0.38); }
+    .btn-gold:active { transform: translateY(0); opacity: 1; }
+    .cart-btn {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--c-text-2);
+      font-size: 16px;
+      transition: color 0.2s, background 0.2s;
+      text-decoration: none;
+    }
+    .cart-btn:hover { color: var(--c-text); background: var(--c-float); }
+
+    /* Page */
+    .page-wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 96px 32px 80px;
+    }
+
+    /* Hero */
+    .hero {
+      padding: 48px 0 40px;
+      border-bottom: 1px solid var(--c-border);
+      margin-bottom: 32px;
+    }
+    .hero-inner {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: var(--c-text);
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--c-text-2);
+    }
+    .hero-sub {
+      font-size: 15px;
+      color: var(--c-text-2);
+      margin-top: 12px;
+      max-width: 480px;
+    }
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--c-text);
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .count-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--c-gold);
+      margin-right: 8px;
+      box-shadow: 0 0 8px rgba(226,168,75,0.5);
+    }
+
+    /* Sort bar */
+    .sort-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .sort-label {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--c-text-3);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .sort-select {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text);
+      background: var(--c-elevated);
+      border: 1px solid var(--c-border-2);
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239896a8' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .sort-select:focus { border-color: rgba(255,255,255,0.25); }
+    .sort-select option { background: var(--c-float); color: var(--c-text); }
+
+    /* Wishlist grid */
+    .wishlist-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 72px;
+    }
+
+    /* Wishlist card */
+    .wish-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, opacity 0.35s, scale 0.35s;
+    }
+    .wish-card:hover {
+      border-color: var(--c-border-2);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+    }
+    .wish-card.removing {
+      opacity: 0;
+      transform: scale(0.92) translateY(8px);
+      pointer-events: none;
+    }
+
+    /* Remove button */
+    .remove-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 30px; height: 30px;
+      border-radius: 8px;
+      background: rgba(13,13,26,0.85);
+      border: 1px solid var(--c-border-2);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      font-size: 12px;
+      color: var(--c-text-3);
+      z-index: 4;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
+      backdrop-filter: blur(8px);
+    }
+    .remove-btn:hover { background: rgba(255,107,87,0.2); color: var(--c-coral); transform: scale(1.1); border-color: rgba(255,107,87,0.3); }
+    .remove-btn:active { transform: scale(0.95); }
+
+    /* Card thumbnail */
+    .wish-thumb {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .wish-thumb-emoji {
+      font-size: 52px;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    .wish-card:hover .wish-thumb-emoji { transform: scale(1.08); }
+
+    /* Badge */
+    .wish-badge {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 3px 9px;
+      border-radius: 5px;
+      z-index: 3;
+    }
+    .badge-sale { background: var(--c-coral); color: #fff; }
+    .badge-hot { background: var(--c-gold); color: var(--c-base); }
+    .badge-rent { background: rgba(0,212,200,0.15); color: var(--c-cyan); border: 1px solid rgba(0,212,200,0.3); }
+
+    /* Card body */
+    .wish-body { padding: 16px; }
+    .wish-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1.3;
+      color: var(--c-text);
+      margin-bottom: 6px;
+    }
+    .wish-price-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .wish-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--c-text);
+      line-height: 1;
+    }
+    .wish-period {
+      font-size: 12px;
+      color: var(--c-text-3);
+    }
+    .wish-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    .condition-dot-sm {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .wish-seller {
+      font-size: 12px;
+      color: var(--c-text-3);
+    }
+    .wish-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-cart-sm {
+      flex: 1;
+      padding: 9px 12px;
+      background: var(--c-gold);
+      color: var(--c-base);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      box-shadow: 0 3px 12px rgba(226,168,75,0.25);
+    }
+    .btn-cart-sm:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-cart-sm:active { transform: translateY(0); }
+    .btn-remove-sm {
+      padding: 9px 12px;
+      background: transparent;
+      color: var(--c-text-3);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+    .btn-remove-sm:hover { color: var(--c-coral); border-color: rgba(255,107,87,0.3); background: rgba(255,107,87,0.06); }
+
+    /* Empty state */
+    .empty-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 32px;
+      text-align: center;
+    }
+    .empty-state.visible { display: flex; }
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      opacity: 0.4;
+      animation: pulse-icon 3s ease-in-out infinite;
+    }
+    @keyframes pulse-icon {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.08); opacity: 0.6; }
+    }
+    .empty-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+      margin-bottom: 10px;
+    }
+    .empty-sub {
+      font-size: 14px;
+      color: var(--c-text-2);
+      margin-bottom: 28px;
+      max-width: 320px;
+      line-height: 1.65;
+    }
+    .btn-gold-lg {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--c-base);
+      background: var(--c-gold);
+      border: none;
+      padding: 14px 32px;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      box-shadow: 0 4px 24px rgba(226,168,75,0.3);
+    }
+    .btn-gold-lg:hover { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 8px 32px rgba(226,168,75,0.42); }
+
+    /* Suggestions section */
+    .section-wrap {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 32px 72px;
+    }
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 28px;
+      letter-spacing: -0.02em;
+      color: var(--c-text);
+    }
+    .section-title em { font-style: italic; color: var(--c-text-2); }
+    .see-all {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--c-violet);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .see-all:hover { opacity: 0.75; }
+
+    .h-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--c-border-2) transparent;
+    }
+    .h-scroll::-webkit-scrollbar { height: 4px; }
+    .h-scroll::-webkit-scrollbar-track { background: transparent; }
+    .h-scroll::-webkit-scrollbar-thumb { background: var(--c-border-2); border-radius: 2px; }
+
+    .sugg-card {
+      background: var(--c-card);
+      border: 1px solid var(--c-border);
+      border-radius: 14px;
+      overflow: hidden;
+      flex-shrink: 0;
+      width: 240px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .sugg-card:hover {
+      border-color: var(--c-border-2);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+    }
+    .sugg-thumb {
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .sugg-emoji {
+      font-size: 48px;
+      position: relative;
+      z-index: 2;
+      transition: transform 0.3s ease;
+    }
+    .sugg-card:hover .sugg-emoji { transform: scale(1.08); }
+    .sugg-body { padding: 14px; }
+    .sugg-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--c-text);
+      line-height: 1.35;
+      margin-bottom: 6px;
+    }
+    .sugg-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--c-text);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--c-float);
+      border: 1px solid var(--c-border-2);
+      color: var(--c-text);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      z-index: 9998;
+      opacity: 0;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast-icon { font-size: 16px; }
+
+    /* Footer */
+    .footer {
+      background: var(--c-card);
+      border-top: 1px solid var(--c-border);
+      padding: 40px 48px;
+    }
+    .footer-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    .footer-brand { max-width: 260px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 18px; color: var(--c-text); letter-spacing: -0.03em; margin-bottom: 10px; }
+    .footer-tagline { font-size: 13px; color: var(--c-text-3); line-height: 1.6; }
+    .footer-links { display: flex; gap: 56px; }
+    .footer-col-title { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 14px; }
+    .footer-col a { display: block; font-size: 13px; color: var(--c-text-2); text-decoration: none; margin-bottom: 9px; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--c-text); }
+    .footer-copy { margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--c-border); font-size: 12px; color: var(--c-text-3); text-align: center; }
+
+    @media (max-width: 1024px) {
+      .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 20px; }
+      .page-wrap { padding: 80px 20px 60px; }
+      .section-wrap { padding: 0 20px 60px; }
+      .footer { padding: 32px 20px; }
+      .footer-inner { flex-direction: column; }
+      .footer-links { flex-wrap: wrap; gap: 32px; }
+      .wishlist-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Noise overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🛒</span>
+  <span>Added to cart!</span>
+</div>
+
+<!-- Nav -->
+<nav class="nav" role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo">✦ Charm</a>
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="marketplace.html">Marketplace</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="how-it-works.html">How it Works</a>
+    </div>
+    <div class="nav-actions">
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="signup.html" class="btn-gold">Sign Up</a>
+      <a href="marketplace.html" class="cart-btn" aria-label="Cart">🛒</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="page-wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <h1 class="hero-title">Your <em>Wishlist</em></h1>
+        <p class="hero-sub">Items you've saved across the marketplace</p>
+      </div>
+      <div class="count-badge">
+        <div class="count-dot"></div>
+        <span id="itemCountBadge">8 items saved</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sort bar -->
+  <div class="sort-bar">
+    <span class="sort-label">SORT BY:</span>
+    <select class="sort-select" id="sortSelect" onchange="sortWishlist(this.value)" aria-label="Sort wishlist">
+      <option value="date">Date saved</option>
+      <option value="price-asc">Price: Low → High</option>
+      <option value="price-desc">Price: High → Low</option>
+    </select>
+  </div>
+
+  <!-- Wishlist grid -->
+  <div class="wishlist-grid" id="wishlistGrid">
+    <!-- Cards injected by JS -->
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-state" id="emptyState">
+    <div class="empty-icon">🤍</div>
+    <h2 class="empty-title">Your wishlist is empty</h2>
+    <p class="empty-sub">Browse the marketplace to save items you love</p>
+    <a href="marketplace.html" class="btn-gold-lg">Browse Marketplace</a>
+  </div>
+
+</div>
+
+<!-- Divider -->
+<div style="max-width:1440px;margin:0 auto;padding:0 32px;"><hr style="border:none;border-top:1px solid var(--c-border);margin-bottom:64px;"></div>
+
+<!-- You might like -->
+<div class="section-wrap">
+  <div class="section-header">
+    <h2 class="section-title">You might <em>also like</em></h2>
+    <a href="marketplace.html" class="see-all">Browse marketplace →</a>
+  </div>
+  <div class="h-scroll">
+
+    <div class="sugg-card">
+      <div class="sugg-thumb" style="background: linear-gradient(135deg, #0e1800, #161e06);">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(226,168,75,0.3) 0%, transparent 65%);"></div>
+        <span class="sugg-emoji">🔊</span>
+      </div>
+      <div class="sugg-body">
+        <div class="sugg-name">Yamaha HS8 Studio Monitor</div>
+        <div class="sugg-price">£449</div>
+      </div>
+    </div>
+
+    <div class="sugg-card">
+      <div class="sugg-thumb" style="background: linear-gradient(135deg, #1a0606, #220a0a);">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(255,107,87,0.3) 0%, transparent 65%);"></div>
+        <span class="sugg-emoji">🎸</span>
+      </div>
+      <div class="sugg-body">
+        <div class="sugg-name">Gibson Les Paul Standard '60s</div>
+        <div class="sugg-price">£2,299</div>
+      </div>
+    </div>
+
+    <div class="sugg-card">
+      <div class="sugg-thumb" style="background: linear-gradient(135deg, #020c1c, #081420);">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,212,200,0.3) 0%, transparent 65%);"></div>
+        <span class="sugg-emoji">💿</span>
+      </div>
+      <div class="sugg-body">
+        <div class="sugg-name">Ableton Live 12 Suite</div>
+        <div class="sugg-price">£599</div>
+      </div>
+    </div>
+
+    <div class="sugg-card">
+      <div class="sugg-thumb" style="background: linear-gradient(135deg, #1a1100, #281a04);">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(226,168,75,0.3) 0%, transparent 65%);"></div>
+        <span class="sugg-emoji">💡</span>
+      </div>
+      <div class="sugg-body">
+        <div class="sugg-name">Aputure 300D Mark II</div>
+        <div class="sugg-price">£749</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">✦ Charm</div>
+      <p class="footer-tagline">The creative marketplace for every discipline.</p>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">Platform</div>
+        <a href="marketplace.html">Marketplace</a>
+        <a href="#">Pricing</a>
+        <a href="#">How it Works</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Company</div>
+        <a href="#">About</a>
+        <a href="#">Blog</a>
+        <a href="#">Careers</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Support</div>
+        <a href="#">Help</a>
+        <a href="#">Contact</a>
+        <a href="#">Privacy</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-copy">© 2025 Charm.</div>
+</footer>
+
+<script>
+  // ─── Data ───────────────────────────────────────────────────────────────────
+  const WISHLIST_KEY = 'charm-wishlist';
+
+  const ALL_ITEMS = [
+    {
+      id: 'sony-a7iv',
+      name: 'Sony A7 IV Mirrorless Camera Body',
+      price: 2199,
+      priceDisplay: '£2,199',
+      period: null,
+      category: 'cameras',
+      bg: 'linear-gradient(135deg, #0a0720, #170f36)',
+      glowColor: 'rgba(157,111,255,0.3)',
+      emoji: '📷',
+      badge: 'SALE',
+      badgeClass: 'badge-sale',
+      seller: 'ProGear_Rentals',
+      condition: 'Like new',
+      conditionColor: '#e2a84b',
+      dateAdded: 1
+    },
+    {
+      id: 'shure-sm7b',
+      name: 'Shure SM7B Dynamic Microphone',
+      price: 349,
+      priceDisplay: '£349',
+      period: null,
+      category: 'audio',
+      bg: 'linear-gradient(135deg, #051410, #0a2018)',
+      glowColor: 'rgba(0,212,200,0.3)',
+      emoji: '🎙',
+      badge: 'HOT',
+      badgeClass: 'badge-hot',
+      seller: 'SoundGear_UK',
+      condition: 'Like new',
+      conditionColor: '#e2a84b',
+      dateAdded: 2
+    },
+    {
+      id: 'neumann-u87',
+      name: 'Neumann U87 Ai Condenser Mic',
+      price: 149,
+      priceDisplay: '£149',
+      period: '/day',
+      category: 'audio',
+      bg: 'linear-gradient(135deg, #051410, #0a2018)',
+      glowColor: 'rgba(0,212,200,0.3)',
+      emoji: '🎙',
+      badge: 'RENT',
+      badgeClass: 'badge-rent',
+      seller: 'StudioGear_Pro',
+      condition: 'Good',
+      conditionColor: '#9d6fff',
+      dateAdded: 3
+    },
+    {
+      id: 'fender-strat',
+      name: 'Fender Stratocaster USA Std.',
+      price: 1450,
+      priceDisplay: '£1,450',
+      period: null,
+      category: 'instruments',
+      bg: 'linear-gradient(135deg, #1a0606, #220a0a)',
+      glowColor: 'rgba(255,107,87,0.3)',
+      emoji: '🎸',
+      badge: null,
+      badgeClass: null,
+      seller: 'VintageAxes',
+      condition: 'Very good',
+      conditionColor: '#9d6fff',
+      dateAdded: 4
+    },
+    {
+      id: 'dji-ronin-4d',
+      name: 'DJI Ronin 4D Cinema Camera',
+      price: 180,
+      priceDisplay: '£180',
+      period: '/day',
+      category: 'cameras',
+      bg: 'linear-gradient(135deg, #0a0720, #170f36)',
+      glowColor: 'rgba(157,111,255,0.3)',
+      emoji: '📷',
+      badge: 'RENT',
+      badgeClass: 'badge-rent',
+      seller: 'CinemaRigs_London',
+      condition: 'Like new',
+      conditionColor: '#e2a84b',
+      dateAdded: 5
+    },
+    {
+      id: 'ua-apollo-twin',
+      name: 'Universal Audio Apollo Twin X',
+      price: 799,
+      priceDisplay: '£799',
+      period: null,
+      category: 'audio',
+      bg: 'linear-gradient(135deg, #051410, #0a2018)',
+      glowColor: 'rgba(0,212,200,0.3)',
+      emoji: '🎙',
+      badge: 'SALE',
+      badgeClass: 'badge-sale',
+      seller: 'StudioGear_Pro',
+      condition: 'Good',
+      conditionColor: '#9d6fff',
+      dateAdded: 6
+    },
+    {
+      id: 'pioneer-cdj3000',
+      name: 'Pioneer CDJ-3000 Pair',
+      price: 120,
+      priceDisplay: '£120',
+      period: '/day',
+      category: 'dj',
+      bg: 'linear-gradient(135deg, #1a0410, #22091a)',
+      glowColor: 'rgba(255,107,87,0.3)',
+      emoji: '🎧',
+      badge: 'RENT',
+      badgeClass: 'badge-rent',
+      seller: 'DJGearHire',
+      condition: 'Very good',
+      conditionColor: '#9d6fff',
+      dateAdded: 7
+    },
+    {
+      id: 'profoto-b10x',
+      name: 'Profoto B10X Flash Kit',
+      price: 1299,
+      priceDisplay: '£1,299',
+      period: null,
+      category: 'lighting',
+      bg: 'linear-gradient(135deg, #1a1100, #281a04)',
+      glowColor: 'rgba(226,168,75,0.3)',
+      emoji: '💡',
+      badge: null,
+      badgeClass: null,
+      seller: 'LightingPros',
+      condition: 'Like new',
+      conditionColor: '#e2a84b',
+      dateAdded: 8
+    }
+  ];
+
+  // ─── State ───────────────────────────────────────────────────────────────────
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(WISHLIST_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch (e) {}
+    return ALL_ITEMS.map(i => i.id);
+  }
+  function saveState(ids) {
+    try { localStorage.setItem(WISHLIST_KEY, JSON.stringify(ids)); } catch (e) {}
+  }
+
+  let activeIds = loadState();
+  let currentSort = 'date';
+
+  // ─── Render ──────────────────────────────────────────────────────────────────
+  function getActiveItems() {
+    let items = ALL_ITEMS.filter(i => activeIds.includes(i.id));
+    if (currentSort === 'price-asc') items.sort((a, b) => a.price - b.price);
+    else if (currentSort === 'price-desc') items.sort((a, b) => b.price - a.price);
+    else items.sort((a, b) => a.dateAdded - b.dateAdded);
+    return items;
+  }
+
+  function renderGrid() {
+    const items = getActiveItems();
+    const grid = document.getElementById('wishlistGrid');
+    const empty = document.getElementById('emptyState');
+    const badge = document.getElementById('itemCountBadge');
+
+    badge.textContent = items.length === 1 ? '1 item saved' : `${items.length} items saved`;
+
+    if (items.length === 0) {
+      grid.innerHTML = '';
+      grid.style.display = 'none';
+      empty.classList.add('visible');
+      return;
+    }
+
+    empty.classList.remove('visible');
+    grid.style.display = '';
+
+    grid.innerHTML = items.map(item => `
+      <div class="wish-card" id="card-${item.id}" data-id="${item.id}">
+        <button class="remove-btn" onclick="removeItem('${item.id}')" aria-label="Remove ${item.name}">✕</button>
+        <div class="wish-thumb" style="background: ${item.bg};">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, ${item.glowColor} 0%, transparent 65%);"></div>
+          <span class="wish-thumb-emoji">${item.emoji}</span>
+          ${item.badge ? `<span class="wish-badge ${item.badgeClass}">${item.badge}</span>` : ''}
+        </div>
+        <div class="wish-body">
+          <div class="wish-name">${item.name}</div>
+          <div class="wish-price-row">
+            <span class="wish-price">${item.priceDisplay}</span>
+            ${item.period ? `<span class="wish-period">${item.period}</span>` : ''}
+          </div>
+          <div class="wish-meta">
+            <div class="condition-dot-sm" style="background: ${item.conditionColor}; box-shadow: 0 0 6px ${item.conditionColor}60;"></div>
+            <span class="wish-seller">${item.condition} · ${item.seller}</span>
+          </div>
+          <div class="wish-actions">
+            <button class="btn-cart-sm" onclick="addToCart('${item.name}')">Add to Cart</button>
+            <button class="btn-remove-sm" onclick="removeItem('${item.id}')">Remove</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function removeItem(id) {
+    const card = document.getElementById('card-' + id);
+    if (!card) return;
+    card.classList.add('removing');
+    setTimeout(() => {
+      activeIds = activeIds.filter(i => i !== id);
+      saveState(activeIds);
+      renderGrid();
+    }, 350);
+  }
+
+  function sortWishlist(val) {
+    currentSort = val;
+    renderGrid();
+  }
+
+  function addToCart(name) {
+    showToast('🛒', `Added to cart!`);
+  }
+
+  // ─── Toast ───────────────────────────────────────────────────────────────────
+  let toastTimer;
+  function showToast(icon, msg) {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+  }
+
+  // ─── Init ────────────────────────────────────────────────────────────────────
+  renderGrid();
+</script>
+<script src="shared.js"></script>
+</body>
+</html>

@@ -30,7 +30,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
     }
@@ -196,9 +196,9 @@
     <div class="ins-hero-orb-1" aria-hidden="true"></div>
     <div class="ins-hero-orb-2" aria-hidden="true"></div>
     <div class="ins-hero-inner">
-      <div class="shield-icon" aria-hidden="true">🛡️</div>
-      <h1 class="ins-hero-headline">Protect Your <em>Gear</em></h1>
-      <p class="ins-hero-sub">Peace of mind for every rental. Whether you're lending or borrowing, our equipment protection plans keep you covered from checkout to return.</p>
+      <div class="shield-icon" aria-hidden="true" data-appear data-appear-delay="0.1">🛡️</div>
+      <h1 class="ins-hero-headline" data-split="words">Protect Your Gear</h1>
+      <p class="ins-hero-sub" data-appear data-appear-delay="0.5">Peace of mind for every rental. Whether you're lending or borrowing, our equipment protection plans keep you covered from checkout to return.</p>
       <a href="#plans" class="ins-hero-btn">View Protection Plans</a>
     </div>
   </section>
@@ -206,11 +206,11 @@
   <!-- PROTECTION PLANS -->
   <section class="ins-section" id="plans" aria-labelledby="plans-heading">
     <div class="ins-section-inner">
-      <h2 class="ins-section-title" id="plans-heading">Choose Your Protection</h2>
-      <p class="ins-section-sub">Every plan is applied per rental. Cancel or change at any time before your rental starts.</p>
-      <div class="plans-grid">
+      <h2 class="ins-section-title" id="plans-heading" data-reveal="fade-up">Choose Your Protection</h2>
+      <p class="ins-section-sub" data-reveal="fade-up" data-reveal-delay="0.1">Every plan is applied per rental. Cancel or change at any time before your rental starts.</p>
+      <div class="plans-grid" data-stagger-parent>
         <!-- Basic -->
-        <div class="plan-card">
+        <div class="plan-card" data-stagger-child data-tilt>
           <p class="plan-name">Basic Protection</p>
           <p class="plan-price">Free</p>
           <p class="plan-desc">Included with every rental. Covers minor cosmetic wear from normal use.</p>
@@ -226,7 +226,7 @@
         </div>
 
         <!-- Standard (Recommended) -->
-        <div class="plan-card recommended">
+        <div class="plan-card recommended" data-stagger-child data-tilt>
           <span class="plan-badge">Recommended</span>
           <p class="plan-name">Standard Protection</p>
           <p class="plan-price">£2.99 <span>/ rental</span></p>
@@ -243,7 +243,7 @@
         </div>
 
         <!-- Premium -->
-        <div class="plan-card">
+        <div class="plan-card" data-stagger-child data-tilt>
           <p class="plan-name">Premium Protection</p>
           <p class="plan-price">£7.99 <span>/ rental</span></p>
           <p class="plan-desc">Full coverage including theft, loss, and damage up to £5,000. Total peace of mind.</p>
@@ -264,7 +264,7 @@
   <!-- HOW IT WORKS -->
   <section class="ins-section hiw-section" aria-labelledby="hiw-heading">
     <div class="ins-section-inner">
-      <h2 class="ins-section-title" id="hiw-heading">How It Works</h2>
+      <h2 class="ins-section-title" id="hiw-heading" data-reveal="fade-up">How It Works</h2>
       <p class="ins-section-sub">Getting protected takes seconds. Here's the process from checkout to claim.</p>
       <div class="hiw-grid">
         <div class="hiw-step">
@@ -295,21 +295,21 @@
   <section class="ins-section stats-section" aria-labelledby="stats-heading">
     <div class="ins-section-inner">
       <h2 class="sr-only" id="stats-heading">Protection statistics</h2>
-      <div class="stats-grid">
-        <div class="stat-item">
-          <p class="stat-num">£2.4M+</p>
+      <div class="stats-grid" data-stagger-parent>
+        <div class="stat-item" data-stagger-child>
+          <p class="stat-num" data-counter="2.4" data-counter-prefix="£" data-counter-suffix="M+" data-counter-decimals="1">0</p>
           <p class="stat-label">In claims paid out</p>
         </div>
-        <div class="stat-item">
-          <p class="stat-num">98%</p>
+        <div class="stat-item" data-stagger-child>
+          <p class="stat-num" data-counter="98" data-counter-suffix="%">0</p>
           <p class="stat-label">Claim approval rate</p>
         </div>
-        <div class="stat-item">
-          <p class="stat-num">24h</p>
+        <div class="stat-item" data-stagger-child>
+          <p class="stat-num" data-counter="24" data-counter-suffix="h">0</p>
           <p class="stat-label">Average response time</p>
         </div>
-        <div class="stat-item">
-          <p class="stat-num">15,000+</p>
+        <div class="stat-item" data-stagger-child>
+          <p class="stat-num" data-counter="15000" data-counter-suffix="+">0</p>
           <p class="stat-label">Protected rentals</p>
         </div>
       </div>
@@ -319,7 +319,7 @@
   <!-- COVERAGE DETAILS ACCORDION -->
   <section class="ins-section" aria-labelledby="coverage-heading">
     <div class="ins-section-inner">
-      <h2 class="ins-section-title" id="coverage-heading">Coverage Details</h2>
+      <h2 class="ins-section-title" id="coverage-heading" data-reveal="fade-up">Coverage Details</h2>
       <p class="ins-section-sub">Everything you need to know about what's covered and how claims work.</p>
       <div class="accordion-group">
         <div class="accordion-item">
@@ -408,7 +408,7 @@
   <!-- FAQ -->
   <section class="ins-section" style="background: var(--c-card); border-top: 1px solid var(--c-border); border-bottom: 1px solid var(--c-border);" aria-labelledby="faq-heading">
     <div class="ins-section-inner">
-      <h2 class="ins-section-title" id="faq-heading">Frequently Asked Questions</h2>
+      <h2 class="ins-section-title" id="faq-heading" data-reveal="fade-up">Frequently Asked Questions</h2>
       <p class="ins-section-sub">Quick answers to the most common questions about equipment protection.</p>
       <div class="accordion-group">
         <div class="accordion-item">
@@ -500,10 +500,65 @@
     <div class="cta-banner-inner">
       <h2 class="cta-banner-title" id="cta-heading">Rent with confidence</h2>
       <p class="cta-banner-sub">Equipment protection from just £2.99 per rental. Add it at checkout and never worry about accidents again.</p>
-      <a href="marketplace.html" class="cta-banner-btn">Browse Equipment</a>
+      <a href="marketplace.html" class="cta-banner-btn" data-magnetic>Browse Equipment</a>
     </div>
   </section>
 </main>
+
+<footer>
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo"><span class="ft-logo-gem" aria-hidden="true">&#10022;</span> Charm</div>
+        <p class="ft-tagline">The creative marketplace for every discipline.</p>
+        <div class="ft-social">
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Platform</div>
+        <ul class="ft-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Categories</div>
+        <ul class="ft-links">
+          <li><a href="cameras.html">Cameras</a></li>
+          <li><a href="audio.html">Audio</a></li>
+          <li><a href="lighting.html">Lighting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Sellers</div>
+        <ul class="ft-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
+          <li><a href="create-listing.html">Create Listing</a></li>
+          <li><a href="earnings.html">Earnings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Company</div>
+        <ul class="ft-links">
+          <li><a href="#">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="insurance.html">Insurance</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">&copy; 2026 Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></span>
+    </div>
+  </div>
+</footer>
 
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

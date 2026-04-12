@@ -20,7 +20,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
     }
@@ -730,14 +730,20 @@
     <div class="nav-inner">
       <a href="home.html" class="nav-logo"><span>✦</span> Charm</a>
       <ul class="nav-links">
-        <li><a href="home.html">Home</a></li>
         <li><a href="marketplace.html">Marketplace</a></li>
+        <li><a href="how-it-works.html" class="active">How It Works</a></li>
         <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="how-it-works.html" class="active">How it Works</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
       </ul>
       <div class="nav-actions">
+        <a href="search.html" class="nav-icon-btn" aria-label="Search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </a>
+        <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </a>
         <a href="login.html" class="btn-ghost">Login</a>
-        <a href="signup.html" class="btn-gold">Sign Up</a>
+        <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
       </div>
     </div>
   </nav>
@@ -982,20 +988,54 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="footer-inner">
-      <div>
-        <a href="home.html" class="footer-logo"><span>✦</span> Charm</a>
-        <p class="footer-tagline">The platform for creative collaboration.</p>
+      <div class="ft-grid">
+        <div>
+          <a href="home.html" class="footer-logo"><span>✦</span> Charm</a>
+          <p class="footer-tagline">The platform for creative collaboration.</p>
+          <div class="ft-social">
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+          </div>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Platform</div>
+          <ul class="footer-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Categories</div>
+          <ul class="footer-links">
+            <li><a href="cameras.html">Cameras</a></li>
+            <li><a href="audio.html">Audio</a></li>
+            <li><a href="lighting.html">Lighting</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Sellers</div>
+          <ul class="footer-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="create-listing.html">Create Listing</a></li>
+            <li><a href="earnings.html">Earnings</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Company</div>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="insurance.html">Insurance</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
       </div>
-      <div>
-        <ul class="footer-links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="marketplace.html">Marketplace</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="login.html">Login</a></li>
-          <li><a href="signup.html">Sign Up</a></li>
-        </ul>
-        <p class="footer-copy">© 2025 Charm. All rights reserved.</p>
-      </div>
+      <p class="footer-copy">&copy; 2026 Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></p>
     </div>
   </footer>
 

@@ -48,7 +48,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
       --z-sticky: 500;
@@ -653,10 +653,14 @@
         <li><a href="wishlist.html">Wishlist</a></li>
       </ul>
       <div class="nav-right">
-        <a href="messages.html" class="nav-icon-btn" aria-label="Messages">✉</a>
-        <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">🔔</a>
+        <a href="search.html" class="nav-icon-btn" aria-label="Search">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </a>
+        <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        </a>
         <a href="login.html" class="btn-ghost">Login</a>
-        <a href="signup.html" class="btn-gold">+ Add Listing</a>
+        <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
       </div>
       <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -681,7 +685,7 @@
       </div>
       <div class="seller-meta">
         <div class="seller-name-row">
-          <h1 class="seller-name">Marcus Webb</h1>
+          <h1 class="seller-name" data-split="words">Marcus Webb</h1>
           <span class="badge-verified" aria-label="Verified seller">✓ Verified</span>
           <span class="badge-pro" aria-label="Pro seller">◆ Pro Seller</span>
         </div>
@@ -701,10 +705,10 @@
         </div>
       </div>
       <div class="seller-actions">
-        <button class="btn-contact" onclick="document.getElementById('contact-modal').showModal?.() || alert('Message sent!')">
+        <button class="btn-contact" data-magnetic onclick="document.getElementById('contact-modal').showModal?.() || alert('Message sent!')">
           Contact Seller
         </button>
-        <button class="btn-follow" id="follow-btn" onclick="this.classList.toggle('following'); this.textContent = this.classList.contains('following') ? '✓ Following' : '+ Follow'">
+        <button class="btn-follow" data-magnetic id="follow-btn" onclick="this.classList.toggle('following'); this.textContent = this.classList.contains('following') ? '✓ Following' : '+ Follow'">
           + Follow
         </button>
       </div>
@@ -712,21 +716,21 @@
   </div>
 
   <!-- STATS ROW -->
-  <div class="stats-section fade-up delay-1">
-    <div class="stats-row" role="list">
-      <div class="stat-item" role="listitem">
-        <div class="stat-value"><span class="gold">★</span> 4.9</div>
+  <div class="stats-section" data-reveal="fade-up">
+    <div class="stats-row" role="list" data-stagger-parent>
+      <div class="stat-item" role="listitem" data-stagger-child>
+        <div class="stat-value" data-counter="4.9" data-counter-decimals="1" data-counter-prefix="★ ">0</div>
         <div class="stat-label">Rating · 312 reviews</div>
       </div>
-      <div class="stat-item" role="listitem">
-        <div class="stat-value">156</div>
+      <div class="stat-item" role="listitem" data-stagger-child>
+        <div class="stat-value" data-counter="156">0</div>
         <div class="stat-label">Completed Rentals</div>
       </div>
-      <div class="stat-item" role="listitem">
-        <div class="stat-value">98%</div>
+      <div class="stat-item" role="listitem" data-stagger-child>
+        <div class="stat-value" data-counter="98" data-counter-suffix="%">0</div>
         <div class="stat-label">Response Rate</div>
       </div>
-      <div class="stat-item" role="listitem">
+      <div class="stat-item" role="listitem" data-stagger-child>
         <div class="stat-value">&lt; 1hr</div>
         <div class="stat-label">Avg Reply Time</div>
       </div>
@@ -765,13 +769,13 @@
       <!-- Current Listings -->
       <div class="listings-section fade-up delay-3">
         <div class="listings-header">
-          <h2>Current Listings</h2>
+          <h2 data-reveal="fade-up">Current Listings</h2>
           <a href="marketplace.html?seller=1" class="view-all-link">View all 24 →</a>
         </div>
-        <div class="listings-grid" id="listings-grid">
+        <div class="listings-grid" id="listings-grid" data-stagger-parent>
 
           <!-- Listing 1 -->
-          <a href="product.html?id=1" class="listing-card">
+          <a href="product.html?id=1" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #0d0d22 0%, #1a1035 50%, #0a0820 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.6) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -789,7 +793,7 @@
           </a>
 
           <!-- Listing 2 -->
-          <a href="product.html?id=2" class="listing-card">
+          <a href="product.html?id=2" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #1a1008 0%, #2a1f08 50%, #140e04 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(226,168,75,0.65) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -807,7 +811,7 @@
           </a>
 
           <!-- Listing 3 -->
-          <a href="product.html?id=3" class="listing-card">
+          <a href="product.html?id=3" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #08141a 0%, #0f2030 50%, #061018 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(0,212,200,0.5) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -825,7 +829,7 @@
           </a>
 
           <!-- Listing 4 -->
-          <a href="product.html?id=4" class="listing-card">
+          <a href="product.html?id=4" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #140a1a 0%, #220e2e 50%, #100818 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.5) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -843,7 +847,7 @@
           </a>
 
           <!-- Listing 5 -->
-          <a href="product.html?id=5" class="listing-card">
+          <a href="product.html?id=5" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #0a180a 0%, #122018 50%, #081008 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(34,197,94,0.4) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -861,7 +865,7 @@
           </a>
 
           <!-- Listing 6 -->
-          <a href="product.html?id=6" class="listing-card">
+          <a href="product.html?id=6" class="listing-card" data-stagger-child data-tilt>
             <div class="listing-thumb" style="background: linear-gradient(135deg, #1a0808 0%, #2a1010 50%, #140606 100%);">
               <div class="listing-thumb-glow" style="background: radial-gradient(circle, rgba(255,107,87,0.45) 0%, transparent 70%);"></div>
               <div class="listing-thumb-overlay"></div>
@@ -1123,6 +1127,61 @@
       ✉ Message Marcus Webb
     </button>
   </div>
+
+  <footer>
+    <div class="ft-inner">
+      <div class="ft-grid">
+        <div>
+          <div class="ft-logo"><span class="ft-logo-gem" aria-hidden="true">&#10022;</span> Charm</div>
+          <p class="ft-tagline">The creative marketplace for every discipline.</p>
+          <div class="ft-social">
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+            <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+          </div>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Platform</div>
+          <ul class="ft-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="how-it-works.html">How It Works</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Categories</div>
+          <ul class="ft-links">
+            <li><a href="cameras.html">Cameras</a></li>
+            <li><a href="audio.html">Audio</a></li>
+            <li><a href="lighting.html">Lighting</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Sellers</div>
+          <ul class="ft-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="analytics.html">Analytics</a></li>
+            <li><a href="create-listing.html">Create Listing</a></li>
+            <li><a href="earnings.html">Earnings</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="ft-col-ttl">Company</div>
+          <ul class="ft-links">
+            <li><a href="#">About</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="insurance.html">Insurance</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="ft-bottom">
+        <span class="ft-copy">&copy; 2026 Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></span>
+      </div>
+    </div>
+  </footer>
 
   <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

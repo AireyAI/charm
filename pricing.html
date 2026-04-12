@@ -23,7 +23,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
     }
@@ -488,14 +488,20 @@
       Charm
     </a>
     <ul class="nav-links">
-      <li><a href="home.html">Home</a></li>
       <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
       <li><a href="pricing.html" class="active">Pricing</a></li>
-      <li><a href="how-it-works.html">How it Works</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
     </ul>
     <div class="nav-right">
-      <a href="#" class="btn-ghost">Login</a>
-      <a href="signup.html" class="btn-gold">Sign Up</a>
+      <a href="search.html" class="nav-icon-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </a>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
     </div>
   </div>
 </nav>
@@ -767,23 +773,58 @@
 <!-- Footer -->
 <footer class="footer">
   <div class="footer-inner">
-    <div class="footer-logo-block">
-      <a href="home.html" class="footer-logo">
-        <span class="logo-gem" style="width:24px;height:24px;border-radius:6px;font-size:12px">✦</span>
-        Charm
-      </a>
-      <p class="footer-tagline">The creative platform for makers.</p>
+    <div class="ft-grid">
+      <div class="footer-logo-block">
+        <a href="home.html" class="footer-logo">
+          <span class="logo-gem" style="width:24px;height:24px;border-radius:6px;font-size:12px">✦</span>
+          Charm
+        </a>
+        <p class="footer-tagline">The creative platform for makers.</p>
+        <div class="ft-social">
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Platform</div>
+        <nav class="footer-links" aria-label="Footer - Platform">
+          <a href="home.html">Home</a>
+          <a href="marketplace.html">Marketplace</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="how-it-works.html">How It Works</a>
+        </nav>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Categories</div>
+        <nav class="footer-links" aria-label="Footer - Categories">
+          <a href="cameras.html">Cameras</a>
+          <a href="audio.html">Audio</a>
+          <a href="lighting.html">Lighting</a>
+        </nav>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Sellers</div>
+        <nav class="footer-links" aria-label="Footer - Sellers">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="analytics.html">Analytics</a>
+          <a href="create-listing.html">Create Listing</a>
+          <a href="earnings.html">Earnings</a>
+        </nav>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Company</div>
+        <nav class="footer-links" aria-label="Footer - Company">
+          <a href="#">About</a>
+          <a href="blog.html">Blog</a>
+          <a href="insurance.html">Insurance</a>
+          <a href="#">Contact</a>
+        </nav>
+      </div>
     </div>
-    <nav class="footer-links" aria-label="Footer">
-      <a href="home.html">Home</a>
-      <a href="marketplace.html">Marketplace</a>
-      <a href="pricing.html">Pricing</a>
-      <a href="#">How it Works</a>
-      <a href="#">About</a>
-      <a href="mailto:hello@charm.space">Contact</a>
-    </nav>
   </div>
-  <div class="footer-bottom">© 2025 Charm. All rights reserved.</div>
+  <div class="footer-bottom">&copy; 2026 Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></div>
 </footer>
 
 <script>

@@ -30,7 +30,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
       --z-sticky: 500;
@@ -64,6 +64,15 @@
     p { text-wrap: pretty; }
     img { display: block; max-width: 100%; height: auto; }
     input, button, select { font: inherit; }
+
+    /* Link distinguishability — underline text links (not just on hover) */
+    .page-breadcrumb a, .p-seller a, .ft-links a { text-decoration: underline; text-decoration-color: rgba(255,255,255,0.2); text-underline-offset: 3px; }
+    .page-breadcrumb a:hover, .p-seller a:hover, .ft-links a:hover { text-decoration-color: currentColor; }
+    /* Touch targets — minimum 44px */
+    .btn-clear, .view-btn, .cart-close, .qv-close, .sell-modal-close { min-width: 44px; min-height: 44px; }
+    .cat-pill { min-height: 44px; }
+    .filter-check input[type="checkbox"] { min-width: 20px; min-height: 20px; }
+    .nav-icon-btn { min-width: 44px; min-height: 44px; }
 
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
@@ -1263,24 +1272,22 @@
       Charm
     </a>
 
-    <div class="nav-search" role="search">
-      <svg class="nav-search-ico" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="search" id="nav-search-input" placeholder="Search equipment, gear, instruments..."
-        autocomplete="off" aria-label="Search marketplace" enterkeyhint="search"
-        aria-autocomplete="list" aria-controls="nav-search-results" aria-expanded="false">
-      <div id="nav-search-results" role="listbox" aria-label="Search suggestions" hidden></div>
-    </div>
+    <ul class="nav-links">
+      <li><a href="marketplace.html" class="active">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+    </ul>
 
     <div class="nav-right">
-      <a href="how-it-works.html" class="btn-ghost">How It Works</a>
-      <a href="pricing.html" class="btn-ghost">Pricing</a>
-      <a href="wishlist.html" class="btn-ghost">Wishlist</a>
+      <a href="search.html" class="nav-icon-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </a>
       <a href="login.html" class="btn-ghost">Login</a>
-      <button class="cart-btn" id="cart-trigger" onclick="openCart()" aria-label="Cart, 0 items">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-        Cart
-        <span class="cart-count" id="cart-badge" aria-live="polite">0</span>
-      </button>
+      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
     </div>
   </div>
 </nav>
@@ -1430,7 +1437,7 @@
     </div>
 
     <!-- Product grid -->
-    <div class="product-grid" id="product-grid" aria-label="Products"></div>
+    <section class="product-grid" id="product-grid" aria-label="Products"></section>
 
     <!-- Load more -->
     <div class="load-more-wrap">
@@ -1503,9 +1510,55 @@
 <!-- ════════ FOOTER ════════ -->
 <footer>
   <div class="ft-inner">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo"><span class="ft-logo-gem" aria-hidden="true">&#10022;</span> Charm</div>
+        <p class="ft-tagline">The creative marketplace for every discipline.</p>
+        <div class="ft-social">
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Platform</div>
+        <ul class="ft-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Categories</div>
+        <ul class="ft-links">
+          <li><a href="cameras.html">Cameras</a></li>
+          <li><a href="audio.html">Audio</a></li>
+          <li><a href="lighting.html">Lighting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Sellers</div>
+        <ul class="ft-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
+          <li><a href="create-listing.html">Create Listing</a></li>
+          <li><a href="earnings.html">Earnings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Company</div>
+        <ul class="ft-links">
+          <li><a href="#">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="insurance.html">Insurance</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="ft-bottom">
-      <span class="ft-copy">© <span id="copy-year"></span> Charm. All rights reserved. · <a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Cookies</a></span>
-      <span class="ft-copy">The creative marketplace for every discipline.</span>
+      <span class="ft-copy">&copy; <span id="copy-year"></span> Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></span>
     </div>
   </div>
 </footer>

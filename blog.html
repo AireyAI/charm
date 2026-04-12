@@ -50,7 +50,7 @@
       --c-cyan: #00d4c8;
       --c-text: #f0ece3;
       --c-text-2: #9896a8;
-      --c-text-3: #5a586e;
+      --c-text-3: #8886a0;
       --c-border: rgba(255,255,255,0.07);
       --c-border-2: rgba(255,255,255,0.13);
       --z-below: -1;
@@ -123,6 +123,14 @@
       padding: 0; margin: -1px; overflow: hidden;
       clip: rect(0,0,0,0); white-space: nowrap; border: 0;
     }
+
+    /* Link distinguishability — always underline text links */
+    .article-title a, .read-link, .ft-links a { text-decoration: underline; text-decoration-color: rgba(255,255,255,0.2); text-underline-offset: 3px; }
+    .article-title a:hover, .read-link:hover, .ft-links a:hover { text-decoration-color: currentColor; }
+    /* Touch targets — minimum 44px */
+    .pill { min-height: 44px; }
+    .nav-icon { min-width: 44px; min-height: 44px; }
+    .soc-btn { min-width: 44px; min-height: 44px; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -727,9 +735,9 @@
       <a href="search.html" class="nav-icon" aria-label="Search">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       </a>
-      <button class="nav-icon" aria-label="Notifications">
+      <a href="notifications.html" class="nav-icon" aria-label="Notifications">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      </button>
+      </a>
       <a href="login.html" class="btn-ghost">Login</a>
       <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
     </div>
@@ -747,7 +755,7 @@
   <div class="blog-hero-inner">
     <h1 id="blog-heading" class="sr-only">Charm Blog — Creator Spotlight & Stories</h1>
 
-    <article class="featured-card reveal">
+    <article class="featured-card" data-reveal="fade-up">
       <div class="featured-img" aria-hidden="true">
         <div class="featured-img-deco"></div>
       </div>
@@ -772,12 +780,12 @@
 <!-- ════════════════ CATEGORY FILTER ════════════════ -->
 <div class="filter-sec reveal">
   <ul class="filter-pills" role="tablist" aria-label="Filter articles by category">
-    <li><button class="pill active" role="tab" aria-selected="true" data-filter="all">All</button></li>
-    <li><button class="pill" role="tab" aria-selected="false" data-filter="spotlight">Creator Spotlights</button></li>
-    <li><button class="pill" role="tab" aria-selected="false" data-filter="review">Gear Reviews</button></li>
-    <li><button class="pill" role="tab" aria-selected="false" data-filter="tutorial">Tutorials</button></li>
-    <li><button class="pill" role="tab" aria-selected="false" data-filter="news">Industry News</button></li>
-    <li><button class="pill" role="tab" aria-selected="false" data-filter="bts">Behind the Scenes</button></li>
+    <li role="presentation"><button class="pill active" role="tab" id="tab-all" aria-selected="true" aria-controls="articles-panel" data-filter="all">All</button></li>
+    <li role="presentation"><button class="pill" role="tab" id="tab-spotlight" aria-selected="false" aria-controls="articles-panel" data-filter="spotlight">Creator Spotlights</button></li>
+    <li role="presentation"><button class="pill" role="tab" id="tab-review" aria-selected="false" aria-controls="articles-panel" data-filter="review">Gear Reviews</button></li>
+    <li role="presentation"><button class="pill" role="tab" id="tab-tutorial" aria-selected="false" aria-controls="articles-panel" data-filter="tutorial">Tutorials</button></li>
+    <li role="presentation"><button class="pill" role="tab" id="tab-news" aria-selected="false" aria-controls="articles-panel" data-filter="news">Industry News</button></li>
+    <li role="presentation"><button class="pill" role="tab" id="tab-bts" aria-selected="false" aria-controls="articles-panel" data-filter="bts">Behind the Scenes</button></li>
   </ul>
 </div>
 
@@ -785,10 +793,10 @@
 <div class="blog-body">
 
   <!-- GRID -->
-  <div class="article-grid" role="tabpanel" aria-label="Articles">
+  <div class="article-grid" role="tabpanel" id="articles-panel" aria-labelledby="tab-all">
 
     <!-- 1 — Tall card -->
-    <article class="article-card tall reveal" data-category="spotlight">
+    <article class="article-card tall" data-reveal="fade-up" data-category="spotlight">
       <div class="article-thumb thumb-spotlight">
         <span class="badge badge-spotlight">Creator Spotlight</span>
         <div class="thumb-icon">&#127909;</div>
@@ -808,7 +816,7 @@
     </article>
 
     <!-- 2 -->
-    <article class="article-card reveal reveal-d1" data-category="review">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.1" data-category="review">
       <div class="article-thumb thumb-review">
         <span class="badge badge-review">Gear Reviews</span>
         <div class="thumb-icon">&#127911;</div>
@@ -828,7 +836,7 @@
     </article>
 
     <!-- 3 -->
-    <article class="article-card reveal reveal-d2" data-category="tutorial">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.2" data-category="tutorial">
       <div class="article-thumb thumb-tutorial">
         <span class="badge badge-tutorial">Tutorials</span>
         <div class="thumb-icon">&#128161;</div>
@@ -848,7 +856,7 @@
     </article>
 
     <!-- 4 -->
-    <article class="article-card reveal" data-category="news">
+    <article class="article-card" data-reveal="fade-up" data-category="news">
       <div class="article-thumb thumb-news">
         <span class="badge badge-news">Industry News</span>
         <div class="thumb-icon">&#128200;</div>
@@ -868,7 +876,7 @@
     </article>
 
     <!-- 5 -->
-    <article class="article-card reveal reveal-d1" data-category="bts">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.1" data-category="bts">
       <div class="article-thumb thumb-bts">
         <span class="badge badge-bts">Behind the Scenes</span>
         <div class="thumb-icon">&#127916;</div>
@@ -888,7 +896,7 @@
     </article>
 
     <!-- 6 -->
-    <article class="article-card reveal reveal-d2" data-category="review">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.2" data-category="review">
       <div class="article-thumb thumb-review">
         <span class="badge badge-review">Gear Reviews</span>
         <div class="thumb-icon">&#127908;</div>
@@ -908,7 +916,7 @@
     </article>
 
     <!-- 7 -->
-    <article class="article-card reveal" data-category="spotlight">
+    <article class="article-card" data-reveal="fade-up" data-category="spotlight">
       <div class="article-thumb thumb-spotlight">
         <span class="badge badge-spotlight">Creator Spotlight</span>
         <div class="thumb-icon">&#9733;</div>
@@ -928,7 +936,7 @@
     </article>
 
     <!-- 8 -->
-    <article class="article-card reveal reveal-d1" data-category="tutorial">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.1" data-category="tutorial">
       <div class="article-thumb thumb-tutorial">
         <span class="badge badge-tutorial">Tutorials</span>
         <div class="thumb-icon">&#127912;</div>
@@ -948,7 +956,7 @@
     </article>
 
     <!-- 9 -->
-    <article class="article-card reveal reveal-d2" data-category="news">
+    <article class="article-card" data-reveal="fade-up" data-reveal-delay="0.2" data-category="news">
       <div class="article-thumb thumb-news">
         <span class="badge badge-news">Industry News</span>
         <div class="thumb-icon">&#127881;</div>
@@ -1036,14 +1044,14 @@
 </div>
 
 <!-- ════════════════ NEWSLETTER CTA ════════════════ -->
-<section class="newsletter-sec reveal" aria-labelledby="newsletter-heading">
+<section class="newsletter-sec" data-reveal="fade-up" aria-labelledby="newsletter-heading">
   <div class="newsletter-card">
-    <h2 id="newsletter-heading" class="newsletter-title">Stay in the loop</h2>
-    <p class="newsletter-sub">Get weekly creator stories, gear reviews, and insider tips delivered to your inbox every Thursday.</p>
-    <form class="newsletter-form" action="#" method="post" aria-label="Newsletter signup">
+    <h2 id="newsletter-heading" class="newsletter-title" data-split="words">Stay in the loop</h2>
+    <p class="newsletter-sub" data-reveal="fade-up" data-reveal-delay="0.1">Get weekly creator stories, gear reviews, and insider tips delivered to your inbox every Thursday.</p>
+    <form class="newsletter-form" action="#" method="post" aria-label="Newsletter signup" data-reveal="fade-up" data-reveal-delay="0.2">
       <label for="newsletter-email" class="sr-only">Email address</label>
       <input type="email" id="newsletter-email" class="newsletter-input" placeholder="you@email.com" required autocomplete="email">
-      <button type="submit" class="btn-gold">Subscribe</button>
+      <button type="submit" class="btn-gold" data-magnetic>Subscribe</button>
     </form>
   </div>
 </section>
@@ -1079,19 +1087,18 @@
       <div>
         <div class="ft-col-ttl">Categories</div>
         <ul class="ft-links">
-          <li><a href="#">Cameras</a></li>
-          <li><a href="#">Audio</a></li>
-          <li><a href="#">Lighting</a></li>
-          <li><a href="#">Instruments</a></li>
+          <li><a href="cameras.html">Cameras</a></li>
+          <li><a href="audio.html">Audio</a></li>
+          <li><a href="lighting.html">Lighting</a></li>
         </ul>
       </div>
       <div>
         <div class="ft-col-ttl">Sellers</div>
         <ul class="ft-links">
           <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="#">Analytics</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
           <li><a href="create-listing.html">Create Listing</a></li>
-          <li><a href="#">Earnings</a></li>
+          <li><a href="earnings.html">Earnings</a></li>
         </ul>
       </div>
       <div>
@@ -1099,13 +1106,13 @@
         <ul class="ft-links">
           <li><a href="#">About</a></li>
           <li><a href="blog.html">Blog</a></li>
-          <li><a href="#">Careers</a></li>
+          <li><a href="insurance.html">Insurance</a></li>
           <li><a href="#">Contact</a></li>
         </ul>
       </div>
     </div>
     <div class="ft-bottom">
-      <span class="ft-copy">&copy; <span id="copy-year"></span> Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a> &middot; <a href="#">Insurance</a></span>
+      <span class="ft-copy">&copy; <span id="copy-year"></span> Charm. All rights reserved. &middot; <a href="#">Terms</a> &middot; <a href="#">Privacy</a> &middot; <a href="#">Cookies</a></span>
       <div class="ft-langs">
         <button class="lang-btn on" type="button">EN</button>
         <button class="lang-btn" type="button">PT</button>
@@ -1159,6 +1166,7 @@
       pills.forEach(p => { p.classList.remove('active'); p.setAttribute('aria-selected', 'false'); });
       pill.classList.add('active');
       pill.setAttribute('aria-selected', 'true');
+      document.getElementById('articles-panel').setAttribute('aria-labelledby', pill.id);
 
       const filter = pill.dataset.filter;
       cards.forEach(card => {

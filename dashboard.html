@@ -856,6 +856,7 @@
   </div>
 </nav>
 
+<script src="charm-db.js"></script>
 <script>
   // ── Reveal on scroll (IntersectionObserver) ──
   const reveals = document.querySelectorAll('.reveal');
@@ -885,6 +886,144 @@
       link.classList.add('active');
     });
   });
+
+  // ── Dynamic dashboard data from CharmDB ──
+  async function loadDashboard() {
+    if (!window.CharmDB) return;
+    const user = CharmDB.Auth.currentUser();
+    if (!user) {
+      window.location.href = 'login.html';
+      return;
+    }
+
+    // Update greeting
+    const greeting = document.querySelector('.topbar-greeting');
+    if (greeting) {
+      const hour = new Date().getHours();
+      const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      greeting.textContent = `${timeGreeting}, ${user.name.split(' ')[0]} 👋`;
+    }
+
+    // Update avatar
+    const avatar = document.querySelector('.topbar-right .avatar');
+    if (avatar) avatar.textContent = user.avatar;
+
+    // Update date
+    const dateEl = document.querySelector('.topbar-date');
+    if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Load user's listings
+    const myListings = await CharmDB.Listings.mine();
+    const totalViews = myListings.reduce((s, l) => s + (l.views || 0), 0);
+
+    // Load bookings
+    const incoming = await CharmDB.Bookings.incomingBookings();
+    const confirmed = incoming.filter(b => b.status === 'confirmed' || b.status === 'completed');
+    const totalEarnings = confirmed.reduce((s, b) => s + (b.total || 0), 0);
+
+    // Update stats
+    const statValues = document.querySelectorAll('.stat-value');
+    if (statValues.length >= 4) {
+      statValues[0].textContent = `£${totalEarnings.toLocaleString()}`;
+      statValues[1].textContent = myListings.length;
+      statValues[2].textContent = totalViews.toLocaleString();
+      statValues[3].textContent = user.rating ? `${user.rating}★` : 'New';
+    }
+
+    // Update listings strip
+    const listingsScroll = document.querySelector('.listings-scroll');
+    if (listingsScroll && myListings.length > 0) {
+      listingsScroll.innerHTML = myListings.map(l => `
+        <div class="listing-card" onclick="window.location.href='product.html?id=${l.id}'">
+          <div class="listing-thumb" style="${l.images[0] ? `background-image:url('${l.images[0]}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg,#0d0d24,#1a0a32);'}">
+            ${!l.images[0] ? '<span class="listing-thumb-emoji">📦</span>' : ''}
+          </div>
+          <div class="listing-info">
+            <div class="listing-name">${l.title}</div>
+            <div class="listing-meta">
+              <span class="listing-price">£${l.priceRent || l.priceBuy}${l.type === 'rent' ? '/day' : ''}</span>
+              <span class="status-badge status-active">${l.availability === 'available' ? 'Active' : 'Booked'}</span>
+            </div>
+            <div class="listing-views">${l.views || 0} views</div>
+          </div>
+        </div>
+      `).join('');
+    } else if (listingsScroll) {
+      listingsScroll.innerHTML = '<div style="padding:24px;text-align:center;color:var(--c-text-3);font-family:\'DM Sans\',sans-serif;"><p>No listings yet</p><a href="create-listing.html" style="color:var(--c-gold);text-decoration:underline;text-underline-offset:3px;">Create your first listing</a></div>';
+    }
+
+    // Update activity feed with real notifications + bookings
+    const actList = document.querySelector('.activity-list');
+    if (actList) {
+      const notifs = CharmDB.Notifications.forCurrentUser().slice(0, 5);
+      const pendingBookings = incoming.filter(b => b.status === 'pending');
+
+      let actHTML = '';
+      // Show pending booking requests first
+      pendingBookings.forEach(b => {
+        actHTML += `
+          <li class="activity-item">
+            <div class="act-icon cyan">📅</div>
+            <div class="act-body">
+              <div class="act-desc"><strong>Booking request</strong> — ${b.bookerName} wants "${b.listingTitle}"</div>
+              <div class="act-meta">£${b.total} · ${b.days} day${b.days>1?'s':''} · ${new Date(b.startDate).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</div>
+              <div style="margin-top:8px;display:flex;gap:8px;">
+                <button onclick="handleBooking('${b.id}','confirmed')" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:6px;padding:6px 14px;cursor:pointer;">Accept</button>
+                <button onclick="handleBooking('${b.id}','declined')" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--c-text-3);background:transparent;border:1px solid var(--c-border);border-radius:6px;padding:6px 14px;cursor:pointer;">Decline</button>
+              </div>
+            </div>
+            <span class="act-time">${timeAgo(b.createdAt)}</span>
+          </li>`;
+      });
+
+      // Add notifications
+      notifs.forEach(n => {
+        const icons = { booking_request: '📅', booking_confirmed: '✅', booking_declined: '❌', booking_cancelled: '⚠️' };
+        actHTML += `
+          <li class="activity-item">
+            <div class="act-icon ${n.type.includes('confirmed') ? 'gold' : 'violet'}">${icons[n.type] || '🔔'}</div>
+            <div class="act-body">
+              <div class="act-desc">${n.message}</div>
+            </div>
+            <span class="act-time">${timeAgo(n.createdAt)}</span>
+          </li>`;
+      });
+
+      if (actHTML) actList.innerHTML = actHTML;
+    }
+
+    // Update notification count
+    const notifBtn = document.querySelector('.notif-btn');
+    const unread = CharmDB.Notifications.unreadCount();
+    if (notifBtn) {
+      const pip = notifBtn.querySelector('.notif-pip');
+      if (pip) pip.style.display = unread > 0 ? '' : 'none';
+      notifBtn.setAttribute('aria-label', `Notifications (${unread} unread)`);
+    }
+  }
+
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'Just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    const days = Math.floor(hrs / 24);
+    return `${days}d ago`;
+  }
+
+  async function handleBooking(id, status) {
+    try {
+      await CharmDB.Bookings.updateStatus(id, status);
+      loadDashboard(); // Refresh
+    } catch (e) { alert(e.message); }
+  }
+
+  // Load on DOM ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadDashboard);
+  } else { loadDashboard(); }
 </script>
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

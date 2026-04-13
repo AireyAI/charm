@@ -1524,7 +1524,7 @@
         <div class="sell-cta-stat"><strong>£0</strong> First sale fee</div>
         <div class="sell-cta-stat"><strong>60+</strong> Countries</div>
       </div>
-      <button class="btn-gold" style="padding:13px 28px;font-size:14px;" onclick="openSellModal()">Start selling →</button>
+      <button class="btn-gold" style="padding:13px 28px;font-size:14px;" id="sell-cta-btn" onclick="openSellModal()">Start selling →</button>
     </div>
   </div>
 </div>
@@ -1623,6 +1623,7 @@
   </div>
 </footer>
 
+<script src="charm-db.js"></script>
 <script>
   // ─── Global error handling ───────────────────────────────────────────
   window.onerror = (msg, src, line) => { console.error('Error:', msg); return false; };
@@ -1666,35 +1667,62 @@
     toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
   }
 
-  // ─── Product data ────────────────────────────────────────────────────
-  const PRODUCTS = [
-    { id:1,  cat:'cameras',     icon:'📷', name:'Sony A7 IV Mirrorless',                seller:'ProGear_Rentals',     price:2199, priceLabel:'£2,199',     wasPrice:'£2,499', condition:'Like new', condKey:'like-new',  rating:4.9, reviews:47,  badge:'sale', type:'buy',  shipping:['ships-worldwide'],                desc:'Full-frame mirrorless powerhouse. 33MP BSI-CMOS sensor, 4K/120p video, real-time tracking AF. Barely used, body only.' },
-    { id:2,  cat:'audio',       icon:'🎙', name:'Shure SM7B Microphone',                seller:'StudioKit_UK',        price:349,  priceLabel:'£349',        condition:'New',     condKey:'new',       rating:4.8, reviews:132, badge:'hot',  type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'Industry-standard broadcast mic. Flat frequency response, air suspension shock isolation, internal pop filter.' },
-    { id:3,  cat:'lighting',    icon:'💡', name:'Aputure 600D Pro Light',               seller:'FilmLights_Berlin',   price:55,   priceLabel:'£55/day',     condition:'Good',    condKey:'good',      rating:4.7, reviews:28,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'600W daylight LED fresnel. Sidus Link app control, weather resistant, works with all Bowens mount modifiers.' },
-    { id:4,  cat:'instruments', icon:'🎸', name:'Fender Stratocaster USA',              seller:'VintageTones',        price:1450, priceLabel:'£1,450',      condition:'Good',    condKey:'good',      rating:4.9, reviews:19,  badge:'new',  type:'buy',  shipping:['ships-worldwide'],                desc:'American Professional II Strat. Alder body, maple neck, V-Mod II pickups. Sunset color, original case included.' },
-    { id:5,  cat:'cameras',     icon:'🎬', name:'DJI Ronin 4D Cinema Camera',           seller:'CineRental_Paris',    price:180,  priceLabel:'£180/day',    condition:'Like new',condKey:'like-new',  rating:5.0, reviews:11,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'6K full-frame cinema camera with built-in 4-axis stabilisation, LiDAR focus, wireless monitoring.' },
-    { id:6,  cat:'props',       icon:'🎭', name:'Vintage Neon Sign Set',                seller:'PropHouse_LDN',       price:80,   priceLabel:'£80/day',     condition:'Good',    condKey:'good',      rating:4.6, reviews:34,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'Set of 5 handcrafted neon signs in various colours. Perfect for music videos, portrait shoots, events.' },
-    { id:7,  cat:'audio',       icon:'🎛', name:'Universal Audio Apollo Twin X',        seller:'AudioKit_Studio',     price:799,  priceLabel:'£799',        wasPrice:'£999',   condition:'Like new',condKey:'like-new',  rating:4.9, reviews:67,  badge:'sale', type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'Thunderbolt 3 desktop interface with Unison preamp technology. 2 Unison mic preamps, realtime UAD plugin processing.' },
-    { id:8,  cat:'cameras',     icon:'🔭', name:'Canon RF 50mm f/1.2L Lens',           seller:'OpticsRental',        price:45,   priceLabel:'£45/day',     condition:'New',     condKey:'new',       rating:4.8, reviews:55,  badge:'rent', type:'rent', shipping:['ships-worldwide'],                desc:'Outstanding corner-to-corner sharpness wide open. Nano USM, fluorine coating, weather sealed.' },
-    { id:9,  cat:'dj',          icon:'🎧', name:'Pioneer CDJ-3000 Pair + DJM-900',     seller:'DJEquip_Ibiza',       price:120,  priceLabel:'£120/day',    condition:'New',     condKey:'new',       rating:4.9, reviews:88,  badge:'hot',  type:'rent', shipping:['local-pickup'],                   desc:'The industry benchmark DJ setup. CDJ-3000 players with 9" touchscreen and flagship DJM-900NXS2 mixer.' },
-    { id:10, cat:'studio',      icon:'🔊', name:'Adam Audio T7V Monitors (pair)',       seller:'StudioGear_NYC',      price:349,  priceLabel:'£349',        condition:'New',     condKey:'new',       rating:4.7, reviews:29,  badge:'new',  type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'7-inch studio monitors with ART ribbon tweeter. Extended frequency response, precise stereo imaging, no harshness.' },
-    { id:11, cat:'instruments', icon:'🥁', name:'Roland TD-50X Electronic Drums',      seller:'PercussionHub',       price:95,   priceLabel:'£95/day',     condition:'Good',    condKey:'good',      rating:4.5, reviews:16,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'Flagship electronic drum kit. Multi-sensor mesh snare/toms, DHD module with 25 kits, acoustic modelling.' },
-    { id:12, cat:'lighting',    icon:'⚡', name:'Profoto B10X Plus Flash Kit',         seller:'LightingPro_BCN',     price:1299, priceLabel:'£1,299',      condition:'Like new',condKey:'like-new',  rating:4.8, reviews:41,  badge:'new',  type:'buy',  shipping:['ships-worldwide'],                desc:'250Ws portable strobe with HSS up to 1/80000s. 10-stop power range, TTL support, integrated softbox included.' },
-    { id:13, cat:'cameras',     icon:'📸', name:'Hasselblad X2D 100C Medium Format',   seller:'MediumFormatRentals', price:350,  priceLabel:'£350/day',    condition:'Like new',condKey:'like-new',  rating:5.0, reviews:8,   badge:'hot',  type:'rent', shipping:['local-pickup'],                   desc:'100MP medium format mirrorless. 16-stop dynamic range, in-body stabilisation, Phocus Mobile 2 integration.' },
-    { id:14, cat:'audio',       icon:'🎚', name:'SSL 2+ USB Audio Interface',          seller:'RecordingKit_DE',     price:189,  priceLabel:'£189',        condition:'New',     condKey:'new',       rating:4.6, reviews:74,  badge:null,   type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'Legendary SSL console sound in a compact interface. Legacy 4K mode, monitor controller, dual headphone outputs.' },
-    { id:15, cat:'props',       icon:'🪴', name:'Studio Backdrop Stand + 3 Rolls',    seller:'StudioProps_MAN',     price:35,   priceLabel:'£35/day',     condition:'Good',    condKey:'good',      rating:4.4, reviews:52,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'3m wide backdrop system, seamless white, grey and forest green rolls included. Height adjustable.' },
-    { id:16, cat:'dj',          icon:'🎹', name:'Arturia MiniFreak Synthesiser',       seller:'SynthWave_UK',        price:329,  priceLabel:'£329',        wasPrice:'£449',   condition:'Like new',condKey:'like-new',  rating:4.7, reviews:23,  badge:'sale', type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'6-voice hybrid synth. Digital oscillators, analogue filter, 16-step sequencer. 500+ factory presets.' },
-    { id:17, cat:'software',    icon:'💿', name:'Native Instruments Komplete 14 Ult.', seller:'SoftwareDirect',      price:399,  priceLabel:'£399',        wasPrice:'£599',   condition:'New',     condKey:'new',       rating:4.8, reviews:105, badge:'sale', type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'130+ instruments and effects. Kontakt, Massive X, Battery 4, Reaktor and all major production tools.' },
-    { id:18, cat:'studio',      icon:'🎞', name:'Elgato Key Light Air Panel',          seller:'StreamerGear_ES',     price:79,   priceLabel:'£79',         condition:'New',     condKey:'new',       rating:4.5, reviews:188, badge:null,   type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'45W content creation light. App control, 2800K-7000K colour temperature, 1400 lux max, slim profile.' },
-    { id:19, cat:'cameras',     icon:'🚁', name:'DJI Mini 4 Pro Drone',                seller:'DroneRental_LDN',     price:65,   priceLabel:'£65/day',     condition:'Like new',condKey:'like-new',  rating:4.9, reviews:63,  badge:'hot',  type:'rent', shipping:['ships-worldwide'],                desc:'249g foldable drone. 4K/60p HDR, omnidirectional obstacle sensing, 34-min flight, ActiveTrack 360.' },
-    { id:20, cat:'instruments', icon:'🎷', name:'Yamaha YAS-280 Alto Saxophone',       seller:'WindInstruments_IE',  price:40,   priceLabel:'£40/day',     condition:'Good',    condKey:'good',      rating:4.3, reviews:11,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'Student-professional alto sax. High F# key, front F key, case and mouthpiece included. Ready to play.' },
-    { id:21, cat:'audio',       icon:'🎤', name:'Neumann U87 Ai Studio Mic',           seller:'HighEnd_Audio_DE',    price:149,  priceLabel:'£149/day',    condition:'Like new',condKey:'like-new',  rating:5.0, reviews:37,  badge:'hot',  type:'rent', shipping:['local-pickup'],                   desc:'The legendary large-diaphragm condenser. Three switchable polar patterns, -10dB pad, transformer-balanced output.' },
-    { id:22, cat:'lighting',    icon:'🌈', name:'Nanlite Forza 500 II Spot Kit',       seller:'VideoLight_NL',       price:75,   priceLabel:'£75/day',     condition:'New',     condKey:'new',       rating:4.6, reviews:19,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'500W daylight LED spot with Fresnel head. Beam 11-52°, DMX & app control, fanless silent operation.' },
-    { id:23, cat:'software',    icon:'🖥', name:'Logic Pro X + Plugin Bundle',         seller:'MacStudio_Pro',       price:25,   priceLabel:'£25/day',     condition:'New',     condKey:'new',       rating:4.8, reviews:44,  badge:'rent', type:'rent', shipping:['local-pickup'],                   desc:'MacBook Pro with Logic Pro X, Waves Diamond, FabFilter Total Bundle. Fully set up, session ready.' },
-    { id:24, cat:'studio',      icon:'🎙', name:'Rode NT-USB+ Podcast Microphone',     seller:'ContentCreator_AU',   price:159,  priceLabel:'£159',        condition:'New',     condKey:'new',       rating:4.5, reviews:92,  badge:'new',  type:'buy',  shipping:['ships-worldwide','free-shipping'], desc:'Studio-quality USB-C mic. 32-bit float recording, zero-latency monitoring, integrated pop filter.' },
-  ];
+  // ─── Product data (from CharmDB) ──────────────────────────────────────
+  // Category icon mapping for visual display
+  const catIcons = { cameras:'📷', audio:'🎙', lighting:'💡', instruments:'🎸', props:'🎭', dj:'🎧', studio:'🎛', software:'💻', other:'📦' };
 
-  let filteredProducts = [...PRODUCTS];
+  // Convert a CharmDB listing to the internal format used by card rendering
+  function toProduct(l) {
+    const price = l.type === 'buy' ? l.priceBuy : l.priceRent;
+    const priceLabel = l.type === 'rent' || l.type === 'both'
+      ? `£${l.priceRent}/day`
+      : `£${l.priceBuy.toLocaleString()}`;
+    const condKey = l.condition.toLowerCase().replace(/\s+/g, '-');
+    const condDisplay = l.condition.charAt(0).toUpperCase() + l.condition.slice(1);
+    return {
+      id: l.id,
+      cat: l.category,
+      icon: catIcons[l.category] || '📦',
+      name: l.title,
+      seller: l.sellerName,
+      sellerAvatar: l.sellerAvatar || l.sellerName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2),
+      price,
+      priceRent: l.priceRent,
+      priceBuy: l.priceBuy,
+      priceLabel,
+      wasPrice: null,
+      condition: condDisplay,
+      condKey,
+      rating: l.rating || 0,
+      reviews: l.reviewCount || 0,
+      badge: l.type === 'rent' ? 'rent' : l.featured ? 'hot' : null,
+      type: l.type === 'both' ? 'rent' : l.type,
+      shipping: [],
+      desc: l.description,
+      images: l.images || [],
+      location: l.location || '',
+      deposit: l.deposit || 0,
+      tags: l.tags || [],
+      views: l.views || 0,
+      createdAt: l.createdAt,
+    };
+  }
+
+  // Load all listings from CharmDB
+  let PRODUCTS = [];
+
+  async function loadProducts() {
+    try {
+      const result = await window.CharmDB.Listings.getAll({ limit: 200 });
+      PRODUCTS = (result.listings || []).map(toProduct);
+    } catch (e) {
+      console.error('Failed to load listings from CharmDB:', e);
+      PRODUCTS = [];
+    }
+    return PRODUCTS;
+  }
+
+  let filteredProducts = [];
   let cart = store.get('charm-cart', []);
   let wishlist = new Set(store.get('charm-wishlist', []));
   let displayCount = 12;
@@ -1709,6 +1737,7 @@
     minRating: 0,
     shipping: new Set(),
     listingType: 'all',
+    searchQuery: '',
   };
 
   function activeFilterCount() {
@@ -1716,27 +1745,63 @@
       (filterState.minRating > 0 ? 1 : 0) +
       filterState.shipping.size +
       (filterState.listingType !== 'all' ? 1 : 0) +
-      (filterState.maxPrice < 5000 ? 1 : 0);
+      (filterState.maxPrice < 5000 ? 1 : 0) +
+      (filterState.searchQuery ? 1 : 0);
   }
 
-  function applyFilters() {
-    let results = PRODUCTS.filter(p => {
-      if (filterState.cat !== 'all' && p.cat !== filterState.cat) return false;
-      if (p.price > filterState.maxPrice) return false;
-      if (filterState.conditions.size > 0 && !filterState.conditions.has(p.condKey)) return false;
-      if (filterState.minRating > 0 && p.rating < filterState.minRating) return false;
-      if (filterState.shipping.size > 0 && ![...filterState.shipping].every(s => p.shipping.includes(s))) return false;
-      if (filterState.listingType !== 'all' && p.type !== filterState.listingType) return false;
-      return true;
-    });
+  async function applyFilters() {
+    // Build CharmDB filter object
+    const dbFilters = { limit: 200 };
+    if (filterState.cat !== 'all') dbFilters.category = filterState.cat;
+    if (filterState.listingType !== 'all') dbFilters.type = filterState.listingType;
+    if (filterState.maxPrice < 5000) dbFilters.maxPrice = filterState.maxPrice;
+    if (filterState.searchQuery) dbFilters.search = filterState.searchQuery;
 
-    // Re-apply current sort
-    if (currentSort === 'price-asc') results.sort((a,b) => a.price - b.price);
-    else if (currentSort === 'price-desc') results.sort((a,b) => b.price - a.price);
-    else if (currentSort === 'rating') results.sort((a,b) => b.rating - a.rating);
-    else if (currentSort === 'newest') results.reverse();
+    // Map sort values
+    const sortMap = { 'newest': 'newest', 'price-asc': 'price-low', 'price-desc': 'price-high', 'rating': 'rating', 'popular': 'newest' };
+    dbFilters.sort = sortMap[currentSort] || 'newest';
 
-    filteredProducts = results;
+    try {
+      const result = await window.CharmDB.Listings.getAll(dbFilters);
+      let results = (result.listings || []).map(toProduct);
+
+      // Client-side filters not supported by CharmDB API
+      if (filterState.conditions.size > 0) {
+        results = results.filter(p => filterState.conditions.has(p.condKey));
+      }
+      if (filterState.minRating > 0) {
+        results = results.filter(p => p.rating >= filterState.minRating);
+      }
+      if (filterState.shipping.size > 0) {
+        results = results.filter(p => [...filterState.shipping].every(s => p.shipping.includes(s)));
+      }
+
+      filteredProducts = results;
+      // Also update PRODUCTS cache for features like compare, quick view, etc.
+      // Merge so we don't lose products not in current filter
+      results.forEach(p => { if (!PRODUCTS.find(x => x.id === p.id)) PRODUCTS.push(p); });
+    } catch(e) {
+      console.error('Filter error:', e);
+      // Fallback to client-side filtering of cached PRODUCTS
+      let results = PRODUCTS.filter(p => {
+        if (filterState.cat !== 'all' && p.cat !== filterState.cat) return false;
+        if (p.price > filterState.maxPrice) return false;
+        if (filterState.conditions.size > 0 && !filterState.conditions.has(p.condKey)) return false;
+        if (filterState.minRating > 0 && p.rating < filterState.minRating) return false;
+        if (filterState.listingType !== 'all' && p.type !== filterState.listingType) return false;
+        if (filterState.searchQuery) {
+          const q = filterState.searchQuery.toLowerCase();
+          if (!p.name.toLowerCase().includes(q) && !p.cat.toLowerCase().includes(q) && !p.desc.toLowerCase().includes(q)) return false;
+        }
+        return true;
+      });
+      if (currentSort === 'price-asc') results.sort((a,b) => a.price - b.price);
+      else if (currentSort === 'price-desc') results.sort((a,b) => b.price - a.price);
+      else if (currentSort === 'rating') results.sort((a,b) => b.rating - a.rating);
+      else if (currentSort === 'newest') results.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+      filteredProducts = results;
+    }
+
     displayCount = 12;
     renderProducts(filteredProducts);
     updateActiveChips();
@@ -1750,6 +1815,8 @@
   function updateActiveChips() {
     const wrap = document.getElementById('active-chips');
     const chips = [];
+    if (filterState.searchQuery)
+      chips.push({ label: `Search: "${filterState.searchQuery}"`, key: 'search', val: filterState.searchQuery });
     if (filterState.conditions.size > 0)
       [...filterState.conditions].forEach(c => chips.push({ label: c.replace('-', ' '), key: 'cond', val: c }));
     if (filterState.minRating > 0)
@@ -1769,6 +1836,7 @@
   }
 
   function removeChip(key, val) {
+    if (key === 'search') { filterState.searchQuery = ''; searchInput.value = ''; }
     if (key === 'cond') { filterState.conditions.delete(val); document.querySelectorAll('.filter-group input[type="checkbox"]').forEach(i => { if (i.value === val) i.checked = false; }); }
     if (key === 'rating') { filterState.minRating = 0; document.querySelectorAll('input[name="rating"]').forEach(i => i.checked = false); }
     if (key === 'ship') { filterState.shipping.delete(val); document.querySelectorAll(`.filter-group input[value="${val}"]`).forEach(i => i.checked = false); }
@@ -1798,14 +1866,21 @@
     setTimeout(() => {
       grid.innerHTML = '';
       if (slice.length === 0) {
+        const hasFilters = activeFilterCount() > 0 || filterState.cat !== 'all';
+        const emptyMsg = hasFilters
+          ? 'Try adjusting your filters or clearing them to see more products.'
+          : 'No listings have been added yet. Be the first to list your gear!';
+        const emptyAction = hasFilters
+          ? `<button class="btn-clear" onclick="clearAllFilters()">Clear all filters</button>`
+          : `<button class="btn-gold" style="padding:11px 24px;font-size:13px;" onclick="openSellModal()">List Your Gear</button>`;
         grid.insertAdjacentHTML('beforeend', `
           <div class="empty-state">
-            <div class="empty-state-icon">🔍</div>
-            <h3 class="empty-state-title">No results found</h3>
-            <p class="empty-state-sub">Try adjusting your filters or clearing them to see more products.</p>
-            <button class="btn-clear" onclick="clearAllFilters()">Clear all filters</button>
+            <div class="empty-state-icon">${hasFilters ? '🔍' : '📦'}</div>
+            <h3 class="empty-state-title">No listings found</h3>
+            <p class="empty-state-sub">${emptyMsg}</p>
+            ${emptyAction}
           </div>`);
-        document.getElementById('results-count').textContent = '0 products found';
+        document.getElementById('results-count').textContent = '0 listings found';
         document.getElementById('load-more-btn').style.display = 'none';
         return;
       }
@@ -1832,47 +1907,65 @@
 
   function productCardHTML(p) {
     const badgeHTML = p.badge ? `<span class="p-badge ${p.badge}">${p.badge === 'rent' ? '🗓 Rent' : p.badge === 'sale' ? 'Sale' : p.badge === 'hot' ? '🔥 Hot' : 'New'}</span>` : '';
+    const condBadge = `<span class="p-badge" style="background:rgba(255,255,255,0.08);color:var(--c-text-2);font-size:10px;">${p.condition}</span>`;
     const wasHTML = p.wasPrice ? `<span class="p-price-was"><del>${p.wasPrice}</del></span>` : '';
     const rentPeriod = p.type === 'rent' ? `<span class="p-price-period">per day</span>` : '';
     const inCart = cart.some(c => c.id === p.id);
     const condClass = `cond-${p.condKey}`;
-    return `
-      <article class="p-card" data-id="${p.id}" data-cat="${p.cat}">
-        <div class="p-card-media">
-          <div class="p-thumb p-thumb-${p.cat}">
+    const pid = typeof p.id === 'string' ? `'${p.id}'` : p.id;
+    const hasImage = p.images && p.images.length > 0 && p.images[0];
+    const imgSrc = hasImage ? p.images[0] : '';
+    const ctaLabel = p.type === 'rent' ? 'Book Now' : 'Add to Cart';
+    const ctaLink = p.type === 'rent' ? `product.html?id=${p.id}` : null;
+    const sellerInitials = p.sellerAvatar || p.seller.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+
+    const mediaHTML = hasImage
+      ? `<img src="${imgSrc}" alt="${p.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'p-thumb p-thumb-${p.cat}\\' style=\\'width:100%;height:100%;\\'><div class=\\'p-thumb-glow\\' aria-hidden=\\'true\\'></div><div class=\\'p-thumb-noise\\' aria-hidden=\\'true\\'></div><div class=\\'p-thumb-icon\\' aria-hidden=\\'true\\'>${p.icon}</div></div>'">`
+      : `<div class="p-thumb p-thumb-${p.cat}" style="width:100%;height:100%;">
             <div class="p-thumb-glow" aria-hidden="true"></div>
             <div class="p-thumb-noise" aria-hidden="true"></div>
             <div class="p-thumb-icon" aria-hidden="true">${p.icon}</div>
-          </div>
-          <div class="p-badges">${badgeHTML}</div>
-          <button class="p-wish" onclick="toggleWish(this, ${p.id})"
+          </div>`;
+
+    return `
+      <article class="p-card" data-id="${p.id}" data-cat="${p.cat}">
+        <div class="p-card-media">
+          ${mediaHTML}
+          <div class="p-badges">${badgeHTML}${condBadge}</div>
+          <button class="p-wish" onclick="toggleWish(this, ${pid})"
             aria-label="Add ${p.name} to wishlist" aria-pressed="false">♡</button>
-          <button class="quick-view" onclick="event.stopPropagation(); openQuickView(${p.id})">
+          <button class="quick-view" onclick="event.stopPropagation(); openQuickView(${pid})">
             Quick view
           </button>
         </div>
         <div class="p-card-body">
           <p class="p-card-cat">${p.cat.replace(/-/g, ' ').toUpperCase()}</p>
-          <a href="#" class="p-card-name" onclick="event.preventDefault();openQuickView(${p.id})">${p.name}</a>
+          <a href="product.html?id=${p.id}" class="p-card-name">${p.name}</a>
           <div class="p-card-rating" aria-label="${p.rating} out of 5 stars, ${p.reviews} reviews">
             <span class="p-stars" aria-hidden="true">${starsHTML(p.rating)}</span>
             <span class="p-rating-count">(${p.reviews})</span>
           </div>
           <p class="p-condition ${condClass}">
             <span class="p-condition-dot"></span>
-            ${p.condition} · ${p.seller}
+            <span style="display:inline-flex;align-items:center;gap:5px;">
+              <span style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,rgba(157,111,255,0.25),rgba(226,168,75,0.25));display:inline-flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;color:var(--c-text);flex-shrink:0;">${sellerInitials}</span>
+              ${p.seller}
+            </span>
           </p>
           <div class="p-card-footer">
             <div class="p-price-col">
               <span class="p-price ${p.wasPrice ? 'sale-price' : ''}">${p.priceLabel}</span>
               ${wasHTML}${rentPeriod}
             </div>
-            <button class="btn-cart ${inCart ? 'added' : ''}" onclick="addToCart(${p.id})"
-              aria-label="${p.type === 'rent' ? 'Rent' : 'Add to cart'}: ${p.name}" aria-live="polite">
-              ${inCart ? '✓ Added' : p.type === 'rent' ? '🗓 Rent' : 'Add to cart'}
-            </button>
+            ${ctaLink
+              ? `<a href="${ctaLink}" class="btn-cart" style="text-decoration:none;text-align:center;" aria-label="Book Now: ${p.name}">🗓 Book Now</a>`
+              : `<button class="btn-cart ${inCart ? 'added' : ''}" onclick="addToCart(${pid})"
+                aria-label="Add to cart: ${p.name}" aria-live="polite">
+                ${inCart ? '✓ Added' : 'Add to Cart'}
+              </button>`
+            }
           </div>
-          <button class="btn-compare" onclick="event.stopPropagation();toggleCompare(${p.id})"
+          <button class="btn-compare" onclick="event.stopPropagation();toggleCompare(${pid})"
             aria-label="Compare ${p.name}">⊞ Compare</button>
         </div>
       </article>`;
@@ -1940,6 +2033,8 @@
     filterState.shipping = new Set();
     filterState.listingType = 'all';
     filterState.maxPrice = 5000;
+    filterState.searchQuery = '';
+    searchInput.value = '';
     applyFilters();
     announce('All filters cleared');
   }
@@ -1989,15 +2084,15 @@
     store.set('charm-wishlist', [...wishlist]);
     showToast(nowSaved ? '♥ Saved to wishlist' : 'Removed from wishlist');
     if (nowSaved) navigator.vibrate?.([8]);
-    track(nowSaved ? 'add_to_wishlist' : 'remove_from_wishlist', { item_id: id });
+    track(nowSaved ? 'add_to_wishlist' : 'remove_from_wishlist', { item_id: String(id) });
   }
 
   // ─── Cart ────────────────────────────────────────────────────────────
   function addToCart(id) {
-    const product = PRODUCTS.find(p => p.id === id);
+    const product = PRODUCTS.find(p => String(p.id) === String(id));
     if (!product) return;
 
-    const existing = cart.find(c => c.id === id);
+    const existing = cart.find(c => String(c.id) === String(id));
     if (existing) { existing.qty++; }
     else { cart.push({ ...product, qty: 1 }); }
 
@@ -2007,22 +2102,24 @@
     navigator.vibrate?.([10, 30, 10]);
     track('add_to_cart', { item_name: product.name, value: product.price });
 
-    // Update card button
+    // Update card button (handle both string and numeric IDs)
     document.querySelectorAll(`[data-id="${id}"] .btn-cart`).forEach(btn => {
-      btn.textContent = '✓ Added';
-      btn.classList.add('added');
+      if (btn.tagName === 'BUTTON') {
+        btn.textContent = '✓ Added';
+        btn.classList.add('added');
+      }
     });
   }
 
   function removeFromCart(id) {
-    cart = cart.filter(c => c.id !== id);
+    cart = cart.filter(c => String(c.id) !== String(id));
     store.set('charm-cart', cart);
     updateCartUI();
     renderCartItems();
   }
 
   function changeQty(id, delta) {
-    const item = cart.find(c => c.id === id);
+    const item = cart.find(c => String(c.id) === String(id));
     if (!item) return;
     item.qty = Math.max(1, item.qty + delta);
     store.set('charm-cart', cart);
@@ -2035,17 +2132,24 @@
     const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
     const badge = document.getElementById('cart-badge');
 
-    badge.textContent = total;
-    badge.style.display = total === 0 ? 'none' : 'flex';
-    document.getElementById('cart-hd-count').textContent = total;
-    document.getElementById('cart-trigger').setAttribute('aria-label', `Cart, ${total} item${total !== 1 ? 's' : ''}`);
-    document.getElementById('cart-total').textContent = `£${subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
+    if (badge) {
+      badge.textContent = total;
+      badge.style.display = total === 0 ? 'none' : 'flex';
+    }
+    const hdCount = document.getElementById('cart-hd-count');
+    const trigger = document.getElementById('cart-trigger');
+    const cartTotal = document.getElementById('cart-total');
+    if (hdCount) hdCount.textContent = total;
+    if (trigger) trigger.setAttribute('aria-label', `Cart, ${total} item${total !== 1 ? 's' : ''}`);
+    if (cartTotal) cartTotal.textContent = `£${subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 
     // Shipping bar (free at £75)
     const pct = Math.min(100, (subtotal / 75) * 100);
-    document.getElementById('shipping-fill').style.width = pct + '%';
+    const shipFill = document.getElementById('shipping-fill');
+    const shipMsg = document.getElementById('shipping-msg');
+    if (shipFill) shipFill.style.width = pct + '%';
     const remaining = Math.max(0, 75 - subtotal);
-    document.getElementById('shipping-msg').innerHTML = remaining > 0
+    if (shipMsg) shipMsg.innerHTML = remaining > 0
       ? `Add <strong>£${remaining.toFixed(2)}</strong> for free shipping`
       : `🎉 You've got <strong>free shipping!</strong>`;
   }
@@ -2056,26 +2160,33 @@
       list.innerHTML = `<li class="cart-empty"><div class="cart-empty-ico">🛒</div><p class="cart-empty-msg">Your cart is empty</p></li>`;
       return;
     }
-    list.innerHTML = cart.map(item => `
+    list.innerHTML = cart.map(item => {
+      const pid = typeof item.id === 'string' ? `'${item.id}'` : item.id;
+      const hasImg = item.images && item.images.length > 0 && item.images[0];
+      const thumbHTML = hasImg
+        ? `<img src="${item.images[0]}" alt="" style="width:56px;height:56px;border-radius:10px;object-fit:cover;flex-shrink:0;">`
+        : `<div class="cart-item-thumb p-thumb p-thumb-${item.cat}">
+            <div class="p-thumb-glow" aria-hidden="true"></div>
+            <span class="p-thumb-icon" aria-hidden="true">${item.icon}</span>
+          </div>`;
+      return `
       <li class="cart-item">
-        <div class="cart-item-thumb p-thumb p-thumb-${item.cat}">
-          <div class="p-thumb-glow" aria-hidden="true"></div>
-          <span class="p-thumb-icon" aria-hidden="true">${item.icon}</span>
-        </div>
+        ${thumbHTML}
         <div class="cart-item-info">
           <p class="cart-item-name">${item.name}</p>
           <p class="cart-item-meta">${item.condition} · ${item.seller}</p>
           <div class="cart-item-controls">
             <div class="qty-picker">
-              <button onclick="changeQty(${item.id},-1)" aria-label="Remove one ${item.name}">−</button>
+              <button onclick="changeQty(${pid},-1)" aria-label="Remove one ${item.name}">−</button>
               <span class="qty-val" aria-live="polite">${item.qty}</span>
-              <button onclick="changeQty(${item.id},1)" aria-label="Add one more ${item.name}">+</button>
+              <button onclick="changeQty(${pid},1)" aria-label="Add one more ${item.name}">+</button>
             </div>
-            <button class="cart-item-remove" onclick="removeFromCart(${item.id})" aria-label="Remove ${item.name} from cart">Remove</button>
+            <button class="cart-item-remove" onclick="removeFromCart(${pid})" aria-label="Remove ${item.name} from cart">Remove</button>
           </div>
         </div>
         <p class="cart-item-price">£${(item.price * item.qty).toFixed(2)}</p>
-      </li>`).join('');
+      </li>`;
+    }).join('');
   }
 
   function openCart() {
@@ -2104,58 +2215,68 @@
 
 
   // ─── Search autocomplete ─────────────────────────────────────────────
-  const searchInput = document.getElementById('nav-search-input');
-  const searchResults = document.getElementById('nav-search-results');
+  const searchInput = document.getElementById('nav-search-input') || document.getElementById('search-input');
+  const searchResults = document.getElementById('nav-search-results') || document.getElementById('search-results');
 
-  const onSearch = debounce((query) => {
+  const onSearch = debounce(async (query) => {
     if (query.length < 2) { closeSearch(); return; }
-    const matches = PRODUCTS.filter(p =>
-      p.name.toLowerCase().includes(query.toLowerCase()) ||
-      p.cat.toLowerCase().includes(query.toLowerCase())
-    ).slice(0, 5);
+
+    let matches = [];
+    try {
+      const result = await window.CharmDB.Listings.getAll({ search: query, limit: 5 });
+      matches = (result.listings || []).map(toProduct);
+    } catch(e) {
+      // Fallback to local search
+      matches = PRODUCTS.filter(p =>
+        p.name.toLowerCase().includes(query.toLowerCase()) ||
+        p.cat.toLowerCase().includes(query.toLowerCase())
+      ).slice(0, 5);
+    }
 
     if (!matches.length) {
       searchResults.innerHTML = `<div style="padding:14px 16px; font-family:'DM Sans',sans-serif; font-size:13.5px; color:var(--c-text-3);">No results for "${query}"</div>`;
     } else {
-      searchResults.innerHTML = matches.map(p => `
-        <a href="#" class="search-result-item" role="option" onclick="selectSearchResult(event,'${p.cat}')">
-          <div class="p-thumb p-thumb-${p.cat}" style="width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden;">
-            <div class="p-thumb-glow" aria-hidden="true"></div>
-            <span style="font-size:18px;position:relative;z-index:1;">${p.icon}</span>
-          </div>
+      searchResults.innerHTML = matches.map(p => {
+        const hasImg = p.images && p.images.length > 0 && p.images[0];
+        const thumbHTML = hasImg
+          ? `<img src="${p.images[0]}" alt="" style="width:40px;height:40px;border-radius:8px;object-fit:cover;flex-shrink:0;">`
+          : `<div class="p-thumb p-thumb-${p.cat}" style="width:40px;height:40px;border-radius:8px;flex-shrink:0;overflow:hidden;">
+              <div class="p-thumb-glow" aria-hidden="true"></div>
+              <span style="font-size:18px;position:relative;z-index:1;">${p.icon}</span>
+            </div>`;
+        return `
+        <a href="product.html?id=${p.id}" class="search-result-item" role="option">
+          ${thumbHTML}
           <div>
             <p class="search-result-name">${p.name.replace(new RegExp(query.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi'), m => `<mark style="background:rgba(226,168,75,0.25);color:var(--c-gold);border-radius:2px;">${m}</mark>`)}</p>
             <p class="search-result-price">${p.priceLabel}</p>
           </div>
-        </a>`).join('');
+        </a>`;
+      }).join('');
     }
     searchResults.hidden = false;
     searchInput.setAttribute('aria-expanded', 'true');
   }, 300);
 
-  searchInput.addEventListener('input', e => onSearch(e.target.value));
-  searchInput.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { closeSearch(); searchInput.value = ''; }
-    if (e.key === 'Enter') {
-      const q = searchInput.value.trim().toLowerCase();
-      closeSearch();
-      if (q) {
-        // Filter grid to matching products
-        filteredProducts = PRODUCTS.filter(p =>
-          p.name.toLowerCase().includes(q) ||
-          p.cat.toLowerCase().includes(q) ||
-          p.seller.toLowerCase().includes(q) ||
-          (p.desc && p.desc.toLowerCase().includes(q))
-        );
-        displayCount = 12;
-        renderProducts(filteredProducts);
-        document.getElementById('results-count').setAttribute('aria-label', `Search results for ${q}`);
-        track('search', { search_term: q });
+  if (searchInput) {
+    searchInput.addEventListener('input', e => onSearch(e.target.value));
+    searchInput.addEventListener('keydown', e => {
+      if (e.key === 'Escape') { closeSearch(); searchInput.value = ''; }
+      if (e.key === 'Enter') {
+        const q = searchInput.value.trim();
+        closeSearch();
+        if (q) {
+          filterState.searchQuery = q;
+          applyFilters();
+          document.getElementById('results-count').setAttribute('aria-label', `Search results for ${q}`);
+          track('search', { search_term: q });
+        }
       }
-    }
-  });
+    });
+  }
 
   function selectSearchResult(e, cat) {
+    // Search results now link directly to product pages, so this is a fallback
     e.preventDefault();
     closeSearch();
     searchInput.value = '';
@@ -2163,11 +2284,11 @@
   }
 
   function closeSearch() {
-    searchResults.hidden = true;
-    searchInput.setAttribute('aria-expanded', 'false');
+    if (searchResults) searchResults.hidden = true;
+    if (searchInput) searchInput.setAttribute('aria-expanded', 'false');
   }
   document.addEventListener('click', e => {
-    if (!e.target.closest('.nav-search')) closeSearch();
+    if (searchInput && !e.target.closest('.nav-search')) closeSearch();
   });
 
   // ─── Scroll depth tracking ───────────────────────────────────────────
@@ -2189,15 +2310,12 @@
 
   // ─── Sell modal ──────────────────────────────────────────────────────
   function openSellModal() {
-    const modal = document.getElementById('sell-modal');
-    const backdrop = document.getElementById('sell-backdrop');
-    modal.style.display = 'block';
-    backdrop.style.display = 'block';
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      modal.classList.add('open');
-      backdrop.classList.add('open');
-    }));
-    document.body.style.overflow = 'hidden';
+    // If logged in, go to create-listing page; otherwise go to login
+    if (window.CharmDB && window.CharmDB.Auth.isLoggedIn()) {
+      window.location.href = 'create-listing.html';
+      return;
+    }
+    window.location.href = 'login.html';
   }
 
   function closeSellModal() {
@@ -2254,14 +2372,18 @@
     document.getElementById('qv-rating').innerHTML = `
       <span class="p-stars" aria-hidden="true">${starsHTML(p.rating)}</span>
       <span class="p-rating-count">(${p.reviews} reviews)</span>`;
-    document.getElementById('qv-seller').innerHTML = `by <strong>${p.seller}</strong>`;
+    const sellerInitials = p.sellerAvatar || p.seller.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+    document.getElementById('qv-seller').innerHTML = `by <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,rgba(157,111,255,0.25),rgba(226,168,75,0.25));display:inline-flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;color:var(--c-text);">${sellerInitials}</span><strong>${p.seller}</strong></span>`;
     document.getElementById('qv-desc').textContent = p.desc || 'No description available.';
 
-    const condColors = { 'new':'var(--c-cyan)', 'like-new':'var(--c-gold)', 'good':'#7dea98', 'fair':'var(--c-text-3)' };
+    const condColors = { 'new':'var(--c-cyan)', 'like-new':'var(--c-gold)', 'good':'#7dea98', 'excellent':'var(--c-gold)', 'fair':'var(--c-text-3)' };
+    const locationText = p.location || 'Not specified';
+    const depositText = p.deposit ? `£${p.deposit}` : 'None';
     document.getElementById('qv-details').innerHTML = `
       <div class="qv-detail"><div class="qv-detail-label">Condition</div><div class="qv-detail-value" style="color:${condColors[p.condKey]||'inherit'}">${p.condition}</div></div>
       <div class="qv-detail"><div class="qv-detail-label">Type</div><div class="qv-detail-value">${p.type === 'rent' ? '🗓 For Rent' : '🛒 For Sale'}</div></div>
-      <div class="qv-detail"><div class="qv-detail-label">Shipping</div><div class="qv-detail-value">${p.shipping.map(s => s.replace(/-/g,' ')).join(', ')}</div></div>
+      <div class="qv-detail"><div class="qv-detail-label">Location</div><div class="qv-detail-value">${locationText}</div></div>
+      ${p.deposit ? `<div class="qv-detail"><div class="qv-detail-label">Deposit</div><div class="qv-detail-value">${depositText}</div></div>` : ''}
       <div class="qv-detail"><div class="qv-detail-label">Listed By</div><div class="qv-detail-value">${p.seller}</div></div>`;
 
     const priceEl = document.getElementById('qv-price');
@@ -2271,9 +2393,15 @@
 
     const inCart = cart.some(c => c.id === id);
     const cartBtn = document.getElementById('qv-cart-btn');
-    cartBtn.textContent = inCart ? '✓ Added' : p.type === 'rent' ? '🗓 Book Now' : 'Add to Cart';
-    cartBtn.className = 'btn-cart' + (inCart ? ' added' : '');
-    cartBtn.onclick = () => { addToCart(id); cartBtn.textContent = '✓ Added'; cartBtn.classList.add('added'); };
+    if (p.type === 'rent') {
+      cartBtn.textContent = '🗓 Book Now';
+      cartBtn.className = 'btn-cart';
+      cartBtn.onclick = () => { window.location.href = `product.html?id=${id}`; };
+    } else {
+      cartBtn.textContent = inCart ? '✓ Added' : 'Add to Cart';
+      cartBtn.className = 'btn-cart' + (inCart ? ' added' : '');
+      cartBtn.onclick = () => { addToCart(id); cartBtn.textContent = '✓ Added'; cartBtn.classList.add('added'); };
+    }
 
     // Sync wish button state
     const wishBtn = document.getElementById('qv-wish-btn');
@@ -2282,12 +2410,14 @@
     wishBtn.textContent = isWished ? '♥' : '♡';
     wishBtn.style.color = isWished ? 'var(--c-coral)' : '';
 
-    document.getElementById('qv-media').innerHTML = `
-      <div class="p-thumb p-thumb-${p.cat}" style="width:100%;height:100%;">
-        <div class="p-thumb-glow" aria-hidden="true"></div>
-        <div class="p-thumb-noise" aria-hidden="true"></div>
-        <div class="p-thumb-icon" style="font-size:80px;" aria-hidden="true">${p.icon}</div>
-      </div>`;
+    const hasImg = p.images && p.images.length > 0 && p.images[0];
+    document.getElementById('qv-media').innerHTML = hasImg
+      ? `<img src="${p.images[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.innerHTML='<div class=\\'p-thumb p-thumb-${p.cat}\\' style=\\'width:100%;height:100%;\\'><div class=\\'p-thumb-glow\\' aria-hidden=\\'true\\'></div><div class=\\'p-thumb-noise\\' aria-hidden=\\'true\\'></div><div class=\\'p-thumb-icon\\' style=\\'font-size:80px;\\' aria-hidden=\\'true\\'>${p.icon}</div></div>'">`
+      : `<div class="p-thumb p-thumb-${p.cat}" style="width:100%;height:100%;">
+          <div class="p-thumb-glow" aria-hidden="true"></div>
+          <div class="p-thumb-noise" aria-hidden="true"></div>
+          <div class="p-thumb-icon" style="font-size:80px;" aria-hidden="true">${p.icon}</div>
+        </div>`;
 
     const modal = document.getElementById('qv-modal');
     const backdrop = document.getElementById('qv-backdrop');
@@ -2336,14 +2466,19 @@
   // ─── Featured strip ──────────────────────────────────────────────────
   function initFeatured() {
     const hot = PRODUCTS.filter(p => p.badge === 'hot' || p.rating >= 4.9).slice(0, 6);
-    document.getElementById('featured-scroll').innerHTML = hot.map(p => `
-      <button class="feat-chip" onclick="openQuickView(${p.id})" aria-label="View ${p.name}">
+    const scrollEl = document.getElementById('featured-scroll');
+    if (!hot.length) { document.getElementById('featured-strip').style.display = 'none'; return; }
+    scrollEl.innerHTML = hot.map(p => {
+      const pid = typeof p.id === 'string' ? `'${p.id}'` : p.id;
+      return `
+      <button class="feat-chip" onclick="openQuickView(${pid})" aria-label="View ${p.name}">
         <span class="feat-chip-icon" aria-hidden="true">${p.icon}</span>
         <span class="feat-chip-text">
           <span class="feat-chip-name">${p.name.split(' ').slice(0,3).join(' ')}</span>
           <span class="feat-chip-price">${p.priceLabel}</span>
         </span>
-      </button>`).join('');
+      </button>`;
+    }).join('');
   }
 
   // ─── Recently Viewed ─────────────────────────────────────────────────
@@ -2361,17 +2496,26 @@
     const items = recentlyViewed.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
     if (items.length === 0) { section.style.display = 'none'; return; }
     section.style.display = 'block';
-    scroll.innerHTML = items.map(p => `
-      <div style="flex-shrink:0;width:180px;background:var(--c-card);border:1px solid var(--c-border);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="openQuickView(${p.id})" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='var(--c-border)';this.style.transform=''">
-        <div class="p-thumb p-thumb-${p.cat}" style="height:120px;position:relative;overflow:hidden;">
-          <div class="p-thumb-glow" aria-hidden="true"></div>
-          <div style="font-size:32px;position:relative;z-index:2;">${p.icon}</div>
+    scroll.innerHTML = items.map(p => {
+      const pid = typeof p.id === 'string' ? `'${p.id}'` : p.id;
+      const hasImg = p.images && p.images.length > 0 && p.images[0];
+      const thumbContent = hasImg
+        ? `<img src="${p.images[0]}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;">`
+        : `<div class="p-thumb p-thumb-${p.cat}" style="height:120px;position:relative;overflow:hidden;">
+            <div class="p-thumb-glow" aria-hidden="true"></div>
+            <div style="font-size:32px;position:relative;z-index:2;">${p.icon}</div>
+          </div>`;
+      return `
+      <div style="flex-shrink:0;width:180px;background:var(--c-card);border:1px solid var(--c-border);border-radius:14px;overflow:hidden;cursor:pointer;transition:border-color 0.2s,transform 0.2s;" onclick="openQuickView(${pid})" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-2px)'" onmouseleave="this.style.borderColor='var(--c-border)';this.style.transform=''">
+        <div style="height:120px;position:relative;overflow:hidden;">
+          ${thumbContent}
         </div>
         <div style="padding:10px 12px;">
           <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--c-text);line-height:1.3;margin-bottom:4px;">${p.name.split(' ').slice(0,3).join(' ')}</p>
           <p style="font-family:'Syne',sans-serif;font-size:12px;font-weight:800;color:var(--c-gold);">${p.priceLabel}</p>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
   }
 
   function clearRecentlyViewed() {
@@ -2388,7 +2532,7 @@
   let compareList = [];
 
   function toggleCompare(id) {
-    const idx = compareList.indexOf(id);
+    const idx = compareList.findIndex(x => x === id || String(x) === String(id));
     if (idx > -1) {
       compareList.splice(idx, 1);
     } else {
@@ -2397,10 +2541,10 @@
     }
     updateCompareBar();
     // Update button state on card
+    const isAdded = compareList.some(x => x === id || String(x) === String(id));
     document.querySelectorAll(`[data-id="${id}"] .btn-compare`).forEach(btn => {
-      const added = compareList.includes(id);
-      btn.style.color = added ? 'var(--c-violet)' : '';
-      btn.textContent = added ? '⊞ Added' : '⊞ Compare';
+      btn.style.color = isAdded ? 'var(--c-violet)' : '';
+      btn.textContent = isAdded ? '⊞ Added' : '⊞ Compare';
     });
   }
 
@@ -2421,10 +2565,12 @@
     btn.style.opacity = compareList.length >= 2 ? '1' : '0.4';
     itemsEl.innerHTML = compareList.map(id => {
       const p = PRODUCTS.find(x => x.id === id);
+      if (!p) return '';
+      const pid = typeof id === 'string' ? `'${id}'` : id;
       return `<div style="display:flex;align-items:center;gap:7px;background:var(--c-elevated);border:1px solid var(--c-border);border-radius:8px;padding:5px 10px;">
         <span style="font-size:14px;">${p.icon}</span>
         <span style="font-family:'Syne',sans-serif;font-size:11.5px;font-weight:600;color:var(--c-text);">${p.name.split(' ').slice(0,2).join(' ')}</span>
-        <button onclick="toggleCompare(${id})" style="background:none;border:none;color:var(--c-text-3);font-size:14px;cursor:pointer;line-height:1;" aria-label="Remove">×</button>
+        <button onclick="toggleCompare(${pid})" style="background:none;border:none;color:var(--c-text-3);font-size:14px;cursor:pointer;line-height:1;" aria-label="Remove">×</button>
       </div>`;
     }).join('');
   }
@@ -2439,15 +2585,16 @@
 
   function openCompare() {
     if (compareList.length < 2) return;
-    const items = compareList.map(id => PRODUCTS.find(p => p.id === id));
+    const items = compareList.map(id => PRODUCTS.find(p => p.id === id)).filter(Boolean);
+    if (items.length < 2) return;
     const rows = [
       { label: 'Item', fn: p => `<div style="display:flex;flex-direction:column;align-items:center;gap:8px;"><div style="font-size:36px;">${p.icon}</div><p style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--c-text);text-align:center;line-height:1.3;">${p.name}</p></div>` },
-      { label: 'Price', fn: p => `<span style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:${p.wasPrice?'var(--c-gold)':'var(--c-text)'};">${p.priceLabel}</span>${p.wasPrice?`<br><del style="color:var(--c-text-3);font-size:12px;">${p.wasPrice}</del>`:''}` },
+      { label: 'Price', fn: p => `<span style="font-family:'Syne',sans-serif;font-weight:800;font-size:16px;color:var(--c-text);">${p.priceLabel}</span>` },
       { label: 'Condition', fn: p => p.condition },
       { label: 'Rating', fn: p => `${'★'.repeat(Math.round(p.rating))}${'☆'.repeat(5-Math.round(p.rating))} ${p.rating} (${p.reviews})` },
       { label: 'Type', fn: p => p.type === 'rent' ? '🗓 For Rent' : '🛒 For Sale' },
       { label: 'Seller', fn: p => p.seller },
-      { label: 'Shipping', fn: p => p.shipping.map(s=>s.replace(/-/g,' ')).join(', ') },
+      { label: 'Location', fn: p => p.location || 'Not specified' },
       { label: 'Category', fn: p => p.cat.replace(/-/g,' ') },
     ];
     const colStyle = `style="flex:1;min-width:180px;padding:16px;text-align:center;border-right:1px solid var(--c-border);"`;
@@ -2465,9 +2612,14 @@
           </div>`).join('')}
         <div ${rowStyle}>
           <span ${labelStyle}>Action</span>
-          ${items.map(p => `<div ${cellStyle}>
-            <button onclick="addToCart(${p.id});showToast('✓ Added to cart')" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:8px;padding:8px 16px;cursor:pointer;">${p.type==='rent'?'Rent':'Add to cart'}</button>
-          </div>`).join('')}
+          ${items.map(p => {
+            const pid = typeof p.id === 'string' ? `'${p.id}'` : p.id;
+            return `<div ${cellStyle}>
+            ${p.type === 'rent'
+              ? `<a href="product.html?id=${p.id}" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:8px;padding:8px 16px;cursor:pointer;text-decoration:none;">Book Now</a>`
+              : `<button onclick="addToCart(${pid});showToast('✓ Added to cart')" style="font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:8px;padding:8px 16px;cursor:pointer;">Add to cart</button>`
+            }
+          </div>`}).join('')}
         </div>
       </div>`;
     const modal = document.getElementById('compare-modal');
@@ -2487,12 +2639,27 @@
   }
 
   // ─── Init ────────────────────────────────────────────────────────────
-  // cart button states are set inside productCardHTML (checks cart.some())
-  // wishlist states are restored inside renderProducts timeout callback
-  renderProducts(filteredProducts);
-  updateCartUI();
-  initFeatured();
-  renderRecentlyViewed();
+  // Load products from CharmDB, then render
+  (async function init() {
+    await loadProducts();
+    filteredProducts = [...PRODUCTS];
+    renderProducts(filteredProducts);
+    updateCartUI();
+    initFeatured();
+    renderRecentlyViewed();
+
+    // Update sell CTA button text based on auth
+    const sellBtn = document.getElementById('sell-cta-btn');
+    if (sellBtn && window.CharmDB && window.CharmDB.Auth.isLoggedIn()) {
+      sellBtn.textContent = '+ Create Listing →';
+    }
+
+    // Update nav "+ Add Listing" link based on auth
+    const addListingLink = document.querySelector('a.btn-gold[href="create-listing.html"]');
+    if (addListingLink && window.CharmDB && !window.CharmDB.Auth.isLoggedIn()) {
+      addListingLink.href = 'login.html';
+    }
+  })();
 </script>
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

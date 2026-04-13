@@ -1102,10 +1102,45 @@
           <span>Ships worldwide · Estimated 2–4 business days</span>
         </div>
 
-        <!-- CTAs -->
-        <div class="cta-stack">
+        <!-- Booking section -->
+        <div id="booking-section" class="booking-section" style="display:none; background:var(--c-card); border:1px solid var(--c-border); border-radius:16px; padding:24px; margin-top:24px;">
+          <h3 style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-text); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.06em;">Book This Item</h3>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+            <div>
+              <label style="font-family:'Syne',sans-serif; font-size:11px; font-weight:600; color:var(--c-text-3); text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:6px;">Start Date</label>
+              <input type="date" id="book-start" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px;" min="">
+            </div>
+            <div>
+              <label style="font-family:'Syne',sans-serif; font-size:11px; font-weight:600; color:var(--c-text-3); text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:6px;">End Date</label>
+              <input type="date" id="book-end" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px;" min="">
+            </div>
+          </div>
+          <div id="booking-summary" style="display:none; background:rgba(226,168,75,0.06); border:1px solid rgba(226,168,75,0.15); border-radius:10px; padding:14px; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2);" id="booking-rate"></span>
+              <span style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:var(--c-text);" id="booking-subtotal"></span>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+              <span style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2);">Refundable deposit</span>
+              <span style="font-family:'Syne',sans-serif; font-size:13px; font-weight:600; color:var(--c-text-2);" id="booking-deposit"></span>
+            </div>
+            <div style="border-top:1px solid var(--c-border); margin-top:8px; padding-top:8px; display:flex; justify-content:space-between;">
+              <span style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-gold);">Total</span>
+              <span style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-gold);" id="booking-total"></span>
+            </div>
+          </div>
+          <textarea id="book-message" placeholder="Add a message to the seller (optional)" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px; resize:vertical; min-height:60px; margin-bottom:16px;"></textarea>
+          <div id="booking-error" style="display:none; color:var(--c-coral); font-size:13px; margin-bottom:12px; font-family:'DM Sans',sans-serif;"></div>
+          <button id="book-btn" class="btn-add-cart" data-magnetic style="width:100%;" onclick="submitBooking()">Request Booking</button>
+          <p id="booking-login-prompt" style="display:none; text-align:center; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2); margin-top:12px;">
+            <a href="login.html" style="color:var(--c-gold); text-decoration:underline; text-underline-offset:3px;">Log in</a> to book this item
+          </p>
+        </div>
+
+        <!-- CTAs (for buy items) -->
+        <div id="buy-ctas" class="cta-stack" style="display:none;">
           <button class="btn-add-cart" onclick="addToCart()">Add to Cart</button>
-          <button class="btn-save">🤍 Save to Wishlist</button>
+          <button class="btn-save" onclick="toggleWishlist()">🤍 Save to Wishlist</button>
         </div>
 
         <!-- Trust badges -->
@@ -1364,7 +1399,20 @@
   <div class="footer-copy">&copy; 2026 Charm. All rights reserved.</div>
 </footer>
 
+<script src="charm-db.js"></script>
 <script>
+  let currentListing = null;
+
+  // Toast
+  let toastTimer;
+  function showToast(icon, msg) {
+    const toast = document.getElementById('toast');
+    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
+    toast.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2800);
+  }
+
   // Gallery switcher
   function switchThumb(el, bg, emoji) {
     document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
@@ -1382,22 +1430,179 @@
     btn.textContent = wishlisted ? '❤️' : '🤍';
     btn.style.transform = 'scale(1.2)';
     setTimeout(() => { btn.style.transform = ''; }, 200);
+    if (currentListing && window.CharmWishlist) {
+      window.CharmWishlist.toggle(currentListing.id);
+    }
     showToast(wishlisted ? '❤️' : '🤍', wishlisted ? 'Saved to wishlist!' : 'Removed from wishlist');
   }
 
   // Add to cart
   function addToCart() {
+    if (currentListing && window.CharmCart) {
+      window.CharmCart.add({ id: currentListing.id, name: currentListing.title, price: currentListing.priceBuy || currentListing.priceRent, image: currentListing.images[0] || '' });
+    }
     showToast('🛒', 'Added to cart!');
   }
 
-  // Toast
-  let toastTimer;
-  function showToast(icon, msg) {
-    const toast = document.getElementById('toast');
-    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2800);
+  // Booking date change handler
+  function updateBookingSummary() {
+    if (!currentListing) return;
+    const start = document.getElementById('book-start').value;
+    const end = document.getElementById('book-end').value;
+    const summary = document.getElementById('booking-summary');
+    if (!start || !end) { summary.style.display = 'none'; return; }
+    const days = Math.ceil((new Date(end) - new Date(start)) / (1000*60*60*24));
+    if (days <= 0) { summary.style.display = 'none'; return; }
+    const rate = currentListing.priceRent || 0;
+    const subtotal = days * rate;
+    const deposit = currentListing.deposit || 0;
+    document.getElementById('booking-rate').textContent = `£${rate}/day × ${days} day${days>1?'s':''}`;
+    document.getElementById('booking-subtotal').textContent = `£${subtotal}`;
+    document.getElementById('booking-deposit').textContent = `£${deposit}`;
+    document.getElementById('booking-total').textContent = `£${subtotal + deposit}`;
+    summary.style.display = 'block';
+  }
+
+  // Submit booking
+  async function submitBooking() {
+    if (!currentListing) return;
+    const user = window.CharmDB?.Auth.currentUser();
+    if (!user) {
+      document.getElementById('booking-login-prompt').style.display = 'block';
+      return;
+    }
+    const start = document.getElementById('book-start').value;
+    const end = document.getElementById('book-end').value;
+    const message = document.getElementById('book-message').value;
+    const errEl = document.getElementById('booking-error');
+    errEl.style.display = 'none';
+    if (!start || !end) { errEl.textContent = 'Please select start and end dates'; errEl.style.display = 'block'; return; }
+    try {
+      await window.CharmDB.Bookings.create({ listingId: currentListing.id, startDate: start, endDate: end, message });
+      showToast('✅', 'Booking request sent!');
+      document.getElementById('book-btn').textContent = 'Request Sent ✓';
+      document.getElementById('book-btn').disabled = true;
+      document.getElementById('book-btn').style.opacity = '0.6';
+    } catch (e) {
+      errEl.textContent = e.message;
+      errEl.style.display = 'block';
+    }
+  }
+
+  // Load listing from URL param
+  async function loadListing() {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get('id');
+    if (!id || !window.CharmDB) return; // Keep static content if no ID
+
+    const listing = await window.CharmDB.Listings.getById(id);
+    if (!listing) return;
+    currentListing = listing;
+
+    // Update page title
+    document.title = `${listing.title} — Charm Marketplace`;
+
+    // Update product title
+    const titleEl = document.querySelector('.product-title');
+    if (titleEl) titleEl.textContent = listing.title;
+
+    // Update category tag
+    const catTag = document.querySelector('.cat-tag');
+    if (catTag) catTag.textContent = listing.category.toUpperCase();
+
+    // Update price
+    const priceMain = document.querySelector('.price-main');
+    if (priceMain) {
+      if (listing.type === 'rent' || listing.type === 'both') {
+        priceMain.textContent = `£${listing.priceRent}/day`;
+      } else {
+        priceMain.textContent = `£${listing.priceBuy}`;
+      }
+    }
+    // Hide sale indicators
+    const priceOrig = document.querySelector('.price-orig');
+    const priceSave = document.querySelector('.price-save');
+    if (priceOrig) priceOrig.style.display = 'none';
+    if (priceSave) priceSave.style.display = 'none';
+
+    // Update rating
+    const ratingNum = document.querySelector('.rating-num');
+    if (ratingNum) ratingNum.textContent = listing.rating || 'New';
+    const reviewsLink = document.querySelector('.reviews-link');
+    if (reviewsLink) reviewsLink.textContent = `${listing.reviewCount || 0} reviews`;
+
+    // Update condition
+    const condLabel = document.querySelector('.condition-label');
+    if (condLabel) condLabel.textContent = `${listing.condition.charAt(0).toUpperCase() + listing.condition.slice(1)} condition`;
+
+    // Update description
+    const desc = document.querySelector('.description');
+    if (desc) desc.textContent = listing.description;
+
+    // Update seller
+    const sellerAvatar = document.querySelector('.seller-avatar');
+    const sellerName = document.querySelector('.seller-name');
+    if (sellerAvatar) sellerAvatar.textContent = listing.sellerAvatar;
+    if (sellerName) sellerName.textContent = listing.sellerName;
+
+    // Update main image
+    if (listing.images && listing.images.length > 0) {
+      const mainThumb = document.getElementById('mainThumb');
+      if (mainThumb) {
+        const thumbBg = mainThumb.querySelector('.thumb-bg');
+        const emoji = mainThumb.querySelector('.thumb-emoji');
+        if (thumbBg) {
+          thumbBg.style.background = 'none';
+          thumbBg.style.backgroundImage = `url('${listing.images[0]}')`;
+          thumbBg.style.backgroundSize = 'cover';
+          thumbBg.style.backgroundPosition = 'center';
+        }
+        if (emoji) emoji.style.display = 'none';
+      }
+    }
+
+    // Show booking section for rentable items
+    if (listing.type === 'rent' || listing.type === 'both') {
+      document.getElementById('booking-section').style.display = 'block';
+      // Set min date to today
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('book-start').min = today;
+      document.getElementById('book-end').min = today;
+      document.getElementById('book-start').addEventListener('change', () => {
+        document.getElementById('book-end').min = document.getElementById('book-start').value;
+        updateBookingSummary();
+      });
+      document.getElementById('book-end').addEventListener('change', updateBookingSummary);
+
+      // Check if logged in
+      const user = window.CharmDB?.Auth.currentUser();
+      if (!user) {
+        document.getElementById('booking-login-prompt').style.display = 'block';
+        document.getElementById('book-btn').style.display = 'none';
+      }
+      // Check if own listing
+      if (user && user.id === listing.sellerId) {
+        document.getElementById('book-btn').textContent = 'This is your listing';
+        document.getElementById('book-btn').disabled = true;
+        document.getElementById('book-btn').style.opacity = '0.5';
+      }
+    }
+    if (listing.type === 'buy' || listing.type === 'both') {
+      document.getElementById('buy-ctas').style.display = 'flex';
+    }
+
+    // Update shipping info for location
+    const shippingRow = document.querySelector('.shipping-row span');
+    if (shippingRow && listing.location) {
+      shippingRow.textContent = `📍 ${listing.location} · Collection or delivery available`;
+    }
+  }
+
+  // Run on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadListing);
+  } else {
+    loadListing();
   }
 </script>
 <!-- GSAP + ScrollTrigger -->

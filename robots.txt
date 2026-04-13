@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aireyai.github.io/charm/sitemap.xml

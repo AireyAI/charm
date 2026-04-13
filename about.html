@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Charm | Creative Equipment Marketplace</title>
+  <meta name="description" content="Learn about Charm — the luxury marketplace connecting creators with premium creative equipment. London-based, globally trusted." />
+  <meta name="theme-color" content="#07070e" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="About — Charm" />
+  <meta property="og:description" content="Learn about Charm — the luxury marketplace connecting creators with premium creative equipment." />
+  <meta property="og:url" content="https://charm.space/about" />
+  <meta property="og:site_name" content="Charm" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About — Charm" />
+  <meta name="twitter:description" content="Learn about Charm — the luxury marketplace connecting creators with premium creative equipment." />
+
+  <link rel="canonical" href="https://charm.space/about" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --c-base: #07070e;
+      --c-card: #0d0d1a;
+      --c-elevated: #131326;
+      --c-float: #1a1a32;
+      --c-gold: #e2a84b;
+      --c-violet: #9d6fff;
+      --c-coral: #ff6b57;
+      --c-cyan: #00d4c8;
+      --c-text: #f0ece3;
+      --c-text-2: #9896a8;
+      --c-text-3: #8886a0;
+      --c-border: rgba(255,255,255,0.07);
+      --c-border-2: rgba(255,255,255,0.13);
+      --z-top: 9999;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      background: var(--c-base);
+      color: var(--c-text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Focus visible */
+    :focus { outline: none; }
+    :focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+
+    button, [role="button"], a, select, label[for], summary { cursor: pointer; }
+    :disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.5; }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--c-base); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
+    * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
+    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+    ::-moz-selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute; top: -100%; left: 1rem;
+      background: var(--c-gold); color: #0f0800;
+      padding: 0.5rem 1rem; z-index: var(--z-top);
+      border-radius: 0 0 6px 6px; font-weight: 700;
+      text-decoration: none; font-family: 'Syne', sans-serif;
+    }
+    .skip-link:focus { top: 0; }
+
+    /* SR only */
+    .sr-only {
+      position: absolute; width: 1px; height: 1px;
+      padding: 0; margin: -1px; overflow: hidden;
+      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+
+    /* Noise overlay */
+    .noise {
+      position: fixed; inset: 0; z-index: var(--z-top); pointer-events: none; opacity: 0.028;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* Nav */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 64px; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+      background: rgba(7,7,14,0.88); border-bottom: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-inner {
+      width: 100%; max-width: 1440px; padding: 0 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      color: var(--c-text); text-decoration: none; letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--c-gold); }
+    .nav-links {
+      display: flex; align-items: center; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px;
+      color: var(--c-text-2); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--c-text); }
+    .nav-links a.active { color: var(--c-text); }
+    .nav-actions { display: flex; align-items: center; gap: 12px; }
+    .nav-icon-btn {
+      font-size: 16px; color: var(--c-text-3); text-decoration: none;
+      width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+      border-radius: 9px; border: 1px solid var(--c-border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-icon-btn:hover { color: var(--c-text); background: rgba(255,255,255,0.04); }
+    .btn-ghost {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 13px;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 8px;
+      padding: 8px 18px; cursor: pointer; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      display: inline-flex; align-items: center;
+    }
+    .btn-ghost:hover {
+      color: var(--c-text); border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04);
+    }
+    .btn-gold {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+      color: #07070e; background: var(--c-gold); border: none; border-radius: 8px;
+      padding: 8px 20px; cursor: pointer; text-decoration: none;
+      transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center;
+    }
+    .btn-gold:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-gold:active { transform: translateY(0); }
+
+    /* Content */
+    .content {
+      padding-top: 64px; max-width: 1200px; margin: 0 auto;
+      padding-left: 32px; padding-right: 32px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative; padding: 120px 0 100px; text-align: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 0%, rgba(226,168,75,0.1) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 20% 80%, rgba(157,111,255,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 40% 40% at 80% 60%, rgba(0,212,200,0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold);
+      margin-bottom: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block; width: 28px; height: 1px;
+      background: var(--c-gold); opacity: 0.5;
+    }
+    .hero-heading {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(52px, 7vw, 88px); letter-spacing: -0.035em;
+      color: var(--c-text); line-height: 0.95; margin-bottom: 24px; position: relative;
+    }
+    .hero-heading em { font-style: italic; color: var(--c-gold); }
+    .hero-sub {
+      font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 18px;
+      line-height: 1.7; color: var(--c-text-2); max-width: 540px; margin: 0 auto 40px;
+    }
+
+    /* Section */
+    .section { padding: 96px 0; }
+    .section-tag {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 12px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif; font-weight: 400;
+      font-size: clamp(36px, 4vw, 52px); letter-spacing: -0.03em;
+      color: var(--c-text); line-height: 1.05; margin-bottom: 16px;
+    }
+    .section-heading em { font-style: italic; color: var(--c-gold); }
+    .section-desc {
+      font-family: 'DM Sans', sans-serif; font-weight: 400; font-size: 16px;
+      line-height: 1.7; color: var(--c-text-2); max-width: 540px; margin-bottom: 64px;
+    }
+
+    /* Glass card */
+    .glass-card {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 16px; padding: 36px; position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+    }
+    .glass-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .glass-card:hover { border-color: var(--c-border-2); transform: translateY(-4px); }
+
+    /* Story section */
+    .story-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .story-text p {
+      font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7;
+      color: var(--c-text-2); margin-bottom: 20px;
+    }
+    .story-text p:last-child { margin-bottom: 0; }
+    .story-visual {
+      aspect-ratio: 4/3; border-radius: 20px; overflow: hidden; position: relative;
+      background: var(--c-card); border: 1px solid var(--c-border);
+    }
+    .story-visual-inner {
+      width: 100%; height: 100%;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(226,168,75,0.15) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(157,111,255,0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(0,212,200,0.08) 0%, transparent 50%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .story-visual-text {
+      font-family: 'Cormorant Garamond', serif; font-size: 72px; font-weight: 300;
+      color: var(--c-gold); opacity: 0.3; font-style: italic;
+    }
+
+    /* Team */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .team-card {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 16px; padding: 32px 24px; text-align: center;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+    }
+    .team-card:hover { border-color: var(--c-border-2); transform: translateY(-4px); }
+    .team-avatar {
+      width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px;
+      color: var(--c-base);
+    }
+    .team-avatar-1 { background: linear-gradient(135deg, var(--c-gold), #f5d080); }
+    .team-avatar-2 { background: linear-gradient(135deg, var(--c-violet), #c4a0ff); }
+    .team-avatar-3 { background: linear-gradient(135deg, var(--c-coral), #ff9d90); }
+    .team-avatar-4 { background: linear-gradient(135deg, var(--c-cyan), #66ebe3); }
+    .team-name {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+      color: var(--c-text); margin-bottom: 4px;
+    }
+    .team-role {
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      color: var(--c-text-2); margin-bottom: 14px;
+    }
+    .team-bio {
+      font-family: 'DM Sans', sans-serif; font-size: 13px;
+      line-height: 1.6; color: var(--c-text-3);
+    }
+
+    /* Values */
+    .values-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .value-card {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 16px; padding: 36px 28px; position: relative; overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s;
+    }
+    .value-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .value-card:hover { border-color: var(--c-border-2); transform: translateY(-4px); }
+    .value-icon {
+      width: 52px; height: 52px; border-radius: 14px; margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .value-icon-1 { background: rgba(226,168,75,0.12); color: var(--c-gold); }
+    .value-icon-2 { background: rgba(157,111,255,0.12); color: var(--c-violet); }
+    .value-icon-3 { background: rgba(255,107,87,0.12); color: var(--c-coral); }
+    .value-icon-4 { background: rgba(0,212,200,0.12); color: var(--c-cyan); }
+    .value-title {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px;
+      color: var(--c-text); margin-bottom: 10px;
+    }
+    .value-desc {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      line-height: 1.65; color: var(--c-text-2);
+    }
+
+    /* Stats */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 20px; padding: 48px 40px;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif; font-weight: 600;
+      font-size: clamp(36px, 4vw, 52px); letter-spacing: -0.03em;
+      color: var(--c-gold); line-height: 1; margin-bottom: 8px;
+    }
+    .stat-label {
+      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--c-text-2);
+    }
+    .stat-item + .stat-item {
+      border-left: 1px solid var(--c-border);
+    }
+
+    /* CTA */
+    .cta-banner {
+      background: var(--c-card); border: 1px solid var(--c-border);
+      border-radius: 24px; padding: 80px 48px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-banner-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 50% 60% at 50% 100%, rgba(226,168,75,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 0%, rgba(157,111,255,0.06) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    .cta-tag {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 11px;
+      letter-spacing: 0.2em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 16px;
+    }
+    .cta-heading {
+      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-size: clamp(40px, 5vw, 62px); letter-spacing: -0.03em;
+      color: var(--c-text); line-height: 1.05; margin-bottom: 14px; position: relative;
+    }
+    .cta-heading em { font-style: italic; color: var(--c-gold); }
+    .cta-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 16px; line-height: 1.7;
+      color: var(--c-text-2); max-width: 460px; margin: 0 auto 40px; position: relative;
+    }
+    .cta-actions {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      flex-wrap: wrap; position: relative;
+    }
+    .btn-cta-gold {
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 15px;
+      letter-spacing: 0.02em; color: #07070e; background: var(--c-gold);
+      border: none; border-radius: 12px; padding: 16px 36px; cursor: pointer;
+      text-decoration: none; transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+      position: relative; overflow: hidden;
+    }
+    .btn-cta-gold::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.13) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .btn-cta-gold:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-cta-gold:active { transform: translateY(0); }
+    .btn-cta-gold:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+    .btn-cta-ghost {
+      font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px;
+      color: var(--c-text-2); background: transparent;
+      border: 1px solid var(--c-border-2); border-radius: 12px;
+      padding: 16px 36px; cursor: pointer; text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-cta-ghost:hover {
+      color: var(--c-text); border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.04); transform: translateY(-2px);
+    }
+    .btn-cta-ghost:active { transform: translateY(0); }
+    .btn-cta-ghost:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+
+    /* Footer */
+    footer {
+      background: var(--c-card); border-top: 1px solid var(--c-border);
+      padding: 64px 48px 40px;
+    }
+    .ft-inner { max-width: 1320px; margin: 0 auto; }
+    .ft-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--c-border);
+    }
+    .ft-logo {
+      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
+      color: var(--c-text); display: flex; align-items: center; gap: 8px;
+      margin-bottom: 14px;
+    }
+    .ft-logo-gem {
+      width: 26px; height: 26px; border-radius: 6px;
+      background: linear-gradient(135deg, #e2a84b, #f5d080, #c98830);
+      display: flex; align-items: center; justify-content: center; font-size: 12px;
+    }
+    .ft-tagline {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--c-text-3); line-height: 1.65; max-width: 260px;
+    }
+    .ft-social { display: flex; gap: 9px; margin-top: 24px; }
+    .soc-btn {
+      width: 36px; height: 36px; border-radius: 9px;
+      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; cursor: pointer; text-decoration: none; color: var(--c-text-2);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+    .soc-btn:hover { background: rgba(255,255,255,0.09); border-color: var(--c-border-2); transform: translateY(-2px); }
+    .ft-col-ttl {
+      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+      letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 18px;
+    }
+    .ft-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .ft-links a {
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      color: var(--c-text-2); text-decoration: none; transition: color 0.2s ease;
+    }
+    .ft-links a:hover { color: var(--c-text); }
+    .ft-bottom {
+      display: flex; align-items: center; justify-content: space-between; padding-top: 28px;
+    }
+    .ft-copy {
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3);
+    }
+    .ft-copy a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
+    .ft-copy a:hover { color: var(--c-text-2); }
+    .ft-langs { display: flex; gap: 8px; }
+    .lang-btn {
+      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
+      color: var(--c-text-3); background: transparent;
+      border: 1px solid var(--c-border); border-radius: 7px;
+      padding: 5px 11px; cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .lang-btn.on { color: var(--c-gold); border-color: rgba(226,168,75,0.3); }
+    .lang-btn:hover:not(.on) { color: var(--c-text-2); border-color: var(--c-border-2); }
+
+    /* Responsive */
+    @media (max-width: 1100px) {
+      .ft-grid { grid-template-columns: 1fr 1fr; }
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .stats-bar { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-left: 1px solid var(--c-border); }
+      .stat-item:nth-child(3) { border-left: none; }
+    }
+    @media (max-width: 800px) {
+      .nav-links { display: none; }
+      .content { padding-left: 20px; padding-right: 20px; }
+      .story-grid { grid-template-columns: 1fr; gap: 40px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .values-grid { grid-template-columns: 1fr; }
+      .stats-bar { grid-template-columns: 1fr; padding: 36px 28px; }
+      .stat-item + .stat-item { border-left: none; border-top: 1px solid var(--c-border); padding-top: 24px; }
+      .cta-banner { padding: 48px 28px; }
+      .cta-actions { flex-direction: column; }
+      .btn-cta-gold, .btn-cta-ghost { width: 100%; justify-content: center; }
+      .ft-grid { grid-template-columns: 1fr; }
+      .ft-bottom { flex-direction: column; gap: 20px; }
+      footer { padding: 48px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
+<div class="noise" aria-hidden="true"></div>
+<div aria-live="polite" aria-atomic="true" id="sr-status" class="sr-only"></div>
+
+<!-- Nav -->
+<nav class="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="home.html" class="nav-logo"><span>✦</span> Charm</a>
+    <ul class="nav-links">
+      <li><a href="marketplace.html">Marketplace</a></li>
+      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="pricing.html">Pricing</a></li>
+      <li><a href="wishlist.html">Wishlist</a></li>
+    </ul>
+    <div class="nav-actions">
+      <a href="search.html" class="nav-icon-btn" aria-label="Search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </a>
+      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </a>
+      <a href="login.html" class="btn-ghost">Login</a>
+      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+    </div>
+  </div>
+</nav>
+
+<div class="content" id="main-content">
+
+  <!-- HERO -->
+  <section class="hero" aria-label="About Charm hero">
+    <div class="hero-bg"></div>
+    <div class="hero-eyebrow" data-appear data-appear-delay="0.1">Our Story</div>
+    <h1 class="hero-heading" data-split="words">
+      About <em>Charm</em>
+    </h1>
+    <p class="hero-sub" data-appear data-appear-delay="0.5">
+      We are building the world's most trusted marketplace for creative equipment — where creators discover, rent, and share the tools that bring their vision to life.
+    </p>
+  </section>
+
+  <!-- OUR STORY -->
+  <section class="section" data-reveal="fade-up" aria-label="Our story">
+    <div class="section-tag">The Beginning</div>
+    <h2 class="section-heading">Born from a <em>creative need</em></h2>
+    <div class="story-grid" style="margin-top: 48px;">
+      <div class="story-text" data-reveal="fade-up" data-reveal-delay="0.1">
+        <p>Charm started in 2023 in a small studio in East London, where two filmmakers realised something was broken. The best creative equipment was locked away in warehouses, gathering dust — while talented creators across the city couldn't afford access to the tools they needed.</p>
+        <p>We built Charm to fix that. A peer-to-peer marketplace where creators can list, discover, and rent premium equipment — cameras, lenses, lighting, audio gear, studio spaces — all with the trust and protection of a platform designed by creators, for creators.</p>
+        <p>Today, Charm connects over 12,000 creatives across 45+ countries, powering everything from indie shorts to commercial shoots. Every transaction is backed by our insurance programme, verified reviews, and a dedicated support team that understands the creative workflow.</p>
+      </div>
+      <div class="story-visual" data-reveal="fade-up" data-reveal-delay="0.3">
+        <div class="story-visual-inner">
+          <span class="story-visual-text">✦</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="section" data-reveal="fade-up" aria-label="Our team">
+    <div class="section-tag">The Team</div>
+    <h2 class="section-heading">The people behind <em>Charm</em></h2>
+    <p class="section-desc">A lean, passionate team of creatives, engineers, and operators building the future of creative collaboration.</p>
+    <div class="team-grid" data-stagger-parent>
+      <div class="team-card" data-stagger-child data-tilt>
+        <div class="team-avatar team-avatar-1">AK</div>
+        <div class="team-name">Alex Keane</div>
+        <div class="team-role">Co-founder & CEO</div>
+        <p class="team-bio">Former cinematographer turned entrepreneur. Obsessed with making creative tools accessible to everyone.</p>
+      </div>
+      <div class="team-card" data-stagger-child data-tilt>
+        <div class="team-avatar team-avatar-2">JM</div>
+        <div class="team-name">Jasmine Moreau</div>
+        <div class="team-role">Co-founder & CTO</div>
+        <p class="team-bio">Full-stack engineer with a background in marketplace platforms. Builds systems that scale beautifully.</p>
+      </div>
+      <div class="team-card" data-stagger-child data-tilt>
+        <div class="team-avatar team-avatar-3">RL</div>
+        <div class="team-name">Ren Lawson</div>
+        <div class="team-role">Head of Design</div>
+        <p class="team-bio">Award-winning product designer who believes every interaction should feel effortless and intentional.</p>
+      </div>
+      <div class="team-card" data-stagger-child data-tilt>
+        <div class="team-avatar team-avatar-4">SP</div>
+        <div class="team-name">Sam Patel</div>
+        <div class="team-role">Head of Community</div>
+        <p class="team-bio">Connects creators globally. Previously ran community at a leading creative agency in London.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- VALUES -->
+  <section class="section" data-reveal="fade-up" aria-label="Our values">
+    <div class="section-tag">What We Stand For</div>
+    <h2 class="section-heading">Our core <em>values</em></h2>
+    <p class="section-desc">These principles guide every decision we make — from product design to how we support our community.</p>
+    <div class="values-grid" data-stagger-parent>
+      <div class="value-card" data-stagger-child data-tilt>
+        <div class="value-icon value-icon-1">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="value-title">Trust</div>
+        <p class="value-desc">Every transaction is backed by verified identities, insurance coverage, and transparent reviews. Trust is our foundation.</p>
+      </div>
+      <div class="value-card" data-stagger-child data-tilt>
+        <div class="value-icon value-icon-2">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <div class="value-title">Creativity</div>
+        <p class="value-desc">We exist to empower creators. Every feature, every decision, every pixel is designed to help you make your best work.</p>
+      </div>
+      <div class="value-card" data-stagger-child data-tilt>
+        <div class="value-icon value-icon-3">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="value-title">Community</div>
+        <p class="value-desc">Charm is more than a marketplace — it's a global network of creators who support, inspire, and uplift each other.</p>
+      </div>
+      <div class="value-card" data-stagger-child data-tilt>
+        <div class="value-icon value-icon-4">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="value-title">Innovation</div>
+        <p class="value-desc">We constantly push boundaries — from AI-powered search to instant booking — to make the creative workflow seamless.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section" data-reveal="fade-up" aria-label="Charm statistics">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-number"><span data-counter="12000" data-counter-suffix="+">0</span></div>
+        <div class="stat-label">Creators</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span data-counter="45" data-counter-suffix="+">0</span></div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span data-counter="98000" data-counter-suffix="+">0</span></div>
+        <div class="stat-label">Transactions</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number"><span data-counter="49" data-counter-suffix="">0</span><span style="color: var(--c-gold);">★</span></div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section" data-reveal="fade-up" aria-label="Call to action">
+    <div class="cta-banner">
+      <div class="cta-banner-bg"></div>
+      <div class="cta-tag">Join the Community</div>
+      <h2 class="cta-heading">Ready to create <em>something?</em></h2>
+      <p class="cta-sub">Join thousands of creatives who trust Charm to find, rent, and share the world's best creative equipment.</p>
+      <div class="cta-actions">
+        <a href="signup.html" class="btn-cta-gold" data-magnetic>
+          Get started free
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </a>
+        <a href="marketplace.html" class="btn-cta-ghost" data-magnetic>Browse marketplace</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="ft-inner">
+    <div class="ft-grid">
+      <div>
+        <div class="ft-logo">
+          <span class="ft-logo-gem">✦</span>
+          Charm
+        </div>
+        <p class="ft-tagline">The global platform for creators to find, book, and share creative spaces worldwide.</p>
+        <div class="ft-social">
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X (opens in new tab)">𝕏</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn (opens in new tab)">in</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram (opens in new tab)">📸</a>
+          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube (opens in new tab)">▶</a>
+        </div>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Platform</div>
+        <ul class="ft-links">
+          <li><a href="home.html">Home</a></li>
+          <li><a href="marketplace.html">Marketplace</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="how-it-works.html">How It Works</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Categories</div>
+        <ul class="ft-links">
+          <li><a href="cameras.html">Cameras</a></li>
+          <li><a href="audio.html">Audio</a></li>
+          <li><a href="lighting.html">Lighting</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Sellers</div>
+        <ul class="ft-links">
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
+          <li><a href="create-listing.html">Create Listing</a></li>
+          <li><a href="earnings.html">Earnings</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="ft-col-ttl">Company</div>
+        <ul class="ft-links">
+          <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="insurance.html">Insurance</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="ft-bottom">
+      <span class="ft-copy">&copy; 2026 Charm. All rights reserved. &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="#">Cookies</a></span>
+      <div class="ft-langs">
+        <button class="lang-btn on">EN</button>
+        <button class="lang-btn">PT</button>
+        <button class="lang-btn">ES</button>
+        <button class="lang-btn">FR</button>
+        <button class="lang-btn">DE</button>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="shared.js"></script>
+</body>
+</html>

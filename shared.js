@@ -154,7 +154,7 @@
     banner.innerHTML = `
       <p style="flex:1; font-family:'DM Sans',sans-serif; font-size:13px; color:#9896a8; line-height:1.5; margin:0; min-width:180px;">
         We use cookies to improve your experience and analyse site traffic.
-        <a href="#" style="color:#e2a84b; text-decoration:none;">Learn more</a>
+        <a href="privacy.html" style="color:#e2a84b; text-decoration:underline; text-decoration-color:rgba(226,168,75,0.3); text-underline-offset:3px;">Learn more</a>
       </p>
       <div style="display:flex; gap:8px; flex-shrink:0;">
         <button id="cookie-decline" style="font-family:'Syne',sans-serif; font-size:12px; font-weight:600; color:#9896a8; background:transparent; border:1px solid rgba(255,255,255,0.13); border-radius:8px; padding:8px 14px; cursor:pointer;">Decline</button>
@@ -176,6 +176,52 @@
     document.getElementById('cookie-accept').addEventListener('click', () => dismissBanner(true));
     document.getElementById('cookie-decline').addEventListener('click', () => dismissBanner(false));
   }
+
+  // ── Cart persistence (localStorage) ────────────────────────────────────
+  window.CharmCart = {
+    KEY: 'charm-cart',
+    get() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch { return []; } },
+    set(items) { localStorage.setItem(this.KEY, JSON.stringify(items)); this._badge(); },
+    add(item) {
+      const cart = this.get();
+      const existing = cart.find(i => i.id === item.id);
+      if (existing) existing.qty = (existing.qty || 1) + 1;
+      else cart.push({ ...item, qty: 1 });
+      this.set(cart);
+    },
+    remove(id) { this.set(this.get().filter(i => i.id !== id)); },
+    clear() { this.set([]); },
+    total() { return this.get().reduce((s, i) => s + (i.qty || 1), 0); },
+    _badge() {
+      const count = this.total();
+      document.querySelectorAll('.cart-count, [data-cart-count]').forEach(el => {
+        el.textContent = count;
+        el.style.display = count > 0 ? '' : 'none';
+      });
+    }
+  };
+
+  // ── Wishlist persistence (localStorage) ───────────────────────────────
+  window.CharmWishlist = {
+    KEY: 'charm-wishlist',
+    get() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch { return []; } },
+    set(items) { localStorage.setItem(this.KEY, JSON.stringify(items)); },
+    toggle(id) {
+      const list = this.get();
+      const idx = list.indexOf(id);
+      if (idx > -1) list.splice(idx, 1); else list.push(id);
+      this.set(list);
+      return idx === -1; // true = added, false = removed
+    },
+    has(id) { return this.get().includes(id); },
+    count() { return this.get().length; }
+  };
+
+  // Init cart badge on page load
+  function initCartBadge() { window.CharmCart._badge(); }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCartBadge);
+  } else { initCartBadge(); }
 
   // ── Scroll reveal ─────────────────────────────────────────────────────
   // Auto-apply to any element with data-reveal attribute

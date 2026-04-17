@@ -675,14 +675,17 @@
     return null;
   }
 
-  function featuredCard(l) {
+  function featuredCard(l, userCity) {
     const img = listingImage(l);
     const price = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
     const typeLabel = l.type === 'buy' ? 'Buy' : l.type === 'both' ? 'Buy or rent' : 'Rent';
+    const nearby = userCity && window.CharmDB && CharmDB.Location && CharmDB.Location.matches(l, userCity);
+    const nearbyBadge = nearby ? `<span class="prod-badge" style="left:auto;right:12px;background:rgba(54,217,138,0.18);color:#36d98a;border:1px solid rgba(54,217,138,0.35);">📍 Nearby</span>` : '';
     return `
       <a class="prod-card" role="listitem" href="product.html?id=${l.id}">
         <div class="prod-img">
           <span class="prod-badge">${typeLabel}</span>
+          ${nearbyBadge}
           ${img
             ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">`
             : (() => {
@@ -714,30 +717,27 @@
     try {
       const result = await CharmDB.Listings.getAll({ limit: 100, sort: 'rating' });
       let items = result.listings || [];
-      if (CharmDB.Location) items = CharmDB.Location.apply(items);
+      // Soft priority: listings in the user's city come first, everything
+      // else still shows (so the grid never runs out of content).
+      if (CharmDB.Location) items = CharmDB.Location.prioritize(items);
       items = items.slice(0, 6);
 
-      // Update the heading + CTA to reflect the user's city
       const city = CharmDB.Location && CharmDB.Location.get();
       const label = document.querySelector('#featured-heading');
       if (label) {
         label.textContent = city
-          ? `Gear and spaces making work in ${city} this week.`
+          ? `Near ${city} — and making work this week.`
           : `Gear and spaces making work this week.`;
       }
 
       if (!items.length) {
         grid.style.display = 'none';
         empty.style.display = 'block';
-        const h = empty.querySelector('h3');
-        if (h && city) h.textContent = `Nothing in ${city} yet.`;
-        const p = empty.querySelector('p');
-        if (p && city) p.textContent = `Charm is just launching in your region. Be the first to list — or switch to all locations from the nav.`;
         return;
       }
       empty.style.display = 'none';
       grid.style.display = '';
-      grid.innerHTML = items.map(featuredCard).join('');
+      grid.innerHTML = items.map(l => featuredCard(l, city)).join('');
     } catch (err) {
       console.warn('Featured load failed:', err);
     }

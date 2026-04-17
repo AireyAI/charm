@@ -140,6 +140,26 @@
   const LOCATION_KEY = 'charm-location';
   const LOCATION_PROMPTED_KEY = 'charm-location-prompted';
 
+  // Approximate coordinates per city so listings can be plotted on a map
+  // without calling a geocoding service. Each entry is [lat, lon].
+  const CITY_COORDS = {
+    'london':       [51.5074, -0.1278],
+    'manchester':   [53.4808, -2.2426],
+    'bristol':      [51.4545, -2.5879],
+    'edinburgh':    [55.9533, -3.1883],
+    'scotland':     [56.4907, -4.2026],
+    'birmingham':   [52.4862, -1.8904],
+    'liverpool':    [53.4084, -2.9916],
+    'glasgow':      [55.8642, -4.2518],
+    'leeds':        [53.8008, -1.5491],
+    'cardiff':      [51.4816, -3.1791],
+    'belfast':      [54.5973, -5.9301],
+    'brighton':     [50.8225, -0.1372],
+    'newcastle':    [54.9783, -1.6178],
+    'sheffield':    [53.3811, -1.4701],
+    'nottingham':   [52.9548, -1.1581],
+  };
+
   const Location = {
     /** Current city or null if "All locations". */
     get() {
@@ -186,13 +206,47 @@
       const city = opts.city !== undefined ? opts.city : this.get();
       if (!city) return listings;
       const needle = city.toLowerCase();
-      return listings.filter(l => {
-        const loc = (l.location || '').toLowerCase();
-        if (loc.includes(needle)) return true;
-        // Soft regional match: Edinburgh covers Scotland-tagged venues.
-        if (needle.includes('edinburgh') && loc.includes('scotland')) return true;
-        return false;
+      return listings.filter(l => this.matches(l, needle));
+    },
+    /** True if a listing is in `city` (or null = everywhere). */
+    matches(listing, city) {
+      if (!city) return true;
+      const needle = String(city).toLowerCase();
+      const loc = (listing.location || '').toLowerCase();
+      if (loc.includes(needle)) return true;
+      if (needle.includes('edinburgh') && loc.includes('scotland')) return true;
+      return false;
+    },
+    /**
+     * Sort listings: the user's city first, everything else after.
+     * Unlike apply() this never hides a listing — it just ranks local
+     * listings to the top. Used by home's featured grid.
+     */
+    prioritize(listings, opts = {}) {
+      const city = opts.city !== undefined ? opts.city : this.get();
+      if (!city) return listings;
+      return listings.slice().sort((a, b) => {
+        const am = this.matches(a, city) ? 0 : 1;
+        const bm = this.matches(b, city) ? 0 : 1;
+        return am - bm;
       });
+    },
+    /** Approximate [lat, lon] for a listing based on its location string. */
+    coordsFor(listing) {
+      const loc = (listing.location || '').toLowerCase();
+      for (const key in CITY_COORDS) {
+        if (loc.includes(key)) return CITY_COORDS[key];
+      }
+      return null;
+    },
+    /** Coords for a city name (used to center the map). */
+    coordsForCity(city) {
+      if (!city) return null;
+      const needle = city.toLowerCase();
+      for (const key in CITY_COORDS) {
+        if (needle.includes(key)) return CITY_COORDS[key];
+      }
+      return null;
     },
   };
 

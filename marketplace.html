@@ -24,6 +24,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="charm-v2.css">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 
 <style>
   /* Page-specific styles for marketplace */
@@ -158,6 +159,92 @@
   }
   .prod-grid.is-list .prod-img { aspect-ratio: 4/3; }
   .prod-grid.is-list .prod-meta { padding: 0; }
+
+  /* Map view */
+  .prod-map {
+    height: 640px;
+    border-radius: var(--r-4);
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+    background: #0d0d1a;
+  }
+  .prod-map .leaflet-container {
+    height: 100%; width: 100%;
+    background: #07070e;
+    font-family: 'DM Sans', 'Inter Tight', sans-serif;
+  }
+  /* Tile filter so OSM matches the dark aesthetic */
+  .prod-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.85); }
+  .prod-map .leaflet-control-attribution {
+    background: rgba(13,13,26,0.85) !important;
+    color: rgba(240,236,227,0.65) !important;
+    font-size: 10px !important;
+  }
+  .prod-map .leaflet-control-attribution a { color: rgba(226,168,75,0.9) !important; }
+  /* Pin: gold dot with soft glow; seller avatar stacks inside on hover */
+  .charm-pin {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: #e2a84b;
+    border: 2px solid #0d0d1a;
+    box-shadow: 0 0 0 6px rgba(226,168,75,0.18), 0 4px 12px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
+    color: #0f0800;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+  }
+  .charm-pin:hover, .charm-pin.is-active {
+    transform: scale(1.18);
+    box-shadow: 0 0 0 8px rgba(226,168,75,0.28), 0 6px 18px rgba(0,0,0,0.6);
+  }
+  /* Leaflet popup: glass card */
+  .leaflet-popup-content-wrapper {
+    background: rgba(13,13,26,0.96) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 12px !important;
+    color: #f0ece3 !important;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.55) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .leaflet-popup-tip { background: rgba(13,13,26,0.96) !important; }
+  .leaflet-popup-content { margin: 14px 16px !important; min-width: 220px; }
+  .leaflet-popup-close-button {
+    color: #8886a0 !important; padding: 8px !important; font-size: 18px !important;
+  }
+  .leaflet-popup-close-button:hover { color: #f0ece3 !important; }
+  .charm-popup-cat {
+    font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.08em; text-transform: uppercase; color: #e2a84b;
+    margin-bottom: 4px;
+  }
+  .charm-popup-title {
+    font-family: 'Cormorant Garamond', serif; font-size: 18px; font-weight: 500;
+    line-height: 1.18; color: #f0ece3; margin: 0 0 4px;
+  }
+  .charm-popup-meta {
+    font-family: 'DM Sans', sans-serif; font-size: 12px; color: #9896a8;
+    margin-bottom: 10px;
+  }
+  .charm-popup-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 10px;
+  }
+  .charm-popup-price {
+    font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: #f0ece3;
+  }
+  .charm-popup-price span { font-weight: 400; color: #9896a8; font-size: 11px; }
+  .charm-popup-link {
+    font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
+    color: #0f0800; background: #e2a84b;
+    padding: 7px 12px; border-radius: 6px; text-decoration: none;
+    transition: background 0.18s ease;
+  }
+  .charm-popup-link:hover { background: #ebb850; }
+  .map-empty {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    height: 100%; color: #9896a8; padding: 20px; text-align: center;
+  }
 
   .prod-card { display: block; cursor: pointer; transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1); }
   .prod-card:hover { transform: translateY(-4px); }
@@ -617,6 +704,9 @@
             <button aria-label="List view" aria-pressed="false" onclick="setView('list', this)">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
             </button>
+            <button aria-label="Map view" aria-pressed="false" onclick="setView('map', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -624,6 +714,7 @@
       <div class="mkt-chips" id="mkt-chips"></div>
 
       <div class="prod-grid" id="prod-grid" role="list" aria-live="polite"></div>
+      <div class="prod-map" id="prod-map" aria-label="Map of listings" style="display:none;"></div>
 
       <!-- Sell banner -->
       <div class="sell-banner">
@@ -763,6 +854,7 @@
 
 <script src="charm-db.js"></script>
 <script src="shared.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
 <script>
   const state = {
@@ -839,6 +931,7 @@
 
     currentRender = out;
     renderGrid(out);
+    if (state.view === 'map') renderMap(out);
     renderChips();
   }
 
@@ -1018,10 +1111,114 @@
 
   function setView(view, btn) {
     state.view = view;
-    $('.prod-grid').classList.toggle('is-list', view === 'list');
+    const grid = $('.prod-grid');
+    const mapEl = document.getElementById('prod-map');
+    grid.classList.toggle('is-list', view === 'list');
+    if (view === 'map') {
+      grid.style.display = 'none';
+      if (mapEl) mapEl.style.display = 'block';
+      renderMap(currentRender);
+    } else {
+      grid.style.display = '';
+      if (mapEl) mapEl.style.display = 'none';
+    }
     $$('.mkt-view-toggle button').forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
     btn.classList.add('is-active');
     btn.setAttribute('aria-pressed', 'true');
+  }
+
+  // ── Map view ──
+  let mapInstance = null;
+  let mapMarkers = [];
+  let mapTileLayer = null;
+
+  function initMap() {
+    if (mapInstance || typeof L === 'undefined') return mapInstance;
+    mapInstance = L.map('prod-map', {
+      center: [54.5, -3],
+      zoom: 6,
+      scrollWheelZoom: true,
+      zoomControl: true,
+      attributionControl: true,
+    });
+    mapTileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(mapInstance);
+    return mapInstance;
+  }
+
+  function mapPopupHtml(l) {
+    const price = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
+    const catLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(l.category) : l.category;
+    return `
+      <div class="charm-popup">
+        <div class="charm-popup-cat">&mdash; ${escHtml(catLabel || '').toUpperCase()}</div>
+        <div class="charm-popup-title">${escHtml(l.title)}</div>
+        <div class="charm-popup-meta">${escHtml(l.sellerName || 'Creator')} &middot; ${escHtml(l.location || '')}</div>
+        <div class="charm-popup-row">
+          <span class="charm-popup-price">${price}</span>
+          <a href="product.html?id=${l.id}" class="charm-popup-link">View</a>
+        </div>
+      </div>`;
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function renderMap(items) {
+    const map = initMap();
+    if (!map) return;
+    // Clear existing markers
+    mapMarkers.forEach(m => map.removeLayer(m));
+    mapMarkers = [];
+
+    // Bucket listings by city so identical coords don't stack on top of each other.
+    const buckets = {};
+    items.forEach(l => {
+      const coords = CharmDB.Location.coordsFor(l);
+      if (!coords) return;
+      const key = coords.join(',');
+      if (!buckets[key]) buckets[key] = { coords, items: [] };
+      buckets[key].items.push(l);
+    });
+
+    const pts = [];
+    Object.values(buckets).forEach(b => {
+      b.items.forEach((l, i) => {
+        // Spread pins in the same city in a small circle so they don't overlap
+        const count = b.items.length;
+        const radius = count > 1 ? 0.035 : 0;
+        const angle = (i / count) * Math.PI * 2;
+        const lat = b.coords[0] + Math.sin(angle) * radius;
+        const lon = b.coords[1] + Math.cos(angle) * radius;
+        const avatar = l.sellerAvatar || (l.sellerName || 'CR').slice(0, 2).toUpperCase();
+        const icon = L.divIcon({
+          className: 'charm-pin-wrap',
+          html: `<div class="charm-pin">${escHtml(avatar)}</div>`,
+          iconSize: [32, 32],
+          iconAnchor: [16, 16],
+        });
+        const m = L.marker([lat, lon], { icon }).addTo(map);
+        m.bindPopup(mapPopupHtml(l), { maxWidth: 280, className: 'charm-popup-host' });
+        mapMarkers.push(m);
+        pts.push([lat, lon]);
+      });
+    });
+
+    // Fit bounds to the markers, otherwise center on user city, otherwise UK
+    if (pts.length === 1) {
+      map.setView(pts[0], 12);
+    } else if (pts.length > 1) {
+      map.fitBounds(L.latLngBounds(pts), { padding: [36, 36], maxZoom: 12 });
+    } else {
+      const cityCoords = CharmDB.Location.coordsForCity(CharmDB.Location.get());
+      map.setView(cityCoords || [54.5, -3], cityCoords ? 11 : 6);
+    }
+
+    // Nudge Leaflet to recompute after the container was hidden
+    setTimeout(() => map.invalidateSize(), 80);
   }
 
   // ── Wishlist ──

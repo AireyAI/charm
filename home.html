@@ -178,88 +178,11 @@
       </div>
     </div>
 
-    <div class="editorial-grid">
-      <!-- Feature 1 (large) -->
-      <a class="card" href="product.html?id=1">
-        <div class="card-img">
-          <span class="card-tag">Camera</span>
-          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
-          <img src="images/creator-filming.jpg" alt="Filmmaker with Blackmagic Pocket Cinema camera in a studio">
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>London, UK</span><span>4.9 ★</span></div>
-          <h3 class="t-card-sub" style="font-size:28px; letter-spacing:-0.6px;">Blackmagic Pocket 6K Pro — cinema-grade, 3 lenses included.</h3>
-          <p class="card-sub" style="margin-top:8px;">Rent from a verified LONDXN creator studio. Delivered and picked up within city limits.</p>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px;">
-            <div class="card-price">£95 <span>/ day</span></div>
-            <span class="t-label">Buy £3,450 →</span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 2 -->
-      <a class="card" href="product.html?id=2">
-        <div class="card-img">
-          <span class="card-tag">Audio</span>
-          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
-          <img src="images/prod-microphone.jpg" alt="Studio condenser microphone on shock mount">
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>Berlin, DE</span><span>4.8 ★</span></div>
-          <h3 class="t-card-sub">Neumann TLM 103 — broadcast standard.</h3>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
-            <div class="card-price">£28 <span>/ day</span></div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 3 -->
-      <a class="card" href="product.html?id=3">
-        <div class="card-img">
-          <span class="card-tag">Lighting</span>
-          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
-          <img src="images/prod-lighting.jpg" alt="Aputure LS 300X bi-colour LED light">
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>NYC, US</span><span>5.0 ★</span></div>
-          <h3 class="t-card-sub">Aputure LS 300X — bi-colour LED.</h3>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
-            <div class="card-price">$45 <span>/ day</span></div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 4 -->
-      <a class="card" href="product.html?id=4">
-        <div class="card-img">
-          <span class="card-tag">Lens</span>
-          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
-          <img src="images/prod-lens.jpg" alt="Sigma 35mm f/1.4 Art prime lens">
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>Paris, FR</span><span>4.7 ★</span></div>
-          <h3 class="t-card-sub">Sigma 35mm f/1.4 Art — prime.</h3>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
-            <div class="card-price">€18 <span>/ day</span></div>
-          </div>
-        </div>
-      </a>
-
-      <!-- Card 5 -->
-      <a class="card" href="product.html?id=5">
-        <div class="card-img">
-          <span class="card-tag">Drone</span>
-          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
-          <img src="images/prod-drone.jpg" alt="DJI Mavic 3 Cine drone">
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>Barcelona, ES</span><span>4.9 ★</span></div>
-          <h3 class="t-card-sub">DJI Mavic 3 Cine — ProRes.</h3>
-          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
-            <div class="card-price">€85 <span>/ day</span></div>
-          </div>
-        </div>
-      </a>
+    <div class="prod-grid" id="home-featured-grid" role="list" aria-live="polite"></div>
+    <div id="home-featured-empty" class="mkt-empty" style="display: none;">
+      <h3>No listings yet.</h3>
+      <p>Charm is new in your region. Be the first to list — creators near you are waiting.</p>
+      <a href="create-listing.html" class="btn btn--primary btn--arrow">List your gear</a>
     </div>
   </div>
 </section>
@@ -711,14 +634,81 @@
     setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; }, 2400);
   }
 
-  // Category pill toggle (visual only)
+  // Category pill — click routes to the matching category page
+  const CATEGORY_ROUTE = {
+    'all': 'marketplace.html',
+    'cameras': 'cameras.html',
+    'lenses': 'cameras.html?sub=lens',
+    'audio': 'audio.html',
+    'lighting': 'lighting.html',
+    'instruments': 'marketplace.html?category=instruments',
+    'drones': 'cameras.html?sub=drone',
+    'studios': 'marketplace.html',
+    'pros': 'marketplace.html',
+    'software': 'marketplace.html',
+    'props & sets': 'marketplace.html',
+  };
   document.querySelectorAll('.cat-strip .cat-pill').forEach(pill => {
     pill.addEventListener('click', () => {
-      document.querySelectorAll('.cat-strip .cat-pill').forEach(p => { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
-      pill.classList.add('is-active');
-      pill.setAttribute('aria-selected', 'true');
+      const label = (pill.textContent || '').trim().toLowerCase();
+      const route = CATEGORY_ROUTE[label];
+      if (route) window.location.href = route;
     });
   });
+
+  // ── Featured listings — pulled from the real database ──
+  function listingImage(l) {
+    if (l.images && l.images.length && l.images[0]) return l.images[0];
+    return null;
+  }
+
+  function featuredCard(l) {
+    const img = listingImage(l);
+    const price = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
+    const typeLabel = l.type === 'buy' ? 'Buy' : l.type === 'both' ? 'Buy or rent' : 'Rent';
+    return `
+      <a class="prod-card" role="listitem" href="product.html?id=${l.id}">
+        <div class="prod-img">
+          <span class="prod-badge">${typeLabel}</span>
+          ${img
+            ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">`
+            : `<div class="prod-noimg">
+                 <div class="prod-noimg__cat">— ${(l.category || 'Listing').toUpperCase()}</div>
+                 <div class="prod-noimg__title">${l.title}</div>
+               </div>`}
+        </div>
+        <div class="prod-meta">
+          <h3 class="prod-title">${l.title}</h3>
+          <div class="prod-seller">
+            <span class="prod-seller-avatar">${l.sellerAvatar || 'CR'}</span>
+            <span>${l.sellerName || 'Creator'} · ${l.location || ''}</span>
+          </div>
+          <div class="prod-footer">
+            <div class="prod-price">${price}</div>
+            <div class="prod-rating">★ ${(l.rating || 0).toFixed(1)} <span style="color:var(--c-text-4);">(${l.reviewCount || 0})</span></div>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  async function loadFeatured() {
+    const grid = document.getElementById('home-featured-grid');
+    const empty = document.getElementById('home-featured-empty');
+    if (!grid || !window.CharmDB) return;
+    try {
+      const result = await CharmDB.Listings.getAll({ limit: 8, sort: 'rating' });
+      const items = (result.listings || []).slice(0, 6);
+      if (!items.length) {
+        grid.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+      grid.innerHTML = items.map(featuredCard).join('');
+    } catch (err) {
+      console.warn('Featured load failed:', err);
+    }
+  }
+  loadFeatured();
 </script>
 </body>
 </html>

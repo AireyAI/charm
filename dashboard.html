@@ -859,6 +859,11 @@
       window.location.href = 'login.html';
       return;
     }
+    // Advertiser-only page — bounce bookers back to home.
+    if (user.role !== 'advertiser') {
+      window.location.href = 'home.html?notice=advertiser-only';
+      return;
+    }
 
     const $ = (s) => document.querySelector(s);
     const firstName = (user.name || '').split(' ')[0] || 'there';

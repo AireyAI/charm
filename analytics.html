@@ -639,6 +639,7 @@
     if (!window.CharmDB) return setTimeout(initAnalytics, 50);
     const user = CharmDB.Auth.currentUser();
     if (!user) { window.location.href = 'login.html'; return; }
+    if (user.role !== 'advertiser') { window.location.href = 'home.html?notice=advertiser-only'; return; }
 
     // ── Sidebar ──
     const firstName = (user.name || '').split(' ')[0] || (user.email || 'U')[0];

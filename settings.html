@@ -248,6 +248,47 @@
       font-size: 13px; color: var(--c-text-2); margin-bottom: 24px; line-height: 1.7;
     }
 
+    /* Account-type role switcher */
+    .role-switch {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .role-pill {
+      display: flex; flex-direction: column; gap: 6px;
+      padding: 16px 18px;
+      background: var(--c-elevated); border: 1px solid var(--c-border);
+      border-radius: 12px; text-align: left; cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .role-pill:hover { border-color: var(--c-border); background: rgba(255,255,255,0.04); }
+    .role-pill.is-active {
+      border-color: var(--c-gold);
+      background: rgba(226,168,75,0.08);
+    }
+    .role-pill-top {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .role-pill-title {
+      font-family: 'Syne', sans-serif; font-size: 13.5px; font-weight: 700;
+      color: var(--c-text); letter-spacing: -0.1px;
+    }
+    .role-pill.is-active .role-pill-title { color: var(--c-gold); }
+    .role-pill-tag {
+      font-family: 'Syne', sans-serif; font-size: 10.5px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-text-3);
+      background: rgba(255,255,255,0.06); padding: 3px 8px; border-radius: 4px;
+    }
+    .role-pill.is-active .role-pill-tag {
+      color: var(--c-gold); background: rgba(226,168,75,0.12);
+    }
+    .role-pill-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; font-weight: 400;
+      color: var(--c-text-3); line-height: 1.5;
+    }
+    @media (max-width: 640px) {
+      .role-switch { grid-template-columns: 1fr; }
+    }
+
     /* Form Elements */
     .form-row {
       display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
@@ -625,6 +666,31 @@
 
       <!-- ACCOUNT TAB -->
       <div class="settings-section" id="tab-account" role="tabpanel">
+        <div class="s-card" id="account-type-card">
+          <h3 class="s-card-title">Account Type</h3>
+          <p class="s-card-desc" id="role-desc">Your account controls which surfaces you can use on Charm.</p>
+          <div class="role-switch" role="radiogroup" aria-label="Account type">
+            <button type="button" class="role-pill" data-role="user" role="radio" aria-checked="true">
+              <div class="role-pill-top">
+                <span class="role-pill-title">I'm booking</span>
+                <span class="role-pill-tag" aria-hidden="true">Booker</span>
+              </div>
+              <span class="role-pill-sub">Browse, save, and book studios, gear, and pros.</span>
+            </button>
+            <button type="button" class="role-pill" data-role="advertiser" role="radio" aria-checked="false">
+              <div class="role-pill-top">
+                <span class="role-pill-title">I'm listing</span>
+                <span class="role-pill-tag" aria-hidden="true">Advertiser</span>
+              </div>
+              <span class="role-pill-sub">Create listings, manage bookings, earn on Charm.</span>
+            </button>
+          </div>
+          <div style="margin-top:14px; display:flex; align-items:center; gap:14px; min-height:22px;">
+            <button class="btn-gold" id="saveRole" type="button" disabled style="opacity:0.55;cursor:not-allowed;">Switch account type</button>
+            <span id="roleStatus" style="font-size:13px;color:var(--c-text-3);"></span>
+          </div>
+        </div>
+
         <div class="s-card">
           <h3 class="s-card-title">Email Address</h3>
           <p class="s-card-desc">Your primary email for login and notifications.</p>
@@ -910,6 +976,27 @@
   const tabs = document.querySelectorAll('.settings-tab');
   const sections = document.querySelectorAll('.settings-section');
 
+  function activateTab(name) {
+    const tab = [...tabs].find(t => t.dataset.tab === name);
+    if (!tab) return;
+    tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
+    sections.forEach(s => s.classList.remove('active'));
+    tab.classList.add('active');
+    tab.setAttribute('aria-selected', 'true');
+    const target = document.getElementById('tab-' + name);
+    if (target) target.classList.add('active');
+    const dangerEl = document.getElementById('dangerZone');
+    if (dangerEl) dangerEl.style.display = name === 'account' ? 'block' : 'none';
+  }
+
+  // Open the tab matching location.hash (e.g. settings.html#account)
+  if (location.hash && location.hash.length > 1) {
+    activateTab(location.hash.slice(1));
+  }
+  window.addEventListener('hashchange', () => {
+    if (location.hash && location.hash.length > 1) activateTab(location.hash.slice(1));
+  });
+
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected', 'false'); });
@@ -1014,7 +1101,71 @@
     // Email verified badge — mirror user.verified
     const vb = document.getElementById('emailVerifiedBadge');
     if (vb) vb.style.display = user.verified ? '' : 'none';
+
+    // Account-type switcher
+    renderRoleSwitcher(user);
   }
+
+  // ── Role switcher (user ↔ advertiser) ──
+  let pendingRole = null;
+  function renderRoleSwitcher(user) {
+    const pills = document.querySelectorAll('.role-pill');
+    pills.forEach(p => {
+      const active = p.dataset.role === user.role;
+      p.classList.toggle('is-active', active);
+      p.setAttribute('aria-checked', active ? 'true' : 'false');
+    });
+    pendingRole = user.role;
+    syncRoleSaveBtn(user.role);
+    const desc = document.getElementById('role-desc');
+    if (desc) {
+      desc.textContent = user.role === 'advertiser'
+        ? 'You\u2019re an advertiser — you can list, manage bookings, and see earnings.'
+        : 'You\u2019re a booker — you can browse, save, and book. Switch to list anytime.';
+    }
+  }
+
+  function syncRoleSaveBtn(currentRole) {
+    const btn = document.getElementById('saveRole');
+    if (!btn) return;
+    const changed = pendingRole && pendingRole !== currentRole;
+    btn.disabled = !changed;
+    btn.style.opacity = changed ? '1' : '0.55';
+    btn.style.cursor = changed ? 'pointer' : 'not-allowed';
+  }
+
+  document.querySelectorAll('.role-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.role-pill').forEach(p => {
+        p.classList.remove('is-active');
+        p.setAttribute('aria-checked', 'false');
+      });
+      pill.classList.add('is-active');
+      pill.setAttribute('aria-checked', 'true');
+      pendingRole = pill.dataset.role;
+      const user = CharmDB.Auth.currentUser();
+      syncRoleSaveBtn(user ? user.role : 'user');
+    });
+  });
+
+  document.getElementById('saveRole')?.addEventListener('click', async () => {
+    if (!window.CharmDB || !pendingRole) return;
+    const status = document.getElementById('roleStatus');
+    if (status) status.textContent = 'Switching…';
+    try {
+      const user = await CharmDB.Auth.setRole(pendingRole);
+      if (status) status.textContent = 'Switched.';
+      showToast(pendingRole === 'advertiser'
+        ? 'You\u2019re now an advertiser. Head to the dashboard to list something.'
+        : 'You\u2019re now a booker. Browse the marketplace whenever you\u2019re ready.');
+      setTimeout(() => {
+        window.location.href = CharmDB.Auth.homeFor(user.role);
+      }, 1200);
+    } catch (err) {
+      if (status) status.textContent = '';
+      showToast(err.message || 'Could not switch account type.');
+    }
+  });
 
   async function saveProfile() {
     if (!window.CharmDB) return;

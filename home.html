@@ -745,6 +745,33 @@
   loadFeatured();
   if (window.CharmDB && CharmDB.Location) CharmDB.Location.onChange(loadFeatured);
   else window.addEventListener('charm:location-change', loadFeatured);
+
+  // ── One-shot notice after role-gated bounce ──
+  (function showRoleNotice() {
+    const params = new URLSearchParams(location.search);
+    if (params.get('notice') !== 'advertiser-only') return;
+    const t = document.createElement('div');
+    t.setAttribute('role', 'status');
+    t.style.cssText = `
+      position:fixed; top:80px; left:50%; transform:translateX(-50%);
+      background:#0d0d1a; border:1px solid rgba(226,168,75,0.35);
+      border-radius:10px; padding:12px 18px; z-index:9997;
+      color:#f0ece3; font-family:'DM Sans',sans-serif; font-size:13.5px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.5);
+      display:flex; align-items:center; gap:12px;
+      max-width:min(520px, calc(100vw - 32px));
+    `;
+    t.innerHTML = `
+      <span style="font-size:16px;">\u2728</span>
+      <span>That surface is for advertisers. Switch your account type in <a href="settings.html#account" style="color:#e2a84b;text-decoration:underline;text-underline-offset:3px;">Settings</a> to list on Charm.</span>
+    `;
+    document.body.appendChild(t);
+    setTimeout(() => { t.style.transition = 'opacity 0.4s'; t.style.opacity = '0'; }, 5200);
+    setTimeout(() => t.remove(), 5700);
+    // Clean the URL so a refresh doesn't reshow the notice
+    const clean = location.pathname + location.hash;
+    history.replaceState(null, '', clean);
+  })();
 </script>
 </body>
 </html>

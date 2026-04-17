@@ -539,6 +539,38 @@
     }
 
     /* Auth tabs */
+    /* Role toggle (user vs advertiser on signup) */
+    .role-toggle {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+      margin: 0 0 22px;
+    }
+    .role-option {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--c-border);
+      border-radius: 10px;
+      text-align: left; cursor: pointer;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+    }
+    .role-option:hover { border-color: var(--c-border-2); background: rgba(255,255,255,0.05); }
+    .role-option.is-active {
+      border-color: var(--c-gold);
+      background: rgba(226,168,75,0.08);
+    }
+    .role-title {
+      font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 700;
+      color: var(--c-text); letter-spacing: -0.1px;
+    }
+    .role-option.is-active .role-title { color: var(--c-gold); }
+    .role-sub {
+      font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 400;
+      color: var(--c-text-3); line-height: 1.4;
+    }
+    @media (max-width: 420px) {
+      .role-toggle { grid-template-columns: 1fr; }
+    }
+
     .auth-tabs {
       display: flex;
       gap: 0;
@@ -810,6 +842,18 @@
           <h1 class="form-heading">Create<br/>account.</h1>
           <p class="form-subtext">Join the creative community in seconds.</p>
 
+          <!-- Role toggle: user (booker) vs advertiser (host/seller) -->
+          <div class="role-toggle" role="radiogroup" aria-label="Account type">
+            <button type="button" class="role-option is-active" data-role="user" role="radio" aria-checked="true">
+              <span class="role-title">I'm booking</span>
+              <span class="role-sub">Find studios, spaces, gear and pros.</span>
+            </button>
+            <button type="button" class="role-option" data-role="advertiser" role="radio" aria-checked="false">
+              <span class="role-title">I'm listing</span>
+              <span class="role-sub">Host a studio, rent gear, or offer services.</span>
+            </button>
+          </div>
+
           <!-- Social buttons (top of signup — one-tap is the fastest path) -->
           <div class="social-buttons" style="margin-bottom: 20px;">
             <button type="button" class="btn-social btn-social--apple" onclick="socialSignIn('apple')" aria-label="Sign up with Apple">
@@ -995,6 +1039,20 @@
       setTimeout(() => toast.classList.remove('visible'), 2500);
     }
 
+    // ─── Role toggle on signup ───
+    let selectedRole = 'user';
+    document.querySelectorAll('.role-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        document.querySelectorAll('.role-option').forEach(o => {
+          o.classList.remove('is-active');
+          o.setAttribute('aria-checked', 'false');
+        });
+        opt.classList.add('is-active');
+        opt.setAttribute('aria-checked', 'true');
+        selectedRole = opt.dataset.role || 'user';
+      });
+    });
+
     // ─── Tab switching ───
     document.querySelectorAll('.auth-tab').forEach(tab => {
       tab.addEventListener('click', () => {
@@ -1067,7 +1125,8 @@
           password: loginPassword.value
         });
         showToast('Welcome back, ' + (user.name || user.email) + '!');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+        const dest = CharmDB.Auth.homeFor(user.role);
+        setTimeout(() => { window.location.href = dest; }, 1200);
       } catch (err) {
         btn.classList.remove('loading');
         showBanner('loginErrorBanner', 'loginErrorText', err.message || 'Invalid email or password.');
@@ -1137,10 +1196,12 @@
         const user = await CharmDB.Auth.signUp({
           email: signupEmail.value.trim(),
           password: signupPassword.value,
-          name: signupName.value.trim()
+          name: signupName.value.trim(),
+          role: selectedRole
         });
         showToast('Account created! Welcome, ' + (user.name || user.email) + '!');
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
+        const dest = CharmDB.Auth.homeFor(user.role);
+        setTimeout(() => { window.location.href = dest; }, 1200);
       } catch (err) {
         btn.classList.remove('loading');
         showBanner('signupErrorBanner', 'signupErrorText', err.message || 'Could not create account. Try again.');
@@ -1318,7 +1379,7 @@
         const stashedPw = 'social_' + provider + '_' + Math.random().toString(36).slice(2, 12);
         let user;
         try {
-          user = await CharmDB.Auth.signUp({ email, password: stashedPw, name });
+          user = await CharmDB.Auth.signUp({ email, password: stashedPw, name, role: selectedRole });
         } catch (err) {
           // Account exists → try to log in. For demo, we accept any password
           // on existing social-linked accounts by looking up the stored hash.
@@ -1330,7 +1391,8 @@
           user = await CharmDB.Auth.login({ email, password: atob(existing.password) });
         }
         showToast(`Welcome, ${user.name || user.email}!`);
-        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+        const dest = CharmDB.Auth.homeFor(user.role);
+        setTimeout(() => { window.location.href = dest; }, 1000);
       } catch (err) {
         console.error('Social sign-in failed:', err);
         showToast(err.message || 'Could not complete sign-in', true);

@@ -650,6 +650,14 @@
       <a href="login.html" class="btn-gold" data-magnetic>Sign In &rarr;</a>
     </div>
 
+    <!-- Role Gate (shown if logged in but role is 'user') -->
+    <div class="auth-gate" id="role-gate" style="display:none;">
+      <div class="auth-gate-icon" aria-hidden="true">&#10022;</div>
+      <h2>Switch to a listing account</h2>
+      <p>You're signed in as a booker. Listings are created by advertiser accounts — you can switch in Settings in one tap, no re-signup needed.</p>
+      <a href="settings.html#account" class="btn-gold" data-magnetic>Switch account type &rarr;</a>
+    </div>
+
     <!-- Form Content (shown if logged in) -->
     <div id="form-content" style="display:none;">
 
@@ -949,7 +957,13 @@
     document.getElementById('form-content').style.display = 'none';
     return; // stop all form init
   }
+  if (user.role !== 'advertiser') {
+    document.getElementById('role-gate').style.display = 'block';
+    document.getElementById('form-content').style.display = 'none';
+    return; // stop all form init
+  }
   document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('role-gate').style.display = 'none';
   document.getElementById('form-content').style.display = 'block';
 
   // ── Prefill location from user profile ──

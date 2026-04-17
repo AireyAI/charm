@@ -215,11 +215,14 @@
     /** Get current logged-in user or null */
     currentUser() {
       const session = store(AUTH_KEY).getObj();
-      return session.user || null;
+      if (!session.user) return null;
+      // Backfill role for sessions created before the role feature shipped.
+      if (!session.user.role) session.user.role = 'user';
+      return session.user;
     },
 
-    /** Sign up with email + password + display name */
-    async signUp({ email, password, name }) {
+    /** Sign up with email + password + display name + optional role */
+    async signUp({ email, password, name, role }) {
       if (!email || !password || !name) throw new Error('All fields required');
       const users = store(USERS_KEY).get();
       if (users.find(u => u.email === email.toLowerCase())) {
@@ -233,6 +236,7 @@
         avatar: name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2),
         bio: '',
         location: '',
+        role: role === 'advertiser' ? 'advertiser' : 'user',
         joined: now(),
         verified: false,
         rating: 0,
@@ -285,6 +289,28 @@
       store(AUTH_KEY).setObj({ user: safeUser, loggedInAt: now() });
       window.dispatchEvent(new CustomEvent('charm:auth-change', { detail: safeUser }));
       return safeUser;
+    },
+
+    /** Switch account role between 'user' and 'advertiser' */
+    async setRole(role) {
+      const user = this.currentUser();
+      if (!user) throw new Error('Not logged in');
+      if (role !== 'user' && role !== 'advertiser') throw new Error('Invalid role');
+      const users = store(USERS_KEY).get();
+      const idx = users.findIndex(u => u.id === user.id);
+      if (idx === -1) throw new Error('User not found');
+      users[idx].role = role;
+      store(USERS_KEY).set(users);
+      const safeUser = { ...users[idx] };
+      delete safeUser.password;
+      store(AUTH_KEY).setObj({ user: safeUser, loggedInAt: now() });
+      window.dispatchEvent(new CustomEvent('charm:auth-change', { detail: safeUser }));
+      return safeUser;
+    },
+
+    /** Convenience: where should this role land after login? */
+    homeFor(role) {
+      return role === 'advertiser' ? 'dashboard.html' : 'home.html';
     },
 
     /** Get user by ID */
@@ -724,7 +750,7 @@
   // Bump this when the seed shape changes so returning visitors get the
   // new demo data. We only reset the demo listings/users — the user's own
   // auth session, wishlist, cart, bookings, etc. are preserved.
-  const SEED_VERSION = 'charm-seed-v2-taxonomy';
+  const SEED_VERSION = 'charm-seed-v3-roles';
   function seedIfEmpty() {
     const seedKey = 'charm-seed-version';
     const existingVersion = localStorage.getItem(seedKey);
@@ -734,20 +760,25 @@
     // current taxonomy seed. Auth/bookings/wishlist are left alone.
     localStorage.setItem(seedKey, SEED_VERSION);
 
-    // Create demo users
+    // Create demo users. Advertisers have listings; users are booker-only.
     const demoUsers = [
-      { id: 'demo-sarah', email: 'sarah@charm.space', password: btoa('demo'), name: 'Sarah Chen', avatar: 'SC', bio: 'Photography studio owner and gear enthusiast', location: 'London, UK', joined: '2025-03-15T10:00:00Z', verified: true, rating: 4.9, reviewCount: 47, listingCount: 8, bookingCount: 0 },
-      { id: 'demo-marcus', email: 'marcus@charm.space', password: btoa('demo'), name: 'Marcus Webb', avatar: 'MW', bio: 'Filmmaker, podcast producer, audio engineer', location: 'Manchester, UK', joined: '2025-06-01T10:00:00Z', verified: true, rating: 4.8, reviewCount: 31, listingCount: 6, bookingCount: 0 },
-      { id: 'demo-aisha', email: 'aisha@charm.space', password: btoa('demo'), name: 'Aisha Kapoor', avatar: 'AK', bio: 'Music producer running a recording room in Dalston', location: 'London, UK', joined: '2025-01-20T10:00:00Z', verified: true, rating: 4.9, reviewCount: 56, listingCount: 12, bookingCount: 0 },
-      { id: 'demo-theo',   email: 'theo@charm.space',   password: btoa('demo'), name: 'Theo Byrne',   avatar: 'TB', bio: 'Dance & rehearsal studio owner, choreographer', location: 'London, UK',       joined: '2025-02-10T10:00:00Z', verified: true, rating: 4.9, reviewCount: 38, listingCount: 4, bookingCount: 0 },
-      { id: 'demo-lena',   email: 'lena@charm.space',   password: btoa('demo'), name: 'Lena Okafor', avatar: 'LO', bio: 'Gallery curator and artist residency host',    location: 'Bristol, UK',     joined: '2025-04-12T10:00:00Z', verified: true, rating: 4.8, reviewCount: 19, listingCount: 3, bookingCount: 0 },
-      { id: 'demo-kai',    email: 'kai@charm.space',    password: btoa('demo'), name: 'Kai Rivers',  avatar: 'KR', bio: 'Tattoo artist — blackwork and minimal linework', location: 'Manchester, UK',  joined: '2025-05-03T10:00:00Z', verified: true, rating: 5.0, reviewCount: 62, listingCount: 2, bookingCount: 0 },
-      { id: 'demo-nina',   email: 'nina@charm.space',   password: btoa('demo'), name: 'Nina Halden', avatar: 'NH', bio: 'Music production tutor and session musician',  location: 'Bristol, UK',     joined: '2025-07-22T10:00:00Z', verified: true, rating: 4.9, reviewCount: 24, listingCount: 3, bookingCount: 0 },
-      { id: 'demo-ravi',   email: 'ravi@charm.space',   password: btoa('demo'), name: 'Ravi Patel',  avatar: 'RP', bio: 'Rooftop and retreat venues across the South West', location: 'Edinburgh, UK',   joined: '2025-02-28T10:00:00Z', verified: true, rating: 4.7, reviewCount: 15, listingCount: 2, bookingCount: 0 },
+      { id: 'demo-sarah', email: 'sarah@charm.space', password: btoa('demo'), name: 'Sarah Chen', avatar: 'SC', bio: 'Photography studio owner and gear enthusiast', location: 'London, UK', role: 'advertiser', joined: '2025-03-15T10:00:00Z', verified: true, rating: 4.9, reviewCount: 47, listingCount: 8, bookingCount: 0 },
+      { id: 'demo-marcus', email: 'marcus@charm.space', password: btoa('demo'), name: 'Marcus Webb', avatar: 'MW', bio: 'Filmmaker, podcast producer, audio engineer', location: 'Manchester, UK', role: 'advertiser', joined: '2025-06-01T10:00:00Z', verified: true, rating: 4.8, reviewCount: 31, listingCount: 6, bookingCount: 0 },
+      { id: 'demo-aisha', email: 'aisha@charm.space', password: btoa('demo'), name: 'Aisha Kapoor', avatar: 'AK', bio: 'Music producer running a recording room in Dalston', location: 'London, UK', role: 'advertiser', joined: '2025-01-20T10:00:00Z', verified: true, rating: 4.9, reviewCount: 56, listingCount: 12, bookingCount: 0 },
+      { id: 'demo-theo',   email: 'theo@charm.space',   password: btoa('demo'), name: 'Theo Byrne',   avatar: 'TB', bio: 'Dance & rehearsal studio owner, choreographer', location: 'London, UK',       role: 'advertiser', joined: '2025-02-10T10:00:00Z', verified: true, rating: 4.9, reviewCount: 38, listingCount: 4, bookingCount: 0 },
+      { id: 'demo-lena',   email: 'lena@charm.space',   password: btoa('demo'), name: 'Lena Okafor', avatar: 'LO', bio: 'Gallery curator and artist residency host',    location: 'Bristol, UK',     role: 'advertiser', joined: '2025-04-12T10:00:00Z', verified: true, rating: 4.8, reviewCount: 19, listingCount: 3, bookingCount: 0 },
+      { id: 'demo-kai',    email: 'kai@charm.space',    password: btoa('demo'), name: 'Kai Rivers',  avatar: 'KR', bio: 'Tattoo artist — blackwork and minimal linework', location: 'Manchester, UK',  role: 'advertiser', joined: '2025-05-03T10:00:00Z', verified: true, rating: 5.0, reviewCount: 62, listingCount: 2, bookingCount: 0 },
+      { id: 'demo-nina',   email: 'nina@charm.space',   password: btoa('demo'), name: 'Nina Halden', avatar: 'NH', bio: 'Music production tutor and session musician',  location: 'Bristol, UK',     role: 'advertiser', joined: '2025-07-22T10:00:00Z', verified: true, rating: 4.9, reviewCount: 24, listingCount: 3, bookingCount: 0 },
+      { id: 'demo-ravi',   email: 'ravi@charm.space',   password: btoa('demo'), name: 'Ravi Patel',  avatar: 'RP', bio: 'Rooftop and retreat venues across the South West', location: 'Edinburgh, UK',   role: 'advertiser', joined: '2025-02-28T10:00:00Z', verified: true, rating: 4.7, reviewCount: 15, listingCount: 2, bookingCount: 0 },
+      // Demo booker-only account for role testing
+      { id: 'demo-jordan', email: 'jordan@charm.space', password: btoa('demo'), name: 'Jordan Miller', avatar: 'JM', bio: 'Filmmaker looking for spaces and gear to rent', location: 'London, UK',        role: 'user',       joined: '2026-03-02T10:00:00Z', verified: false, rating: 0, reviewCount: 0, listingCount: 0, bookingCount: 0 },
     ];
     // Merge demo users: replace any existing demo-* rows, keep real users.
+    // Backfill role='user' on any real signups that predate the role feature.
     const existingUsers = store(USERS_KEY).get();
-    const nonDemoUsers = existingUsers.filter(u => !String(u.id || '').startsWith('demo-'));
+    const nonDemoUsers = existingUsers
+      .filter(u => !String(u.id || '').startsWith('demo-'))
+      .map(u => ({ ...u, role: u.role || 'user' }));
     store(USERS_KEY).set([...nonDemoUsers, ...demoUsers]);
 
     // Create demo listings. Each listing carries a top-level category and,

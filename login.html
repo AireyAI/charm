@@ -1204,14 +1204,111 @@
         }
       }
 
-      // Fallback mock flow — no OAuth credentials configured yet
-      console.info(`[charm] ${providerName} OAuth not configured — using prompt fallback.`);
-      const email = (prompt(`Continue with ${providerName}.\n\nEnter the email tied to your ${providerName} account:`) || '').trim();
-      if (!email) return;
-      const existing = CharmDB && CharmDB.Auth.getUser && false; // no lookup by email in Auth API; signUp handles duplicates
-      const name = (prompt(`What name should other creators see?`) || email.split('@')[0]).trim();
-      if (!name) return;
-      completeSocialAuth({ email, name, provider });
+      // Fallback demo flow — no OAuth credentials configured yet.
+      // Opens an in-page modal (iOS Safari silently suppresses prompt()
+      // inside a tap handler, which is why the button felt broken on mobile).
+      console.info(`[charm] ${providerName} OAuth not configured — using in-page demo flow.`);
+      openSocialDemoModal(provider, providerName);
+    }
+
+    function openSocialDemoModal(provider, providerName) {
+      // Remove any existing modal
+      document.getElementById('charm-social-modal')?.remove();
+      const modal = document.createElement('div');
+      modal.id = 'charm-social-modal';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.setAttribute('aria-label', `Continue with ${providerName}`);
+      modal.style.cssText = `
+        position:fixed; inset:0; z-index:10001; display:flex; align-items:center; justify-content:center;
+        background:rgba(7,7,14,0.78); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+        padding:20px; opacity:0; transition:opacity 0.22s ease;
+      `;
+      modal.innerHTML = `
+        <div style="
+          width:min(420px, calc(100vw - 40px));
+          background:#0d0d1a; border:1px solid rgba(255,255,255,0.1); border-radius:14px;
+          padding:28px 26px; transform:translateY(10px); opacity:0;
+          transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.22s;
+        " id="charm-social-card">
+          <div style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-gold); margin-bottom:8px;">Continue with ${providerName}</div>
+          <h2 style="font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:500; font-style:italic; color:var(--c-text); margin:0 0 6px; line-height:1.1;">One more step.</h2>
+          <p style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-3); margin:0 0 20px; line-height:1.55;">
+            This demo mocks ${providerName} sign-in. Enter the email and name you'd like on your Charm account — real OAuth picks this up from the provider automatically.
+          </p>
+          <form id="charm-social-form" style="display:flex; flex-direction:column; gap:12px;">
+            <label style="display:flex; flex-direction:column; gap:6px;">
+              <span style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-text-3);">Email</span>
+              <input type="email" id="charm-social-email" required autocomplete="email" inputmode="email"
+                placeholder="you@example.com"
+                style="height:44px; padding:0 14px; background:rgba(255,255,255,0.04); border:1px solid var(--c-border-2); border-radius:10px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none;">
+            </label>
+            <label style="display:flex; flex-direction:column; gap:6px;">
+              <span style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--c-text-3);">Name</span>
+              <input type="text" id="charm-social-name" required autocomplete="name"
+                placeholder="Jane Doe"
+                style="height:44px; padding:0 14px; background:rgba(255,255,255,0.04); border:1px solid var(--c-border-2); border-radius:10px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none;">
+            </label>
+            <div id="charm-social-err" style="display:none; font-family:'DM Sans',sans-serif; font-size:12.5px; color:#ff6b57;"></div>
+            <div style="display:flex; gap:10px; margin-top:10px; align-items:center;">
+              <button type="button" id="charm-social-cancel" style="
+                flex:0 0 auto; padding:10px 16px; background:transparent; color:var(--c-text-3);
+                border:1px solid var(--c-border-2); border-radius:10px;
+                font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; cursor:pointer;
+              ">Cancel</button>
+              <button type="submit" id="charm-social-submit" style="
+                flex:1; padding:11px 16px; background:#ffffff; color:#000000;
+                border:none; border-radius:10px;
+                font-family:'Syne',sans-serif; font-size:12.5px; font-weight:700; cursor:pointer;
+              ">Continue</button>
+            </div>
+          </form>
+        </div>
+      `;
+      document.body.appendChild(modal);
+      requestAnimationFrame(() => {
+        modal.style.opacity = '1';
+        const card = modal.querySelector('#charm-social-card');
+        if (card) { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }
+      });
+
+      function close() {
+        modal.style.opacity = '0';
+        setTimeout(() => modal.remove(), 220);
+      }
+      modal.querySelector('#charm-social-cancel').addEventListener('click', close);
+      modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+      const form = modal.querySelector('#charm-social-form');
+      const err = modal.querySelector('#charm-social-err');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = form.querySelector('#charm-social-email').value.trim();
+        const name = form.querySelector('#charm-social-name').value.trim();
+        if (!email || !validateEmail(email)) {
+          err.style.display = 'block';
+          err.textContent = 'Please enter a valid email address.';
+          return;
+        }
+        if (!name) {
+          err.style.display = 'block';
+          err.textContent = 'Please enter your name.';
+          return;
+        }
+        err.style.display = 'none';
+        const submitBtn = form.querySelector('#charm-social-submit');
+        submitBtn.textContent = 'Continuing…';
+        submitBtn.disabled = true;
+        try {
+          await completeSocialAuth({ email, name, provider });
+          close();
+        } catch (e2) {
+          submitBtn.textContent = 'Continue';
+          submitBtn.disabled = false;
+          err.style.display = 'block';
+          err.textContent = e2.message || 'Could not continue. Try again.';
+        }
+      });
+      setTimeout(() => modal.querySelector('#charm-social-email').focus(), 260);
     }
 
     async function completeSocialAuth({ email, name, provider }) {

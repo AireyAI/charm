@@ -680,49 +680,15 @@
 
       <div class="form-group">
         <label class="form-label">Category <span class="required">*</span></label>
-        <div class="category-grid" role="radiogroup" aria-label="Select category">
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="cameras">
-            <span class="cat-icon">&#128247;</span>
-            <span class="cat-name">Cameras</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="audio">
-            <span class="cat-icon">&#127908;</span>
-            <span class="cat-name">Audio</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="lighting">
-            <span class="cat-icon">&#128161;</span>
-            <span class="cat-name">Lighting</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="instruments">
-            <span class="cat-icon">&#127928;</span>
-            <span class="cat-name">Instruments</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="props">
-            <span class="cat-icon">&#127917;</span>
-            <span class="cat-name">Props</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="dj">
-            <span class="cat-icon">&#127926;</span>
-            <span class="cat-name">DJ</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="studio">
-            <span class="cat-icon">&#127909;</span>
-            <span class="cat-name">Studio</span>
-          </label>
-          <label class="cat-option" onclick="selectCategory(this)">
-            <input type="radio" name="category" value="other">
-            <span class="cat-icon">&#128206;</span>
-            <span class="cat-name">Other</span>
-          </label>
-        </div>
+        <div class="category-grid" role="radiogroup" aria-label="Select category" id="category-grid"></div>
         <div class="form-error" id="cat-error">Please select a category</div>
+      </div>
+
+      <div class="form-group" id="subcategory-group" style="display:none;">
+        <label class="form-label" for="subcategory">Subcategory <span style="color:var(--c-text-3);font-weight:400;">(optional)</span></label>
+        <select class="form-input" name="subcategory" id="subcategory">
+          <option value="">Choose one…</option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -1025,8 +991,10 @@
   }
 
   function saveDraftData() {
+    const subEl = document.getElementById('subcategory');
     const data = {
       category: getRadioValue('category'),
+      subcategory: subEl ? subEl.value : '',
       condition: getRadioValue('condition'),
       'listing-type': getRadioValue('listing-type'),
       title: document.getElementById('listing-title').value,
@@ -1061,8 +1029,51 @@
     el.classList.add('selected');
     el.querySelector('input').checked = true;
     hideError('cat-error');
+    populateSubcategories(el.querySelector('input').value);
     saveDraftData();
   };
+
+  // ── Populate the category grid + subcategory select from CharmDB.Categories ──
+  function populateCategoryGrid() {
+    if (!window.CharmDB || !CharmDB.Categories) return setTimeout(populateCategoryGrid, 40);
+    const grid = document.getElementById('category-grid');
+    if (!grid) return;
+    grid.innerHTML = CharmDB.Categories.all().map(c => `
+      <label class="cat-option" onclick="selectCategory(this)">
+        <input type="radio" name="category" value="${c.slug}">
+        <span class="cat-icon">${c.emoji}</span>
+        <span class="cat-name">${c.label}</span>
+      </label>`).join('');
+
+    // If a draft category was restored before the grid was built, re-apply it.
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      if (saved && saved.category) {
+        const el = grid.querySelector(`input[value="${saved.category}"]`);
+        if (el) {
+          el.checked = true;
+          el.closest('.cat-option').classList.add('selected');
+          populateSubcategories(saved.category, saved.subcategory);
+        }
+      }
+    } catch {}
+  }
+
+  function populateSubcategories(catSlug, preselect) {
+    const wrap = document.getElementById('subcategory-group');
+    const sel = document.getElementById('subcategory');
+    if (!wrap || !sel || !window.CharmDB || !CharmDB.Categories) return;
+    const cat = CharmDB.Categories.bySlug(catSlug);
+    if (!cat || !cat.subs || !cat.subs.length) {
+      wrap.style.display = 'none';
+      sel.innerHTML = '<option value="">Choose one…</option>';
+      return;
+    }
+    wrap.style.display = '';
+    sel.innerHTML = `<option value="">Choose one…</option>` +
+      cat.subs.map(s => `<option value="${s.slug}"${preselect === s.slug ? ' selected' : ''}>${s.label}</option>`).join('');
+  }
+  populateCategoryGrid();
 
   // ── Toggle selection ──
   window.selectToggle = function(el, name) {
@@ -1276,11 +1287,11 @@
       renderTags();
     }
 
-    const catLabels = { cameras:'Cameras', audio:'Audio', lighting:'Lighting', instruments:'Instruments', props:'Props', dj:'DJ', studio:'Studio', other:'Other' };
+    const catLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(cat) : cat;
     const condLabels = { 'like-new':'Like New', excellent:'Excellent', good:'Good', fair:'Fair' };
     const typeLabels = { buy:'For Sale', rent:'For Rent', both:'Sale & Rental' };
 
-    document.getElementById('review-cat').textContent = catLabels[cat] || cat;
+    document.getElementById('review-cat').textContent = catLabel || cat;
     document.getElementById('review-title').textContent = title || 'Untitled';
     document.getElementById('review-desc').textContent = desc || 'No description';
     document.getElementById('review-condition').textContent = condLabels[cond] || cond;
@@ -1307,7 +1318,7 @@
     }
 
     // Details summary
-    document.getElementById('rd-category').textContent = catLabels[cat] || '--';
+    document.getElementById('rd-category').textContent = catLabel || '--';
     document.getElementById('rd-condition').textContent = condLabels[cond] || '--';
     document.getElementById('rd-type').textContent = typeLabels[type] || '--';
     document.getElementById('rd-brand').textContent = brand || '--';
@@ -1362,10 +1373,12 @@
         renderTags();
       }
 
+      const subEl = document.getElementById('subcategory');
       const listingData = {
         title: document.getElementById('listing-title').value.trim(),
         description: document.getElementById('listing-desc').value.trim(),
         category: getRadioValue('category'),
+        subcategory: subEl ? subEl.value : '',
         condition: getRadioValue('condition'),
         type: type,
         priceRent: parseFloat(document.getElementById('rent-price').value) || 0,
@@ -1448,9 +1461,9 @@
       <div>
         <div class="ft-col-ttl">Categories</div>
         <ul class="ft-links">
-          <li><a href="cameras.html">Cameras</a></li>
-          <li><a href="audio.html">Audio</a></li>
-          <li><a href="lighting.html">Lighting</a></li>
+          <li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li>
+          <li><a href="marketplace.html?category=music-studios">Music Studios</a></li>
+          <li><a href="marketplace.html?category=marketplace">Gear</a></li>
         </ul>
       </div>
       <div>

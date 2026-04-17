@@ -110,12 +110,7 @@
         <label for="s-cat">Category</label>
         <select id="s-cat" name="category">
           <option value="">Any</option>
-          <option>Cameras</option>
-          <option>Audio</option>
-          <option>Lighting</option>
-          <option>Instruments</option>
-          <option>Studios</option>
-          <option>Pros</option>
+          <!-- Populated on load from CharmDB.Categories -->
         </select>
       </div>
       <div class="hero-search-field">
@@ -143,22 +138,12 @@
 </section>
 
 <!-- ============================================================
-     Category strip
+     Category strip — populated from CharmDB.Categories on load
      ============================================================ -->
 <section style="padding: var(--s-5) 0; border-top: 1px solid var(--c-border);">
   <div class="container-wide">
-    <div class="cat-strip" role="tablist" aria-label="Filter by category">
-      <button class="cat-pill is-active" role="tab" aria-selected="true">All</button>
-      <button class="cat-pill" role="tab">Cameras</button>
-      <button class="cat-pill" role="tab">Lenses</button>
-      <button class="cat-pill" role="tab">Audio</button>
-      <button class="cat-pill" role="tab">Lighting</button>
-      <button class="cat-pill" role="tab">Instruments</button>
-      <button class="cat-pill" role="tab">Drones</button>
-      <button class="cat-pill" role="tab">Studios</button>
-      <button class="cat-pill" role="tab">Pros</button>
-      <button class="cat-pill" role="tab">Software</button>
-      <button class="cat-pill" role="tab">Props &amp; Sets</button>
+    <div class="cat-strip" id="home-cat-strip" role="tablist" aria-label="Filter by category">
+      <a class="cat-pill is-active" href="marketplace.html" role="tab" aria-selected="true">All</a>
     </div>
   </div>
 </section>
@@ -195,62 +180,15 @@
     <div class="section-head">
       <div>
         <div class="t-label">Catalogue</div>
-        <h2 class="t-headline" id="cats-heading">Eight disciplines.<br>One platform.</h2>
+        <h2 class="t-headline" id="cats-heading">Eleven disciplines.<br>One platform.</h2>
       </div>
       <div class="section-aside">
         <a href="marketplace.html" class="btn btn--link">Browse everything</a>
       </div>
     </div>
 
-    <div class="listing-grid">
-      <a href="cameras.html" class="card">
-        <div class="card-img card-img--tall">
-          <img src="images/cat-photo.jpg" alt="Photography gear">
-          <span class="card-tag">Discipline</span>
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>01</span><span>215 listings</span></div>
-          <h3 class="t-card-title">Photography &amp; Cinema</h3>
-          <p class="card-sub">Cinema bodies, mirrorless, primes, matte boxes, follow-focus rigs.</p>
-        </div>
-      </a>
-
-      <a href="audio.html" class="card">
-        <div class="card-img card-img--tall">
-          <img src="images/cat-podcast.jpg" alt="Audio gear">
-          <span class="card-tag">Discipline</span>
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>02</span><span>142 listings</span></div>
-          <h3 class="t-card-title">Audio &amp; Podcast</h3>
-          <p class="card-sub">Condensers, interfaces, field recorders, booms, foam-treated booths.</p>
-        </div>
-      </a>
-
-      <a href="lighting.html" class="card">
-        <div class="card-img card-img--tall">
-          <img src="images/lighting-setup.jpg" alt="Lighting gear">
-          <span class="card-tag">Discipline</span>
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>03</span><span>98 listings</span></div>
-          <h3 class="t-card-title">Lighting &amp; Grip</h3>
-          <p class="card-sub">Continuous LEDs, strobes, modifiers, stands, sandbags, C-stands.</p>
-        </div>
-      </a>
-
-      <a href="marketplace.html?category=instruments" class="card">
-        <div class="card-img card-img--tall">
-          <img src="images/cat-music.jpg" alt="Instruments">
-          <span class="card-tag">Discipline</span>
-        </div>
-        <div class="card-meta">
-          <div class="card-label"><span>04</span><span>73 listings</span></div>
-          <h3 class="t-card-title">Instruments &amp; MIDI</h3>
-          <p class="card-sub">Guitars, synths, drums, keyboards, pedals, amps, hardware.</p>
-        </div>
-      </a>
-    </div>
+    <!-- Discipline cards — rendered from CharmDB.Categories -->
+    <div class="listing-grid" id="home-discipline-grid" aria-label="Categories"></div>
   </div>
 </section>
 
@@ -503,9 +441,9 @@
         <h4>Shop</h4>
         <ul>
           <li><a href="marketplace.html">Marketplace</a></li>
-          <li><a href="cameras.html">Cameras</a></li>
-          <li><a href="audio.html">Audio</a></li>
-          <li><a href="lighting.html">Lighting</a></li>
+          <li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li>
+          <li><a href="marketplace.html?category=music-studios">Music Studios</a></li>
+          <li><a href="marketplace.html?category=marketplace">Gear</a></li>
           <li><a href="wishlist.html">Wishlist</a></li>
         </ul>
       </div>
@@ -634,27 +572,68 @@
     setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; }, 2400);
   }
 
-  // Category pill — click routes to the matching category page
-  const CATEGORY_ROUTE = {
-    'all': 'marketplace.html',
-    'cameras': 'cameras.html',
-    'lenses': 'cameras.html?sub=lens',
-    'audio': 'audio.html',
-    'lighting': 'lighting.html',
-    'instruments': 'marketplace.html?category=instruments',
-    'drones': 'cameras.html?sub=drone',
-    'studios': 'marketplace.html',
-    'pros': 'marketplace.html',
-    'software': 'marketplace.html',
-    'props & sets': 'marketplace.html',
+  // ── Category taxonomy: strip, select, and discipline cards ──
+  const CATEGORY_IMAGES = {
+    'music-studios':        'images/music-studio.jpg',
+    'podcast-studios':      'images/cat-podcast.jpg',
+    'photography-studios':  'images/cat-photo.jpg',
+    'rehearsal-theater':    'images/creator-filming.jpg',
+    'art-spaces':           null,
+    'dance-studios':        'images/cat-dance.jpg',
+    'training':             null,
+    'professionals':        'images/hero-studio.jpg',
+    'marketplace':          'images/prod-camera.jpg',
+    'events-venues':        null,
+    'tattoo-artists':       null,
   };
-  document.querySelectorAll('.cat-strip .cat-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      const label = (pill.textContent || '').trim().toLowerCase();
-      const route = CATEGORY_ROUTE[label];
-      if (route) window.location.href = route;
-    });
-  });
+
+  function populateCategoryUI() {
+    if (!window.CharmDB || !CharmDB.Categories) return setTimeout(populateCategoryUI, 40);
+    const cats = CharmDB.Categories.all();
+
+    // Hero-search select
+    const sel = document.getElementById('s-cat');
+    if (sel) {
+      cats.forEach(c => {
+        const opt = document.createElement('option');
+        opt.value = c.slug;
+        opt.textContent = `${c.emoji} ${c.label}`;
+        sel.appendChild(opt);
+      });
+    }
+
+    // Pill strip under hero (routes to marketplace filtered by slug)
+    const strip = document.getElementById('home-cat-strip');
+    if (strip) {
+      strip.innerHTML = `<a class="cat-pill is-active" href="marketplace.html" role="tab" aria-selected="true">All</a>` +
+        cats.map(c => `<a class="cat-pill" href="marketplace.html?category=${c.slug}" role="tab"><span style="margin-right:6px;">${c.emoji}</span>${c.label}</a>`).join('');
+    }
+
+    // Discipline cards — 11 tall editorial cards
+    const grid = document.getElementById('home-discipline-grid');
+    if (grid) {
+      grid.innerHTML = cats.map((c, i) => {
+        const num = String(i + 1).padStart(2, '0');
+        const img = CATEGORY_IMAGES[c.slug];
+        const imgBlock = img
+          ? `<img src="${img}" alt="${c.label}">`
+          : `<div class="prod-noimg" style="width:100%;height:100%;"><div class="prod-noimg__cat">— ${c.label.toUpperCase()}</div><div class="prod-noimg__title">${c.emoji}</div></div>`;
+        return `
+          <a href="marketplace.html?category=${c.slug}" class="card">
+            <div class="card-img card-img--tall">
+              ${imgBlock}
+              <span class="card-tag">Discipline</span>
+            </div>
+            <div class="card-meta">
+              <div class="card-label"><span>${num}</span><span>${c.emoji}</span></div>
+              <h3 class="t-card-title">${c.label}</h3>
+              <p class="card-sub">${c.tagline}</p>
+            </div>
+          </a>`;
+      }).join('');
+    }
+  }
+  populateCategoryUI();
 
   // ── Featured listings — pulled from the real database ──
   function listingImage(l) {
@@ -672,10 +651,13 @@
           <span class="prod-badge">${typeLabel}</span>
           ${img
             ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">`
-            : `<div class="prod-noimg">
-                 <div class="prod-noimg__cat">— ${(l.category || 'Listing').toUpperCase()}</div>
+            : (() => {
+                const catLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(l.category) : l.category;
+                return `<div class="prod-noimg">
+                 <div class="prod-noimg__cat">— ${(catLabel || 'Listing').toUpperCase()}</div>
                  <div class="prod-noimg__title">${l.title}</div>
-               </div>`}
+               </div>`;
+              })()}
         </div>
         <div class="prod-meta">
           <h3 class="prod-title">${l.title}</h3>

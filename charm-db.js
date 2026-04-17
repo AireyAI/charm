@@ -28,6 +28,112 @@
 
   function now() { return new Date().toISOString(); }
 
+  // ═══════════════════════════════════════════════════════════════════════
+  //  CATEGORIES — the Charm taxonomy (single source of truth)
+  // ═══════════════════════════════════════════════════════════════════════
+  const CATEGORIES = [
+    { slug: 'music-studios', label: 'Music Studios', emoji: '🎧',
+      tagline: 'Production, recording, rehearsal, instruments',
+      subs: [
+        { slug: 'production', label: 'Production' },
+        { slug: 'recording', label: 'Recording' },
+        { slug: 'rehearsal', label: 'Rehearsal' },
+        { slug: 'instruments', label: 'Instruments' },
+      ] },
+    { slug: 'podcast-studios', label: 'Podcast Studios', emoji: '🎙',
+      tagline: 'Audio, microphones, software, acoustics',
+      subs: [
+        { slug: 'audio', label: 'Audio' },
+        { slug: 'microphones', label: 'Microphones' },
+        { slug: 'software', label: 'Software' },
+        { slug: 'acoustics', label: 'Acoustics' },
+      ] },
+    { slug: 'photography-studios', label: 'Photography Studios', emoji: '📷',
+      tagline: 'Fashion, product, portrait, white cyclorama',
+      subs: [
+        { slug: 'fashion', label: 'Fashion' },
+        { slug: 'product', label: 'Product' },
+        { slug: 'portrait', label: 'Portrait' },
+        { slug: 'cyclorama', label: 'White Cyclorama' },
+      ] },
+    { slug: 'rehearsal-theater', label: 'Rehearsal / Theater', emoji: '🎭',
+      tagline: 'Theater, dance, singing, performance',
+      subs: [
+        { slug: 'theater', label: 'Theater' },
+        { slug: 'dance', label: 'Dance' },
+        { slug: 'singing', label: 'Singing' },
+        { slug: 'performance', label: 'Performance' },
+      ] },
+    { slug: 'art-spaces', label: 'Art Spaces', emoji: '🎨',
+      tagline: 'Galleries, exhibitions, ateliers, residencies',
+      subs: [
+        { slug: 'galleries', label: 'Galleries' },
+        { slug: 'exhibitions', label: 'Exhibitions' },
+        { slug: 'ateliers', label: 'Ateliers' },
+        { slug: 'residencies', label: 'Residencies' },
+      ] },
+    { slug: 'dance-studios', label: 'Dance Studios', emoji: '💃',
+      tagline: 'Hip hop, contemporary, ballet, zumba',
+      subs: [
+        { slug: 'hip-hop', label: 'Hip Hop' },
+        { slug: 'contemporary', label: 'Contemporary' },
+        { slug: 'ballet', label: 'Ballet' },
+        { slug: 'zumba', label: 'Zumba' },
+      ] },
+    { slug: 'training', label: 'Training', emoji: '🎓',
+      tagline: 'Music, audiovisual, dance, and photography courses',
+      subs: [
+        { slug: 'music', label: 'Music' },
+        { slug: 'audiovisual', label: 'Audiovisual' },
+        { slug: 'dance', label: 'Dance' },
+        { slug: 'photography', label: 'Photography' },
+      ] },
+    { slug: 'professionals', label: 'Professionals', emoji: '🛠',
+      tagline: 'Videographers, photographers, designers, producers',
+      subs: [
+        { slug: 'videographers', label: 'Videographers' },
+        { slug: 'photographers', label: 'Photographers' },
+        { slug: 'designers', label: 'Designers' },
+        { slug: 'producers', label: 'Producers' },
+      ] },
+    { slug: 'marketplace', label: 'Marketplace', emoji: '🛍',
+      tagline: 'Audiovisual equipment, instruments, merchandising, decor',
+      subs: [
+        { slug: 'equipment', label: 'Audiovisual Equipment' },
+        { slug: 'instruments', label: 'Instruments' },
+        { slug: 'merch', label: 'Merchandising' },
+        { slug: 'decor', label: 'Creative Decor' },
+      ] },
+    { slug: 'events-venues', label: 'Events / Unique Venues', emoji: '🎪',
+      tagline: 'Retreat houses, rooftops, farms, exotic locations',
+      subs: [
+        { slug: 'retreats', label: 'Retreat Houses' },
+        { slug: 'rooftops', label: 'Rooftops' },
+        { slug: 'farms', label: 'Farms' },
+        { slug: 'exotic', label: 'Exotic Locations' },
+      ] },
+    { slug: 'tattoo-artists', label: 'Tattoo Artists', emoji: '🖌',
+      tagline: 'Traditional, realism, blackwork, minimal',
+      subs: [
+        { slug: 'traditional', label: 'Traditional' },
+        { slug: 'realism', label: 'Realism' },
+        { slug: 'blackwork', label: 'Blackwork' },
+        { slug: 'minimal', label: 'Minimal' },
+      ] },
+  ];
+
+  const Categories = {
+    all() { return CATEGORIES; },
+    bySlug(slug) { return CATEGORIES.find(c => c.slug === slug) || null; },
+    labelFor(slug) { const c = this.bySlug(slug); return c ? c.label : slug; },
+    subLabelFor(catSlug, subSlug) {
+      const c = this.bySlug(catSlug);
+      if (!c) return subSlug;
+      const s = c.subs.find(s => s.slug === subSlug);
+      return s ? s.label : subSlug;
+    },
+  };
+
   function store(key) {
     return {
       get() { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } },
@@ -157,7 +263,8 @@
         sellerAvatar: user.avatar,
         title: data.title,
         description: data.description || '',
-        category: data.category || 'other',
+        category: data.category || 'marketplace',
+        subcategory: data.subcategory || '',
         condition: data.condition || 'excellent',
         type: data.type || 'rent', // rent | buy | both
         priceRent: parseFloat(data.priceRent) || 0,   // per day
@@ -194,6 +301,9 @@
 
       if (filters.category && filters.category !== 'all') {
         listings = listings.filter(l => l.category === filters.category);
+      }
+      if (filters.subcategory && filters.subcategory !== 'all') {
+        listings = listings.filter(l => l.subcategory === filters.subcategory);
       }
       if (filters.type && filters.type !== 'all') {
         listings = listings.filter(l => l.type === filters.type || l.type === 'both');
@@ -554,22 +664,210 @@
 
     // Create demo users
     const demoUsers = [
-      { id: 'demo-sarah', email: 'sarah@charm.space', password: btoa('demo'), name: 'Sarah Chen', avatar: 'SC', bio: 'Professional photographer & gear enthusiast', location: 'London, UK', joined: '2025-03-15T10:00:00Z', verified: true, rating: 4.9, reviewCount: 47, listingCount: 8, bookingCount: 0 },
-      { id: 'demo-marcus', email: 'marcus@charm.space', password: btoa('demo'), name: 'Marcus Webb', avatar: 'MW', bio: 'Filmmaker & audio engineer', location: 'Manchester, UK', joined: '2025-06-01T10:00:00Z', verified: true, rating: 4.8, reviewCount: 31, listingCount: 6, bookingCount: 0 },
-      { id: 'demo-aisha', email: 'aisha@charm.space', password: btoa('demo'), name: 'Aisha Kapoor', avatar: 'AK', bio: 'Music producer & content creator', location: 'London, UK', joined: '2025-01-20T10:00:00Z', verified: true, rating: 4.9, reviewCount: 56, listingCount: 12, bookingCount: 0 },
+      { id: 'demo-sarah', email: 'sarah@charm.space', password: btoa('demo'), name: 'Sarah Chen', avatar: 'SC', bio: 'Photography studio owner and gear enthusiast', location: 'London, UK', joined: '2025-03-15T10:00:00Z', verified: true, rating: 4.9, reviewCount: 47, listingCount: 8, bookingCount: 0 },
+      { id: 'demo-marcus', email: 'marcus@charm.space', password: btoa('demo'), name: 'Marcus Webb', avatar: 'MW', bio: 'Filmmaker, podcast producer, audio engineer', location: 'Manchester, UK', joined: '2025-06-01T10:00:00Z', verified: true, rating: 4.8, reviewCount: 31, listingCount: 6, bookingCount: 0 },
+      { id: 'demo-aisha', email: 'aisha@charm.space', password: btoa('demo'), name: 'Aisha Kapoor', avatar: 'AK', bio: 'Music producer running a recording room in Dalston', location: 'London, UK', joined: '2025-01-20T10:00:00Z', verified: true, rating: 4.9, reviewCount: 56, listingCount: 12, bookingCount: 0 },
+      { id: 'demo-theo',   email: 'theo@charm.space',   password: btoa('demo'), name: 'Theo Byrne',   avatar: 'TB', bio: 'Dance & rehearsal studio owner, choreographer', location: 'London, UK',       joined: '2025-02-10T10:00:00Z', verified: true, rating: 4.9, reviewCount: 38, listingCount: 4, bookingCount: 0 },
+      { id: 'demo-lena',   email: 'lena@charm.space',   password: btoa('demo'), name: 'Lena Okafor', avatar: 'LO', bio: 'Gallery curator and artist residency host',    location: 'Bristol, UK',     joined: '2025-04-12T10:00:00Z', verified: true, rating: 4.8, reviewCount: 19, listingCount: 3, bookingCount: 0 },
+      { id: 'demo-kai',    email: 'kai@charm.space',    password: btoa('demo'), name: 'Kai Rivers',  avatar: 'KR', bio: 'Tattoo artist — blackwork and minimal linework', location: 'Manchester, UK',  joined: '2025-05-03T10:00:00Z', verified: true, rating: 5.0, reviewCount: 62, listingCount: 2, bookingCount: 0 },
+      { id: 'demo-nina',   email: 'nina@charm.space',   password: btoa('demo'), name: 'Nina Halden', avatar: 'NH', bio: 'Music production tutor and session musician',  location: 'Bristol, UK',     joined: '2025-07-22T10:00:00Z', verified: true, rating: 4.9, reviewCount: 24, listingCount: 3, bookingCount: 0 },
+      { id: 'demo-ravi',   email: 'ravi@charm.space',   password: btoa('demo'), name: 'Ravi Patel',  avatar: 'RP', bio: 'Rooftop and retreat venues across the South West', location: 'Edinburgh, UK',   joined: '2025-02-28T10:00:00Z', verified: true, rating: 4.7, reviewCount: 15, listingCount: 2, bookingCount: 0 },
     ];
     store(USERS_KEY).set(demoUsers);
 
-    // Create demo listings
+    // Create demo listings. Each listing carries a top-level category and,
+    // where meaningful, a subcategory so the marketplace can filter both.
+    // All listings get a typographic thumbnail if no image is supplied.
     const demoListings = [
-      { id: 'listing-1', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Sony FX6 Cinema Camera Kit', description: 'Full-frame cinema camera with 24-70mm f/2.8 lens, V-mount battery plate, XLR handle, and Pelican case. Perfect for commercial and documentary work.', category: 'cameras', condition: 'excellent', type: 'rent', priceRent: 95, priceBuy: 0, deposit: 200, location: 'London, UK', images: ['images/prod-camera.jpg'], tags: ['sony', 'cinema', 'fx6', '4k'], availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 23, views: 342, featured: true, createdAt: '2026-03-01T10:00:00Z', updatedAt: '2026-04-10T10:00:00Z' },
-      { id: 'listing-2', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Rode NTG5 Shotgun Microphone', description: 'Broadcast-quality shotgun mic with pistol grip, windshield, and XLR cable. Ultra-lightweight and incredibly clear audio.', category: 'audio', condition: 'excellent', type: 'rent', priceRent: 25, priceBuy: 0, deposit: 50, location: 'Manchester, UK', images: ['images/prod-microphone.jpg'], tags: ['rode', 'shotgun', 'ntg5', 'audio'], availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 18, views: 215, featured: true, createdAt: '2026-02-15T10:00:00Z', updatedAt: '2026-04-08T10:00:00Z' },
-      { id: 'listing-3', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Aputure 600d Pro LED Light', description: 'Daylight-balanced 600W LED with Bowens mount. Includes light dome, barn doors, and heavy-duty stand. Incredibly powerful output.', category: 'lighting', condition: 'like-new', type: 'rent', priceRent: 55, priceBuy: 0, deposit: 150, location: 'London, UK', images: ['images/prod-lighting.jpg'], tags: ['aputure', 'led', '600d', 'lighting'], availability: 'available', bookedDates: [], rating: 5.0, reviewCount: 12, views: 189, featured: false, createdAt: '2026-01-20T10:00:00Z', updatedAt: '2026-04-05T10:00:00Z' },
-      { id: 'listing-4', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK', title: 'DJI Inspire 3 Professional Drone', description: 'Professional aerial cinematography drone with X9-8K gimbal camera, dual operator control, and TB51 batteries (x4). Licensed operator available.', category: 'cameras', condition: 'excellent', type: 'rent', priceRent: 180, priceBuy: 0, deposit: 500, location: 'London, UK', images: ['images/prod-drone.jpg'], tags: ['dji', 'drone', 'inspire', 'aerial'], availability: 'available', bookedDates: [], rating: 4.7, reviewCount: 8, views: 156, featured: true, createdAt: '2026-03-10T10:00:00Z', updatedAt: '2026-04-12T10:00:00Z' },
-      { id: 'listing-5', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Canon RF 70-200mm f/2.8L IS USM', description: 'Professional telephoto zoom lens. Razor sharp across the range with dual nano USM motors for silent, fast autofocus. Includes lens hood and pouch.', category: 'cameras', condition: 'excellent', type: 'both', priceRent: 40, priceBuy: 1800, deposit: 100, location: 'Manchester, UK', images: ['images/prod-lens.jpg'], tags: ['canon', 'lens', 'rf', 'telephoto'], availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 15, views: 278, featured: false, createdAt: '2026-02-28T10:00:00Z', updatedAt: '2026-04-09T10:00:00Z' },
-      { id: 'listing-6', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK', title: 'Complete Music Production Bundle', description: 'Yamaha MODX8 synthesizer, Fender Player Plus Strat, Audio-Technica ATH-M50x headphones, and Focusrite Scarlett 4i4. Everything you need for a session.', category: 'audio', condition: 'good', type: 'rent', priceRent: 75, priceBuy: 0, deposit: 200, location: 'London, UK', images: ['images/prod-instruments.jpg'], tags: ['music', 'production', 'keyboard', 'guitar'], availability: 'available', bookedDates: [], rating: 4.6, reviewCount: 9, views: 134, featured: false, createdAt: '2026-03-05T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
-      { id: 'listing-7', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Sennheiser MKH 416 Shotgun Mic', description: 'Industry-standard short shotgun mic for film and broadcast. Known for its exceptional off-axis rejection and rich, full-bodied sound.', category: 'audio', condition: 'excellent', type: 'rent', priceRent: 30, priceBuy: 0, deposit: 60, location: 'London, UK', images: ['images/prod-microphone.jpg'], tags: ['sennheiser', 'mkh416', 'shotgun', 'film'], availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 21, views: 198, featured: false, createdAt: '2026-01-10T10:00:00Z', updatedAt: '2026-04-06T10:00:00Z' },
-      { id: 'listing-8', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Godox AD600Pro Strobe Kit (x3)', description: 'Three AD600Pro strobes with stands, softboxes, beauty dish, and wireless trigger. Complete portrait/commercial lighting setup.', category: 'lighting', condition: 'good', type: 'rent', priceRent: 65, priceBuy: 0, deposit: 180, location: 'Manchester, UK', images: ['images/prod-lighting.jpg'], tags: ['godox', 'strobe', 'flash', 'portrait'], availability: 'available', bookedDates: [], rating: 4.5, reviewCount: 7, views: 112, featured: false, createdAt: '2026-02-05T10:00:00Z', updatedAt: '2026-04-07T10:00:00Z' },
+      // ── Music Studios ──
+      { id: 'listing-ms-1', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK',
+        title: 'Dalston Recording Room with Vintage API Console',
+        description: 'Treated live room with iso booth, 16-channel API console, classic mic locker (U87, SM7B, 57s) and a Yamaha C3 grand. Engineer bookable on request.',
+        category: 'music-studios', subcategory: 'recording', condition: 'excellent', type: 'rent',
+        priceRent: 180, priceBuy: 0, deposit: 300, location: 'London, UK',
+        images: ['images/music-studio.jpg'], tags: ['recording', 'api', 'live room', 'grand piano'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 28, views: 412, featured: true,
+        createdAt: '2026-01-12T10:00:00Z', updatedAt: '2026-04-14T10:00:00Z' },
+      { id: 'listing-ms-2', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK',
+        title: 'Rehearsal Room — Backline Included',
+        description: 'Daytime rehearsal room with full backline: Orange half-stack, Ampeg bass rig, DW kit, Nord Stage 3, 4-channel vocal PA.',
+        category: 'music-studios', subcategory: 'rehearsal', condition: 'good', type: 'rent',
+        priceRent: 28, priceBuy: 0, deposit: 40, location: 'London, UK',
+        images: ['images/cat-music.jpg'], tags: ['rehearsal', 'backline', 'band'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 22, views: 201, featured: false,
+        createdAt: '2026-02-03T10:00:00Z', updatedAt: '2026-04-09T10:00:00Z' },
+
+      // ── Podcast Studios ──
+      { id: 'listing-pod-1', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW',
+        title: 'Four-Seat Podcast Studio in the Northern Quarter',
+        description: 'Fully treated podcast room: 4× SM7B on boom arms, RodeCaster Pro II, video-ready with 3× 4K cameras and soft key lighting. Producer/engineer optional.',
+        category: 'podcast-studios', subcategory: 'audio', condition: 'excellent', type: 'rent',
+        priceRent: 95, priceBuy: 0, deposit: 150, location: 'Manchester, UK',
+        images: ['images/cat-podcast.jpg'], tags: ['podcast', 'rodecaster', 'sm7b', 'video'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 34, views: 308, featured: true,
+        createdAt: '2026-01-25T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
+      { id: 'listing-pod-2', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW',
+        title: 'Solo Voice-Over Booth — Hourly',
+        description: 'Whisper-quiet single-person booth tuned for voice-over and narration. Neumann TLM-103, Apogee Symphony, Reaper/Pro Tools on the Mac.',
+        category: 'podcast-studios', subcategory: 'microphones', condition: 'excellent', type: 'rent',
+        priceRent: 35, priceBuy: 0, deposit: 0, location: 'Manchester, UK',
+        images: ['images/audio-mic.jpg'], tags: ['voiceover', 'neumann', 'booth'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 18, views: 167, featured: false,
+        createdAt: '2026-02-18T10:00:00Z', updatedAt: '2026-04-07T10:00:00Z' },
+
+      // ── Photography Studios ──
+      { id: 'listing-ps-1', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC',
+        title: 'Daylight Photo Studio — Soho',
+        description: 'South-facing 120m² studio with huge windows, white infinity cove, styling area, and hair/makeup room. Ideal for fashion and editorial.',
+        category: 'photography-studios', subcategory: 'fashion', condition: 'excellent', type: 'rent',
+        priceRent: 220, priceBuy: 0, deposit: 250, location: 'London, UK',
+        images: ['images/cat-photo.jpg'], tags: ['daylight', 'cove', 'fashion', 'editorial'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 41, views: 489, featured: true,
+        createdAt: '2026-01-08T10:00:00Z', updatedAt: '2026-04-13T10:00:00Z' },
+      { id: 'listing-ps-2', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC',
+        title: 'White Cyclorama with 10kW Lighting Package',
+        description: 'Pure white infinity cove with pre-rigged Aputure 600x, softboxes, C-stands, apple boxes, and a full grip kit. 4.5m ceiling.',
+        category: 'photography-studios', subcategory: 'cyclorama', condition: 'excellent', type: 'rent',
+        priceRent: 310, priceBuy: 0, deposit: 400, location: 'London, UK',
+        images: ['images/hero-studio.jpg'], tags: ['cyclorama', 'infinity', 'video', 'photo'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 26, views: 294, featured: false,
+        createdAt: '2026-02-22T10:00:00Z', updatedAt: '2026-04-10T10:00:00Z' },
+
+      // ── Rehearsal / Theater ──
+      { id: 'listing-rt-1', sellerId: 'demo-theo', sellerName: 'Theo Byrne', sellerAvatar: 'TB',
+        title: 'Black Box Theater — 60 Seats',
+        description: 'Intimate black-box theater with retractable seating, basic LX/sound rig, green room and technical booth. Great for previews, R&D, and scratch nights.',
+        category: 'rehearsal-theater', subcategory: 'theater', condition: 'good', type: 'rent',
+        priceRent: 140, priceBuy: 0, deposit: 200, location: 'London, UK',
+        images: ['images/creator-filming.jpg'], tags: ['black box', 'theater', 'performance'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 17, views: 188, featured: false,
+        createdAt: '2026-02-01T10:00:00Z', updatedAt: '2026-04-08T10:00:00Z' },
+      { id: 'listing-rt-2', sellerId: 'demo-theo', sellerName: 'Theo Byrne', sellerAvatar: 'TB',
+        title: 'Rehearsal Hall with Sprung Floor',
+        description: 'Bright rehearsal hall with sprung floor, mirrored wall, sound system, upright piano, and plenty of natural light. Ideal for theater and movement.',
+        category: 'rehearsal-theater', subcategory: 'performance', condition: 'excellent', type: 'rent',
+        priceRent: 45, priceBuy: 0, deposit: 50, location: 'London, UK',
+        images: ['images/cat-dance.jpg'], tags: ['rehearsal', 'sprung floor', 'movement'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 23, views: 214, featured: false,
+        createdAt: '2026-01-18T10:00:00Z', updatedAt: '2026-04-12T10:00:00Z' },
+
+      // ── Art Spaces ──
+      { id: 'listing-art-1', sellerId: 'demo-lena', sellerName: 'Lena Okafor', sellerAvatar: 'LO',
+        title: 'Pop-Up Gallery Space in Old Market',
+        description: 'Ground-floor white-walled gallery, 90m², high ceilings, track lighting. Hireable for exhibitions, launches, and private views.',
+        category: 'art-spaces', subcategory: 'galleries', condition: 'excellent', type: 'rent',
+        priceRent: 260, priceBuy: 0, deposit: 300, location: 'Bristol, UK',
+        images: [], tags: ['gallery', 'popup', 'exhibition'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 12, views: 146, featured: true,
+        createdAt: '2026-02-14T10:00:00Z', updatedAt: '2026-04-05T10:00:00Z' },
+      { id: 'listing-art-2', sellerId: 'demo-lena', sellerName: 'Lena Okafor', sellerAvatar: 'LO',
+        title: 'Artist Residency — Two-Week Atelier',
+        description: 'Two-week artist residency in a working atelier. Includes private studio, shared kitchen, and a closing open-studio event.',
+        category: 'art-spaces', subcategory: 'residencies', condition: 'good', type: 'rent',
+        priceRent: 85, priceBuy: 0, deposit: 100, location: 'Bristol, UK',
+        images: [], tags: ['residency', 'atelier', 'studio'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 9, views: 98, featured: false,
+        createdAt: '2026-03-05T10:00:00Z', updatedAt: '2026-04-06T10:00:00Z' },
+
+      // ── Dance Studios ──
+      { id: 'listing-dance-1', sellerId: 'demo-theo', sellerName: 'Theo Byrne', sellerAvatar: 'TB',
+        title: 'Hip-Hop Dance Studio with Mirrored Wall',
+        description: 'Heavy-duty sprung floor, full mirrored wall, pro sound system. Used weekly by London crews. Hourly or half-day bookings.',
+        category: 'dance-studios', subcategory: 'hip-hop', condition: 'excellent', type: 'rent',
+        priceRent: 32, priceBuy: 0, deposit: 40, location: 'London, UK',
+        images: ['images/cat-dance.jpg'], tags: ['hip hop', 'dance', 'mirrored'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 31, views: 267, featured: true,
+        createdAt: '2026-01-28T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
+      { id: 'listing-dance-2', sellerId: 'demo-theo', sellerName: 'Theo Byrne', sellerAvatar: 'TB',
+        title: 'Ballet Room with Barre and Marley Floor',
+        description: 'Classical ballet room with fixed barres, Marley-surface floor, upright piano, and great acoustics.',
+        category: 'dance-studios', subcategory: 'ballet', condition: 'excellent', type: 'rent',
+        priceRent: 36, priceBuy: 0, deposit: 40, location: 'London, UK',
+        images: [], tags: ['ballet', 'barre', 'dance'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 14, views: 132, featured: false,
+        createdAt: '2026-02-20T10:00:00Z', updatedAt: '2026-04-03T10:00:00Z' },
+
+      // ── Training ──
+      { id: 'listing-train-1', sellerId: 'demo-nina', sellerName: 'Nina Halden', sellerAvatar: 'NH',
+        title: '8-Week Ableton Live Production Course',
+        description: 'Small-group production course (max 6). Covers sound design, arrangement, and mixing. Take home two finished tracks.',
+        category: 'training', subcategory: 'music', condition: 'excellent', type: 'rent',
+        priceRent: 420, priceBuy: 0, deposit: 0, location: 'Bristol, UK',
+        images: [], tags: ['course', 'ableton', 'production'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 21, views: 178, featured: false,
+        createdAt: '2026-01-30T10:00:00Z', updatedAt: '2026-04-04T10:00:00Z' },
+      { id: 'listing-train-2', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC',
+        title: 'Studio Photography Weekend Workshop',
+        description: 'Two-day intensive weekend on studio lighting, direction, and post. Shoot with real models in a working studio.',
+        category: 'training', subcategory: 'photography', condition: 'excellent', type: 'rent',
+        priceRent: 295, priceBuy: 0, deposit: 0, location: 'London, UK',
+        images: [], tags: ['workshop', 'photography', 'studio'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 16, views: 142, featured: false,
+        createdAt: '2026-02-12T10:00:00Z', updatedAt: '2026-04-02T10:00:00Z' },
+
+      // ── Professionals ──
+      { id: 'listing-pro-1', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW',
+        title: 'Music Video Director & DP — Day Rate',
+        description: '10 years directing music videos and commercials. Day rate includes direction, full camera package (Sony FX6), and colour grade on request.',
+        category: 'professionals', subcategory: 'videographers', condition: 'excellent', type: 'rent',
+        priceRent: 850, priceBuy: 0, deposit: 0, location: 'Manchester, UK',
+        images: [], tags: ['director', 'dp', 'music video'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 27, views: 235, featured: false,
+        createdAt: '2026-01-14T10:00:00Z', updatedAt: '2026-04-09T10:00:00Z' },
+      { id: 'listing-pro-2', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC',
+        title: 'Editorial Photographer — Half / Full Day',
+        description: 'Editorial and portrait photographer shooting for magazines and brands for 8+ years. Includes full-frame kit and same-week selects.',
+        category: 'professionals', subcategory: 'photographers', condition: 'excellent', type: 'rent',
+        priceRent: 620, priceBuy: 0, deposit: 0, location: 'London, UK',
+        images: [], tags: ['editorial', 'portrait', 'photographer'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 35, views: 318, featured: true,
+        createdAt: '2026-02-06T10:00:00Z', updatedAt: '2026-04-10T10:00:00Z' },
+
+      // ── Marketplace (gear — the original listings, relabelled) ──
+      { id: 'listing-1', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Sony FX6 Cinema Camera Kit', description: 'Full-frame cinema camera with 24-70mm f/2.8 lens, V-mount battery plate, XLR handle, and Pelican case. Perfect for commercial and documentary work.', category: 'marketplace', subcategory: 'equipment', condition: 'excellent', type: 'rent', priceRent: 95, priceBuy: 0, deposit: 200, location: 'London, UK', images: ['images/prod-camera.jpg'], tags: ['sony', 'cinema', 'fx6', '4k'], availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 23, views: 342, featured: true, createdAt: '2026-03-01T10:00:00Z', updatedAt: '2026-04-10T10:00:00Z' },
+      { id: 'listing-2', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Rode NTG5 Shotgun Microphone', description: 'Broadcast-quality shotgun mic with pistol grip, windshield, and XLR cable. Ultra-lightweight and incredibly clear audio.', category: 'marketplace', subcategory: 'equipment', condition: 'excellent', type: 'rent', priceRent: 25, priceBuy: 0, deposit: 50, location: 'Manchester, UK', images: ['images/prod-microphone.jpg'], tags: ['rode', 'shotgun', 'ntg5', 'audio'], availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 18, views: 215, featured: true, createdAt: '2026-02-15T10:00:00Z', updatedAt: '2026-04-08T10:00:00Z' },
+      { id: 'listing-3', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Aputure 600d Pro LED Light', description: 'Daylight-balanced 600W LED with Bowens mount. Includes light dome, barn doors, and heavy-duty stand. Incredibly powerful output.', category: 'marketplace', subcategory: 'equipment', condition: 'like-new', type: 'rent', priceRent: 55, priceBuy: 0, deposit: 150, location: 'London, UK', images: ['images/prod-lighting.jpg'], tags: ['aputure', 'led', '600d', 'lighting'], availability: 'available', bookedDates: [], rating: 5.0, reviewCount: 12, views: 189, featured: false, createdAt: '2026-01-20T10:00:00Z', updatedAt: '2026-04-05T10:00:00Z' },
+      { id: 'listing-4', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK', title: 'DJI Inspire 3 Professional Drone', description: 'Professional aerial cinematography drone with X9-8K gimbal camera, dual operator control, and TB51 batteries (x4). Licensed operator available.', category: 'marketplace', subcategory: 'equipment', condition: 'excellent', type: 'rent', priceRent: 180, priceBuy: 0, deposit: 500, location: 'London, UK', images: ['images/prod-drone.jpg'], tags: ['dji', 'drone', 'inspire', 'aerial'], availability: 'available', bookedDates: [], rating: 4.7, reviewCount: 8, views: 156, featured: true, createdAt: '2026-03-10T10:00:00Z', updatedAt: '2026-04-12T10:00:00Z' },
+      { id: 'listing-5', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Canon RF 70-200mm f/2.8L IS USM', description: 'Professional telephoto zoom lens. Razor sharp across the range with dual nano USM motors for silent, fast autofocus. Includes lens hood and pouch.', category: 'marketplace', subcategory: 'equipment', condition: 'excellent', type: 'both', priceRent: 40, priceBuy: 1800, deposit: 100, location: 'Manchester, UK', images: ['images/prod-lens.jpg'], tags: ['canon', 'lens', 'rf', 'telephoto'], availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 15, views: 278, featured: false, createdAt: '2026-02-28T10:00:00Z', updatedAt: '2026-04-09T10:00:00Z' },
+      { id: 'listing-6', sellerId: 'demo-aisha', sellerName: 'Aisha Kapoor', sellerAvatar: 'AK', title: 'Complete Music Production Bundle', description: 'Yamaha MODX8 synthesizer, Fender Player Plus Strat, Audio-Technica ATH-M50x headphones, and Focusrite Scarlett 4i4. Everything you need for a session.', category: 'marketplace', subcategory: 'instruments', condition: 'good', type: 'rent', priceRent: 75, priceBuy: 0, deposit: 200, location: 'London, UK', images: ['images/prod-instruments.jpg'], tags: ['music', 'production', 'keyboard', 'guitar'], availability: 'available', bookedDates: [], rating: 4.6, reviewCount: 9, views: 134, featured: false, createdAt: '2026-03-05T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
+      { id: 'listing-7', sellerId: 'demo-sarah', sellerName: 'Sarah Chen', sellerAvatar: 'SC', title: 'Sennheiser MKH 416 Shotgun Mic', description: 'Industry-standard short shotgun mic for film and broadcast. Known for its exceptional off-axis rejection and rich, full-bodied sound.', category: 'marketplace', subcategory: 'equipment', condition: 'excellent', type: 'rent', priceRent: 30, priceBuy: 0, deposit: 60, location: 'London, UK', images: ['images/prod-microphone.jpg'], tags: ['sennheiser', 'mkh416', 'shotgun', 'film'], availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 21, views: 198, featured: false, createdAt: '2026-01-10T10:00:00Z', updatedAt: '2026-04-06T10:00:00Z' },
+      { id: 'listing-8', sellerId: 'demo-marcus', sellerName: 'Marcus Webb', sellerAvatar: 'MW', title: 'Godox AD600Pro Strobe Kit (x3)', description: 'Three AD600Pro strobes with stands, softboxes, beauty dish, and wireless trigger. Complete portrait/commercial lighting setup.', category: 'marketplace', subcategory: 'equipment', condition: 'good', type: 'rent', priceRent: 65, priceBuy: 0, deposit: 180, location: 'Manchester, UK', images: ['images/prod-lighting.jpg'], tags: ['godox', 'strobe', 'flash', 'portrait'], availability: 'available', bookedDates: [], rating: 4.5, reviewCount: 7, views: 112, featured: false, createdAt: '2026-02-05T10:00:00Z', updatedAt: '2026-04-07T10:00:00Z' },
+
+      // ── Events / Unique Venues ──
+      { id: 'listing-ev-1', sellerId: 'demo-ravi', sellerName: 'Ravi Patel', sellerAvatar: 'RP',
+        title: 'Panoramic Rooftop with DJ Booth — Up to 120',
+        description: 'Private rooftop terrace with full bar, DJ booth, and skyline views. Permitted to 1am. Includes event manager and sound system.',
+        category: 'events-venues', subcategory: 'rooftops', condition: 'excellent', type: 'rent',
+        priceRent: 1200, priceBuy: 0, deposit: 800, location: 'Edinburgh, UK',
+        images: [], tags: ['rooftop', 'events', 'party'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 19, views: 286, featured: true,
+        createdAt: '2026-02-09T10:00:00Z', updatedAt: '2026-04-13T10:00:00Z' },
+      { id: 'listing-ev-2', sellerId: 'demo-ravi', sellerName: 'Ravi Patel', sellerAvatar: 'RP',
+        title: 'Weekend Retreat Farmhouse — Sleeps 14',
+        description: 'Restored 18th-century farmhouse on 6 acres. Perfect for writing retreats, offsites, and creative workshops. Full kitchen, wood stoves, hot tub.',
+        category: 'events-venues', subcategory: 'retreats', condition: 'excellent', type: 'rent',
+        priceRent: 980, priceBuy: 0, deposit: 500, location: 'Scotland, UK',
+        images: [], tags: ['retreat', 'farmhouse', 'offsite'],
+        availability: 'available', bookedDates: [], rating: 4.8, reviewCount: 11, views: 172, featured: false,
+        createdAt: '2026-01-22T10:00:00Z', updatedAt: '2026-04-08T10:00:00Z' },
+
+      // ── Tattoo Artists ──
+      { id: 'listing-tat-1', sellerId: 'demo-kai', sellerName: 'Kai Rivers', sellerAvatar: 'KR',
+        title: 'Kai Rivers — Blackwork & Bold Linework',
+        description: 'Specialist in blackwork and bold linework. 6+ years, hygienic private studio in central Manchester. Consultations free.',
+        category: 'tattoo-artists', subcategory: 'blackwork', condition: 'excellent', type: 'rent',
+        priceRent: 180, priceBuy: 0, deposit: 60, location: 'Manchester, UK',
+        images: [], tags: ['tattoo', 'blackwork', 'linework'],
+        availability: 'available', bookedDates: [], rating: 5.0, reviewCount: 62, views: 401, featured: true,
+        createdAt: '2026-01-06T10:00:00Z', updatedAt: '2026-04-14T10:00:00Z' },
+      { id: 'listing-tat-2', sellerId: 'demo-kai', sellerName: 'Kai Rivers', sellerAvatar: 'KR',
+        title: 'Fine-Line Minimal Tattoos — Walk-ins Welcome',
+        description: 'Micro and minimal tattoos, one-line drawings, dainty pieces. Hourly rate for a chatty, relaxed session.',
+        category: 'tattoo-artists', subcategory: 'minimal', condition: 'excellent', type: 'rent',
+        priceRent: 120, priceBuy: 0, deposit: 40, location: 'Manchester, UK',
+        images: [], tags: ['tattoo', 'minimal', 'fineline'],
+        availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 38, views: 254, featured: false,
+        createdAt: '2026-02-25T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
     ];
     store(LISTINGS_KEY).set(demoListings);
   }
@@ -674,6 +972,7 @@
     Bookings,
     Notifications,
     Reviews,
+    Categories,
     config: { useSupabase: USE_SUPABASE }
   };
 

@@ -534,16 +534,17 @@
 <!-- Category strip + search -->
 <section style="padding: var(--s-5) 0; border-bottom: 1px solid var(--c-border);">
   <div class="container-wide" style="display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;">
-    <div class="cat-strip" role="tablist" aria-label="Filter by category" style="flex: 1; padding: 0;">
+    <div class="cat-strip" role="tablist" aria-label="Filter by category" id="cat-strip" style="flex: 1; padding: 0;">
+      <!-- Pills are populated from CharmDB.Categories on load -->
       <button class="cat-pill is-active" role="tab" data-cat="all">All</button>
-      <button class="cat-pill" role="tab" data-cat="cameras">Cameras</button>
-      <button class="cat-pill" role="tab" data-cat="audio">Audio</button>
-      <button class="cat-pill" role="tab" data-cat="lighting">Lighting</button>
-      <button class="cat-pill" role="tab" data-cat="instruments">Instruments</button>
-      <button class="cat-pill" role="tab" data-cat="props">Props &amp; Sets</button>
     </div>
     <div style="position: relative; min-width: 260px;">
-      <input id="mkt-search" type="search" class="input" placeholder="Search gear, tags, sellers…" aria-label="Search listings" style="height: 40px;" oninput="onSearchInput(event)">
+      <input id="mkt-search" type="search" class="input" placeholder="Search studios, pros, gear…" aria-label="Search listings" style="height: 40px;" oninput="onSearchInput(event)">
+    </div>
+  </div>
+  <!-- Subcategory strip: appears when a top category is selected -->
+  <div class="container-wide" id="sub-strip-wrap" style="display:none; padding-top: var(--s-3);">
+    <div class="cat-strip" role="tablist" aria-label="Filter by subcategory" id="sub-strip" style="padding: 0; gap: 8px;">
     </div>
   </div>
 </section>
@@ -725,9 +726,9 @@
       </div>
       <div class="footer-col"><h4>Shop</h4><ul>
         <li><a href="marketplace.html">All gear</a></li>
-        <li><a href="cameras.html">Cameras</a></li>
-        <li><a href="audio.html">Audio</a></li>
-        <li><a href="lighting.html">Lighting</a></li>
+        <li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li>
+        <li><a href="marketplace.html?category=music-studios">Music Studios</a></li>
+        <li><a href="marketplace.html?category=marketplace">Gear</a></li>
         <li><a href="wishlist.html">Wishlist</a></li>
       </ul></div>
       <div class="footer-col"><h4>Sell</h4><ul>
@@ -762,6 +763,7 @@
 <script>
   const state = {
     category: 'all',
+    subcategory: 'all',
     type: 'all',
     maxPrice: 500,
     conditions: [],
@@ -809,6 +811,7 @@
     let out = [...listings];
 
     if (state.category !== 'all') out = out.filter(l => l.category === state.category);
+    if (state.subcategory !== 'all') out = out.filter(l => l.subcategory === state.subcategory);
     if (state.type !== 'all') out = out.filter(l => l.type === state.type || l.type === 'both');
     if (state.conditions.length) out = out.filter(l => state.conditions.includes(l.condition));
     if (state.minRating > 0) out = out.filter(l => (l.rating || 0) >= state.minRating);
@@ -868,11 +871,14 @@
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
           </div>
-          ${img ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">` : `
+          ${img ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">` : (() => {
+            const catLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(l.category) : l.category;
+            return `
           <div class="prod-noimg">
-            <div class="prod-noimg__cat">— ${(l.category || 'Listing').toUpperCase()}</div>
+            <div class="prod-noimg__cat">— ${(catLabel || 'Listing').toUpperCase()}</div>
             <div class="prod-noimg__title">${l.title}</div>
-          </div>`}
+          </div>`;
+          })()}
         </div>
         <div class="prod-meta">
           <h3 class="prod-title">${l.title}</h3>
@@ -888,16 +894,58 @@
       </article>`;
   }
 
-  // ── Filter event binders ──
-  $$('.cat-strip .cat-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-      $$('.cat-strip .cat-pill').forEach(p => { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
-      pill.classList.add('is-active');
-      pill.setAttribute('aria-selected', 'true');
-      state.category = pill.dataset.cat;
-      applyFilters();
+  // ── Category strip — populated from CharmDB.Categories ──
+  function renderCategoryStrip() {
+    const strip = document.getElementById('cat-strip');
+    if (!strip || !window.CharmDB || !CharmDB.Categories) return false;
+    const cats = CharmDB.Categories.all();
+    strip.innerHTML = `<button class="cat-pill ${state.category === 'all' ? 'is-active' : ''}" role="tab" data-cat="all" aria-selected="${state.category === 'all'}">All</button>` +
+      cats.map(c => `<button class="cat-pill ${state.category === c.slug ? 'is-active' : ''}" role="tab" data-cat="${c.slug}" aria-selected="${state.category === c.slug}"><span style="margin-right:6px;">${c.emoji}</span>${c.label}</button>`).join('');
+    Array.from(strip.querySelectorAll('.cat-pill')).forEach(pill => {
+      pill.addEventListener('click', () => {
+        const slug = pill.dataset.cat;
+        state.category = slug;
+        state.subcategory = 'all';
+        renderCategoryStrip();
+        renderSubStrip();
+        applyFilters();
+      });
     });
-  });
+    return true;
+  }
+
+  // ── Subcategory strip — appears when a top category is selected ──
+  function renderSubStrip() {
+    const wrap = document.getElementById('sub-strip-wrap');
+    const strip = document.getElementById('sub-strip');
+    if (!wrap || !strip) return;
+    if (state.category === 'all' || !window.CharmDB || !CharmDB.Categories) {
+      wrap.style.display = 'none';
+      strip.innerHTML = '';
+      return;
+    }
+    const cat = CharmDB.Categories.bySlug(state.category);
+    if (!cat || !cat.subs || !cat.subs.length) {
+      wrap.style.display = 'none';
+      strip.innerHTML = '';
+      return;
+    }
+    wrap.style.display = '';
+    strip.innerHTML = `<button class="cat-pill ${state.subcategory === 'all' ? 'is-active' : ''}" role="tab" data-sub="all" aria-selected="${state.subcategory === 'all'}" style="padding:6px 14px;font-size:12.5px;">All ${cat.label}</button>` +
+      cat.subs.map(s => `<button class="cat-pill ${state.subcategory === s.slug ? 'is-active' : ''}" role="tab" data-sub="${s.slug}" aria-selected="${state.subcategory === s.slug}" style="padding:6px 14px;font-size:12.5px;">${s.label}</button>`).join('');
+    Array.from(strip.querySelectorAll('.cat-pill')).forEach(pill => {
+      pill.addEventListener('click', () => {
+        state.subcategory = pill.dataset.sub;
+        renderSubStrip();
+        applyFilters();
+      });
+    });
+  }
+
+  // Populate once CharmDB is ready.
+  (function waitForCategories() {
+    if (!renderCategoryStrip()) setTimeout(waitForCategories, 40);
+  })();
 
   $$('input[name="type"]').forEach(i => i.addEventListener('change', (e) => { state.type = e.target.value; applyFilters(); }));
   $$('input[name="rating"]').forEach(i => i.addEventListener('change', (e) => { state.minRating = parseFloat(e.target.value); applyFilters(); }));
@@ -920,13 +968,14 @@
   }
 
   function resetFilters() {
-    state.category = 'all'; state.type = 'all'; state.maxPrice = 500;
+    state.category = 'all'; state.subcategory = 'all'; state.type = 'all'; state.maxPrice = 500;
     state.conditions = []; state.minRating = 0; state.location = ''; state.search = '';
     $('#price-range').value = 500; $('#price-display').textContent = '£500';
     $$('.mkt-filter-group input[type="checkbox"]').forEach(c => c.checked = false);
     $$('input[name="type"]').forEach((r, i) => r.checked = i === 0);
     $$('input[name="rating"]').forEach(r => r.checked = r.value === '0');
-    $$('.cat-strip .cat-pill').forEach((p, i) => { p.classList.toggle('is-active', i === 0); p.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); });
+    renderCategoryStrip();
+    renderSubStrip();
     $('#mkt-search').value = '';
     $('#mkt-sort').value = 'newest'; state.sort = 'newest';
     applyFilters();
@@ -934,7 +983,14 @@
 
   function renderChips() {
     const chips = [];
-    if (state.category !== 'all') chips.push({ label: `Category: ${state.category}`, fn: () => { state.category = 'all'; $$('.cat-strip .cat-pill')[0].click(); } });
+    if (state.category !== 'all') {
+      const catLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(state.category) : state.category;
+      chips.push({ label: `Category: ${catLabel}`, fn: () => { state.category = 'all'; state.subcategory = 'all'; renderCategoryStrip(); renderSubStrip(); applyFilters(); } });
+    }
+    if (state.subcategory !== 'all') {
+      const subLabel = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.subLabelFor(state.category, state.subcategory) : state.subcategory;
+      chips.push({ label: subLabel, fn: () => { state.subcategory = 'all'; renderSubStrip(); applyFilters(); } });
+    }
     if (state.type !== 'all') chips.push({ label: `${state.type === 'rent' ? 'Rent' : 'Buy'} only`, fn: () => { state.type = 'all'; $$('input[name="type"]')[0].checked = true; applyFilters(); } });
     if (state.conditions.length) chips.push({ label: `Condition: ${state.conditions.join(', ')}`, fn: () => { state.conditions = []; $$('.mkt-filter-group input[type="checkbox"]').forEach(c => c.checked = false); applyFilters(); } });
     if (state.minRating > 0) chips.push({ label: `${state.minRating}★+`, fn: () => { state.minRating = 0; $$('input[name="rating"]').forEach(r => r.checked = r.value === '0'); applyFilters(); } });
@@ -1056,7 +1112,8 @@
       qvImg.classList.add('qv-img--none');
       qvImgTitle.textContent = l.title;
     }
-    $('#qv-label').textContent = `— ${l.category.toUpperCase()}`;
+    const qvCat = (window.CharmDB && CharmDB.Categories) ? CharmDB.Categories.labelFor(l.category) : l.category;
+    $('#qv-label').textContent = `— ${(qvCat || '').toUpperCase()}`;
     $('#qv-title').textContent = l.title;
     $('#qv-price').innerHTML = price;
     $('#qv-desc').textContent = l.description || '';
@@ -1104,12 +1161,24 @@
   renderCart();
   loadListings();
 
-  // Reading ?category=xxx query string
-  const urlCat = new URLSearchParams(location.search).get('category');
-  if (urlCat) {
-    const pill = $$('.cat-strip .cat-pill').find(p => p.dataset.cat === urlCat);
-    if (pill) pill.click();
-  }
+  // Reading ?category=xxx&sub=yyy — wait for category strip to populate
+  (function applyUrlCats() {
+    const params = new URLSearchParams(location.search);
+    const urlCat = params.get('category');
+    const urlSub = params.get('sub');
+    if (!urlCat && !urlSub) return;
+    const tryApply = () => {
+      if (!window.CharmDB || !CharmDB.Categories) return setTimeout(tryApply, 40);
+      if (urlCat && CharmDB.Categories.bySlug(urlCat)) {
+        state.category = urlCat;
+        if (urlSub) state.subcategory = urlSub;
+        renderCategoryStrip();
+        renderSubStrip();
+        applyFilters();
+      }
+    };
+    tryApply();
+  })();
 </script>
 
 </body>

@@ -288,7 +288,7 @@
         <div class="nav-logo" style="margin-bottom: var(--s-5);">Charm</div>
         <p class="t-small" style="max-width: 28ch;">A marketplace for the people who make the work.</p>
       </div>
-      <div class="footer-col"><h4>Shop</h4><ul><li><a href="marketplace.html">Marketplace</a></li><li><a href="cameras.html">Cameras</a></li><li><a href="audio.html">Audio</a></li><li><a href="lighting.html">Lighting</a></li></ul></div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="marketplace.html">Marketplace</a></li><li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li><li><a href="marketplace.html?category=music-studios">Music Studios</a></li><li><a href="marketplace.html?category=marketplace">Gear</a></li></ul></div>
       <div class="footer-col"><h4>Sell</h4><ul><li><a href="create-listing.html">List your gear</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="earnings.html">Earnings</a></li></ul></div>
       <div class="footer-col"><h4>Community</h4><ul><li><a href="how-it-works.html">How it works</a></li><li><a href="blog.html">Journal</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="insurance.html">Insurance</a></li></ul></div>
       <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
@@ -314,15 +314,25 @@
 
   let currentListing = null;
 
+  // Fallback hero per category for the product page.
   const categoryImage = {
-    cameras: 'images/prod-camera.jpg', audio: 'images/prod-microphone.jpg',
-    lighting: 'images/prod-lighting.jpg', instruments: 'images/prod-instruments.jpg',
-    other: 'images/hero-studio.jpg',
+    'music-studios': 'images/music-studio.jpg',
+    'podcast-studios': 'images/cat-podcast.jpg',
+    'photography-studios': 'images/cat-photo.jpg',
+    'dance-studios': 'images/cat-dance.jpg',
+    'professionals': 'images/hero-studio.jpg',
+    'marketplace': 'images/prod-camera.jpg',
+    'other': 'images/hero-studio.jpg',
   };
 
   function listingImage(l) {
     if (l.images && l.images.length && l.images[0]) return l.images[0];
     return categoryImage[l.category] || categoryImage.other;
+  }
+
+  function categoryLabel(slug) {
+    if (window.CharmDB && CharmDB.Categories) return CharmDB.Categories.labelFor(slug);
+    return slug || '';
   }
 
   $$('.p-thumb').forEach(t => t.addEventListener('click', () => {
@@ -395,7 +405,8 @@
     currentListing = listing;
     document.title = `${listing.title} — Charm`;
 
-    $('#p-label').textContent = `— ${listing.category.toUpperCase()}`;
+    const catLabel = categoryLabel(listing.category);
+    $('#p-label').textContent = `— ${catLabel.toUpperCase()}`;
     $('#p-title').textContent = listing.title;
     $('#p-rating-num').textContent = (listing.rating || 0).toFixed(1);
     $('#p-reviews-link').textContent = `${listing.reviewCount || 0} reviews`;
@@ -403,14 +414,14 @@
     $('#p-views').textContent = (listing.views || 0).toLocaleString();
     $('#p-desc').textContent = listing.description || '';
     $('#p-location').textContent = listing.location;
-    $('#p-category').textContent = listing.category.charAt(0).toUpperCase() + listing.category.slice(1);
+    $('#p-category').textContent = catLabel;
     $('#p-avail').textContent = listing.availability === 'available' ? 'Available' : listing.availability;
     $('#p-seller-name').textContent = listing.sellerName;
     $('#p-seller-name-2').textContent = listing.sellerName;
     $('#p-seller-avatar').textContent = listing.sellerAvatar || 'CR';
     $('#p-seller-rating').textContent = `${(listing.rating || 4.9).toFixed(1)}★`;
     $('#crumb-title').textContent = listing.title;
-    $('#crumb-cat').textContent = listing.category;
+    $('#crumb-cat').textContent = catLabel;
     $('#crumb-cat').href = `marketplace.html?category=${listing.category}`;
 
     const mainImg = listingImage(listing);

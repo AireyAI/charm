@@ -134,6 +134,68 @@
     },
   };
 
+  // ═══════════════════════════════════════════════════════════════════════
+  //  LOCATION — the user's city preference (drives default filtering)
+  // ═══════════════════════════════════════════════════════════════════════
+  const LOCATION_KEY = 'charm-location';
+  const LOCATION_PROMPTED_KEY = 'charm-location-prompted';
+
+  const Location = {
+    /** Current city or null if "All locations". */
+    get() {
+      const v = localStorage.getItem(LOCATION_KEY);
+      return v && v !== 'all' ? v : null;
+    },
+    /** Set city to a string, or null/'all' for no filter. Emits a change event. */
+    set(city) {
+      if (!city || city === 'all') localStorage.removeItem(LOCATION_KEY);
+      else localStorage.setItem(LOCATION_KEY, city);
+      localStorage.setItem(LOCATION_PROMPTED_KEY, '1');
+      window.dispatchEvent(new CustomEvent('charm:location-change', { detail: this.get() }));
+    },
+    /** Has the user ever been asked? First visit triggers the prompt. */
+    hasPrompted() { return !!localStorage.getItem(LOCATION_PROMPTED_KEY); },
+    markPrompted() { localStorage.setItem(LOCATION_PROMPTED_KEY, '1'); },
+    /**
+     * Unique list of cities that currently have listings, sorted by count.
+     * Each entry: { city, count }.
+     */
+    availableCities() {
+      const counts = {};
+      store(LISTINGS_KEY).get().forEach(l => {
+        const c = (l.location || '').trim();
+        if (!c) return;
+        counts[c] = (counts[c] || 0) + 1;
+      });
+      return Object.entries(counts)
+        .map(([city, count]) => ({ city, count }))
+        .sort((a, b) => b.count - a.count || a.city.localeCompare(b.city));
+    },
+    /** Subscribe to location changes. */
+    onChange(callback) {
+      window.addEventListener('charm:location-change', e => callback(e.detail));
+    },
+    /**
+     * Filter a list of listings by the current location.
+     * If no location is set, returns the full list unchanged.
+     * Matching is case-insensitive and substring-based (so "London"
+     * matches "London, UK"). A special "Scotland" rule lets retreats
+     * flagged "Scotland, UK" show up under Edinburgh searches too.
+     */
+    apply(listings, opts = {}) {
+      const city = opts.city !== undefined ? opts.city : this.get();
+      if (!city) return listings;
+      const needle = city.toLowerCase();
+      return listings.filter(l => {
+        const loc = (l.location || '').toLowerCase();
+        if (loc.includes(needle)) return true;
+        // Soft regional match: Edinburgh covers Scotland-tagged venues.
+        if (needle.includes('edinburgh') && loc.includes('scotland')) return true;
+        return false;
+      });
+    },
+  };
+
   function store(key) {
     return {
       get() { try { return JSON.parse(localStorage.getItem(key)) || []; } catch { return []; } },
@@ -991,6 +1053,7 @@
     Notifications,
     Reviews,
     Categories,
+    Location,
     config: { useSupabase: USE_SUPABASE }
   };
 

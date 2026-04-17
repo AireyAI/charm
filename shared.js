@@ -223,6 +223,163 @@
     document.addEventListener('DOMContentLoaded', initCartBadge);
   } else { initCartBadge(); }
 
+  // ── Location pill + first-visit prompt ────────────────────────────────
+  function waitForDB(fn) {
+    if (window.CharmDB && CharmDB.Location) return fn();
+    setTimeout(() => waitForDB(fn), 40);
+  }
+
+  function openLocationModal({ firstVisit } = {}) {
+    // Remove any existing modal
+    document.getElementById('charm-loc-modal')?.remove();
+
+    const cities = CharmDB.Location.availableCities();
+    const current = CharmDB.Location.get();
+
+    const modal = document.createElement('div');
+    modal.id = 'charm-loc-modal';
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Choose your location');
+    modal.style.cssText = `
+      position:fixed; inset:0; z-index:10000; display:flex; align-items:center; justify-content:center;
+      background:rgba(7,7,14,0.75); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+      opacity:0; transition:opacity 0.25s ease; padding:24px;
+    `;
+
+    const heading = firstVisit ? "Where are you based?" : "Change location";
+    const sub = firstVisit
+      ? "Charm shows listings near you by default. You can change this anytime from the nav."
+      : "Pick a city to see nearby listings, or switch to all locations.";
+
+    modal.innerHTML = `
+      <div style="
+        background:#0d0d1a; border:1px solid rgba(255,255,255,0.1); border-radius:14px;
+        padding:28px 28px 24px; width:min(460px, calc(100vw - 48px));
+        box-shadow:0 24px 80px rgba(0,0,0,0.55);
+        transform:translateY(12px); opacity:0;
+        transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s;
+      " id="charm-loc-card">
+        <div style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#e2a84b; margin-bottom:8px;">📍 Location</div>
+        <h2 style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:500; color:#f0ece3; margin:0 0 8px; line-height:1.1; letter-spacing:-0.3px;">${heading}</h2>
+        <p style="font-family:'DM Sans',sans-serif; font-size:13.5px; color:#9896a8; line-height:1.55; margin:0 0 22px;">${sub}</p>
+        <div id="charm-loc-options" style="display:flex; flex-direction:column; gap:6px; margin-bottom:18px; max-height:320px; overflow-y:auto;"></div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
+          <button type="button" id="charm-loc-all" style="
+            font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:#9896a8;
+            background:transparent; border:none; padding:8px 0; cursor:pointer; text-decoration:underline;
+            text-underline-offset:3px; text-decoration-color:rgba(152,150,168,0.3);
+          ">Show all locations</button>
+          ${firstVisit ? '' : `<button type="button" id="charm-loc-close" style="
+            font-family:'Syne',sans-serif; font-size:12px; font-weight:700; color:#0f0800;
+            background:#e2a84b; border:none; border-radius:8px; padding:10px 18px; cursor:pointer;
+          ">Done</button>`}
+        </div>
+      </div>
+    `;
+
+    const optionsWrap = modal.querySelector('#charm-loc-options');
+    cities.forEach(({ city, count }) => {
+      const selected = current === city;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.style.cssText = `
+        display:flex; align-items:center; justify-content:space-between; gap:12px;
+        padding:12px 14px; background:${selected ? 'rgba(226,168,75,0.12)' : 'rgba(255,255,255,0.03)'};
+        border:1px solid ${selected ? 'rgba(226,168,75,0.35)' : 'rgba(255,255,255,0.08)'};
+        border-radius:10px; color:#f0ece3; font-family:'DM Sans',sans-serif; font-size:14px;
+        text-align:left; cursor:pointer; transition:background 0.15s, border-color 0.15s;
+      `;
+      btn.innerHTML = `
+        <span style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:15px;">📍</span>
+          <span style="font-weight:500;">${city}</span>
+        </span>
+        <span style="font-family:'Syne',sans-serif; font-size:11.5px; font-weight:600; color:#9896a8; letter-spacing:0.04em;">${count} listing${count === 1 ? '' : 's'}</span>
+      `;
+      btn.addEventListener('mouseenter', () => { if (!selected) btn.style.background = 'rgba(255,255,255,0.06)'; });
+      btn.addEventListener('mouseleave', () => { if (!selected) btn.style.background = 'rgba(255,255,255,0.03)'; });
+      btn.addEventListener('click', () => {
+        CharmDB.Location.set(city);
+        closeLocationModal();
+      });
+      optionsWrap.appendChild(btn);
+    });
+
+    modal.querySelector('#charm-loc-all').addEventListener('click', () => {
+      CharmDB.Location.set(null);
+      closeLocationModal();
+    });
+    modal.querySelector('#charm-loc-close')?.addEventListener('click', closeLocationModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeLocationModal(); });
+
+    document.body.appendChild(modal);
+    requestAnimationFrame(() => {
+      modal.style.opacity = '1';
+      const card = modal.querySelector('#charm-loc-card');
+      if (card) { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }
+    });
+  }
+
+  function closeLocationModal() {
+    const modal = document.getElementById('charm-loc-modal');
+    if (!modal) return;
+    modal.style.opacity = '0';
+    setTimeout(() => modal.remove(), 220);
+  }
+
+  function renderLocationPill() {
+    const navRight = document.querySelector('.nav-right, .nav .btn-ghost')?.parentElement;
+    if (!navRight) return;
+    let pill = document.getElementById('charm-loc-pill');
+    const city = CharmDB.Location.get();
+    const label = city || 'All locations';
+
+    if (!pill) {
+      pill = document.createElement('button');
+      pill.id = 'charm-loc-pill';
+      pill.setAttribute('aria-label', 'Change location');
+      pill.style.cssText = `
+        display:inline-flex; align-items:center; gap:6px;
+        height:34px; padding:0 12px; border-radius:8px;
+        border:1px solid rgba(255,255,255,0.13);
+        background:rgba(255,255,255,0.05); color:#9896a8;
+        font-family:'DM Sans',sans-serif; font-size:12.5px; font-weight:500;
+        cursor:pointer; transition:color 0.2s, background 0.2s, border-color 0.2s;
+        flex-shrink:0; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+      `;
+      pill.addEventListener('mouseenter', () => { pill.style.color = '#e2a84b'; pill.style.borderColor = 'rgba(226,168,75,0.35)'; });
+      pill.addEventListener('mouseleave', () => { pill.style.color = '#9896a8'; pill.style.borderColor = 'rgba(255,255,255,0.13)'; });
+      pill.addEventListener('click', () => openLocationModal());
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) navRight.insertBefore(pill, themeToggle);
+      else navRight.insertBefore(pill, navRight.firstChild);
+    }
+    pill.innerHTML = `<span style="font-size:13px;">📍</span><span>${label}</span>`;
+  }
+
+  function initLocation() {
+    waitForDB(() => {
+      renderLocationPill();
+      // First visit: ask. But only on a primary surface where it makes sense
+      // (home/marketplace). Skip inner pages so it doesn't block reading.
+      const path = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+      const primary = ['index.html', 'home.html', 'marketplace.html', ''].includes(path);
+      if (primary && !CharmDB.Location.hasPrompted()) {
+        setTimeout(() => openLocationModal({ firstVisit: true }), 900);
+      }
+      CharmDB.Location.onChange(renderLocationPill);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLocation);
+  } else {
+    initLocation();
+  }
+
+  // Expose for other pages to trigger manually
+  window.openCharmLocationModal = () => openLocationModal();
+
   // ── Scroll reveal ─────────────────────────────────────────────────────
   // Auto-apply to any element with data-reveal attribute
   const revealEls = document.querySelectorAll('[data-reveal]');

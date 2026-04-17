@@ -580,13 +580,9 @@
       </div>
       <div class="mkt-filter-group">
         <div class="mkt-filter-title">Location</div>
-        <select class="select" onchange="state.location = this.value; applyFilters();" aria-label="Location">
+        <select class="select" id="mkt-location" onchange="state.location = this.value; applyFilters();" aria-label="Location">
           <option value="">Anywhere</option>
-          <option value="London">London</option>
-          <option value="Manchester">Manchester</option>
-          <option value="Berlin">Berlin</option>
-          <option value="Paris">Paris</option>
-          <option value="Barcelona">Barcelona</option>
+          <!-- Cities populated from CharmDB.Location.availableCities() -->
         </select>
       </div>
       <button class="mkt-filter-reset" onclick="resetFilters()">Clear all filters</button>
@@ -1160,6 +1156,28 @@
   // ── Init ──
   renderCart();
   loadListings();
+
+  // ── Location: hydrate sidebar select from available cities and pull the
+  //    current location preference from CharmDB.Location on every load.
+  function populateLocationSelect() {
+    if (!window.CharmDB || !CharmDB.Location) return setTimeout(populateLocationSelect, 40);
+    const sel = document.getElementById('mkt-location');
+    if (!sel) return;
+    const current = CharmDB.Location.get();
+    const cities = CharmDB.Location.availableCities();
+    sel.innerHTML = `<option value="">All locations</option>` +
+      cities.map(c => `<option value="${c.city}"${current === c.city ? ' selected' : ''}>${c.city} (${c.count})</option>`).join('');
+    if (current) {
+      state.location = current;
+      applyFilters();
+    }
+    CharmDB.Location.onChange((city) => {
+      state.location = city || '';
+      sel.value = city || '';
+      applyFilters();
+    });
+  }
+  populateLocationSelect();
 
   // Reading ?category=xxx&sub=yyy — wait for category strip to populate
   (function applyUrlCats() {

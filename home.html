@@ -678,19 +678,39 @@
     const empty = document.getElementById('home-featured-empty');
     if (!grid || !window.CharmDB) return;
     try {
-      const result = await CharmDB.Listings.getAll({ limit: 8, sort: 'rating' });
-      const items = (result.listings || []).slice(0, 6);
+      const result = await CharmDB.Listings.getAll({ limit: 100, sort: 'rating' });
+      let items = result.listings || [];
+      if (CharmDB.Location) items = CharmDB.Location.apply(items);
+      items = items.slice(0, 6);
+
+      // Update the heading + CTA to reflect the user's city
+      const city = CharmDB.Location && CharmDB.Location.get();
+      const label = document.querySelector('#featured-heading');
+      if (label) {
+        label.textContent = city
+          ? `Gear and spaces making work in ${city} this week.`
+          : `Gear and spaces making work this week.`;
+      }
+
       if (!items.length) {
         grid.style.display = 'none';
         empty.style.display = 'block';
+        const h = empty.querySelector('h3');
+        if (h && city) h.textContent = `Nothing in ${city} yet.`;
+        const p = empty.querySelector('p');
+        if (p && city) p.textContent = `Charm is just launching in your region. Be the first to list — or switch to all locations from the nav.`;
         return;
       }
+      empty.style.display = 'none';
+      grid.style.display = '';
       grid.innerHTML = items.map(featuredCard).join('');
     } catch (err) {
       console.warn('Featured load failed:', err);
     }
   }
   loadFeatured();
+  if (window.CharmDB && CharmDB.Location) CharmDB.Location.onChange(loadFeatured);
+  else window.addEventListener('charm:location-change', loadFeatured);
 </script>
 </body>
 </html>

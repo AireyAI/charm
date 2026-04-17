@@ -473,6 +473,115 @@
       .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
       .stat-value { font-size: 30px; }
     }
+
+    /* ── Onboarding card (new users only) ── */
+    .onboarding {
+      position: relative;
+      margin: 0 0 28px;
+      padding: 32px 32px 28px;
+      border: 1px solid var(--c-border);
+      border-radius: 16px;
+      background:
+        linear-gradient(135deg, rgba(226,168,75,0.05) 0%, transparent 40%),
+        linear-gradient(225deg, rgba(157,111,255,0.05) 0%, transparent 40%),
+        var(--c-card);
+      overflow: hidden;
+    }
+    .onboarding::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 500px 200px at 10% 20%, rgba(226,168,75,0.10), transparent 60%);
+      pointer-events: none;
+    }
+    .onboarding-inner { position: relative; }
+    .onboarding-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 1.4px;
+      text-transform: uppercase; color: var(--c-text-3); margin-bottom: 12px;
+    }
+    .onboarding-heading {
+      font-family: 'DM Sans', 'Inter Tight', sans-serif;
+      font-size: clamp(28px, 3.2vw, 40px); font-weight: 500;
+      letter-spacing: -0.8px; line-height: 1.05;
+      color: var(--c-text); margin: 0 0 12px;
+      max-width: 22ch; text-wrap: balance;
+    }
+    .onboarding-lede {
+      font-size: 14px; color: var(--c-text-2);
+      line-height: 1.6; margin: 0 0 24px; max-width: 58ch;
+    }
+    .onboarding-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .onboarding-step {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 16px; border: 1px solid var(--c-border);
+      border-radius: 10px; background: rgba(0,0,0,0.25);
+      text-decoration: none; color: inherit;
+      transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+    }
+    .onboarding-step:hover {
+      border-color: var(--c-text-3); background: rgba(0,0,0,0.4); transform: translateY(-1px);
+    }
+    .onboarding-step-num {
+      font-size: 11px; font-weight: 500; letter-spacing: 1.4px;
+      color: var(--c-text-3); padding-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+    .onboarding-step-title {
+      font-size: 14px; font-weight: 500; color: var(--c-text);
+      margin-bottom: 4px; letter-spacing: -0.1px;
+    }
+    .onboarding-step-sub {
+      font-size: 12px; color: var(--c-text-3); line-height: 1.45;
+    }
+    @media (max-width: 720px) {
+      .onboarding { padding: 24px 20px; }
+      .onboarding-steps { grid-template-columns: 1fr; }
+    }
+
+    /* ── Empty states ── */
+    .activity-empty {
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .activity-empty-icon {
+      font-size: 32px; margin-bottom: 12px; opacity: 0.7;
+    }
+    .activity-empty-title {
+      font-family: 'DM Sans', 'Inter Tight', sans-serif;
+      font-size: 18px; font-weight: 500; letter-spacing: -0.2px;
+      color: var(--c-text); margin-bottom: 8px;
+    }
+    .activity-empty-sub {
+      font-size: 13px; color: var(--c-text-3); line-height: 1.5;
+      max-width: 36ch; margin: 0 auto;
+    }
+
+    /* Listings empty state within .listings-scroll */
+    .listings-empty {
+      padding: 32px 24px; text-align: center;
+      width: 100%;
+      border: 1px dashed var(--c-border); border-radius: 12px;
+      background: rgba(0,0,0,0.2);
+    }
+    .listings-empty-title {
+      font-family: 'DM Sans', 'Inter Tight', sans-serif;
+      font-size: 15px; font-weight: 500;
+      color: var(--c-text); margin-bottom: 8px;
+    }
+    .listings-empty-sub {
+      font-size: 13px; color: var(--c-text-3); margin-bottom: 14px;
+    }
+    .listings-empty a {
+      font-family: 'DM Sans', 'Inter Tight', sans-serif;
+      font-size: 13px; font-weight: 500;
+      color: var(--c-text); background: var(--c-text);
+      color: var(--c-bg, #07070e);
+      padding: 9px 18px; border-radius: 8px;
+      text-decoration: none; display: inline-block;
+      transition: opacity 180ms ease;
+    }
+    .listings-empty a:hover { opacity: 0.88; }
   </style>
   <link rel="stylesheet" href="charm-v2-compat.css">
 </head>
@@ -490,13 +599,13 @@
     </a>
 
     <div class="sidebar-avatar-block">
-      <div class="avatar">
-        AR
+      <div class="avatar" id="sidebar-avatar">
+        —
         <span class="online-dot" aria-label="Online"></span>
       </div>
       <div class="avatar-info">
-        <div class="avatar-name">Alex Rivera</div>
-        <div class="pro-badge">★ Pro Seller</div>
+        <div class="avatar-name" id="sidebar-name">—</div>
+        <div class="pro-badge" id="sidebar-badge" style="display:none;">★ Pro Seller</div>
       </div>
     </div>
 
@@ -505,19 +614,19 @@
         <li><a href="dashboard.html" class="active"><span class="nav-icon">📊</span> Overview</a></li>
         <li><a href="marketplace.html"><span class="nav-icon">📦</span> My Listings</a></li>
         <li>
-          <a href="#">
+          <a href="messages.html">
             <span class="nav-icon">💬</span> Messages
-            <span class="msg-badge">3</span>
+            <span class="msg-badge" id="sidebar-msg-badge" style="display:none;">0</span>
           </a>
         </li>
         <li><a href="wishlist.html"><span class="nav-icon">❤️</span> Wishlist</a></li>
-        <li><a href="#"><span class="nav-icon">💰</span> Earnings</a></li>
-        <li><a href="#"><span class="nav-icon">⚙️</span> Settings</a></li>
+        <li><a href="earnings.html"><span class="nav-icon">💰</span> Earnings</a></li>
+        <li><a href="settings.html"><span class="nav-icon">⚙️</span> Settings</a></li>
       </ul>
     </nav>
 
     <div class="sidebar-bottom">
-      <a href="signup.html" class="btn-add-listing">
+      <a href="create-listing.html" class="btn-add-listing">
         <span>+</span> Add Listing
       </a>
     </div>
@@ -542,27 +651,59 @@
 
     <main class="page-body">
 
+      <!-- Onboarding card — hidden by default, shown for new users with no data -->
+      <section id="onboarding-card" class="onboarding" style="display:none;">
+        <div class="onboarding-inner">
+          <div class="onboarding-eyebrow">Welcome to Charm</div>
+          <h2 class="onboarding-heading" id="onboarding-heading">You're in. Let's make the first move.</h2>
+          <p class="onboarding-lede">Charm is a marketplace for the people who make the work. A few minutes now turns your first listing or first browse into the rest of your account's story.</p>
+          <div class="onboarding-steps">
+            <a href="create-listing.html" class="onboarding-step">
+              <div class="onboarding-step-num">01</div>
+              <div>
+                <div class="onboarding-step-title">List your first item</div>
+                <div class="onboarding-step-sub">A camera, a mic, a light — earn from gear you already own.</div>
+              </div>
+            </a>
+            <a href="marketplace.html" class="onboarding-step">
+              <div class="onboarding-step-num">02</div>
+              <div>
+                <div class="onboarding-step-title">Browse the marketplace</div>
+                <div class="onboarding-step-sub">See what creators near you are renting and selling right now.</div>
+              </div>
+            </a>
+            <a href="settings.html" class="onboarding-step">
+              <div class="onboarding-step-num">03</div>
+              <div>
+                <div class="onboarding-step-title">Finish your profile</div>
+                <div class="onboarding-step-sub">Add a photo and location so renters know who they're dealing with.</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <!-- Stats Row -->
       <div class="stats-row">
         <div class="stat-card reveal" style="--accent-glow: rgba(54,217,138,0.08)">
           <div class="stat-label">Total Earnings</div>
-          <div class="stat-value">£3,842</div>
-          <span class="stat-change up">↑ 12% this month</span>
+          <div class="stat-value">£0</div>
+          <span class="stat-change neutral" id="stat-earnings-change">No earnings yet</span>
         </div>
         <div class="stat-card reveal" style="--accent-glow: rgba(226,168,75,0.07); transition-delay:0.07s">
           <div class="stat-label">Active Listings</div>
-          <div class="stat-value">8</div>
+          <div class="stat-value">0</div>
           <span class="stat-change neutral">Items live</span>
         </div>
         <div class="stat-card reveal" style="--accent-glow: rgba(157,111,255,0.07); transition-delay:0.14s">
           <div class="stat-label">Total Views</div>
-          <div class="stat-value">1,247</div>
+          <div class="stat-value">0</div>
           <span class="stat-change neutral">This month</span>
         </div>
         <div class="stat-card reveal" style="--accent-glow: rgba(226,168,75,0.08); transition-delay:0.21s">
           <div class="stat-label">Avg Rating</div>
-          <div class="stat-value">4.9★</div>
-          <span class="stat-change gold">Excellent</span>
+          <div class="stat-value">New</div>
+          <span class="stat-change neutral" id="stat-rating-change">No reviews yet</span>
         </div>
       </div>
 
@@ -574,48 +715,12 @@
             <span class="panel-title">Recent Activity</span>
             <a href="#" class="panel-action">View all →</a>
           </div>
-          <ul class="activity-list">
-            <li class="activity-item">
-              <div class="act-icon cyan">📅</div>
-              <div class="act-body">
-                <div class="act-desc"><strong>New booking</strong> — Studio session booked for April 16th</div>
-                <div class="act-meta">£180 · Retouching bundle</div>
-              </div>
-              <span class="act-time">2m ago</span>
-            </li>
-            <li class="activity-item">
-              <div class="act-icon violet">💬</div>
-              <div class="act-body">
-                <div class="act-desc"><strong>New message</strong> from <strong>Priya M.</strong></div>
-                <div class="act-meta">"Hey, is this still available for..."</div>
-              </div>
-              <span class="act-time">18m ago</span>
-            </li>
-            <li class="activity-item">
-              <div class="act-icon gold">🛍️</div>
-              <div class="act-body">
-                <div class="act-desc"><strong>Item sold</strong> — Editorial shoot preset pack</div>
-                <div class="act-meta">£24.00 · Instant delivery</div>
-              </div>
-              <span class="act-time">1h ago</span>
-            </li>
-            <li class="activity-item">
-              <div class="act-icon muted">👁️</div>
-              <div class="act-body">
-                <div class="act-desc">Your listing <strong>"Rooftop Session"</strong> was viewed 12×</div>
-                <div class="act-meta">Photography · 312 total views</div>
-              </div>
-              <span class="act-time">3h ago</span>
-            </li>
-            <li class="activity-item">
-              <div class="act-icon star">⭐</div>
-              <div class="act-body">
-                <div class="act-desc"><strong>New review</strong> from <strong>Theo K.</strong></div>
-                <div class="act-meta">★★★★★ "Absolutely brilliant — fast, professional..."</div>
-              </div>
-              <span class="act-time">Yesterday</span>
-            </li>
-          </ul>
+          <ul class="activity-list" id="activity-list"></ul>
+          <div class="activity-empty" id="activity-empty" style="display:none;">
+            <div class="activity-empty-icon">🌱</div>
+            <div class="activity-empty-title">Nothing yet.</div>
+            <p class="activity-empty-sub">Bookings, messages and reviews will land here the moment someone interacts with your listings.</p>
+          </div>
         </div>
 
         <!-- Earnings Chart -->
@@ -626,65 +731,10 @@
           </div>
           <div class="chart-wrap">
             <div class="chart-week">This week</div>
-            <div class="chart-total">£284</div>
-            <div class="bar-chart" role="img" aria-label="Weekly earnings bar chart">
-              <!-- heights as % of 120px max, data: Mon 48, Tue 72, Wed 34, Thu 96, Fri 60, Sat 108, Sun 28 -->
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:40%">
-                    <div class="bar-tooltip">£38</div>
-                  </div>
-                </div>
-                <div class="bar-label">Mon</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:60%">
-                    <div class="bar-tooltip">£56</div>
-                  </div>
-                </div>
-                <div class="bar-label">Tue</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:28%">
-                    <div class="bar-tooltip">£22</div>
-                  </div>
-                </div>
-                <div class="bar-label">Wed</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:80%">
-                    <div class="bar-tooltip">£84</div>
-                  </div>
-                </div>
-                <div class="bar-label">Thu</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:50%">
-                    <div class="bar-tooltip">£48</div>
-                  </div>
-                </div>
-                <div class="bar-label">Fri</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:90%; background: linear-gradient(180deg, #f5d080 0%, var(--c-gold) 100%);">
-                    <div class="bar-tooltip">£112</div>
-                  </div>
-                </div>
-                <div class="bar-label">Sat</div>
-              </div>
-              <div class="bar-col">
-                <div class="bar-track">
-                  <div class="bar" style="height:22%; opacity:0.55;">
-                    <div class="bar-tooltip">£24</div>
-                  </div>
-                </div>
-                <div class="bar-label">Sun</div>
-              </div>
+            <div class="chart-total" id="chart-total">£0</div>
+            <div class="bar-chart" id="bar-chart" role="img" aria-label="Weekly earnings bar chart"></div>
+            <div class="activity-empty" id="earnings-empty" style="display:none; padding: 24px 0 0;">
+              <p class="activity-empty-sub" style="margin:0;">No earnings this week — your first booking will show up here.</p>
             </div>
           </div>
         </div>
@@ -696,68 +746,7 @@
           <h3>My Listings</h3>
           <a href="#" class="panel-action">Manage all →</a>
         </div>
-        <div class="listings-scroll">
-          <!-- Card 1 -->
-          <div class="listing-card">
-            <div class="listing-thumb" style="background: linear-gradient(135deg, #0d0d24 0%, #1a0a32 100%);">
-              <div class="listing-thumb-glow" style="background: var(--c-violet);"></div>
-              <span class="listing-thumb-emoji">📸</span>
-            </div>
-            <div class="listing-info">
-              <div class="listing-name">Rooftop Session</div>
-              <div class="listing-meta">
-                <span class="listing-price">£180</span>
-                <span class="status-badge status-active">Active</span>
-              </div>
-              <div class="listing-views">312 views this month</div>
-            </div>
-          </div>
-          <!-- Card 2 -->
-          <div class="listing-card">
-            <div class="listing-thumb" style="background: linear-gradient(135deg, #0e1408 0%, #1a2410 100%);">
-              <div class="listing-thumb-glow" style="background: var(--c-cyan);"></div>
-              <span class="listing-thumb-emoji">🎵</span>
-            </div>
-            <div class="listing-info">
-              <div class="listing-name">Studio Mix Session</div>
-              <div class="listing-meta">
-                <span class="listing-price">£95</span>
-                <span class="status-badge status-active">Active</span>
-              </div>
-              <div class="listing-views">186 views this month</div>
-            </div>
-          </div>
-          <!-- Card 3 -->
-          <div class="listing-card">
-            <div class="listing-thumb" style="background: linear-gradient(135deg, #14080e 0%, #240d1a 100%);">
-              <div class="listing-thumb-glow" style="background: var(--c-coral);"></div>
-              <span class="listing-thumb-emoji">🎨</span>
-            </div>
-            <div class="listing-info">
-              <div class="listing-name">Brand Identity Pack</div>
-              <div class="listing-meta">
-                <span class="listing-price">£320</span>
-                <span class="status-badge status-pending">Pending</span>
-              </div>
-              <div class="listing-views">74 views this month</div>
-            </div>
-          </div>
-          <!-- Card 4 -->
-          <div class="listing-card">
-            <div class="listing-thumb" style="background: linear-gradient(135deg, #080e14 0%, #0d1824 100%);">
-              <div class="listing-thumb-glow" style="background: var(--c-gold);"></div>
-              <span class="listing-thumb-emoji">✍️</span>
-            </div>
-            <div class="listing-info">
-              <div class="listing-name">Editorial Preset Pack</div>
-              <div class="listing-meta">
-                <span class="listing-price">£24</span>
-                <span class="status-badge status-active">Active</span>
-              </div>
-              <div class="listing-views">675 views this month</div>
-            </div>
-          </div>
-        </div>
+        <div class="listings-scroll"></div>
       </div>
 
       <!-- Quick Links -->
@@ -790,40 +779,12 @@
           <span class="panel-title">Messages</span>
           <a href="#" class="panel-action">View all →</a>
         </div>
-        <ul class="messages-list">
-          <li class="msg-item msg-unread">
-            <div class="msg-avatar" style="background: linear-gradient(135deg,#9d6fff,#ff6b57)">PM</div>
-            <div class="msg-body">
-              <div class="msg-row">
-                <span class="msg-name">Priya Mehta</span>
-                <span class="msg-time">2m ago</span>
-              </div>
-              <div class="msg-preview">Hey, is this still available for next Friday? I'd love to—</div>
-            </div>
-            <div class="unread-dot" aria-label="Unread"></div>
-          </li>
-          <li class="msg-item msg-unread">
-            <div class="msg-avatar" style="background: linear-gradient(135deg,#00d4c8,#9d6fff)">TK</div>
-            <div class="msg-body">
-              <div class="msg-row">
-                <span class="msg-name">Theo Kang</span>
-                <span class="msg-time">1h ago</span>
-              </div>
-              <div class="msg-preview">Just left you a 5-star review — absolute pleasure working with you!</div>
-            </div>
-            <div class="unread-dot" aria-label="Unread"></div>
-          </li>
-          <li class="msg-item">
-            <div class="msg-avatar" style="background: linear-gradient(135deg,#e2a84b,#ff6b57)">SB</div>
-            <div class="msg-body">
-              <div class="msg-row">
-                <span class="msg-name">Sofia Blanc</span>
-                <span class="msg-time">Yesterday</span>
-              </div>
-              <div class="msg-preview">Thanks for the quick delivery! Already using the presets.</div>
-            </div>
-          </li>
-        </ul>
+        <ul class="messages-list" id="messages-list"></ul>
+        <div class="activity-empty" id="messages-empty" style="display:none;">
+          <div class="activity-empty-icon">💬</div>
+          <div class="activity-empty-title">No messages yet.</div>
+          <p class="activity-empty-sub">When someone asks about a listing or replies to your request, the conversation opens here.</p>
+        </div>
       </div>
 
     </main>
@@ -897,103 +858,144 @@
       return;
     }
 
-    // Update greeting
-    const greeting = document.querySelector('.topbar-greeting');
+    const $ = (s) => document.querySelector(s);
+    const firstName = (user.name || '').split(' ')[0] || 'there';
+
+    // ── Topbar greeting + date + avatar ──
+    const greeting = $('.topbar-greeting');
     if (greeting) {
       const hour = new Date().getHours();
       const timeGreeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
-      greeting.textContent = `${timeGreeting}, ${user.name.split(' ')[0]} 👋`;
+      greeting.textContent = `${timeGreeting}, ${firstName} 👋`;
     }
-
-    // Update avatar
-    const avatar = document.querySelector('.topbar-right .avatar');
-    if (avatar) avatar.textContent = user.avatar;
-
-    // Update date
-    const dateEl = document.querySelector('.topbar-date');
+    const topAvatar = $('.topbar-right .avatar');
+    if (topAvatar) topAvatar.textContent = user.avatar || firstName[0].toUpperCase();
+    const dateEl = $('.topbar-date');
     if (dateEl) dateEl.textContent = new Date().toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
 
-    // Load user's listings
+    // ── Sidebar: real user, not "Alex Rivera" ──
+    const sbAvatar = $('#sidebar-avatar');
+    if (sbAvatar) {
+      // Preserve the online-dot child
+      const dot = sbAvatar.querySelector('.online-dot');
+      sbAvatar.textContent = user.avatar || firstName[0].toUpperCase();
+      if (dot) sbAvatar.appendChild(dot);
+    }
+    const sbName = $('#sidebar-name');
+    if (sbName) sbName.textContent = user.name || user.email || 'You';
+
+    // Pro Seller badge only for users with a real rating history
+    const sbBadge = $('#sidebar-badge');
+    if (sbBadge) sbBadge.style.display = (user.rating && user.reviewCount >= 5) ? '' : 'none';
+
+    // ── Load real data ──
     const myListings = await CharmDB.Listings.mine();
     const totalViews = myListings.reduce((s, l) => s + (l.views || 0), 0);
-
-    // Load bookings
     const incoming = await CharmDB.Bookings.incomingBookings();
     const confirmed = incoming.filter(b => b.status === 'confirmed' || b.status === 'completed');
     const totalEarnings = confirmed.reduce((s, b) => s + (b.total || 0), 0);
+    const pendingBookings = incoming.filter(b => b.status === 'pending');
+    const notifs = CharmDB.Notifications.forCurrentUser().slice(0, 6);
 
-    // Update stats
+    // ── Stats ──
     const statValues = document.querySelectorAll('.stat-value');
     if (statValues.length >= 4) {
-      statValues[0].textContent = `£${totalEarnings.toLocaleString()}`;
+      statValues[0].textContent = totalEarnings ? `£${totalEarnings.toLocaleString()}` : '£0';
       statValues[1].textContent = myListings.length;
       statValues[2].textContent = totalViews.toLocaleString();
       statValues[3].textContent = user.rating ? `${user.rating}★` : 'New';
     }
+    const earningsChange = $('#stat-earnings-change');
+    if (earningsChange) earningsChange.textContent = totalEarnings ? 'Lifetime earnings' : 'No earnings yet';
+    const ratingChange = $('#stat-rating-change');
+    if (ratingChange) ratingChange.textContent = user.reviewCount ? `${user.reviewCount} review${user.reviewCount === 1 ? '' : 's'}` : 'No reviews yet';
 
-    // Update listings strip
-    const listingsScroll = document.querySelector('.listings-scroll');
-    if (listingsScroll && myListings.length > 0) {
-      listingsScroll.innerHTML = myListings.map(l => `
-        <div class="listing-card" onclick="window.location.href='product.html?id=${l.id}'">
-          <div class="listing-thumb" style="${l.images[0] ? `background-image:url('${l.images[0]}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg,#0d0d24,#1a0a32);'}">
-            ${!l.images[0] ? '<span class="listing-thumb-emoji">📦</span>' : ''}
-          </div>
-          <div class="listing-info">
-            <div class="listing-name">${l.title}</div>
-            <div class="listing-meta">
-              <span class="listing-price">£${l.priceRent || l.priceBuy}${l.type === 'rent' ? '/day' : ''}</span>
-              <span class="status-badge status-active">${l.availability === 'available' ? 'Active' : 'Booked'}</span>
-            </div>
-            <div class="listing-views">${l.views || 0} views</div>
-          </div>
-        </div>
-      `).join('');
-    } else if (listingsScroll) {
-      listingsScroll.innerHTML = '<div style="padding:24px;text-align:center;color:var(--c-text-3);font-family:\'DM Sans\',sans-serif;"><p>No listings yet</p><a href="create-listing.html" style="color:var(--c-gold);text-decoration:underline;text-underline-offset:3px;">Create your first listing</a></div>';
+    // ── Onboarding card: shown only when user has nothing yet ──
+    const onboarding = $('#onboarding-card');
+    const isBrandNew = myListings.length === 0 && incoming.length === 0 && notifs.length === 0;
+    if (onboarding) {
+      onboarding.style.display = isBrandNew ? '' : 'none';
+      const heading = $('#onboarding-heading');
+      if (heading) heading.textContent = `Welcome, ${firstName}. Let's make the first move.`;
     }
 
-    // Update activity feed with real notifications + bookings
-    const actList = document.querySelector('.activity-list');
-    if (actList) {
-      const notifs = CharmDB.Notifications.forCurrentUser().slice(0, 5);
-      const pendingBookings = incoming.filter(b => b.status === 'pending');
+    // ── My Listings strip ──
+    const listingsScroll = document.querySelector('.listings-scroll');
+    if (listingsScroll) {
+      if (myListings.length) {
+        listingsScroll.innerHTML = myListings.map(l => {
+          const hasImg = l.images && l.images[0];
+          return `
+            <div class="listing-card" onclick="window.location.href='product.html?id=${l.id}'">
+              <div class="listing-thumb" style="${hasImg ? `background-image:url('${l.images[0]}');background-size:cover;background-position:center;` : 'background:linear-gradient(135deg,#0d0d24,#1a0a32);'}">
+                ${!hasImg ? '<span class="listing-thumb-emoji">📦</span>' : ''}
+              </div>
+              <div class="listing-info">
+                <div class="listing-name">${l.title}</div>
+                <div class="listing-meta">
+                  <span class="listing-price">£${l.priceRent || l.priceBuy}${l.type === 'rent' ? '/day' : ''}</span>
+                  <span class="status-badge status-active">${l.availability === 'available' ? 'Active' : 'Booked'}</span>
+                </div>
+                <div class="listing-views">${l.views || 0} views</div>
+              </div>
+            </div>`;
+        }).join('');
+      } else {
+        listingsScroll.innerHTML = `
+          <div class="listings-empty">
+            <div class="listings-empty-title">You haven't listed anything yet.</div>
+            <div class="listings-empty-sub">List a camera, mic, light or studio and your first earning is one booking away.</div>
+            <a href="create-listing.html">Create first listing</a>
+          </div>`;
+      }
+    }
 
-      let actHTML = '';
-      // Show pending booking requests first
+    // ── Activity feed: real pending bookings + notifications ──
+    const actList = $('#activity-list');
+    const actEmpty = $('#activity-empty');
+    if (actList && actEmpty) {
+      const pieces = [];
       pendingBookings.forEach(b => {
-        actHTML += `
+        pieces.push(`
           <li class="activity-item">
             <div class="act-icon cyan">📅</div>
             <div class="act-body">
               <div class="act-desc"><strong>Booking request</strong> — ${b.bookerName} wants "${b.listingTitle}"</div>
-              <div class="act-meta">£${b.total} · ${b.days} day${b.days>1?'s':''} · ${new Date(b.startDate).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</div>
+              <div class="act-meta">£${b.total} · ${b.days} day${b.days > 1 ? 's' : ''} · ${new Date(b.startDate).toLocaleDateString('en-GB',{day:'numeric',month:'short'})}</div>
               <div style="margin-top:8px;display:flex;gap:8px;">
-                <button onclick="handleBooking('${b.id}','confirmed')" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:#0f0800;background:var(--c-gold);border:none;border-radius:6px;padding:6px 14px;cursor:pointer;">Accept</button>
-                <button onclick="handleBooking('${b.id}','declined')" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:600;color:var(--c-text-3);background:transparent;border:1px solid var(--c-border);border-radius:6px;padding:6px 14px;cursor:pointer;">Decline</button>
+                <button onclick="handleBooking('${b.id}','confirmed')" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--c-bg,#07070e);background:var(--c-text);border:none;border-radius:6px;padding:7px 14px;cursor:pointer;">Accept</button>
+                <button onclick="handleBooking('${b.id}','declined')" style="font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:var(--c-text-3);background:transparent;border:1px solid var(--c-border);border-radius:6px;padding:7px 14px;cursor:pointer;">Decline</button>
               </div>
             </div>
             <span class="act-time">${timeAgo(b.createdAt)}</span>
-          </li>`;
+          </li>`);
       });
-
-      // Add notifications
       notifs.forEach(n => {
-        const icons = { booking_request: '📅', booking_confirmed: '✅', booking_declined: '❌', booking_cancelled: '⚠️' };
-        actHTML += `
+        const icons = { booking_request: '📅', booking_confirmed: '✅', booking_declined: '❌', booking_cancelled: '⚠️', message: '💬' };
+        pieces.push(`
           <li class="activity-item">
-            <div class="act-icon ${n.type.includes('confirmed') ? 'gold' : 'violet'}">${icons[n.type] || '🔔'}</div>
+            <div class="act-icon ${n.type && n.type.includes('confirmed') ? 'gold' : 'violet'}">${(n.type && icons[n.type]) || '🔔'}</div>
             <div class="act-body">
               <div class="act-desc">${n.message}</div>
             </div>
             <span class="act-time">${timeAgo(n.createdAt)}</span>
-          </li>`;
+          </li>`);
       });
-
-      if (actHTML) actList.innerHTML = actHTML;
+      if (pieces.length) {
+        actList.innerHTML = pieces.join('');
+        actList.style.display = '';
+        actEmpty.style.display = 'none';
+      } else {
+        actList.innerHTML = '';
+        actList.style.display = 'none';
+        actEmpty.style.display = '';
+      }
     }
 
-    // Update notification count
+    // ── Weekly earnings chart from real bookings ──
+    renderEarningsChart(confirmed);
+
+    // ── Notifications pip + messages badge ──
     const notifBtn = document.querySelector('.notif-btn');
     const unread = CharmDB.Notifications.unreadCount();
     if (notifBtn) {
@@ -1001,6 +1003,97 @@
       if (pip) pip.style.display = unread > 0 ? '' : 'none';
       notifBtn.setAttribute('aria-label', `Notifications (${unread} unread)`);
     }
+    const msgBadge = $('#sidebar-msg-badge');
+    const msgList = $('#messages-list');
+    const msgEmpty = $('#messages-empty');
+    let unreadMsgs = 0;
+    let recentMsgs = [];
+    if (CharmDB.Messages && typeof CharmDB.Messages.recent === 'function') {
+      try { recentMsgs = CharmDB.Messages.recent({ limit: 4 }) || []; } catch {}
+    }
+    if (CharmDB.Messages && typeof CharmDB.Messages.unreadCount === 'function') {
+      try { unreadMsgs = CharmDB.Messages.unreadCount() || 0; } catch {}
+    }
+    if (msgBadge) {
+      msgBadge.textContent = unreadMsgs;
+      msgBadge.style.display = unreadMsgs > 0 ? '' : 'none';
+    }
+    if (msgList && msgEmpty) {
+      if (recentMsgs.length) {
+        msgList.innerHTML = recentMsgs.map(m => {
+          const initials = ((m.fromName || 'C').split(' ').map(s => s[0]).join('')).slice(0,2).toUpperCase();
+          return `
+            <li class="msg-item ${m.unread ? 'msg-unread' : ''}">
+              <div class="msg-avatar" style="background: var(--c-elevated); color: var(--c-text);">${initials}</div>
+              <div class="msg-body">
+                <div class="msg-row">
+                  <span class="msg-name">${m.fromName || 'Creator'}</span>
+                  <span class="msg-time">${timeAgo(m.createdAt)}</span>
+                </div>
+                <div class="msg-preview">${m.preview || ''}</div>
+              </div>
+              ${m.unread ? '<div class="unread-dot" aria-label="Unread"></div>' : ''}
+            </li>`;
+        }).join('');
+        msgList.style.display = '';
+        msgEmpty.style.display = 'none';
+      } else {
+        msgList.innerHTML = '';
+        msgList.style.display = 'none';
+        msgEmpty.style.display = '';
+      }
+    }
+  }
+
+  // Render a 7-day bar chart from confirmed bookings in the last 7 days.
+  // Falls back to a clean empty state when nothing happened this week.
+  function renderEarningsChart(confirmedBookings) {
+    const chart = document.getElementById('bar-chart');
+    const totalEl = document.getElementById('chart-total');
+    const empty = document.getElementById('earnings-empty');
+    if (!chart || !totalEl) return;
+
+    const now = new Date();
+    const startOfWeek = new Date(now);
+    startOfWeek.setHours(0, 0, 0, 0);
+    startOfWeek.setDate(now.getDate() - now.getDay() + (now.getDay() === 0 ? -6 : 1)); // Monday
+
+    const dayTotals = [0, 0, 0, 0, 0, 0, 0]; // Mon..Sun
+    confirmedBookings.forEach(b => {
+      const d = new Date(b.createdAt);
+      const diffDays = Math.floor((d - startOfWeek) / 86400000);
+      if (diffDays >= 0 && diffDays < 7) dayTotals[diffDays] += (b.total || 0);
+    });
+
+    const weekTotal = dayTotals.reduce((s, v) => s + v, 0);
+    totalEl.textContent = weekTotal ? `£${weekTotal.toLocaleString()}` : '£0';
+
+    if (!weekTotal) {
+      chart.innerHTML = '';
+      chart.style.display = 'none';
+      if (empty) empty.style.display = '';
+      return;
+    }
+
+    if (empty) empty.style.display = 'none';
+    chart.style.display = '';
+    const max = Math.max(...dayTotals, 1);
+    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const todayIdx = (now.getDay() + 6) % 7; // 0 = Mon
+    chart.innerHTML = dayTotals.map((v, i) => {
+      const pct = v ? Math.max(8, Math.round((v / max) * 100)) : 0;
+      const isToday = i === todayIdx;
+      const dim = i > todayIdx ? 'opacity:0.45;' : '';
+      return `
+        <div class="bar-col">
+          <div class="bar-track">
+            <div class="bar" style="height:${pct}%;${isToday ? 'background:var(--c-text);' : ''}${dim}">
+              ${v ? `<div class="bar-tooltip">£${v}</div>` : ''}
+            </div>
+          </div>
+          <div class="bar-label">${labels[i]}</div>
+        </div>`;
+    }).join('');
   }
 
   function timeAgo(dateStr) {

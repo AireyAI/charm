@@ -659,8 +659,18 @@
   // ═══════════════════════════════════════════════════════════════════════
   //  SEED DATA — populate demo content on first visit
   // ═══════════════════════════════════════════════════════════════════════
+  // Bump this when the seed shape changes so returning visitors get the
+  // new demo data. We only reset the demo listings/users — the user's own
+  // auth session, wishlist, cart, bookings, etc. are preserved.
+  const SEED_VERSION = 'charm-seed-v2-taxonomy';
   function seedIfEmpty() {
-    if (store(LISTINGS_KEY).get().length > 0) return;
+    const seedKey = 'charm-seed-version';
+    const existingVersion = localStorage.getItem(seedKey);
+    const hasListings = store(LISTINGS_KEY).get().length > 0;
+    if (hasListings && existingVersion === SEED_VERSION) return;
+    // First visit OR old seed — replace demo users and listings with the
+    // current taxonomy seed. Auth/bookings/wishlist are left alone.
+    localStorage.setItem(seedKey, SEED_VERSION);
 
     // Create demo users
     const demoUsers = [
@@ -673,7 +683,10 @@
       { id: 'demo-nina',   email: 'nina@charm.space',   password: btoa('demo'), name: 'Nina Halden', avatar: 'NH', bio: 'Music production tutor and session musician',  location: 'Bristol, UK',     joined: '2025-07-22T10:00:00Z', verified: true, rating: 4.9, reviewCount: 24, listingCount: 3, bookingCount: 0 },
       { id: 'demo-ravi',   email: 'ravi@charm.space',   password: btoa('demo'), name: 'Ravi Patel',  avatar: 'RP', bio: 'Rooftop and retreat venues across the South West', location: 'Edinburgh, UK',   joined: '2025-02-28T10:00:00Z', verified: true, rating: 4.7, reviewCount: 15, listingCount: 2, bookingCount: 0 },
     ];
-    store(USERS_KEY).set(demoUsers);
+    // Merge demo users: replace any existing demo-* rows, keep real users.
+    const existingUsers = store(USERS_KEY).get();
+    const nonDemoUsers = existingUsers.filter(u => !String(u.id || '').startsWith('demo-'));
+    store(USERS_KEY).set([...nonDemoUsers, ...demoUsers]);
 
     // Create demo listings. Each listing carries a top-level category and,
     // where meaningful, a subcategory so the marketplace can filter both.
@@ -869,7 +882,12 @@
         availability: 'available', bookedDates: [], rating: 4.9, reviewCount: 38, views: 254, featured: false,
         createdAt: '2026-02-25T10:00:00Z', updatedAt: '2026-04-11T10:00:00Z' },
     ];
-    store(LISTINGS_KEY).set(demoListings);
+    // Merge demo listings: drop any old demo listings (listing-* or listing-xx-*)
+    // and re-seed with the new taxonomy. Real user-created listings (uuid ids)
+    // are preserved.
+    const existingListings = store(LISTINGS_KEY).get();
+    const userListings = existingListings.filter(l => !String(l.id || '').startsWith('listing-'));
+    store(LISTINGS_KEY).set([...userListings, ...demoListings]);
   }
 
   // Run seed on load

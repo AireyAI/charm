@@ -532,14 +532,14 @@
 </header>
 
 <!-- Category strip + search -->
-<section style="padding: var(--s-5) 0; border-bottom: 1px solid var(--c-border);">
-  <div class="container-wide" style="display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;">
-    <div class="cat-strip" role="tablist" aria-label="Filter by category" id="cat-strip" style="flex: 1; padding: 0;">
+<section class="mkt-filter-bar" style="padding: var(--s-5) 0; border-bottom: 1px solid var(--c-border);">
+  <div class="container-wide mkt-filter-row-1" style="display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap;">
+    <div class="cat-strip" role="tablist" aria-label="Filter by category" id="cat-strip" style="flex: 1; min-width: 0; padding: 0;">
       <!-- Pills are populated from CharmDB.Categories on load -->
       <button class="cat-pill is-active" role="tab" data-cat="all">All</button>
     </div>
-    <div style="position: relative; min-width: 260px;">
-      <input id="mkt-search" type="search" class="input" placeholder="Search studios, pros, gear…" aria-label="Search listings" style="height: 40px;" oninput="onSearchInput(event)">
+    <div class="mkt-search-wrap" style="position: relative; min-width: 260px;">
+      <input id="mkt-search" type="search" class="input" placeholder="Search studios, pros, gear…" aria-label="Search listings" style="height: 40px; width: 100%;" oninput="onSearchInput(event)">
     </div>
   </div>
   <!-- Subcategory strip: appears when a top category is selected -->
@@ -548,6 +548,14 @@
     </div>
   </div>
 </section>
+
+<style>
+  @media (max-width: 760px) {
+    .mkt-filter-bar .mkt-filter-row-1 { flex-direction: column; align-items: stretch; gap: var(--s-3); }
+    .mkt-filter-bar .cat-strip { flex: 0 0 auto; width: 100%; }
+    .mkt-filter-bar .mkt-search-wrap { min-width: 0 !important; width: 100%; }
+  }
+</style>
 
 <div class="container-wide">
   <div class="mkt-layout">

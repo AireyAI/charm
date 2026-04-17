@@ -441,9 +441,10 @@
 
     /* Mobile */
     @media (max-width: 768px) {
+      html, body { overflow-x: hidden; }
       .nav { padding: 14px 16px; }
       .nav-links { display: none; }
-      .msgs-shell { flex-direction: column; }
+      .msgs-shell { flex-direction: column; width: 100%; max-width: 100vw; }
       .panel-left {
         width: 100%; min-width: unset;
         position: absolute; top: 64px; left: 0; right: 0; bottom: 0;
@@ -451,10 +452,10 @@
         transform: translateX(0);
       }
       .panel-left.hidden { transform: translateX(-100%); }
-      .panel-right { width: 100%; }
+      .panel-right { width: 100%; min-width: 0; }
       .chat-back-btn { display: flex; }
       .listing-ctx { margin: 10px 14px 0; }
-      .chat-thread { padding: 14px 14px 10px; }
+      .chat-thread { padding: 14px 14px 10px; min-width: 0; }
       .chat-input-bar { padding: 10px 14px; }
     }
 

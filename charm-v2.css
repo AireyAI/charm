@@ -333,6 +333,25 @@ input, select, textarea { font: inherit; color: inherit; }
   .nav-inner { gap: var(--s-4); }
 }
 
+/* Mobile-specific nav adjustments — tightens spacing, shrinks pill, hides
+   lower-priority icons so the primary CTA always stays visible. */
+@media (max-width: 640px) {
+  .nav-inner { padding: 0 var(--s-4); gap: var(--s-3); }
+  .nav-right, .nav-actions { gap: 6px; }
+  .nav-icon, .nav-icon-btn { width: 32px; height: 32px; }
+  /* Collapse the location pill to just the pin glyph on small screens */
+  #charm-loc-pill { padding: 0 !important; width: 34px !important; max-width: 34px !important; justify-content: center !important; }
+  #charm-loc-pill > span:nth-child(2) { display: none; }
+  /* Theme toggle is nice-to-have — hide on small phones */
+  #theme-toggle { display: none; }
+}
+@media (max-width: 480px) {
+  /* Drop the secondary icons on tiny phones; keep Sign in + primary CTA */
+  .nav-right .nav-icon, .nav-actions .nav-icon-btn { display: none; }
+  .nav-inner { padding: 0 12px; }
+  .btn.btn--sm, .btn-ghost, .btn-gold { padding: 6px 10px; font-size: 11px; }
+}
+
 /* ============================================================
    Buttons — restrained, editorial
    ============================================================ */

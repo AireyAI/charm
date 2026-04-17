@@ -3,6 +3,37 @@
 (function () {
   'use strict';
 
+  // ── Global mobile nav polish ──────────────────────────────────────────
+  // Injected so every page (including those that don't load charm-v2.css)
+  // gets a consistent nav at phone widths.
+  const mobileNavCss = document.createElement('style');
+  mobileNavCss.id = 'charm-mobile-nav-css';
+  mobileNavCss.textContent = `
+    @media (max-width: 640px) {
+      .nav-inner { padding: 0 14px !important; gap: 10px !important; }
+      .nav-right, .nav-actions { gap: 6px !important; }
+      .nav-icon, .nav-icon-btn { width: 32px !important; height: 32px !important; }
+      #charm-loc-pill { padding: 0 !important; width: 34px !important; max-width: 34px !important; justify-content: center !important; }
+      #charm-loc-pill > span:nth-child(2) { display: none !important; }
+      #theme-toggle { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .nav-right .nav-icon, .nav-actions .nav-icon-btn { display: none !important; }
+      .nav-inner { padding: 0 12px !important; }
+      .btn.btn--sm, .btn-ghost, .btn-gold, .nav .btn-gold { padding: 6px 10px !important; font-size: 11px !important; }
+    }
+    /* When the user is logged in, the avatar covers account + create-listing,
+       so the "+ Add Listing" primary button becomes redundant on mobile. */
+    @media (max-width: 640px) {
+      .nav-right:has(.charm-auth-el) .btn-gold,
+      .nav-right:has(.charm-auth-el) .btn--primary,
+      .nav-right:has(.charm-auth-el) .nav-add-listing,
+      .nav-actions:has(.charm-auth-el) .btn-gold,
+      .nav-actions:has(.charm-auth-el) .btn--primary { display: none !important; }
+    }
+  `;
+  document.head.appendChild(mobileNavCss);
+
   // ── Page transition ───────────────────────────────────────────────────
   // Inject fade overlay
   const overlay = document.createElement('div');
@@ -380,27 +411,31 @@
   // Expose for other pages to trigger manually
   window.openCharmLocationModal = () => openLocationModal();
 
-  // ── Scroll reveal ─────────────────────────────────────────────────────
-  // Auto-apply to any element with data-reveal attribute
-  const revealEls = document.querySelectorAll('[data-reveal]');
-  if (revealEls.length) {
-    revealEls.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(24px)';
-      el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
-    });
-    const revealObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }, (entry.target.dataset.delay || 0));
-          revealObs.unobserve(entry.target);
-        }
+  // ── Scroll reveal fallback ────────────────────────────────────────────
+  // animations.js handles [data-reveal] via GSAP/ScrollTrigger. Only wire
+  // a plain IntersectionObserver fallback when GSAP is not available, and
+  // never intervene if animations.js has already flagged itself as running.
+  if (typeof window.gsap === 'undefined') {
+    const revealEls = document.querySelectorAll('[data-reveal]');
+    if (revealEls.length) {
+      revealEls.forEach(el => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(24px)';
+        el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94)';
       });
-    }, { threshold: 0.1 });
-    revealEls.forEach(el => revealObs.observe(el));
+      const revealObs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => {
+              entry.target.style.opacity = '1';
+              entry.target.style.transform = 'translateY(0)';
+            }, (entry.target.dataset.delay || 0));
+            revealObs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revealEls.forEach(el => revealObs.observe(el));
+    }
   }
 
 })();

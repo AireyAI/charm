@@ -460,10 +460,12 @@
     .tab-btn-icon { font-size: 20px; }
 
     @media (max-width: 900px) {
+      html, body { overflow-x: hidden; }
+      .app-shell { width: 100%; max-width: 100vw; overflow-x: hidden; }
       .sidebar { display: none; }
-      .main-content { margin-left: 0; }
+      .main-content { margin-left: 0; width: 100%; min-width: 0; max-width: 100vw; }
       .mobile-tabs { display: block; }
-      .page-body { padding: 20px 16px 90px; }
+      .page-body { padding: 20px 16px 90px; min-width: 0; }
       .topbar { padding: 0 16px; }
       .stats-row { grid-template-columns: repeat(2, 1fr); }
       .two-col { grid-template-columns: 1fr; }

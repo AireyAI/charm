@@ -1362,9 +1362,15 @@
 
   // ── Toast helper ──
   function showToast() {
-    const toast = document.getElementById('success-toast');
-    toast.classList.add('show');
-    setTimeout(() => { toast.classList.remove('show'); }, 3000);
+    if (window.CharmToast) {
+      window.CharmToast.success('Listing published. Redirecting to your dashboard.', { duration: 2600 });
+    } else {
+      const toast = document.getElementById('success-toast');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 3000);
+      }
+    }
   }
 
   // ── Publish listing via CharmDB ──

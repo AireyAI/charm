@@ -731,7 +731,7 @@
         </div>
       </div>
       <div class="seller-actions">
-        <button class="btn-contact" data-magnetic onclick="document.getElementById('contact-modal').showModal?.() || alert('Message sent!')">
+        <button class="btn-contact" data-magnetic onclick="document.getElementById('contact-modal').showModal?.() || (window.CharmToast ? window.CharmToast.success('Message sent — the seller will see it in their inbox.') : alert('Message sent!'))">
           Contact Seller
         </button>
         <button class="btn-follow" data-magnetic id="follow-btn" onclick="this.classList.toggle('following'); this.textContent = this.classList.contains('following') ? '✓ Following' : '+ Follow'">
@@ -1052,7 +1052,7 @@
 
         <!-- Contact CTA -->
         <div class="sidebar-card">
-          <button class="sidebar-contact-btn" onclick="alert('Opening message thread with Marcus Webb...')">
+          <button class="sidebar-contact-btn" onclick="(window.CharmToast ? window.CharmToast.info('Opening your thread with Marcus Webb…', { kicker: 'Messages' }) : alert('Opening message thread with Marcus Webb...'))">
             ✉ Message Marcus
           </button>
           <p class="sidebar-report">
@@ -1149,7 +1149,7 @@
 
   <!-- MOBILE STICKY CTA -->
   <div class="mobile-cta" aria-label="Contact seller">
-    <button class="mobile-cta-btn" onclick="alert('Opening message thread with Marcus Webb...')">
+    <button class="mobile-cta-btn" onclick="(window.CharmToast ? window.CharmToast.info('Opening your thread with Marcus Webb…', { kicker: 'Messages' }) : alert('Opening message thread with Marcus Webb...'))">
       ✉ Message Marcus Webb
     </button>
   </div>

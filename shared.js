@@ -34,6 +34,191 @@
   `;
   document.head.appendChild(mobileNavCss);
 
+  // ── Unified toast notifications (CharmToast) ──────────────────────────
+  // Every page used to roll its own toast (different positions, colours,
+  // typography, timing). CharmToast replaces them with one editorial look:
+  // dark card + gold accent pin, subtle border, Syne kicker + DM Sans copy,
+  // bottom-center slide-up. Page-local showToast() / toast() helpers get
+  // shimmed to delegate here, so no call sites need to change.
+  const toastCss = document.createElement('style');
+  toastCss.id = 'charm-toast-css';
+  toastCss.textContent = `
+    #charm-toast-stack {
+      position: fixed;
+      left: 50%;
+      bottom: max(24px, env(safe-area-inset-bottom, 24px));
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 10px;
+      z-index: 10002;
+      pointer-events: none;
+      width: min(420px, calc(100vw - 32px));
+    }
+    .charm-toast {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px 12px 12px;
+      background: rgba(13, 13, 26, 0.94);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      color: #f0ece3;
+      font-family: 'DM Sans', 'Inter Tight', sans-serif;
+      font-size: 13.5px;
+      line-height: 1.45;
+      letter-spacing: -0.1px;
+      box-shadow: 0 16px 44px rgba(0,0,0,0.45);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      pointer-events: auto;
+      transform: translateY(14px);
+      opacity: 0;
+      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), opacity 0.22s ease;
+    }
+    .charm-toast.is-open { transform: translateY(0); opacity: 1; }
+    .charm-toast__icon {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      display: inline-flex; align-items: center; justify-content: center;
+      background: rgba(226,168,75,0.12);
+      color: #e2a84b;
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .charm-toast--success .charm-toast__icon { background: rgba(54,217,138,0.12); color: #36d98a; }
+    .charm-toast--error   .charm-toast__icon { background: rgba(255,107,87,0.14); color: #ff6b57; }
+    .charm-toast--info    .charm-toast__icon { background: rgba(0,212,200,0.12);  color: #00d4c8; }
+    .charm-toast__body { min-width: 0; }
+    .charm-toast__kicker {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #e2a84b;
+      margin-bottom: 1px;
+    }
+    .charm-toast--success .charm-toast__kicker { color: #36d98a; }
+    .charm-toast--error   .charm-toast__kicker { color: #ff6b57; }
+    .charm-toast--info    .charm-toast__kicker { color: #00d4c8; }
+    .charm-toast__msg { display: block; color: #f0ece3; }
+    .charm-toast__close {
+      width: 28px; height: 28px;
+      display: inline-flex; align-items: center; justify-content: center;
+      border: none; background: transparent; color: #8886a0;
+      font-family: 'Syne', sans-serif; font-size: 14px; line-height: 1;
+      border-radius: 6px; cursor: pointer;
+      transition: color 0.18s ease, background 0.18s ease;
+    }
+    .charm-toast__close:hover { color: #f0ece3; background: rgba(255,255,255,0.06); }
+
+    /* Hide legacy page-specific toast containers — CharmToast replaces them. */
+    .toast#toast, #success-toast.toast { display: none !important; }
+  `;
+  document.head.appendChild(toastCss);
+
+  function ensureToastStack() {
+    let stack = document.getElementById('charm-toast-stack');
+    if (!stack) {
+      stack = document.createElement('div');
+      stack.id = 'charm-toast-stack';
+      stack.setAttribute('role', 'status');
+      stack.setAttribute('aria-live', 'polite');
+      document.body.appendChild(stack);
+    }
+    return stack;
+  }
+
+  const DEFAULT_KICKERS = {
+    default: 'Charm',
+    success: 'Done',
+    error: 'Heads up',
+    info: 'Note',
+  };
+  const DEFAULT_ICONS = {
+    default: '\u2726',
+    success: '\u2713',
+    error: '\u0021',
+    info: 'i',
+  };
+
+  window.CharmToast = {
+    show(message, opts = {}) {
+      if (!message) return null;
+      const variant = opts.variant && DEFAULT_KICKERS[opts.variant] ? opts.variant : 'default';
+      const duration = typeof opts.duration === 'number' ? opts.duration : 3200;
+      const icon = opts.icon || DEFAULT_ICONS[variant];
+      const kicker = opts.kicker !== undefined ? opts.kicker : DEFAULT_KICKERS[variant];
+
+      const stack = ensureToastStack();
+      const el = document.createElement('div');
+      el.className = `charm-toast charm-toast--${variant}`;
+      const hasKicker = kicker && kicker.length > 0;
+      el.innerHTML = `
+        <span class="charm-toast__icon" aria-hidden="true">${icon}</span>
+        <span class="charm-toast__body">
+          ${hasKicker ? `<span class="charm-toast__kicker">${kicker}</span>` : ''}
+          <span class="charm-toast__msg"></span>
+        </span>
+        <button class="charm-toast__close" aria-label="Dismiss">&times;</button>
+      `;
+      el.querySelector('.charm-toast__msg').textContent = message;
+
+      const dismiss = () => {
+        el.classList.remove('is-open');
+        setTimeout(() => el.remove(), 260);
+      };
+      el.querySelector('.charm-toast__close').addEventListener('click', dismiss);
+
+      stack.appendChild(el);
+      requestAnimationFrame(() => el.classList.add('is-open'));
+      if (duration > 0) setTimeout(dismiss, duration);
+      return el;
+    },
+    success(msg, opts = {}) { return this.show(msg, { variant: 'success', ...opts }); },
+    error(msg, opts = {})   { return this.show(msg, { variant: 'error',   ...opts }); },
+    info(msg, opts = {})    { return this.show(msg, { variant: 'info',    ...opts }); },
+  };
+
+  // Legacy shim — every page-local showToast() / toast() now forwards to
+  // CharmToast. Keep the scope isolated so individual pages can still
+  // define their own if they want different behaviour (they currently
+  // don't). Pages that had `window.showToast = ...` still win because
+  // they run after shared.js; the shim below only kicks in if the page
+  // hasn't defined one. That's wired below via window.addEventListener.
+  window.addEventListener('DOMContentLoaded', () => {
+    const guessVariant = (txt) => {
+      const lower = String(txt || '').toLowerCase();
+      if (/\bcould not|fail|error|invalid|cannot|must be|please /i.test(lower)) return 'error';
+      if (/\bsaved|added|removed|welcome|signed in|switched|confirmed|logged/i.test(lower)) return 'success';
+      return 'default';
+    };
+    // Don't clobber a page-local showToast — they already run their own
+    // animation against specific DOM. The legacy DOM is hidden via CSS
+    // above, so calling the old showToast still works but is silent; to
+    // keep notifications visible we proxy through CharmToast whenever a
+    // page-local implementation exists.
+    const wrap = (name) => {
+      const orig = window[name];
+      if (typeof orig !== 'function') return;
+      window[name] = function (...args) {
+        try { orig.apply(this, args); } catch {}
+        // Most page-local signatures are (msg) or (icon, msg) or ()
+        const msg = args.length >= 2 && typeof args[0] === 'string' && args[0].length <= 4 ? args[1] : args[0];
+        if (typeof msg === 'string' && msg.length) {
+          window.CharmToast.show(msg, { variant: guessVariant(msg) });
+        }
+      };
+    };
+    wrap('showToast');
+    wrap('toast');
+  });
+
   // ── Page transition ───────────────────────────────────────────────────
   // Inject fade overlay
   const overlay = document.createElement('div');

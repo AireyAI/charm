@@ -1118,7 +1118,7 @@
     try {
       await CharmDB.Bookings.updateStatus(id, status);
       loadDashboard(); // Refresh
-    } catch (e) { alert(e.message); }
+    } catch (e) { (window.CharmToast ? window.CharmToast.error(e.message) : alert(e.message)); }
   }
 
   // Load on DOM ready

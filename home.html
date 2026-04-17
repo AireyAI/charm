@@ -123,11 +123,14 @@
       </div>
       <div class="hero-search-field">
         <label for="s-loc">Location</label>
-        <input id="s-loc" type="text" placeholder="Anywhere" autocomplete="off">
+        <select id="s-loc" name="location">
+          <option value="">All locations</option>
+          <!-- Cities populated from CharmDB.Location.availableCities() -->
+        </select>
       </div>
       <div class="hero-search-field">
         <label for="s-when">When</label>
-        <input id="s-when" type="text" placeholder="Any date" autocomplete="off">
+        <input id="s-when" type="date" autocomplete="off" aria-label="Select date">
       </div>
       <button type="submit" class="hero-search-btn">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
@@ -551,15 +554,46 @@
   }, { threshold: 0.4 });
   document.querySelectorAll('[data-counter]').forEach(el => countObs.observe(el));
 
+  // ── Hero search: hydrate the location select + wire the date picker ──
+  function hydrateHeroSearch() {
+    if (!window.CharmDB || !CharmDB.Location) return setTimeout(hydrateHeroSearch, 40);
+
+    // Location select — populate with cities that actually have listings
+    const locSel = document.getElementById('s-loc');
+    if (locSel && locSel.tagName === 'SELECT') {
+      const current = CharmDB.Location.get();
+      const cities = CharmDB.Location.availableCities();
+      locSel.innerHTML = `<option value="">All locations</option>` +
+        cities.map(c => `<option value="${c.city}"${current === c.city ? ' selected' : ''}>${c.city} (${c.count})</option>`).join('');
+      // Selecting here updates the global location preference too.
+      locSel.addEventListener('change', () => {
+        CharmDB.Location.set(locSel.value || null);
+      });
+      // If the nav pill changes the location, reflect it here.
+      CharmDB.Location.onChange((city) => { locSel.value = city || ''; });
+    }
+
+    // Date picker — set today as the minimum so past dates can't be picked
+    const dateEl = document.getElementById('s-when');
+    if (dateEl) {
+      const today = new Date();
+      const iso = today.toISOString().split('T')[0];
+      dateEl.min = iso;
+    }
+  }
+  hydrateHeroSearch();
+
   // Search submit → route to search.html
   function submitSearch() {
     const cat = document.getElementById('s-cat').value;
     const type = document.getElementById('s-type').value;
     const loc = document.getElementById('s-loc').value;
+    const when = document.getElementById('s-when').value;
     const q = new URLSearchParams();
     if (cat) q.set('category', cat);
     if (type) q.set('type', type);
     if (loc) q.set('location', loc);
+    if (when) q.set('date', when);
     window.location.href = 'search.html' + (q.toString() ? '?' + q.toString() : '');
   }
 

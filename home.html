@@ -1,1837 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Charm — Find Your Creative Space</title>
-  <meta name="description" content="The global platform connecting creators with inspiring studios, venues, professionals, products, and communities. Book music studios, photography spaces, dance studios and more worldwide.">
-  <link rel="canonical" href="https://www.charm.space/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Charm — Creative Gear, Spaces & People</title>
+<meta name="description" content="A marketplace for creators. Buy and rent cameras, audio gear, lighting, instruments. Book studios, hire pros, join the global creative community.">
+<link rel="canonical" href="https://aireyai.github.io/charm/home.html">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Charm — Find Your Creative Space">
-  <meta property="og:description" content="The global ecosystem connecting creators with inspiring studios, venues, professionals, products, and communities worldwide.">
-  <meta property="og:image" content="https://www.charm.space/og-image.jpg">
-  <meta property="og:url" content="https://www.charm.space/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Charm">
+<meta property="og:title" content="Charm — Creative Gear, Spaces & People">
+<meta property="og:description" content="A marketplace for creators. Buy and rent cameras, audio gear, lighting, instruments. Book studios, hire pros.">
+<meta property="og:image" content="https://aireyai.github.io/charm/images/hero-studio.jpg">
+<meta property="og:url" content="https://aireyai.github.io/charm/home.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Charm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Charm — Creative Gear, Spaces & People">
+<meta name="twitter:description" content="A marketplace for creators. Buy and rent cameras, audio gear, lighting, instruments.">
+<meta name="twitter:image" content="https://aireyai.github.io/charm/images/hero-studio.jpg">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Charm — Find Your Creative Space">
-  <meta name="twitter:description" content="The global ecosystem connecting creators with inspiring studios, venues, professionals, products, and communities worldwide.">
-  <meta name="twitter:image" content="https://www.charm.space/og-image.jpg">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Charm">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-  <!-- Theme & iOS -->
-  <meta name="theme-color" content="#07070e">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Charm">
-  <meta name="format-detection" content="telephone=no">
-  <link rel="apple-touch-icon" href="favicon.svg">
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/hero-studio.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap" rel="stylesheet">
 
-  <!-- Resource hints -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="image" href="images/music-studio.jpg" fetchpriority="high">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=optional" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="charm-v2.css">
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Charm",
-    "url": "https://www.charm.space",
-    "description": "The global platform connecting creators with inspiring studios, venues, professionals, products, and communities.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://www.charm.space/search?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "reviewCount": "98000"
-    }
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Charm",
+  "url": "https://aireyai.github.io/charm/",
+  "description": "A marketplace for creators — gear, spaces, pros.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://aireyai.github.io/charm/search.html?q={search_term_string}",
+    "query-input": "required name=search_term_string"
   }
-  </script>
-  <style>
-    :root {
-      --c-base: #07070e;
-      --c-card: #0d0d1a;
-      --c-elevated: #131326;
-      --c-float: #1a1a32;
-      --c-gold: #e2a84b;
-      --c-gold-dim: rgba(226,168,75,0.14);
-      --c-violet: #9d6fff;
-      --c-coral: #ff6b57;
-      --c-cyan: #00d4c8;
-      --c-text: #f0ece3;
-      --c-text-2: #9896a8;
-      --c-text-3: #8886a0;
-      --c-border: rgba(255,255,255,0.07);
-      --c-border-2: rgba(255,255,255,0.13);
-      /* Z-index system */
-      --z-below: -1;
-      --z-base: 0;
-      --z-raised: 10;
-      --z-sticky: 500;
-      --z-overlay: 700;
-      --z-modal: 800;
-      --z-toast: 900;
-      --z-top: 9999;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px;
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
-
-    body {
-      background-color: var(--c-base);
-      color: var(--c-text);
-      font-family: 'DM Sans', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      overscroll-behavior-y: none;
-    }
-
-    h1, h2, h3, h4 { text-wrap: balance; }
-    p { text-wrap: pretty; }
-
-    img, video, svg { display: block; max-width: 100%; }
-    img { height: auto; }
-    input, button, textarea, select { font: inherit; }
-
-    /* iOS tap highlight */
-    * { -webkit-tap-highlight-color: transparent; }
-
-    /* Focus visible */
-    :focus { outline: none; }
-    :focus-visible {
-      outline: 2px solid var(--c-gold);
-      outline-offset: 3px;
-      border-radius: 3px;
-    }
-
-    /* Cursor */
-    button, [role="button"], a, select, label[for], summary { cursor: pointer; }
-    :disabled, [aria-disabled="true"] { cursor: not-allowed; opacity: 0.5; }
-
-    /* Pointer events */
-    @media (hover: hover) and (pointer: fine) {
-      .l-card:hover .l-img img { transform: scale(1.04); }
-      .cat-card:hover img { transform: scale(1.06); }
-    }
-
-    ::-webkit-scrollbar { width: 5px; }
-    ::-webkit-scrollbar-track { background: var(--c-base); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.25); }
-    * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.15) transparent; }
-    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
-    ::-moz-selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
-
-    /* Skip link */
-    .skip-link {
-      position: absolute; top: -100%; left: 1rem;
-      background: var(--c-gold); color: #0f0800;
-      padding: 0.5rem 1rem; z-index: var(--z-top);
-      border-radius: 0 0 6px 6px; font-weight: 700;
-      text-decoration: none; font-family: 'Syne', sans-serif;
-    }
-    .skip-link:focus { top: 0; }
-
-    /* SR only */
-    .sr-only {
-      position: absolute; width: 1px; height: 1px;
-      padding: 0; margin: -1px; overflow: hidden;
-      clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
-      .reveal { opacity: 1 !important; transform: none !important; }
-    }
-
-    /* Noise overlay */
-    .noise {
-      position: fixed; inset: 0; z-index: var(--z-top); pointer-events: none; opacity: 0.028;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
-
-    /* ═══════════════════════════════════════
-       NAVIGATION
-    ═══════════════════════════════════════ */
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: var(--z-sticky);
-      padding: 22px 48px;
-      transition: background 0.35s ease, padding 0.35s ease, border-color 0.35s ease;
-      border-bottom: 1px solid transparent;
-    }
-    .nav.scrolled {
-      background: rgba(7,7,14,0.88);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      padding: 14px 48px;
-      border-color: var(--c-border);
-    }
-    .nav-inner {
-      max-width: 1320px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 21px;
-      letter-spacing: -0.02em; color: var(--c-text);
-      text-decoration: none; display: flex; align-items: center; gap: 9px;
-    }
-    .logo-gem {
-      width: 30px; height: 30px; border-radius: 7px;
-      background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%);
-      display: flex; align-items: center; justify-content: center; font-size: 15px;
-      box-shadow: 0 2px 12px rgba(226,168,75,0.35);
-    }
-    .nav-links {
-      display: flex; align-items: center; gap: 36px; list-style: none;
-    }
-    .nav-links a {
-      font-family: 'Syne', sans-serif; font-size: 13.5px; font-weight: 500;
-      color: var(--c-text-2); text-decoration: none; letter-spacing: 0.005em;
-      transition: color 0.2s ease;
-    }
-    .nav-links a:hover { color: var(--c-text); }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-
-    .btn-ghost {
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--c-text-2); background: transparent;
-      border: 1px solid var(--c-border-2); border-radius: 9px;
-      padding: 8px 16px; cursor: pointer;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-    .btn-ghost:hover {
-      color: var(--c-text); border-color: rgba(255,255,255,0.22);
-      background: rgba(255,255,255,0.05);
-    }
-    .btn-gold {
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700;
-      color: #0f0800; background: var(--c-gold);
-      border: none; border-radius: 9px; padding: 9px 20px; cursor: pointer;
-      box-shadow: 0 2px 14px rgba(226,168,75,0.28);
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease, background 0.2s ease;
-    }
-    .btn-gold:hover {
-      background: #ebb850; transform: translateY(-1px);
-      box-shadow: 0 5px 22px rgba(226,168,75,0.44);
-    }
-    .btn-gold:active { transform: translateY(0); }
-
-    /* ═══════════════════════════════════════
-       HERO
-    ═══════════════════════════════════════ */
-    .hero {
-      position: relative; min-height: 100vh; min-height: 100dvh; overflow: hidden;
-      display: flex; align-items: center;
-      padding: 130px 48px 90px;
-      padding-top: max(130px, env(safe-area-inset-top) + 130px);
-    }
-
-    /* Mouse-tracking glow */
-    .hero-glow {
-      position: absolute; border-radius: 50%; pointer-events: none;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(226,168,75,0.07) 0%, transparent 70%);
-      transform: translate(-50%, -50%);
-      transition: left 0.08s ease, top 0.08s ease;
-      z-index: var(--z-below);
-    }
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(90px); pointer-events: none;
-    }
-    .orb-v {
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(157,111,255,0.22) 0%, transparent 65%);
-      top: -220px; right: -180px;
-      animation: drift 14s ease-in-out infinite;
-    }
-    .orb-g {
-      width: 560px; height: 560px;
-      background: radial-gradient(circle, rgba(226,168,75,0.16) 0%, transparent 65%);
-      bottom: -120px; left: 15%;
-      animation: drift 18s ease-in-out infinite reverse;
-    }
-    .orb-c {
-      width: 420px; height: 420px;
-      background: radial-gradient(circle, rgba(0,212,200,0.12) 0%, transparent 65%);
-      top: 40%; left: -80px;
-      animation: drift 11s ease-in-out infinite 3s;
-    }
-    @keyframes drift {
-      0%,100% { transform: translate(0,0) scale(1); }
-      33% { transform: translate(28px,-28px) scale(1.04); }
-      66% { transform: translate(-18px,18px) scale(0.97); }
-    }
-    .hero-grid-bg {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 10%, transparent 80%);
-    }
-    .hero-inner {
-      position: relative; z-index: 10; max-width: 1320px; width: 100%; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 440px; gap: 64px; align-items: center;
-    }
-    .hero-hl {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700;
-      font-size: clamp(58px, 7.5vw, 104px); line-height: 1.0; letter-spacing: -0.025em;
-      color: var(--c-text);
-    }
-    .hero-hl .gold-text {
-      background: linear-gradient(120deg, #d4913c 0%, #f5d080 45%, #e2a84b 75%, #c98a30 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .hero-sub {
-      font-family: 'DM Sans', sans-serif; font-size: 17px; color: var(--c-text-2);
-      line-height: 1.75; margin-top: 22px; max-width: 440px;
-    }
-    .hero-tags {
-      display: flex; gap: 10px; margin-top: 34px; flex-wrap: wrap;
-    }
-    .hero-tag {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
-      color: var(--c-text-3); background: rgba(255,255,255,0.04);
-      border: 1px solid var(--c-border); border-radius: 20px; padding: 5px 13px;
-      letter-spacing: 0.02em;
-    }
-    .hero-scroll {
-      display: flex; align-items: center; gap: 10px; margin-top: 48px;
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
-      color: var(--c-text-3); letter-spacing: 0.05em;
-    }
-    .scroll-line {
-      width: 40px; height: 1px;
-      background: linear-gradient(90deg, var(--c-text-3), transparent);
-    }
-
-    /* Search Card */
-    .search-card {
-      background: rgba(13,13,26,0.88); backdrop-filter: blur(28px);
-      -webkit-backdrop-filter: blur(28px);
-      border: 1px solid var(--c-border-2); border-radius: 22px;
-      padding: 28px 26px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 12px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.04);
-    }
-    .s-tabs {
-      display: flex; gap: 4px; margin-bottom: 24px;
-      background: rgba(255,255,255,0.04); border-radius: 10px; padding: 4px;
-    }
-    .s-tab {
-      flex: 1; font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
-      color: var(--c-text-3); background: transparent; border: none;
-      border-radius: 7px; padding: 8px 4px; cursor: pointer; letter-spacing: 0.02em;
-      transition: color 0.2s ease, background 0.2s ease; text-align: center;
-    }
-    .s-tab.on { color: var(--c-text); background: rgba(255,255,255,0.09); }
-    .s-tab:hover:not(.on) { color: var(--c-text-2); }
-
-    .s-fields { display: flex; flex-direction: column; gap: 11px; }
-    .s-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .s-field label {
-      display: block; font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700;
-      letter-spacing: 0.09em; color: var(--c-text-3); text-transform: uppercase; margin-bottom: 6px;
-    }
-    .s-field input, .s-field select {
-      width: 100%; background: rgba(255,255,255,0.04);
-      border: 1px solid var(--c-border); border-radius: 10px;
-      padding: 11px 14px; font-family: 'DM Sans', sans-serif; font-size: 14px;
-      color: var(--c-text); outline: none;
-      transition: border-color 0.2s ease, background 0.2s ease;
-      -webkit-appearance: none; appearance: none;
-    }
-    .s-field input::placeholder { color: var(--c-text-3); }
-    .s-field input:focus, .s-field select:focus {
-      border-color: rgba(226,168,75,0.45);
-      background: rgba(226,168,75,0.04);
-    }
-    .s-field select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235a586e' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 12px center;
-      padding-right: 34px;
-    }
-    .s-actions { display: flex; gap: 10px; margin-top: 16px; align-items: center; }
-    .btn-search {
-      flex: 1; font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700;
-      color: #0f0800; background: var(--c-gold); border: none; border-radius: 10px;
-      padding: 13px 20px; cursor: pointer; display: flex; align-items: center;
-      justify-content: center; gap: 8px;
-      box-shadow: 0 4px 18px rgba(226,168,75,0.32);
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
-    }
-    .btn-search:hover { transform: translateY(-2px); box-shadow: 0 7px 28px rgba(226,168,75,0.48); }
-    .btn-search:active { transform: translateY(0); }
-    .btn-adv {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
-      color: var(--c-text-3); background: transparent; border: 1px solid var(--c-border);
-      border-radius: 10px; padding: 13px 15px; cursor: pointer; white-space: nowrap;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-    .btn-adv:hover { color: var(--c-text-2); border-color: var(--c-border-2); }
-
-    /* ═══════════════════════════════════════
-       FILTER PILLS
-    ═══════════════════════════════════════ */
-    .pills-wrap { padding: 44px 48px 0; }
-    .pills-inner { max-width: 1320px; margin: 0 auto; }
-    .pills { display: flex; gap: 8px; flex-wrap: wrap; }
-    .pill {
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--c-text-3); background: rgba(255,255,255,0.04);
-      border: 1px solid var(--c-border); border-radius: 50px;
-      padding: 8px 18px; cursor: pointer; white-space: nowrap;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-    }
-    .pill.on {
-      color: var(--c-gold); background: var(--c-gold-dim);
-      border-color: rgba(226,168,75,0.3);
-    }
-    .pill:hover:not(.on) { color: var(--c-text-2); border-color: var(--c-border-2); }
-
-    /* ═══════════════════════════════════════
-       SECTION COMMONS
-    ═══════════════════════════════════════ */
-    .sec { padding: 84px 48px; }
-    .sec-inner { max-width: 1320px; margin: 0 auto; }
-    .sec-hd {
-      display: flex; align-items: flex-end;
-      justify-content: space-between; margin-bottom: 44px;
-    }
-    .sec-title {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(24px, 2.8vw, 36px); letter-spacing: -0.03em; color: var(--c-text);
-    }
-    .sec-sub {
-      font-family: 'DM Sans', sans-serif; font-size: 15px;
-      color: var(--c-text-2); margin-top: 6px; line-height: 1.5;
-    }
-    .see-all {
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--c-gold); text-decoration: none; white-space: nowrap;
-      display: flex; align-items: center; gap: 6px;
-      transition: gap 0.2s ease;
-    }
-    .see-all:hover { gap: 10px; }
-    .divider {
-      padding: 0 48px;
-    }
-    .divider-line {
-      max-width: 1320px; margin: 0 auto; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--c-border-2) 25%, var(--c-border-2) 75%, transparent);
-    }
-
-    /* ═══════════════════════════════════════
-       LISTING CARDS
-    ═══════════════════════════════════════ */
-    .listings-grid {
-      display: grid; grid-template-columns: repeat(3,1fr); gap: 22px;
-    }
-    .l-card {
-      background: var(--c-card); border: 1px solid var(--c-border);
-      border-radius: 18px; overflow: hidden; cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.28), 0 0 0 1px rgba(255,255,255,0.04);
-      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.32s ease, border-color 0.32s ease;
-    }
-    .l-card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5), 0 18px 52px rgba(0,0,0,0.48), 0 0 0 1px rgba(255,255,255,0.1);
-      border-color: rgba(255,255,255,0.12);
-    }
-    .l-img { position: relative; overflow: hidden; height: 204px; }
-    .l-img img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-    .l-card:hover .l-img img { transform: scale(1.07); }
-    .l-grad {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(7,7,14,0.72) 0%, rgba(7,7,14,0.18) 50%, transparent 100%);
-    }
-    .l-badge {
-      position: absolute; top: 12px; left: 12px;
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
-      color: #0f0800; background: var(--c-gold); border-radius: 6px;
-      padding: 4px 10px; text-transform: uppercase;
-    }
-    .l-fav {
-      position: absolute; top: 12px; right: 12px;
-      width: 33px; height: 33px; border-radius: 50%;
-      background: rgba(7,7,14,0.72); backdrop-filter: blur(8px);
-      border: 1px solid rgba(255,255,255,0.1);
-      display: flex; align-items: center; justify-content: center; font-size: 15px; cursor: pointer;
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), background 0.2s ease;
-    }
-    .l-fav:hover { transform: scale(1.16); background: rgba(226,168,75,0.18); }
-    .l-body { padding: 16px 18px 18px; }
-    .l-name {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
-      letter-spacing: -0.02em; color: var(--c-text); margin-bottom: 5px;
-    }
-    .l-meta {
-      display: flex; align-items: center; gap: 7px;
-      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3);
-    }
-    .dot { width: 3px; height: 3px; background: var(--c-text-3); border-radius: 50%; flex-shrink: 0; }
-    .l-rating { display: flex; align-items: center; gap: 4px; color: var(--c-gold); font-weight: 600; }
-    .l-footer {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--c-border);
-    }
-    .l-price {
-      font-family: 'Syne', sans-serif; font-size: 19px; font-weight: 700; color: var(--c-text);
-    }
-    .l-price span {
-      font-size: 12px; font-weight: 400; color: var(--c-text-3); font-family: 'DM Sans', sans-serif;
-    }
-    .btn-book {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-      color: var(--c-gold); background: var(--c-gold-dim);
-      border: 1px solid rgba(226,168,75,0.24); border-radius: 8px;
-      padding: 7px 16px; cursor: pointer;
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    .btn-book:hover {
-      background: rgba(226,168,75,0.24); border-color: rgba(226,168,75,0.42);
-      transform: translateY(-1px);
-    }
-    .btn-book:active { transform: translateY(0); }
-
-    /* ═══════════════════════════════════════
-       CATEGORIES
-    ═══════════════════════════════════════ */
-    .cat-grid {
-      display: grid; grid-template-columns: repeat(6,1fr); gap: 16px;
-    }
-    .cat-card {
-      position: relative; border-radius: 18px; overflow: hidden;
-      aspect-ratio: 3/4; cursor: pointer;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.5), 0 4px 14px rgba(0,0,0,0.3);
-      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.32s ease;
-    }
-    .cat-card:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 5px 10px rgba(0,0,0,0.5), 0 18px 44px rgba(0,0,0,0.38); }
-    .cat-card img {
-      width: 100%; height: 100%; object-fit: cover;
-      transition: transform 0.55s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-    .cat-card:hover img { transform: scale(1.1); }
-    .cat-ov {
-      position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(7,7,14,0.92) 0%, rgba(7,7,14,0.4) 55%, transparent 100%);
-      display: flex; flex-direction: column; justify-content: flex-end; padding: 16px;
-    }
-    .cat-ico { font-size: 26px; margin-bottom: 7px; }
-    .cat-name { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 14px; color: var(--c-text); line-height: 1.2; }
-    .cat-count { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--c-text-2); margin-top: 3px; }
-    .cat-link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; color: var(--c-gold);
-      margin-top: 9px; opacity: 0; transform: translateY(5px);
-      transition: opacity 0.22s ease, transform 0.22s ease;
-    }
-    .cat-card:hover .cat-link { opacity: 1; transform: translateY(0); }
-    .suggest-btn {
-      display: block; margin: 30px auto 0;
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--c-text-3); background: transparent;
-      border: 1px dashed rgba(255,255,255,0.15); border-radius: 50px;
-      padding: 10px 26px; cursor: pointer;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-    .suggest-btn:hover { color: var(--c-text-2); border-color: rgba(255,255,255,0.25); }
-
-    /* ═══════════════════════════════════════
-       MODULE CARDS
-    ═══════════════════════════════════════ */
-    .mod-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
-    .mod-card {
-      background: var(--c-card); border: 1px solid var(--c-border);
-      border-radius: 22px; padding: 30px 26px; cursor: pointer; position: relative; overflow: hidden;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 14px rgba(0,0,0,0.25);
-      transition: transform 0.32s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.32s ease, border-color 0.32s ease;
-    }
-    .mod-card::before {
-      content: ''; position: absolute; inset: 0; opacity: 0;
-      transition: opacity 0.32s ease;
-    }
-    .mg::before { background: radial-gradient(circle at 50% -10%, rgba(226,168,75,0.1) 0%, transparent 65%); }
-    .mv::before { background: radial-gradient(circle at 50% -10%, rgba(157,111,255,0.1) 0%, transparent 65%); }
-    .mc::before { background: radial-gradient(circle at 50% -10%, rgba(255,107,87,0.1) 0%, transparent 65%); }
-    .mt::before { background: radial-gradient(circle at 50% -10%, rgba(0,212,200,0.1) 0%, transparent 65%); }
-    .mod-card:hover::before { opacity: 1; }
-    .mod-card:hover {
-      transform: translateY(-7px);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.4), 0 18px 44px rgba(0,0,0,0.38), 0 0 0 1px rgba(255,255,255,0.09);
-    }
-    .mg:hover { border-color: rgba(226,168,75,0.22); }
-    .mv:hover { border-color: rgba(157,111,255,0.22); }
-    .mc:hover { border-color: rgba(255,107,87,0.22); }
-    .mt:hover { border-color: rgba(0,212,200,0.22); }
-    .mod-ico {
-      width: 50px; height: 50px; border-radius: 13px; display: flex;
-      align-items: center; justify-content: center; font-size: 24px; margin-bottom: 22px;
-    }
-    .ico-g { background: rgba(226,168,75,0.1); border: 1px solid rgba(226,168,75,0.2); }
-    .ico-v { background: rgba(157,111,255,0.1); border: 1px solid rgba(157,111,255,0.2); }
-    .ico-c { background: rgba(255,107,87,0.1); border: 1px solid rgba(255,107,87,0.2); }
-    .ico-t { background: rgba(0,212,200,0.1); border: 1px solid rgba(0,212,200,0.2); }
-    .mod-title {
-      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 17px;
-      letter-spacing: -0.02em; color: var(--c-text); margin-bottom: 9px;
-    }
-    .mod-desc {
-      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-2); line-height: 1.65;
-    }
-    .mod-cta {
-      display: flex; align-items: center; gap: 6px; margin-top: 22px;
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-    }
-    .cta-g { color: var(--c-gold); }
-    .cta-v { color: var(--c-violet); }
-    .cta-c { color: var(--c-coral); }
-    .cta-t { color: var(--c-cyan); }
-
-    /* ═══════════════════════════════════════
-       STATS
-    ═══════════════════════════════════════ */
-    .stats-sec {
-      padding: 80px 48px;
-      background: var(--c-card);
-      border-top: 1px solid var(--c-border);
-      border-bottom: 1px solid var(--c-border);
-    }
-    .stats-grid {
-      max-width: 1320px; margin: 0 auto;
-      display: grid; grid-template-columns: repeat(4,1fr); gap: 40px; text-align: center;
-    }
-    .stat-num {
-      font-family: 'Cormorant Garamond', serif; font-weight: 700;
-      font-size: 60px; line-height: 1; letter-spacing: -0.03em; color: var(--c-gold);
-      font-variant-numeric: tabular-nums; font-feature-settings: 'tnum';
-    }
-    .stat-label {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700;
-      color: var(--c-text-2); letter-spacing: 0.07em; margin-top: 9px; text-transform: uppercase;
-    }
-
-    /* ═══════════════════════════════════════
-       CTA BANNER
-    ═══════════════════════════════════════ */
-    .cta-sec { padding: 80px 48px; }
-    .cta-wrap {
-      max-width: 1320px; margin: 0 auto;
-      background: var(--c-elevated); border: 1px solid var(--c-border-2);
-      border-radius: 30px; padding: 72px 64px;
-      display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
-      position: relative; overflow: hidden;
-    }
-    .cta-bg-orb {
-      position: absolute; width: 540px; height: 540px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(226,168,75,0.09) 0%, transparent 65%);
-      right: -200px; top: -200px; pointer-events: none;
-    }
-    .cta-bg-grid {
-      position: absolute; inset: 0; border-radius: 30px;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
-      background-size: 44px 44px;
-    }
-    .cta-eyebrow {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-gold); margin-bottom: 16px;
-      position: relative; z-index: 1;
-    }
-    .cta-title {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700;
-      font-size: clamp(36px, 4vw, 54px); letter-spacing: -0.02em; color: var(--c-text);
-      line-height: 1.08; position: relative; z-index: 1;
-    }
-    .cta-desc {
-      font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--c-text-2);
-      line-height: 1.75; margin-top: 18px; max-width: 520px; position: relative; z-index: 1;
-    }
-    .cta-btns {
-      display: flex; flex-direction: column; gap: 12px; position: relative; z-index: 1;
-    }
-    .btn-cta-primary {
-      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
-      color: #0f0800; background: var(--c-gold); border: none; border-radius: 13px;
-      padding: 16px 34px; cursor: pointer; white-space: nowrap;
-      box-shadow: 0 4px 22px rgba(226,168,75,0.38);
-      transition: transform 0.22s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.22s ease;
-    }
-    .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 34px rgba(226,168,75,0.52); }
-    .btn-cta-sec {
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      color: var(--c-text-2); background: transparent; border: none;
-      cursor: pointer; text-align: center;
-      transition: color 0.2s ease;
-    }
-    .btn-cta-sec:hover { color: var(--c-text); }
-
-    /* ═══════════════════════════════════════
-       TESTIMONIALS
-    ═══════════════════════════════════════ */
-    .testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .testi-card {
-      background: var(--c-card); border: 1px solid var(--c-border);
-      border-radius: 18px; padding: 26px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.4), 0 4px 12px rgba(0,0,0,0.22);
-      transition: border-color 0.3s ease;
-    }
-    .testi-card:hover { border-color: var(--c-border-2); }
-    .testi-stars { color: var(--c-gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 15px; }
-    .testi-text {
-      font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--c-text-2);
-      line-height: 1.75; font-style: italic; margin-bottom: 22px;
-    }
-    .testi-author { display: flex; align-items: center; gap: 11px; }
-    .testi-av {
-      width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
-      border: 1px solid var(--c-border-2);
-    }
-    .testi-name { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: var(--c-text); }
-    .testi-role { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-text-3); }
-
-    /* ═══════════════════════════════════════
-       ABOUT
-    ═══════════════════════════════════════ */
-    .about-sec { padding: 84px 48px; border-top: 1px solid var(--c-border); }
-    .about-inner {
-      max-width: 1320px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 88px; align-items: center;
-    }
-    .about-eyebrow {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-violet); margin-bottom: 18px;
-    }
-    .about-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 700;
-      font-size: clamp(32px,3.5vw, 50px); line-height: 1.12;
-      letter-spacing: -0.025em; color: var(--c-text);
-    }
-    .about-body {
-      font-family: 'DM Sans', sans-serif; font-size: 15.5px; color: var(--c-text-2);
-      line-height: 1.78; margin-top: 22px;
-    }
-    .about-img-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr; gap: 12px; height: 440px;
-    }
-    .aimg { border-radius: 16px; overflow: hidden; }
-    .aimg img { width: 100%; height: 100%; object-fit: cover; }
-    .aimg:first-child { grid-row: span 2; }
-
-    /* ═══════════════════════════════════════
-       FOOTER
-    ═══════════════════════════════════════ */
-    footer {
-      background: var(--c-card);
-      border-top: 1px solid var(--c-border);
-      padding: 64px 48px 40px;
-    }
-    .ft-inner { max-width: 1320px; margin: 0 auto; }
-    .ft-grid {
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
-      gap: 48px; padding-bottom: 48px; border-bottom: 1px solid var(--c-border);
-    }
-    .ft-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px;
-      color: var(--c-text); display: flex; align-items: center; gap: 8px;
-      margin-bottom: 14px;
-    }
-    .ft-logo-gem {
-      width: 26px; height: 26px; border-radius: 6px;
-      background: linear-gradient(135deg, #e2a84b, #f5d080, #c98830);
-      display: flex; align-items: center; justify-content: center; font-size: 12px;
-    }
-    .ft-tagline {
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      color: var(--c-text-3); line-height: 1.65; max-width: 260px;
-    }
-    .ft-social { display: flex; gap: 9px; margin-top: 24px; }
-    .soc-btn {
-      width: 36px; height: 36px; border-radius: 9px;
-      background: rgba(255,255,255,0.04); border: 1px solid var(--c-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 15px; cursor: pointer; text-decoration: none; color: var(--c-text-2);
-      transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
-    }
-    .soc-btn:hover { background: rgba(255,255,255,0.09); border-color: var(--c-border-2); transform: translateY(-2px); }
-    .ft-col-ttl {
-      font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700;
-      letter-spacing: 0.09em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 18px;
-    }
-    .ft-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-    .ft-links a {
-      font-family: 'DM Sans', sans-serif; font-size: 14px;
-      color: var(--c-text-2); text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .ft-links a:hover { color: var(--c-text); }
-    .ft-bottom {
-      display: flex; align-items: center; justify-content: space-between;
-      padding-top: 28px;
-    }
-    .ft-copy {
-      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3);
-    }
-    .ft-copy a { color: inherit; text-decoration: none; transition: color 0.2s ease; }
-    .ft-copy a:hover { color: var(--c-text-2); }
-    .ft-langs { display: flex; gap: 8px; }
-    .lang-btn {
-      font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600;
-      color: var(--c-text-3); background: transparent;
-      border: 1px solid var(--c-border); border-radius: 7px;
-      padding: 5px 11px; cursor: pointer;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-    .lang-btn.on { color: var(--c-gold); border-color: rgba(226,168,75,0.3); }
-    .lang-btn:hover:not(.on) { color: var(--c-text-2); border-color: var(--c-border-2); }
-
-    /* ═══════════════════════════════════════
-       REVEAL
-    ═══════════════════════════════════════ */
-    .reveal {
-      opacity: 0; transform: translateY(26px);
-      transition: opacity 0.65s ease, transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .d1 { transition-delay: 0.1s; }
-    .d2 { transition-delay: 0.2s; }
-    .d3 { transition-delay: 0.3s; }
-    .d4 { transition-delay: 0.4s; }
-    .d5 { transition-delay: 0.5s; }
-
-    /* ═══════════════════════════════════════
-       COOKIE BANNER
-    ═══════════════════════════════════════ */
-    #cookie-banner {
-      position: fixed; bottom: 0; left: 0; right: 0;
-      z-index: var(--z-toast);
-      background: rgba(13,13,26,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid var(--c-border-2);
-      padding: 18px 32px; display: flex; align-items: center; gap: 20px; flex-wrap: wrap;
-      bottom: max(0px, env(safe-area-inset-bottom));
-    }
-    #cookie-banner p {
-      flex: 1; min-width: 200px; font-size: 13.5px;
-      color: var(--c-text-2); margin: 0;
-    }
-    #cookie-banner a { color: var(--c-gold); text-decoration: none; }
-    #cookie-banner a:hover { text-decoration: underline; }
-    .cookie-btns { display: flex; gap: 8px; }
-    #cookie-decline {
-      font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600;
-      padding: 8px 16px; border: 1px solid var(--c-border-2); background: transparent;
-      color: var(--c-text-2); border-radius: 8px; cursor: pointer;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    #cookie-decline:hover { color: var(--c-text); border-color: rgba(255,255,255,0.25); }
-    #cookie-accept {
-      font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 700;
-      padding: 8px 16px; background: var(--c-gold); color: #0f0800;
-      border: none; border-radius: 8px; cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-    }
-    #cookie-accept:hover { background: #ebb850; transform: translateY(-1px); }
-
-    /* ═══════════════════════════════════════
-       OFFLINE TOAST
-    ═══════════════════════════════════════ */
-    #offline-toast {
-      position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-      z-index: var(--z-toast);
-      background: rgba(255,107,87,0.12); border: 1px solid rgba(255,107,87,0.3);
-      color: var(--c-coral); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      padding: 10px 20px; border-radius: 10px;
-      font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600;
-      display: none;
-    }
-    body.offline #offline-toast { display: block; }
-
-    /* ═══════════════════════════════════════
-       PRINT
-    ═══════════════════════════════════════ */
-    @media print {
-      .nav, .noise, #cookie-banner, .hero-glow, .orb, .orb-v, .orb-g, .orb-c { display: none !important; }
-      body { background: white; color: black; }
-      a { color: black; }
-      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.8em; }
-      h1, h2, h3, img { page-break-inside: avoid; break-inside: avoid; }
-      @page { margin: 1.5cm; }
-    }
-
-    /* ═══════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════ */
-    @media (max-width: 1100px) {
-      .cat-grid { grid-template-columns: repeat(3,1fr); }
-      .mod-grid { grid-template-columns: repeat(2,1fr); }
-      .listings-grid { grid-template-columns: repeat(2,1fr); }
-      .stats-grid { grid-template-columns: repeat(2,1fr); }
-      .ft-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 800px) {
-      .nav-links { display: none; }
-      .hero { padding: 100px 24px 60px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 42px; }
-      .s-row { grid-template-columns: 1fr; }
-      .pills-wrap { padding: 34px 24px 0; }
-      .sec { padding: 60px 24px; }
-      .divider { padding: 0 24px; }
-      .listings-grid { grid-template-columns: 1fr; }
-      .cat-grid { grid-template-columns: repeat(2,1fr); }
-      .mod-grid { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2,1fr); gap: 28px; }
-      .cta-sec { padding: 60px 24px; }
-      .cta-wrap { grid-template-columns: 1fr; padding: 44px 32px; }
-      .testi-grid { grid-template-columns: 1fr; }
-      .about-sec { padding: 60px 24px; }
-      .about-inner { grid-template-columns: 1fr; gap: 44px; }
-      .ft-grid { grid-template-columns: 1fr; }
-      .ft-bottom { flex-direction: column; gap: 20px; }
-      .nav { padding: 16px 24px; }
-      .nav.scrolled { padding: 12px 24px; }
-      .stats-sec { padding: 60px 24px; }
-    }
-  </style>
+}
+</script>
 </head>
 <body>
 
-<!-- Skip to main content (accessibility) -->
-<a href="#main-content" class="skip-link">Skip to main content</a>
+<a href="#main" class="skip-link">Skip to main content</a>
 
-<!-- Live region for screen reader announcements -->
-<div aria-live="polite" aria-atomic="true" id="sr-status" class="sr-only"></div>
-
-<div class="noise" aria-hidden="true"></div>
-
-<!-- Cookie Banner -->
-<div id="cookie-banner" role="dialog" aria-label="Cookie consent" hidden>
-  <p>We use cookies to improve your experience and analyse site traffic. <a href="/privacy">Privacy Policy</a></p>
-  <div class="cookie-btns">
-    <button id="cookie-decline" type="button">Decline</button>
-    <button id="cookie-accept" type="button">Accept All</button>
-  </div>
-</div>
-
-<!-- Offline notice -->
-<div id="offline-toast" role="status" aria-live="assertive">You're offline — some features may be unavailable</div>
-
-<!-- ════════════════ NAV ════════════════ -->
-<nav class="nav" id="nav" aria-label="Main navigation">
+<!-- ============================================================
+     Navigation
+     ============================================================ -->
+<nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-inner">
-    <a href="home.html" class="logo" aria-label="Charm — home">
-      <span class="logo-gem" aria-hidden="true">✦</span>
-      Charm
-    </a>
+    <a href="home.html" class="nav-logo" aria-label="Charm — home">Charm</a>
     <ul class="nav-links">
       <li><a href="marketplace.html">Marketplace</a></li>
-      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
       <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="wishlist.html">Wishlist</a></li>
+      <li><a href="blog.html">Journal</a></li>
     </ul>
     <div class="nav-right">
-      <a href="search.html" class="nav-icon-btn" aria-label="Search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <a href="search.html" class="nav-icon" aria-label="Search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </a>
-      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </a>
-      <a href="login.html" class="btn-ghost">Login</a>
-      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+      <a href="login.html" class="btn btn--ghost btn--sm">Sign in</a>
+      <a href="create-listing.html" class="btn btn--primary btn--sm">List your gear</a>
     </div>
   </div>
 </nav>
 
-<main id="main-content">
+<main id="main">
 
-<!-- ════════════════ HERO ════════════════ -->
+<!-- ============================================================
+     Hero — cinematic full-bleed
+     ============================================================ -->
 <section class="hero" aria-labelledby="hero-heading">
-  <div class="hero-glow" id="hero-glow" aria-hidden="true"></div>
-  <div class="orb orb-v" aria-hidden="true" data-parallax="-120"></div>
-  <div class="orb orb-g" aria-hidden="true" data-parallax="-80"></div>
-  <div class="orb orb-c" aria-hidden="true" data-parallax="-60"></div>
-  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-media">
+    <img src="images/hero-studio.jpg" alt="Creator studio interior with cameras, lenses and audio equipment on dark shelves" fetchpriority="high">
+  </div>
+  <div class="container-wide hero-body">
+    <div class="t-label hero-eyebrow">— Marketplace · Bookings · Community</div>
+    <h1 class="t-display-xl hero-title" id="hero-heading">Gear.&nbsp;Space.<br>People.</h1>
+    <p class="hero-lede">
+      Charm is a marketplace for creators. Buy and rent professional gear.
+      Book studios and venues. Hire the pros who shape the work.
+    </p>
+    <div class="hero-cta">
+      <a href="marketplace.html" class="btn btn--primary btn--lg btn--arrow">Shop the marketplace</a>
+      <a href="how-it-works.html" class="btn btn--ghost btn--lg">How Charm works</a>
+    </div>
+  </div>
+</section>
 
-  <div class="hero-inner">
-    <div>
-      <h1 class="hero-hl" id="hero-heading" data-split="words">
-        Find Your
-        Creative
-        Space
-      </h1>
-      <p class="hero-sub" data-appear data-appear-delay="0.4">The global ecosystem connecting creators with inspiring studios, venues, professionals, products, and communities worldwide.</p>
-      <div class="hero-tags" data-appear data-appear-delay="0.6">
-        <span class="hero-tag">🎧 Music Studios</span>
-        <span class="hero-tag">📷 Photography</span>
-        <span class="hero-tag">🎭 Theater Rooms</span>
-        <span class="hero-tag">💃 Dance Studios</span>
-        <span class="hero-tag">🎙 Podcasts</span>
-        <span class="hero-tag">+6 more</span>
+<!-- ============================================================
+     Inline search — pulled up under hero
+     ============================================================ -->
+<section style="background: var(--c-bg); padding: 0 0 var(--s-8);">
+  <div class="container-wide">
+    <form class="hero-search" role="search" aria-label="Search Charm" onsubmit="event.preventDefault(); submitSearch();">
+      <div class="hero-search-field">
+        <label for="s-cat">Category</label>
+        <select id="s-cat" name="category">
+          <option value="">Any</option>
+          <option>Cameras</option>
+          <option>Audio</option>
+          <option>Lighting</option>
+          <option>Instruments</option>
+          <option>Studios</option>
+          <option>Pros</option>
+        </select>
       </div>
-      <div class="hero-scroll">
-        <div class="scroll-line"></div>
-        SCROLL TO EXPLORE
+      <div class="hero-search-field">
+        <label for="s-type">Buy or rent</label>
+        <select id="s-type" name="type">
+          <option value="">Both</option>
+          <option>Buy</option>
+          <option>Rent</option>
+        </select>
+      </div>
+      <div class="hero-search-field">
+        <label for="s-loc">Location</label>
+        <input id="s-loc" type="text" placeholder="Anywhere" autocomplete="off">
+      </div>
+      <div class="hero-search-field">
+        <label for="s-when">When</label>
+        <input id="s-when" type="text" placeholder="Any date" autocomplete="off">
+      </div>
+      <button type="submit" class="hero-search-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search
+      </button>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================================
+     Category strip
+     ============================================================ -->
+<section style="padding: var(--s-5) 0; border-top: 1px solid var(--c-border);">
+  <div class="container-wide">
+    <div class="cat-strip" role="tablist" aria-label="Filter by category">
+      <button class="cat-pill is-active" role="tab" aria-selected="true">All</button>
+      <button class="cat-pill" role="tab">Cameras</button>
+      <button class="cat-pill" role="tab">Lenses</button>
+      <button class="cat-pill" role="tab">Audio</button>
+      <button class="cat-pill" role="tab">Lighting</button>
+      <button class="cat-pill" role="tab">Instruments</button>
+      <button class="cat-pill" role="tab">Drones</button>
+      <button class="cat-pill" role="tab">Studios</button>
+      <button class="cat-pill" role="tab">Pros</button>
+      <button class="cat-pill" role="tab">Software</button>
+      <button class="cat-pill" role="tab">Props &amp; Sets</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Featured — editorial mixed-size grid
+     ============================================================ -->
+<section class="section" aria-labelledby="featured-heading">
+  <div class="container-wide">
+    <div class="section-head">
+      <div>
+        <div class="t-label">Featured — Week 16</div>
+        <h2 class="t-headline" id="featured-heading">Gear and spaces making work this week.</h2>
+      </div>
+      <div class="section-aside">
+        <a href="marketplace.html" class="btn btn--link">View all listings</a>
       </div>
     </div>
 
-    <div class="search-card">
-      <div class="s-tabs">
-        <button class="s-tab on" onclick="setTab(this)">Spaces</button>
-        <button class="s-tab" onclick="setTab(this)">Pros</button>
-        <button class="s-tab" onclick="setTab(this)">Products</button>
-        <button class="s-tab" onclick="setTab(this)">Training</button>
-      </div>
-      <div class="s-fields">
-        <div class="s-field">
-          <label>Space Type</label>
-          <select>
-            <option value="">All space types</option>
-            <option>Music Studio</option>
-            <option>Podcast Studio</option>
-            <option>Photography Studio</option>
-            <option>Dance Studio</option>
-            <option>Art Space</option>
-            <option>Rehearsal Room</option>
-            <option>Event Venue</option>
-            <option>Tattoo Studio</option>
-          </select>
+    <div class="editorial-grid">
+      <!-- Feature 1 (large) -->
+      <a class="card" href="product.html?id=1">
+        <div class="card-img">
+          <span class="card-tag">Camera</span>
+          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
+          <img src="images/creator-filming.jpg" alt="Filmmaker with Blackmagic Pocket Cinema camera in a studio">
         </div>
-        <div class="s-row">
-          <div class="s-field">
-            <label>Location</label>
-            <input type="text" placeholder="City or country">
-          </div>
-          <div class="s-field">
-            <label>Dates</label>
-            <input type="text" placeholder="Add dates">
+        <div class="card-meta">
+          <div class="card-label"><span>London, UK</span><span>4.9 ★</span></div>
+          <h3 class="t-card-sub" style="font-size:28px; letter-spacing:-0.6px;">Blackmagic Pocket 6K Pro — cinema-grade, 3 lenses included.</h3>
+          <p class="card-sub" style="margin-top:8px;">Rent from a verified LONDXN creator studio. Delivered and picked up within city limits.</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:20px;">
+            <div class="card-price">£95 <span>/ day</span></div>
+            <span class="t-label">Buy £3,450 →</span>
           </div>
         </div>
+      </a>
+
+      <!-- Card 2 -->
+      <a class="card" href="product.html?id=2">
+        <div class="card-img">
+          <span class="card-tag">Audio</span>
+          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
+          <img src="images/prod-microphone.jpg" alt="Studio condenser microphone on shock mount">
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>Berlin, DE</span><span>4.8 ★</span></div>
+          <h3 class="t-card-sub">Neumann TLM 103 — broadcast standard.</h3>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+            <div class="card-price">£28 <span>/ day</span></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3 -->
+      <a class="card" href="product.html?id=3">
+        <div class="card-img">
+          <span class="card-tag">Lighting</span>
+          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
+          <img src="images/prod-lighting.jpg" alt="Aputure LS 300X bi-colour LED light">
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>NYC, US</span><span>5.0 ★</span></div>
+          <h3 class="t-card-sub">Aputure LS 300X — bi-colour LED.</h3>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+            <div class="card-price">$45 <span>/ day</span></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 4 -->
+      <a class="card" href="product.html?id=4">
+        <div class="card-img">
+          <span class="card-tag">Lens</span>
+          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
+          <img src="images/prod-lens.jpg" alt="Sigma 35mm f/1.4 Art prime lens">
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>Paris, FR</span><span>4.7 ★</span></div>
+          <h3 class="t-card-sub">Sigma 35mm f/1.4 Art — prime.</h3>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+            <div class="card-price">€18 <span>/ day</span></div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5 -->
+      <a class="card" href="product.html?id=5">
+        <div class="card-img">
+          <span class="card-tag">Drone</span>
+          <button class="card-fav" aria-label="Save" aria-pressed="false" onclick="event.preventDefault(); toggleFav(this);">♡</button>
+          <img src="images/prod-drone.jpg" alt="DJI Mavic 3 Cine drone">
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>Barcelona, ES</span><span>4.9 ★</span></div>
+          <h3 class="t-card-sub">DJI Mavic 3 Cine — ProRes.</h3>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-top:12px;">
+            <div class="card-price">€85 <span>/ day</span></div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Categories — tall editorial cards
+     ============================================================ -->
+<section class="section--tight" aria-labelledby="cats-heading" style="padding: var(--s-10) 0;">
+  <div class="container-wide">
+    <div class="section-head">
+      <div>
+        <div class="t-label">Catalogue</div>
+        <h2 class="t-headline" id="cats-heading">Eight disciplines.<br>One platform.</h2>
       </div>
-      <div class="s-actions">
-        <button class="btn-search">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          Search
+      <div class="section-aside">
+        <a href="marketplace.html" class="btn btn--link">Browse everything</a>
+      </div>
+    </div>
+
+    <div class="listing-grid">
+      <a href="cameras.html" class="card">
+        <div class="card-img card-img--tall">
+          <img src="images/cat-photo.jpg" alt="Photography gear">
+          <span class="card-tag">Discipline</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>01</span><span>215 listings</span></div>
+          <h3 class="t-card-title">Photography &amp; Cinema</h3>
+          <p class="card-sub">Cinema bodies, mirrorless, primes, matte boxes, follow-focus rigs.</p>
+        </div>
+      </a>
+
+      <a href="audio.html" class="card">
+        <div class="card-img card-img--tall">
+          <img src="images/cat-podcast.jpg" alt="Audio gear">
+          <span class="card-tag">Discipline</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>02</span><span>142 listings</span></div>
+          <h3 class="t-card-title">Audio &amp; Podcast</h3>
+          <p class="card-sub">Condensers, interfaces, field recorders, booms, foam-treated booths.</p>
+        </div>
+      </a>
+
+      <a href="lighting.html" class="card">
+        <div class="card-img card-img--tall">
+          <img src="images/lighting-setup.jpg" alt="Lighting gear">
+          <span class="card-tag">Discipline</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>03</span><span>98 listings</span></div>
+          <h3 class="t-card-title">Lighting &amp; Grip</h3>
+          <p class="card-sub">Continuous LEDs, strobes, modifiers, stands, sandbags, C-stands.</p>
+        </div>
+      </a>
+
+      <a href="marketplace.html?category=instruments" class="card">
+        <div class="card-img card-img--tall">
+          <img src="images/cat-music.jpg" alt="Instruments">
+          <span class="card-tag">Discipline</span>
+        </div>
+        <div class="card-meta">
+          <div class="card-label"><span>04</span><span>73 listings</span></div>
+          <h3 class="t-card-title">Instruments &amp; MIDI</h3>
+          <p class="card-sub">Guitars, synths, drums, keyboards, pedals, amps, hardware.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Mission statement — editorial full-width
+     ============================================================ -->
+<section class="mission">
+  <div class="container">
+    <div class="t-label" style="margin-bottom: var(--s-6);">— Our thesis</div>
+    <h2 class="mission-text">
+      The tools you need to make the work —<br>
+      and the people who make them sing.
+    </h2>
+    <p style="margin-top: var(--s-6); max-width: 58ch; font-size: 18px; line-height: 1.50; color: var(--c-text-3); letter-spacing:-0.2px;">
+      Charm is a global marketplace where creators rent gear from other creators,
+      book the spaces they need for the shoot, and hire the editors, engineers,
+      and artists who turn raw footage into something real.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     Stats — tabular editorial
+     ============================================================ -->
+<section class="section--tight" style="padding: 0 0 var(--s-10);">
+  <div class="container-wide">
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-value" data-counter="12000" data-counter-suffix="+">12,000+</div>
+        <div class="stat-label">Gear listings</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" data-counter="1800" data-counter-suffix="+">1,800+</div>
+        <div class="stat-label">Creative spaces</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" data-counter="45" data-counter-suffix="">45</div>
+        <div class="stat-label">Cities served</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">4.9<span style="color:var(--c-text-3); font-size:0.5em; letter-spacing:0;"> ★</span></div>
+        <div class="stat-label">Average rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Ecosystem — 4 modules in a 2x2 bordered grid
+     ============================================================ -->
+<section class="section" aria-labelledby="eco-heading">
+  <div class="container-wide">
+    <div class="section-head">
+      <div>
+        <div class="t-label">Ecosystem</div>
+        <h2 class="t-headline" id="eco-heading">More than a shop —<br>the whole production.</h2>
+      </div>
+    </div>
+
+    <div class="mod-grid">
+      <a class="mod-card" href="marketplace.html">
+        <div class="mod-card-num">01 — Marketplace</div>
+        <div>
+          <h3 class="mod-card-title">Buy or rent pro gear from other creators.</h3>
+          <p class="mod-card-body">Browse 12,000+ listings. Filter by condition, location, and rental windows. Every seller verified, every item insured up to £5k.</p>
+        </div>
+        <span class="mod-card-link">Shop the marketplace</span>
+      </a>
+
+      <a class="mod-card" href="search.html?type=spaces">
+        <div class="mod-card-num">02 — Spaces</div>
+        <div>
+          <h3 class="mod-card-title">Book studios, warehouses, and venues by the hour.</h3>
+          <p class="mod-card-body">Music studios, photo sets, podcast booths, dance floors. Instant booking in 45 cities with real-time availability.</p>
+        </div>
+        <span class="mod-card-link">Find a space</span>
+      </a>
+
+      <a class="mod-card" href="search.html?type=pros">
+        <div class="mod-card-num">03 — Pros</div>
+        <div>
+          <h3 class="mod-card-title">Hire the people who shape the final cut.</h3>
+          <p class="mod-card-body">Editors, colourists, sound engineers, retouchers, stylists. Vetted portfolios, direct messaging, transparent rates.</p>
+        </div>
+        <span class="mod-card-link">Browse pros</span>
+      </a>
+
+      <a class="mod-card" href="blog.html">
+        <div class="mod-card-num">04 — Journal</div>
+        <div>
+          <h3 class="mod-card-title">A publication for the people doing the work.</h3>
+          <p class="mod-card-body">Interviews with working filmmakers, gear reviews from the field, and honest advice on rate-setting, contracts, and craft.</p>
+        </div>
+        <span class="mod-card-link">Read the Journal</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     Light-section testimonial editorial
+     ============================================================ -->
+<section class="section light-sec" aria-labelledby="quotes-heading">
+  <div class="container-wide">
+    <div class="section-head">
+      <div>
+        <div class="t-label">— Field notes</div>
+        <h2 class="t-headline" id="quotes-heading" style="color: var(--c-light-text);">What creators<br>actually say.</h2>
+      </div>
+    </div>
+
+    <div class="tri-grid">
+      <div class="quote-card" style="background:#fff; border-color: #e0e0e6;">
+        <p class="quote-text" style="color: var(--c-light-text);">"I rented an Alexa Mini for a weekend shoot. Listed at half the dealer rate, delivered Friday morning, collected Monday evening. Zero friction."</p>
+        <div class="quote-author">
+          <div class="quote-avatar" style="background: linear-gradient(135deg, #c9ccd1, #d0d4d4);"></div>
+          <div>
+            <div class="quote-name" style="color: var(--c-light-text);">Amelia Hart</div>
+            <div class="quote-role">Music video DP · London</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card" style="background:#fff; border-color: #e0e0e6;">
+        <p class="quote-text" style="color: var(--c-light-text);">"I pay the mortgage on my studio by renting it through Charm when I'm not shooting. It's that simple."</p>
+        <div class="quote-author">
+          <div class="quote-avatar" style="background: linear-gradient(135deg, #e9ecf2, #c9ccd1);"></div>
+          <div>
+            <div class="quote-name" style="color: var(--c-light-text);">Marcus Okoye</div>
+            <div class="quote-role">Photographer · Lagos / London</div>
+          </div>
+        </div>
+      </div>
+      <div class="quote-card" style="background:#fff; border-color: #e0e0e6;">
+        <p class="quote-text" style="color: var(--c-light-text);">"Found my colourist here. Two projects in, she's become a regular collaborator. That's the bit nobody tells you about marketplaces — they're how you meet your next creative partner."</p>
+        <div class="quote-author">
+          <div class="quote-avatar" style="background: linear-gradient(135deg, #d0d4d4, #a7a7a7);"></div>
+          <div>
+            <div class="quote-name" style="color: var(--c-light-text);">Hana Ito</div>
+            <div class="quote-role">Director · Tokyo / Berlin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA banner — full-width dark, editorial
+     ============================================================ -->
+<section class="section" aria-labelledby="cta-heading">
+  <div class="container-wide">
+    <div style="border: 1px solid var(--c-border-2); border-radius: var(--r-6); padding: clamp(56px, 7vw, 112px) clamp(32px, 5vw, 80px); display: grid; grid-template-columns: 1.3fr 1fr; gap: var(--s-8); align-items: end; background: var(--c-surface);">
+      <div>
+        <div class="t-label" style="margin-bottom: var(--s-4);">Sellers &amp; space owners</div>
+        <h2 class="t-display" id="cta-heading" style="margin:0 0 var(--s-5);">Your gear earns,<br>even when you sleep.</h2>
+        <p class="t-body-lg" style="max-width: 52ch;">List idle gear and underused spaces in under five minutes. Charm handles insurance, payments, and customer verification — you just hand over the keys.</p>
+      </div>
+      <div style="display: flex; gap: var(--s-3); justify-content: flex-end; flex-wrap: wrap;">
+        <a href="create-listing.html" class="btn btn--primary btn--lg btn--arrow">Start listing</a>
+        <a href="pricing.html" class="btn btn--ghost btn--lg">See the numbers</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FAQ — editorial accordion
+     ============================================================ -->
+<section class="section" id="faq" aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="t-label">Questions</div>
+        <h2 class="t-headline" id="faq-heading">Everything<br>before you start.</h2>
+      </div>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>How does rental delivery work?</span>
+          <span class="faq-sign" aria-hidden="true">+</span>
         </button>
-        <button class="btn-adv">Advanced ↗</button>
+        <div class="faq-a"><div class="faq-a-inner">For rentals inside a city, the seller arranges delivery and pickup at agreed times. For longer-distance rentals, we offer insured courier shipping via DHL with full tracking. All deliveries are signed-for and documented with photos on both ends.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>What happens if gear is damaged?</span>
+          <span class="faq-sign" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Every rental includes up to £5,000 of damage protection automatically. Renters can add extended cover at checkout. Sellers document condition at handover; disputes go through Charm Trust &amp; Safety with 48-hour turnaround.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Do you verify sellers?</span>
+          <span class="faq-sign" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes. Every seller completes identity verification and — for gear over £1,000 — provides proof of ownership. Sellers with sub-4.5★ ratings are removed from Featured until they recover.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>What are the fees?</span>
+          <span class="faq-sign" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sellers pay a flat 10% commission on completed rentals and 8% on outright sales. Buyers pay the listed price plus a 2% service fee. No subscription, no listing fees, no hidden charges. See <a href="pricing.html" style="border-bottom:1px solid currentColor;">full pricing</a>.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false" onclick="toggleFaq(this)">
+          <span>Can I book spaces and hire pros through the same account?</span>
+          <span class="faq-sign" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Yes — one account, one checkout, one messaging inbox. Whether you're renting a Sony FX6, booking a photo studio, and hiring a colourist, it all lives in one thread.</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ FILTER PILLS ════════════════ -->
-<div class="pills-wrap">
-  <div class="pills-inner">
-    <div class="pills">
-      <button class="pill on" onclick="setPill(this)">All</button>
-      <button class="pill" onclick="setPill(this)">🎧 Music Studios</button>
-      <button class="pill" onclick="setPill(this)">🎙 Podcast Studios</button>
-      <button class="pill" onclick="setPill(this)">📷 Photography</button>
-      <button class="pill" onclick="setPill(this)">🎭 Theater & Rehearsal</button>
-      <button class="pill" onclick="setPill(this)">💃 Dance Studios</button>
-      <button class="pill" onclick="setPill(this)">🎨 Art Spaces</button>
-      <button class="pill" onclick="setPill(this)">🎪 Events & Venues</button>
-      <button class="pill" onclick="setPill(this)">🖌 Tattoo Artists</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════ FEATURED LISTINGS ════════════════ -->
-<section class="sec" id="explore" aria-labelledby="featured-heading">
-  <div class="sec-inner">
-    <div class="sec-hd" data-reveal="fade-up">
+<!-- ============================================================
+     Newsletter — restrained
+     ============================================================ -->
+<section class="section--tight" style="padding: var(--s-9) 0; border-top: 1px solid var(--c-border);">
+  <div class="container">
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-7); align-items: center;">
       <div>
-        <h2 class="sec-title" id="featured-heading">Featured Spaces</h2>
-        <div class="sec-sub">Handpicked creative venues near you</div>
+        <div class="t-label" style="margin-bottom: var(--s-3);">The Charm Journal</div>
+        <h2 class="t-section" style="margin: 0 0 var(--s-3); max-width: 20ch;">Working creators, straight to your inbox.</h2>
+        <p class="t-body" style="margin:0; max-width: 54ch;">One Sunday email. Gear we actually used, spaces we shot in, and interviews with the people making a living from the work.</p>
       </div>
-      <a href="#" class="see-all">View all spaces →</a>
-    </div>
-    <div class="listings-grid" data-stagger-parent>
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/music-studio.jpg" alt="The Black Room — music studio interior" loading="eager" fetchpriority="high" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Music Studio</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">The Black Room</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 4.9</div>
-            <div class="dot"></div>
-            <span>London, UK</span>
-            <div class="dot"></div>
-            <span>Professional</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">£65 <span>/ hour</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/hero-studio.jpg" alt="Frame and Light Studio — photography studio interior" loading="lazy" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Photography</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">Frame & Light Studio</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 4.8</div>
-            <div class="dot"></div>
-            <span>Berlin, DE</span>
-            <div class="dot"></div>
-            <span>Creative</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">€55 <span>/ hour</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/audio-mic.jpg" alt="The Vault Podcast — recording studio" loading="lazy" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Podcast Studio</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">The Vault Podcast Studio</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 5.0</div>
-            <div class="dot"></div>
-            <span>New York, US</span>
-            <div class="dot"></div>
-            <span>Premium</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">$45 <span>/ hour</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/lighting-setup.jpg" alt="Studio Noire — performance space" loading="lazy" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Dance Studio</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">Studio Noire</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 4.7</div>
-            <div class="dot"></div>
-            <span>Paris, FR</span>
-            <div class="dot"></div>
-            <span>Creative</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">€40 <span>/ hour</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/music-studio.jpg" alt="Resonance Rooms — instrument studio" loading="lazy" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Rehearsal Room</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">Resonance Rooms</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 4.9</div>
-            <div class="dot"></div>
-            <span>London, UK</span>
-            <div class="dot"></div>
-            <span>Professional</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">£35 <span>/ hour</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="l-card" data-stagger-child data-tilt>
-        <div class="l-img">
-          <img src="images/creator-filming.jpg" alt="The Canvas Atelier — creative studio" loading="lazy" width="560" height="360" style="object-fit:cover;height:100%;">
-          <div class="l-grad"></div>
-          <span class="l-badge">Art Space</span>
-          <button class="l-fav" onclick="toggleFav(this)" aria-label="Add to favourites" aria-pressed="false">♡</button>
-        </div>
-        <div class="l-body">
-          <div class="l-name">The Canvas — Atelier</div>
-          <div class="l-meta">
-            <div class="l-rating">★ 4.8</div>
-            <div class="dot"></div>
-            <span>Barcelona, ES</span>
-            <div class="dot"></div>
-            <span>Artistic</span>
-          </div>
-          <div class="l-footer">
-            <div class="l-price">€50 <span>/ day</span></div>
-            <button class="btn-book" data-track>Book Now</button>
-          </div>
-        </div>
-      </div>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); submitNewsletter(this);">
+        <input class="input" type="email" required placeholder="you@studio.com" aria-label="Email">
+        <button class="btn btn--primary" type="submit">Subscribe</button>
+      </form>
     </div>
   </div>
-</section>
-
-<div class="divider"><div class="divider-line"></div></div>
-
-<!-- ════════════════ CATEGORIES ════════════════ -->
-<section class="sec">
-  <div class="sec-inner">
-    <div class="sec-hd" data-reveal="fade-up">
-      <div>
-        <div class="sec-title">Browse by Category</div>
-        <div class="sec-sub">Discover the right space for your craft</div>
-      </div>
-      <a href="#" class="see-all">All categories →</a>
-    </div>
-    <div class="cat-grid" data-stagger-parent>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/cat-music.jpg" alt="Music Studios" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">🎧</div>
-          <div class="cat-name">Music Studios</div>
-          <div class="cat-count">142 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/cat-podcast.jpg" alt="Podcast Studios" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">🎙</div>
-          <div class="cat-name">Podcast Studios</div>
-          <div class="cat-count">87 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/cat-photo.jpg" alt="Photography Studios" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">📷</div>
-          <div class="cat-name">Photography</div>
-          <div class="cat-count">215 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/cat-dance.jpg" alt="Dance Studios" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">💃</div>
-          <div class="cat-name">Dance Studios</div>
-          <div class="cat-count">98 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/creator-filming.jpg" alt="Art Spaces" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">🎨</div>
-          <div class="cat-name">Art Spaces</div>
-          <div class="cat-count">63 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-      <div class="cat-card" data-stagger-child data-tilt>
-        <img src="images/lighting-setup.jpg" alt="Events & Venues" loading="lazy" width="300" height="400" style="object-fit:cover;height:100%;">
-        <div class="cat-ov">
-          <div class="cat-ico">🎪</div>
-          <div class="cat-name">Events & Venues</div>
-          <div class="cat-count">179 available</div>
-          <span class="cat-link">See more →</span>
-        </div>
-      </div>
-    </div>
-    <button class="suggest-btn">+ Suggest a New Category</button>
-  </div>
-</section>
-
-<div class="divider"><div class="divider-line"></div></div>
-
-<!-- ════════════════ MODULES ════════════════ -->
-<section class="sec" id="marketplace">
-  <div class="sec-inner">
-    <div class="sec-hd" data-reveal="fade-up">
-      <div>
-        <div class="sec-title">Explore the Ecosystem</div>
-        <div class="sec-sub">More than spaces — a complete creative platform</div>
-      </div>
-    </div>
-    <div class="mod-grid" data-stagger-parent>
-      <div class="mod-card mg" data-stagger-child data-tilt>
-        <div class="mod-ico ico-g">🎬</div>
-        <div class="mod-title">Hire Professionals</div>
-        <div class="mod-desc">Find videographers, photographers, designers, producers, and more for your next creative project.</div>
-        <div class="mod-cta cta-g">Explore talent →</div>
-      </div>
-      <div class="mod-card mv" data-stagger-child data-tilt>
-        <div class="mod-ico ico-v">🛍</div>
-        <div class="mod-title">Marketplace</div>
-        <div class="mod-desc">Buy, sell, and rent cameras, microphones, instruments, props, and creative equipment.</div>
-        <a href="marketplace.html" class="mod-cta cta-v" style="text-decoration:none;">Browse products →</a>
-      </div>
-      <div class="mod-card mc" data-stagger-child data-tilt>
-        <div class="mod-ico ico-c">🎓</div>
-        <div class="mod-title">Training & Workshops</div>
-        <div class="mod-desc">Level up with courses in music, audiovisual production, dance, photography, and more.</div>
-        <div class="mod-cta cta-c">Find courses →</div>
-      </div>
-      <div class="mod-card mt reveal d4">
-        <div class="mod-ico ico-t">🎪</div>
-        <div class="mod-title">Unique Events</div>
-        <div class="mod-desc">Discover rooftops, retreat houses, farms, and exotic venues for unforgettable experiences.</div>
-        <div class="mod-cta cta-t">View events →</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════ STATS ════════════════ -->
-<div class="stats-sec">
-  <div class="stats-grid">
-    <div class="reveal" data-reveal="fade-up">
-      <div class="stat-num" data-counter="12000" data-counter-suffix="+" data-counter-prefix="">0</div>
-      <div class="stat-label">Creative Spaces</div>
-    </div>
-    <div class="reveal d1" data-reveal="fade-up" data-reveal-delay="0.1">
-      <div class="stat-num" data-counter="45" data-counter-suffix="+">0</div>
-      <div class="stat-label">Countries</div>
-    </div>
-    <div class="reveal d2" data-reveal="fade-up" data-reveal-delay="0.2">
-      <div class="stat-num" data-counter="98" data-counter-suffix="K+">0</div>
-      <div class="stat-label">Creators Served</div>
-    </div>
-    <div class="reveal d3" data-reveal="fade-up" data-reveal-delay="0.3">
-      <div class="stat-num" data-counter="4.9" data-counter-suffix="★" data-counter-decimals="1">0</div>
-      <div class="stat-label">Average Rating</div>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════ CTA BANNER ════════════════ -->
-<div class="cta-sec">
-  <div class="cta-wrap">
-    <div class="cta-bg-orb"></div>
-    <div class="cta-bg-grid"></div>
-    <div>
-      <div class="cta-eyebrow reveal">For Space Owners & Creators</div>
-      <div class="cta-title reveal d1">Share Your Space<br>with the World</div>
-      <p class="cta-desc reveal d2">List your studio, venue, or creative space on Charm and connect with thousands of creators. Set your hours, prices, and rules — we handle the rest.</p>
-    </div>
-    <div class="cta-btns reveal d3">
-      <button class="btn-cta-primary" data-track data-magnetic>+ Add Your Listing</button>
-      <button class="btn-cta-sec" data-magnetic>Learn how it works</button>
-    </div>
-  </div>
-</div>
-
-<!-- ════════════════ TESTIMONIALS ════════════════ -->
-<section class="sec">
-  <div class="sec-inner">
-    <div class="sec-hd reveal">
-      <div>
-        <div class="sec-title">Loved by Creators</div>
-        <div class="sec-sub">From independent artists to professional studios</div>
-      </div>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal d1">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"Found the perfect recording studio for my debut EP through Charm. The booking process was seamless and the space was exactly as described. A genuine game changer for independent artists."</p>
-        <div class="testi-author">
-          <img src="https://placehold.co/76x76/1a0e2e/e2a84b?text=MK" class="testi-av" alt="">
-          <div>
-            <div class="testi-name">Marcus K.</div>
-            <div class="testi-role">Music Producer · London</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal d2">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"As a photographer, finding quality studios used to take days. Charm's search is so precise I booked the ideal white cyclorama space in under 10 minutes. Incredible platform."</p>
-        <div class="testi-author">
-          <img src="https://placehold.co/76x76/0d1f12/9d6fff?text=SP" class="testi-av" alt="">
-          <div>
-            <div class="testi-name">Sofia P.</div>
-            <div class="testi-role">Photographer · Berlin</div>
-          </div>
-        </div>
-      </div>
-      <div class="testi-card reveal d3">
-        <div class="testi-stars">★★★★★</div>
-        <p class="testi-text">"I listed my dance studio on Charm and within two weeks had a full booking calendar. The platform handles payments, invoicing, and communication. Worth every second."</p>
-        <div class="testi-author">
-          <img src="https://placehold.co/76x76/200d0d/ff6b57?text=AL" class="testi-av" alt="">
-          <div>
-            <div class="testi-name">Antoine L.</div>
-            <div class="testi-role">Studio Owner · Paris</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════════════ ABOUT ════════════════ -->
-<section class="about-sec" id="about">
-  <div class="about-inner">
-    <div>
-      <div class="about-eyebrow reveal">Our Story</div>
-      <div class="about-title reveal d1">Born from a passion<br>for creative freedom</div>
-      <p class="about-body reveal d2">Charm was founded by a collective of musicians, photographers, and venue owners who shared a common frustration: finding the right creative space was unnecessarily hard. We built the platform we always wished existed.<br><br>Today, Charm is a full ecosystem — connecting creators with spaces, professionals, products, training, and events across 45+ countries. We believe creativity shouldn't be limited by access to space.</p>
-      <div style="margin-top:32px;" class="reveal d3">
-        <button class="btn-ghost" style="font-size:14px; padding:12px 26px;">Read our full story →</button>
-      </div>
-    </div>
-    <div class="reveal d2">
-      <div class="about-img-grid">
-        <div class="aimg">
-          <img src="https://placehold.co/300x440/150a28/e2a84b?text=✦" alt="">
-        </div>
-        <div class="aimg">
-          <img src="https://placehold.co/300x210/0d1520/00d4c8?text=🎧" alt="">
-        </div>
-        <div class="aimg">
-          <img src="https://placehold.co/300x210/180d25/9d6fff?text=📷" alt="">
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════ FEATURED CREATORS ════════ -->
-<section style="padding:96px 48px; max-width:1440px; margin:0 auto;" id="creators">
-  <div style="text-align:center; margin-bottom:56px;">
-    <p style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--c-gold); margin-bottom:12px;">The Community</p>
-    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4vw,52px); font-weight:700; letter-spacing:-0.03em; color:var(--c-text); line-height:1.1; margin-bottom:16px;">Built by creators,<br><em>for creators</em></h2>
-    <p style="font-family:'DM Sans',sans-serif; font-size:16px; color:var(--c-text-2); max-width:480px; margin:0 auto; line-height:1.7;">Join 98,000+ musicians, photographers, filmmakers, and artists already using Charm.</p>
-  </div>
-  <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:20px;">
-    <div style="background:var(--c-card); border:1px solid var(--c-border); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:16px; transition:border-color 0.2s, transform 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform=''">
-      <div style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#e2a84b,#f5d080); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:#0f0800;">M</div>
-      <div>
-        <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--c-text); margin-bottom:2px;">Maya Chen</p>
-        <p style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--c-gold);">📸 Photographer · London</p>
-      </div>
-      <p style="font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text-2); line-height:1.7; font-style:italic;">"Charm helped me go from shooting in my bedroom to booking proper studios. My portfolio transformed overnight."</p>
-      <div style="display:flex; gap:4px; color:var(--c-gold); font-size:12px;">★★★★★</div>
-    </div>
-    <div style="background:var(--c-card); border:1px solid var(--c-border); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:16px; transition:border-color 0.2s, transform 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform=''">
-      <div style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#9d6fff,#c4a0ff); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:#fff;">J</div>
-      <div>
-        <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--c-text); margin-bottom:2px;">James Okafor</p>
-        <p style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--c-violet);">🎙 Music Producer · Lagos</p>
-      </div>
-      <p style="font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text-2); line-height:1.7; font-style:italic;">"I rent out my gear when I'm not using it. Earned enough last month to buy a new interface — this platform pays for itself."</p>
-      <div style="display:flex; gap:4px; color:var(--c-gold); font-size:12px;">★★★★★</div>
-    </div>
-    <div style="background:var(--c-card); border:1px solid var(--c-border); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:16px; transition:border-color 0.2s, transform 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform=''">
-      <div style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#ff6b57,#ff9a8b); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:#fff;">S</div>
-      <div>
-        <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--c-text); margin-bottom:2px;">Sofia Reyes</p>
-        <p style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--c-coral);">🎬 Filmmaker · Mexico City</p>
-      </div>
-      <p style="font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text-2); line-height:1.7; font-style:italic;">"Rented a cinema camera setup for my short film at a fraction of ownership cost. The quality was immaculate."</p>
-      <div style="display:flex; gap:4px; color:var(--c-gold); font-size:12px;">★★★★★</div>
-    </div>
-    <div style="background:var(--c-card); border:1px solid var(--c-border); border-radius:20px; padding:28px; display:flex; flex-direction:column; gap:16px; transition:border-color 0.2s, transform 0.2s;" onmouseenter="this.style.borderColor='rgba(255,255,255,0.2)';this.style.transform='translateY(-3px)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.07)';this.style.transform=''">
-      <div style="width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,#00d4c8,#6ee7e2); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:18px; color:#001f1e;">A</div>
-      <div>
-        <p style="font-family:'Syne',sans-serif; font-weight:700; font-size:15px; color:var(--c-text); margin-bottom:2px;">Aiden Park</p>
-        <p style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--c-cyan);">🎸 Musician · Seoul</p>
-      </div>
-      <p style="font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text-2); line-height:1.7; font-style:italic;">"Found a rehearsal studio 10 minutes from home. The booking process took literally 2 minutes. Game changer."</p>
-      <div style="display:flex; gap:4px; color:var(--c-gold); font-size:12px;">★★★★★</div>
-    </div>
-  </div>
-</section>
-
-<!-- ════════ FAQ ════════ -->
-<section style="padding:96px 48px; border-top:1px solid var(--c-border);" id="faq">
-  <div style="max-width:760px; margin:0 auto;">
-    <div style="text-align:center; margin-bottom:56px;">
-      <p style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--c-gold); margin-bottom:12px;">FAQ</p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(32px,4vw,48px); font-weight:700; letter-spacing:-0.03em; color:var(--c-text); line-height:1.1;">Common questions</h2>
-    </div>
-    <div id="faq-list" style="display:flex; flex-direction:column; gap:4px;"></div>
-    <style>
-      .faq-item { background:var(--c-card); border:1px solid var(--c-border); border-radius:14px; overflow:hidden; transition:border-color 0.2s; }
-      .faq-item.open { border-color:rgba(226,168,75,0.25); }
-      .faq-q { width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:20px 24px; background:none; border:none; cursor:pointer; text-align:left; }
-      .faq-q-text { font-family:'Syne',sans-serif; font-weight:600; font-size:14.5px; color:var(--c-text); }
-      .faq-icon { width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid var(--c-border); display:flex; align-items:center; justify-content:center; color:var(--c-text-2); font-size:16px; flex-shrink:0; transition:transform 0.25s, background 0.2s; }
-      .faq-item.open .faq-icon { transform:rotate(45deg); background:rgba(226,168,75,0.1); color:var(--c-gold); border-color:rgba(226,168,75,0.3); }
-      .faq-body { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
-      .faq-body-inner { padding:0 24px 20px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text-2); line-height:1.75; }
-    </style>
-    <script>
-      const FAQS = [
-        { q: "Is Charm free to use?", a: "Yes — signing up and browsing is completely free. We charge a small platform fee only on completed transactions. Listing your first 3 items is also free. See our Pricing page for full details." },
-        { q: "How does renting work?", a: "Browse available items, select your dates, and book instantly. The owner is notified, and you'll receive pickup/delivery details. A refundable security deposit is held and released after the rental period." },
-        { q: "What if something gets damaged?", a: "All rentals include our Charm Protect coverage. In the unlikely event of damage, we mediate between both parties and our protection policy covers up to £5,000 in accidental damage." },
-        { q: "How do I list my gear or space?", a: "Click 'Add Your Listing' or head to the Marketplace and select 'Start Selling'. Fill in your item details, set your price and availability, and your listing can go live in under 3 minutes." },
-        { q: "When do I get paid?", a: "Payments are released to sellers 24 hours after a successful transaction. Rental payments are released after the return is confirmed. We support bank transfer and PayPal." },
-        { q: "Can I message sellers before buying?", a: "Absolutely — every listing has a direct message button. We encourage buyers and renters to confirm details, arrange logistics, and ask questions before completing a booking." },
-      ];
-      const list = document.getElementById('faq-list');
-      FAQS.forEach((faq, i) => {
-        const item = document.createElement('div');
-        item.className = 'faq-item';
-        item.innerHTML = `
-          <button class="faq-q" onclick="toggleFaq(${i})" aria-expanded="false" id="faq-btn-${i}">
-            <span class="faq-q-text">${faq.q}</span>
-            <span class="faq-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="faq-body" id="faq-body-${i}" role="region" aria-labelledby="faq-btn-${i}">
-            <div class="faq-body-inner">${faq.a}</div>
-          </div>`;
-        list.appendChild(item);
-      });
-      function toggleFaq(i) {
-        const item = list.children[i];
-        const body = document.getElementById('faq-body-' + i);
-        const btn = document.getElementById('faq-btn-' + i);
-        const isOpen = item.classList.contains('open');
-        // Close all
-        list.querySelectorAll('.faq-item').forEach((el, j) => {
-          el.classList.remove('open');
-          document.getElementById('faq-body-' + j).style.maxHeight = '0';
-          document.getElementById('faq-btn-' + j).setAttribute('aria-expanded', 'false');
-        });
-        if (!isOpen) {
-          item.classList.add('open');
-          body.style.maxHeight = body.scrollHeight + 'px';
-          btn.setAttribute('aria-expanded', 'true');
-        }
-      }
-    </script>
-  </div>
-</section>
-
-<!-- ════════ NEWSLETTER ════════ -->
-<section style="padding:96px 48px; border-top:1px solid var(--c-border);" id="newsletter">
-  <div style="max-width:1440px; margin:0 auto;">
-    <div style="background:var(--c-elevated); border:1px solid var(--c-border); border-radius:24px; padding:56px 48px; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap; position:relative; overflow:hidden;">
-      <div style="position:absolute; right:-80px; top:-80px; width:400px; height:400px; border-radius:50%; background:radial-gradient(circle, rgba(226,168,75,0.08) 0%, transparent 70%); pointer-events:none;"></div>
-      <div style="position:absolute; left:-40px; bottom:-60px; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, rgba(157,111,255,0.06) 0%, transparent 70%); pointer-events:none;"></div>
-      <div style="position:relative; z-index:1; max-width:480px;">
-        <p style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--c-gold); margin-bottom:12px;">Stay in the loop</p>
-        <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(28px,3vw,42px); font-weight:700; letter-spacing:-0.03em; color:var(--c-text); line-height:1.15; margin-bottom:12px;">Creative insights,<br><em>delivered weekly</em></h2>
-        <p style="font-family:'DM Sans',sans-serif; font-size:15px; color:var(--c-text-2); line-height:1.7;">New gear arrivals, creator spotlights, studio tips, and exclusive deals. No spam, unsubscribe any time.</p>
-      </div>
-      <div style="position:relative; z-index:1; flex:1; min-width:280px; max-width:420px;">
-        <form id="newsletter-form" onsubmit="submitNewsletter(event)" novalidate style="display:flex; flex-direction:column; gap:12px;">
-          <div style="display:flex; gap:10px; flex-wrap:wrap;">
-            <input type="email" id="nl-email" placeholder="your@email.com" required
-              style="flex:1; min-width:200px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.13); border-radius:10px; padding:12px 16px; font-family:'DM Sans',sans-serif; font-size:14px; color:var(--c-text); outline:none; transition:border-color 0.2s;"
-              onfocus="this.style.borderColor='rgba(226,168,75,0.4)'" onblur="this.style.borderColor='rgba(255,255,255,0.13)'">
-            <button type="submit" style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:#0f0800; background:var(--c-gold); border:none; border-radius:10px; padding:12px 22px; cursor:pointer; white-space:nowrap; transition:background 0.2s, transform 0.2s; box-shadow:0 2px 16px rgba(226,168,75,0.28);"
-              onmouseenter="this.style.background='#ebb850';this.style.transform='translateY(-1px)'" onmouseleave="this.style.background='var(--c-gold)';this.style.transform=''">
-              Subscribe →
-            </button>
-          </div>
-          <p id="nl-msg" style="font-family:'DM Sans',sans-serif; font-size:12px; color:var(--c-text-3); display:none;"></p>
-          <p style="font-family:'DM Sans',sans-serif; font-size:11.5px; color:var(--c-text-3);">Join 24,000+ creators. Unsubscribe anytime.</p>
-        </form>
-      </div>
-    </div>
-  </div>
-  <script>
-    function submitNewsletter(e) {
-      e.preventDefault();
-      const email = document.getElementById('nl-email');
-      const msg = document.getElementById('nl-msg');
-      if (!email.value.includes('@')) {
-        msg.textContent = 'Please enter a valid email address.';
-        msg.style.color = '#ff6b57'; msg.style.display = 'block';
-        email.style.borderColor = 'rgba(255,107,87,0.5)'; return;
-      }
-      const btn = e.target.querySelector('button');
-      btn.textContent = 'Subscribing…'; btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = '✓ Subscribed!'; btn.style.background = '#00d4c8'; btn.style.color = '#001f1e';
-        msg.textContent = "You're in! Check your inbox for a welcome email.";
-        msg.style.color = '#00d4c8'; msg.style.display = 'block';
-        email.value = ''; email.disabled = true;
-      }, 800);
-    }
-  </script>
 </section>
 
 </main>
 
-<!-- ════════════════ FOOTER ════════════════ -->
-<footer>
-  <div class="ft-inner">
-    <div class="ft-grid">
-      <div>
-        <div class="ft-logo">
-          <span class="ft-logo-gem">✦</span>
-          Charm
-        </div>
-        <p class="ft-tagline">The global platform for creators to find, book, and share creative spaces worldwide.</p>
-        <div class="ft-social">
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X (opens in new tab)">𝕏</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn (opens in new tab)">in</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram (opens in new tab)">📸</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube (opens in new tab)">▶</a>
-        </div>
+<!-- ============================================================
+     Footer
+     ============================================================ -->
+<footer class="footer" aria-label="Site footer">
+  <div class="container-wide">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="nav-logo" style="margin-bottom: var(--s-5);">Charm</div>
+        <p class="t-small" style="max-width: 28ch;">A marketplace for the people who make the work. Gear, spaces, pros — one account.</p>
       </div>
-      <div>
-        <div class="ft-col-ttl">Platform</div>
-        <ul class="ft-links">
-          <li><a href="home.html">Home</a></li>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
           <li><a href="marketplace.html">Marketplace</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="how-it-works.html">How It Works</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="ft-col-ttl">Categories</div>
-        <ul class="ft-links">
           <li><a href="cameras.html">Cameras</a></li>
           <li><a href="audio.html">Audio</a></li>
           <li><a href="lighting.html">Lighting</a></li>
+          <li><a href="wishlist.html">Wishlist</a></li>
         </ul>
       </div>
-      <div>
-        <div class="ft-col-ttl">Sellers</div>
-        <ul class="ft-links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="analytics.html">Analytics</a></li>
-          <li><a href="create-listing.html">Create Listing</a></li>
+      <div class="footer-col">
+        <h4>Sell</h4>
+        <ul>
+          <li><a href="create-listing.html">List your gear</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
           <li><a href="earnings.html">Earnings</a></li>
+          <li><a href="analytics.html">Analytics</a></li>
+          <li><a href="seller-profile.html">Seller profiles</a></li>
         </ul>
       </div>
-      <div>
-        <div class="ft-col-ttl">Company</div>
-        <ul class="ft-links">
-          <li><a href="about.html">About</a></li>
-          <li><a href="blog.html">Blog</a></li>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="how-it-works.html">How it works</a></li>
+          <li><a href="blog.html">Journal</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="insurance.html">Insurance</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
           <li><a href="contact.html">Contact</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="login.html">Sign in</a></li>
+          <li><a href="signup.html">Sign up</a></li>
         </ul>
       </div>
     </div>
-    <div class="ft-bottom">
-      <span class="ft-copy">© <span id="copy-year"></span> Charm. All rights reserved. · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="#">Cookies</a></span>
-      <div class="ft-langs">
-        <button class="lang-btn on">EN</button>
-        <button class="lang-btn">PT</button>
-        <button class="lang-btn">ES</button>
-        <button class="lang-btn">FR</button>
-        <button class="lang-btn">DE</button>
+    <div class="footer-bottom">
+      <div>© <span id="year">2026</span> Charm · Built for creators</div>
+      <div class="footer-lang" role="group" aria-label="Language">
+        <button class="on">EN</button>
+        <button>PT</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>DE</button>
       </div>
     </div>
   </div>
 </footer>
 
-<script>
-  // ─── Global error handling ───────────────────────────────────────────
-  window.onerror = (message, source, line, col, error) => {
-    console.error('Uncaught error:', { message, source, line });
-    return false;
-  };
-  window.addEventListener('unhandledrejection', (event) => {
-    console.error('Unhandled rejection:', event.reason);
-  });
-
-  // ─── Copyright year ──────────────────────────────────────────────────
-  document.getElementById('copy-year').textContent = new Date().getFullYear();
-
-  // ─── Safe localStorage wrapper ───────────────────────────────────────
-  const store = {
-    get(k, fallback = null) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fallback; } catch { return fallback; } },
-    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
-    remove(k) { try { localStorage.removeItem(k); } catch {} }
-  };
-
-  // ─── Analytics helper ────────────────────────────────────────────────
-  function track(event, params = {}) {
-    if (typeof gtag === 'function') gtag('event', event, params);
-  }
-
-  // ─── Cookie consent ──────────────────────────────────────────────────
-  const cookieBanner = document.getElementById('cookie-banner');
-  const cookieConsent = store.get('cookie-consent');
-  if (!cookieConsent) cookieBanner.hidden = false;
-  else if (cookieConsent === 'accepted') initAnalytics();
-
-  document.getElementById('cookie-accept').addEventListener('click', () => {
-    store.set('cookie-consent', 'accepted');
-    cookieBanner.hidden = true;
-    initAnalytics();
-    track('cookie_consent', { decision: 'accepted' });
-  });
-  document.getElementById('cookie-decline').addEventListener('click', () => {
-    store.set('cookie-consent', 'declined');
-    cookieBanner.hidden = true;
-  });
-
-  function initAnalytics() {
-    // GA4 consent granted — placeholder until GA ID is added
-    if (typeof gtag === 'function') {
-      gtag('consent', 'update', { analytics_storage: 'granted', ad_storage: 'granted' });
-    }
-  }
-
-  // ─── Throttle utility ────────────────────────────────────────────────
-  function throttle(fn, limit = 100) {
-    let lastCall = 0;
-    return (...args) => {
-      const now = Date.now();
-      if (now - lastCall >= limit) { lastCall = now; fn(...args); }
-    };
-  }
-
-  // ─── Nav scroll ──────────────────────────────────────────────────────
-  const nav = document.getElementById('nav');
-  const onNavScroll = throttle(() => {
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-  }, 50);
-  window.addEventListener('scroll', onNavScroll, { passive: true });
-
-  // ─── Reveal on scroll ────────────────────────────────────────────────
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reducedMotion) {
-    document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-  } else {
-    const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-  }
-
-  // ─── Mouse-tracking glow on hero ─────────────────────────────────────
-  if (!reducedMotion) {
-    const heroGlow = document.getElementById('hero-glow');
-    const heroSection = document.querySelector('.hero');
-    if (heroSection && heroGlow) {
-      heroSection.addEventListener('mousemove', throttle((e) => {
-        const rect = heroSection.getBoundingClientRect();
-        heroGlow.style.left = (e.clientX - rect.left) + 'px';
-        heroGlow.style.top = (e.clientY - rect.top) + 'px';
-      }, 16));
-      heroSection.addEventListener('mouseleave', () => {
-        heroGlow.style.left = '50%';
-        heroGlow.style.top = '50%';
-      });
-    }
-  }
-
-  // ─── Scroll depth tracking ───────────────────────────────────────────
-  let scrollDepths = [25, 50, 75, 90];
-  window.addEventListener('scroll', throttle(() => {
-    if (!scrollDepths.length) return;
-    const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
-    scrollDepths = scrollDepths.filter(d => {
-      if (pct >= d) { track('scroll', { percent_scrolled: d }); return false; }
-      return true;
-    });
-  }, 250), { passive: true });
-
-  // ─── CTA click tracking ──────────────────────────────────────────────
-  document.querySelectorAll('[data-track]').forEach(el => {
-    el.addEventListener('click', () => track('cta_click', {
-      cta_text: el.textContent.trim(),
-      cta_location: el.closest('section')?.id || el.closest('nav') ? 'nav' : 'unknown'
-    }));
-  });
-
-  // ─── 30s engagement tracking ─────────────────────────────────────────
-  setTimeout(() => track('user_engagement', { engagement_time_msec: 30000 }), 30000);
-
-  // ─── Online / Offline ────────────────────────────────────────────────
-  function updateOnlineStatus() {
-    document.body.classList.toggle('offline', !navigator.onLine);
-  }
-  window.addEventListener('online', updateOnlineStatus);
-  window.addEventListener('offline', updateOnlineStatus);
-
-  // ─── Tab switcher ────────────────────────────────────────────────────
-  function setTab(btn) {
-    document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('on'));
-    btn.classList.add('on');
-  }
-
-  // ─── Filter pills ────────────────────────────────────────────────────
-  function setPill(btn) {
-    document.querySelectorAll('.pill').forEach(p => p.classList.remove('on'));
-    btn.classList.add('on');
-    track('filter_pill', { pill: btn.textContent.trim() });
-  }
-
-  // ─── Fav toggle ──────────────────────────────────────────────────────
-  function toggleFav(el) {
-    const faved = el.getAttribute('aria-pressed') === 'true';
-    el.setAttribute('aria-pressed', !faved);
-    el.textContent = faved ? '♡' : '♥';
-    el.style.color = faved ? '' : '#ff6b57';
-    if (!faved) navigator.vibrate?.([8]);
-  }
-
-  // ─── Language switcher ───────────────────────────────────────────────
-  document.querySelectorAll('.lang-btn').forEach(b => {
-    b.addEventListener('click', () => {
-      document.querySelectorAll('.lang-btn').forEach(x => x.classList.remove('on'));
-      b.classList.add('on');
-    });
-  });
-</script>
-<!-- GSAP + ScrollTrigger -->
+<!-- ============================================================
+     Scripts
+     ============================================================ -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<!-- AireyAI Animation Toolkit -->
 <script src="animations.js"></script>
 <script src="charm-db.js"></script>
 <script src="shared.js"></script>
+
+<script>
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add('nav--scrolled');
+    else nav.classList.remove('nav--scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Year
+  const yr = document.getElementById('year');
+  if (yr) yr.textContent = new Date().getFullYear();
+
+  // Fav toggle
+  function toggleFav(btn) {
+    const pressed = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', String(!pressed));
+    btn.textContent = pressed ? '♡' : '♥';
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+
+  // FAQ accordion
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', String(open));
+  }
+
+  // Counters
+  const countObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.counter, 10);
+      const suffix = el.dataset.counterSuffix || '';
+      const duration = 1600;
+      const start = performance.now();
+      const step = (now) => {
+        const p = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const value = Math.floor(eased * target);
+        el.textContent = value.toLocaleString() + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+      countObs.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-counter]').forEach(el => countObs.observe(el));
+
+  // Search submit → route to search.html
+  function submitSearch() {
+    const cat = document.getElementById('s-cat').value;
+    const type = document.getElementById('s-type').value;
+    const loc = document.getElementById('s-loc').value;
+    const q = new URLSearchParams();
+    if (cat) q.set('category', cat);
+    if (type) q.set('type', type);
+    if (loc) q.set('location', loc);
+    window.location.href = 'search.html' + (q.toString() ? '?' + q.toString() : '');
+  }
+
+  // Newsletter mock
+  function submitNewsletter(form) {
+    const btn = form.querySelector('button');
+    btn.textContent = 'Subscribed ✓';
+    btn.disabled = true;
+    form.querySelector('input').value = '';
+    setTimeout(() => { btn.textContent = 'Subscribe'; btn.disabled = false; }, 2400);
+  }
+
+  // Category pill toggle (visual only)
+  document.querySelectorAll('.cat-strip .cat-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.cat-strip .cat-pill').forEach(p => { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
+      pill.classList.add('is-active');
+      pill.setAttribute('aria-selected', 'true');
+    });
+  });
+</script>
 </body>
 </html>

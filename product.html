@@ -1,1614 +1,453 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sony A7 IV Mirrorless Camera Body — Charm Marketplace</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --c-base: #07070e;
-      --c-card: #0d0d1a;
-      --c-elevated: #131326;
-      --c-float: #1a1a32;
-      --c-gold: #e2a84b;
-      --c-violet: #9d6fff;
-      --c-coral: #ff6b57;
-      --c-cyan: #00d4c8;
-      --c-text: #f0ece3;
-      --c-text-2: #9896a8;
-      --c-text-3: #8886a0;
-      --c-border: rgba(255,255,255,0.07);
-      --c-border-2: rgba(255,255,255,0.13);
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Listing — Charm</title>
+<meta name="description" content="Rent or buy creative gear from verified sellers on Charm.">
+<link rel="canonical" href="https://aireyai.github.io/charm/product.html">
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta property="og:title" content="Charm listing">
+<meta property="og:description" content="Rent or buy creative gear from verified sellers on Charm.">
+<meta property="og:type" content="product">
+<meta name="twitter:card" content="summary_large_image">
 
-    body {
-      background: var(--c-base);
-      color: var(--c-text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 400;
-      line-height: 1.7;
-      min-height: 100vh;
-    }
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    /* Noise overlay */
-    .noise-overlay {
-      position: fixed;
-      inset: 0;
-      opacity: 0.028;
-      pointer-events: none;
-      z-index: 9999;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="charm-v2.css">
 
-    /* Nav */
-    .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      height: 64px;
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      background: rgba(7,7,14,0.88);
-      border-bottom: 1px solid var(--c-border);
-    }
-    .nav-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      height: 100%;
-      padding: 0 32px;
-      display: flex;
-      align-items: center;
-      gap: 0;
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--c-text);
-      text-decoration: none;
-      letter-spacing: -0.03em;
-      margin-right: auto;
-    }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      align-items: center;
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    .nav-links a {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--c-text-2);
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    .nav-links a:hover { color: var(--c-text); }
-    .nav-actions {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      margin-left: auto;
-    }
-    .btn-ghost {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--c-text-2);
-      background: transparent;
-      border: 1px solid var(--c-border-2);
-      padding: 8px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-    }
-    .btn-ghost:hover {
-      color: var(--c-text);
-      border-color: rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.04);
-    }
-    .btn-ghost:active { background: rgba(255,255,255,0.08); }
-    .btn-gold {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--c-base);
-      background: var(--c-gold);
-      border: none;
-      padding: 8px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: opacity 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      box-shadow: 0 4px 20px rgba(226,168,75,0.25);
-    }
-    .btn-gold:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 28px rgba(226,168,75,0.38);
-    }
-    .btn-gold:active { transform: translateY(0); opacity: 1; }
-    .cart-btn {
-      width: 38px;
-      height: 38px;
-      border-radius: 8px;
-      background: var(--c-elevated);
-      border: 1px solid var(--c-border-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      color: var(--c-text-2);
-      font-size: 16px;
-      transition: color 0.2s, background 0.2s;
-      text-decoration: none;
-    }
-    .cart-btn:hover { color: var(--c-text); background: var(--c-float); }
+<style>
+  .crumb { padding: var(--s-6) 0 var(--s-4); font-size: 13px; color: var(--c-text-3); display: flex; gap: var(--s-3); align-items: center; flex-wrap: wrap; }
+  .crumb a { color: var(--c-text-3); transition: color 180ms ease; }
+  .crumb a:hover { color: var(--c-text); }
+  .crumb span.sep { color: var(--c-text-4); }
 
-    /* Page layout */
-    .page-wrap {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 96px 32px 80px;
-    }
+  .p-layout { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--s-8); padding: var(--s-4) 0 var(--s-9); align-items: start; }
+  @media (max-width: 960px) { .p-layout { grid-template-columns: 1fr; gap: var(--s-6); } }
 
-    /* Breadcrumb */
-    .breadcrumb {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'Syne', sans-serif;
-      font-size: 12px;
-      color: var(--c-text-3);
-      margin-bottom: 24px;
-    }
-    .breadcrumb a {
-      color: var(--c-text-3);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .breadcrumb a:hover { color: var(--c-text-2); }
-    .breadcrumb span { color: var(--c-text-3); }
+  .p-gallery { display: flex; flex-direction: column; gap: var(--s-3); }
+  .p-hero-img { aspect-ratio: 4/5; border-radius: var(--r-4); overflow: hidden; background: var(--c-surface-2); }
+  .p-hero-img img { width: 100%; height: 100%; object-fit: cover; }
+  .p-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-2); }
+  .p-thumb { aspect-ratio: 1/1; border-radius: var(--r-3); overflow: hidden; border: 1px solid var(--c-border); background: var(--c-surface-2); opacity: 0.55; cursor: pointer; transition: opacity 180ms ease, border-color 180ms ease; }
+  .p-thumb:hover { opacity: 0.85; }
+  .p-thumb.is-active { opacity: 1; border-color: var(--c-text); }
+  .p-thumb img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Product grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 56px;
-      align-items: start;
-    }
+  .p-details { position: sticky; top: 88px; }
+  @media (max-width: 960px) { .p-details { position: static; } }
 
-    /* Media column */
-    .media-col { position: sticky; top: 80px; }
-    .main-thumbnail {
-      position: relative;
-      border-radius: 16px;
-      overflow: hidden;
-      aspect-ratio: 1/1;
-      cursor: pointer;
-      border: 1px solid var(--c-border-2);
-    }
-    .thumb-bg {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .thumb-emoji {
-      font-size: 88px;
-      position: relative;
-      z-index: 2;
-      filter: drop-shadow(0 0 32px rgba(157,111,255,0.5));
-      transition: transform 0.3s ease;
-    }
-    .main-thumbnail:hover .thumb-emoji { transform: scale(1.06); }
-    .thumb-glow {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      width: 60%;
-      height: 60%;
-      top: 20%;
-      left: 20%;
-      pointer-events: none;
-    }
-    .sale-badge {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      background: var(--c-coral);
-      color: #fff;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.08em;
-      padding: 4px 10px;
-      border-radius: 6px;
-      z-index: 3;
-    }
-    .wishlist-btn {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: rgba(13,13,26,0.85);
-      border: 1px solid var(--c-border-2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      z-index: 3;
-      transition: background 0.2s, transform 0.15s;
-      backdrop-filter: blur(8px);
-    }
-    .wishlist-btn:hover { background: rgba(19,19,38,0.95); transform: scale(1.05); }
-    .wishlist-btn:active { transform: scale(0.95); }
+  .p-label { color: var(--c-text-3); margin-bottom: var(--s-3); }
+  .p-title { font-family: var(--f-display); font-size: clamp(32px, 4vw, 52px); font-weight: 400; line-height: 1.00; letter-spacing: -1.4px; color: var(--c-text); margin: 0 0 var(--s-5); text-wrap: balance; }
+  .p-meta-row { display: flex; gap: var(--s-5); align-items: center; margin-bottom: var(--s-6); padding-bottom: var(--s-5); border-bottom: 1px solid var(--c-border); flex-wrap: wrap; }
+  .p-rating { display: flex; align-items: center; gap: 6px; font-size: 14px; color: var(--c-text-2); font-variant-numeric: tabular-nums; }
+  .p-rating a { color: var(--c-text-3); border-bottom: 1px solid var(--c-border-2); }
+  .p-rating a:hover { color: var(--c-text); }
+  .p-condition { display: inline-flex; align-items: center; padding: 4px 10px; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--c-text); border: 1px solid var(--c-border-2); border-radius: var(--r-2); }
+  .p-views { font-size: 13px; color: var(--c-text-3); }
 
-    /* Gallery strip */
-    .gallery-strip {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-    }
-    .gallery-thumb {
-      flex: 1;
-      aspect-ratio: 1/1;
-      border-radius: 10px;
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid var(--c-border);
-      transition: border-color 0.2s, transform 0.15s;
-      position: relative;
-    }
-    .gallery-thumb:hover { transform: translateY(-2px); border-color: var(--c-border-2); }
-    .gallery-thumb.active { border-color: var(--c-violet); box-shadow: 0 0 0 1px var(--c-violet); }
-    .gallery-thumb .thumb-bg { pointer-events: none; }
-    .gallery-thumb .thumb-emoji { font-size: 22px; filter: none; }
+  .p-price-row { margin-bottom: var(--s-6); }
+  .p-price { font-family: var(--f-display); font-variant-numeric: tabular-nums; font-size: clamp(32px, 4vw, 48px); font-weight: 400; letter-spacing: -1px; line-height: 1; color: var(--c-text); }
+  .p-price span { font-size: 16px; color: var(--c-text-3); margin-left: 6px; }
+  .p-price-note { font-size: 13px; color: var(--c-text-3); margin-top: 8px; }
 
-    /* Info column */
-    .info-col {}
-    .cat-tag {
-      display: inline-flex;
-      align-items: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 11px;
-      letter-spacing: 0.1em;
-      color: var(--c-violet);
-      background: rgba(157,111,255,0.1);
-      border: 1px solid rgba(157,111,255,0.2);
-      padding: 4px 12px;
-      border-radius: 6px;
-      margin-bottom: 14px;
-    }
-    .product-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: clamp(28px, 3vw, 42px);
-      line-height: 1.12;
-      letter-spacing: -0.02em;
-      color: var(--c-text);
-      margin-bottom: 14px;
-    }
-    .rating-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    .stars { color: var(--c-gold); font-size: 14px; letter-spacing: 1px; }
-    .rating-num {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--c-text);
-    }
-    .reviews-link {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 13px;
-      color: var(--c-text-3);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .reviews-link:hover { color: var(--c-text-2); }
-    .verified-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 11px;
-      color: var(--c-cyan);
-      background: rgba(0,212,200,0.08);
-      border: 1px solid rgba(0,212,200,0.18);
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
+  .p-desc { color: var(--c-text-2); font-size: 15px; line-height: 1.55; margin: var(--s-5) 0 var(--s-6); max-width: 58ch; }
 
-    /* Price */
-    .price-row {
-      display: flex;
-      align-items: baseline;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--c-border);
-    }
-    .price-main {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      font-size: 42px;
-      line-height: 1;
-      color: var(--c-text);
-      letter-spacing: -0.02em;
-    }
-    .price-orig {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 18px;
-      color: var(--c-text-3);
-      text-decoration: line-through;
-    }
-    .price-save {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      color: var(--c-coral);
-      background: rgba(255,107,87,0.1);
-      border: 1px solid rgba(255,107,87,0.2);
-      padding: 3px 10px;
-      border-radius: 6px;
-    }
+  .p-actions { display: flex; gap: var(--s-3); margin-bottom: var(--s-7); flex-wrap: wrap; }
 
-    /* Condition */
-    .condition-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 20px;
-      padding: 14px 16px;
-      background: var(--c-card);
-      border-radius: 10px;
-      border: 1px solid var(--c-border);
-    }
-    .condition-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: var(--c-gold);
-      margin-top: 6px;
-      flex-shrink: 0;
-      box-shadow: 0 0 8px rgba(226,168,75,0.5);
-    }
-    .condition-label {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--c-text);
-    }
-    .condition-desc {
-      font-size: 13px;
-      color: var(--c-text-2);
-      line-height: 1.5;
-    }
+  .p-booking { padding: var(--s-5); border: 1px solid var(--c-border); border-radius: var(--r-4); background: var(--c-surface); margin-bottom: var(--s-6); }
+  .p-booking-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--s-4); gap: var(--s-3); flex-wrap: wrap; }
+  .p-booking-head h3 { font-family: var(--f-display); font-size: 18px; font-weight: 400; letter-spacing: -0.3px; margin: 0; color: var(--c-text); }
+  .p-booking-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); margin-bottom: var(--s-4); }
+  .p-booking-field label { display: block; font-size: 10px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 6px; }
+  .p-booking-field input { width: 100%; height: 40px; padding: 0 var(--s-3); background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: var(--r-2); color: var(--c-text); font-size: 14px; color-scheme: dark; }
+  .p-booking-field textarea { width: 100%; padding: var(--s-3); background: var(--c-surface-2); border: 1px solid var(--c-border); border-radius: var(--r-2); color: var(--c-text); font-size: 14px; resize: vertical; min-height: 72px; font-family: inherit; }
+  .p-booking-summary { padding: var(--s-3) var(--s-4); background: var(--c-elevated); border-radius: var(--r-2); font-size: 13px; color: var(--c-text-2); margin-bottom: var(--s-4); display: none; }
+  .p-booking-summary.is-open { display: block; }
+  .p-booking-summary-row { display: flex; justify-content: space-between; padding: 3px 0; }
+  .p-booking-summary-row.total { border-top: 1px solid var(--c-border); margin-top: 6px; padding-top: 10px; color: var(--c-text); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .p-booking-error { display: none; color: #ff7070; font-size: 13px; margin: var(--s-3) 0; }
 
-    /* Seller card */
-    .seller-card {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .seller-avatar {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-      background: var(--c-gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 14px;
-      color: var(--c-base);
-      flex-shrink: 0;
-    }
-    .seller-info { flex: 1; }
-    .seller-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      color: var(--c-text);
-    }
-    .seller-meta {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 3px;
-      flex-wrap: wrap;
-    }
-    .seller-meta span {
-      font-size: 12px;
-      color: var(--c-text-2);
-    }
-    .seller-badge {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 10px;
-      color: var(--c-cyan);
-      background: rgba(0,212,200,0.08);
-      border: 1px solid rgba(0,212,200,0.18);
-      padding: 2px 8px;
-      border-radius: 4px;
-    }
-    .view-profile {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      color: var(--c-violet);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .view-profile:hover { opacity: 0.75; }
+  .p-specs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--c-border); border: 1px solid var(--c-border); border-radius: var(--r-4); overflow: hidden; }
+  .p-spec { padding: var(--s-4) var(--s-5); background: var(--c-bg); }
+  .p-spec .label { font-size: 10px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 6px; }
+  .p-spec .value { font-size: 15px; color: var(--c-text); }
 
-    /* Specs grid */
-    .specs-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-bottom: 20px;
-    }
-    .spec-item {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-    .spec-label {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: var(--c-text-3);
-      text-transform: uppercase;
-      margin-bottom: 2px;
-    }
-    .spec-value {
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 500;
-      font-size: 13px;
-      color: var(--c-text);
-    }
+  .p-seller-card { padding: var(--s-5); border: 1px solid var(--c-border); border-radius: var(--r-4); background: var(--c-surface); display: flex; gap: var(--s-4); align-items: center; margin-top: var(--s-5); transition: background 200ms ease; }
+  .p-seller-card:hover { background: var(--c-surface-2); }
+  .p-seller-avatar-lg { width: 48px; height: 48px; border-radius: 50%; background: var(--c-elevated); color: var(--c-text); font-size: 13px; font-weight: 500; letter-spacing: 0.5px; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .p-seller-card .name { font-family: var(--f-display); font-size: 16px; color: var(--c-text); margin: 0 0 2px; }
+  .p-seller-card .meta { font-size: 12px; color: var(--c-text-3); }
 
-    /* Description */
-    .description {
-      font-size: 14px;
-      color: var(--c-text-2);
-      line-height: 1.75;
-      margin-bottom: 20px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid var(--c-border);
-    }
+  .p-related, .p-reviews { padding: var(--s-9) 0; border-top: 1px solid var(--c-border); }
+  .p-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+  @media (max-width: 900px) { .p-reviews-grid { grid-template-columns: 1fr; } }
+  .p-review { padding: var(--s-6); border: 1px solid var(--c-border); border-radius: var(--r-4); background: var(--c-surface); }
+  .p-review-head { display: flex; gap: 10px; align-items: center; margin-bottom: var(--s-4); }
+  .p-review-head .stars { color: var(--c-text); font-size: 13px; letter-spacing: 1px; }
+  .p-review-body { font-size: 14px; color: var(--c-text-2); line-height: 1.55; margin-bottom: var(--s-4); }
+  .p-review-foot { display: flex; gap: 10px; align-items: center; font-size: 12px; color: var(--c-text-3); }
 
-    /* Shipping */
-    .shipping-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      color: var(--c-text-2);
-    }
-    .shipping-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      background: var(--c-elevated);
-      border: 1px solid var(--c-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-    }
+  .review-avatar { width: 32px; height: 32px; font-size: 11px; background: var(--c-elevated); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--c-text); flex-shrink: 0; font-weight: 500; }
 
-    /* CTAs */
-    .cta-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-    .btn-add-cart {
-      width: 100%;
-      padding: 16px;
-      background: var(--c-gold);
-      color: var(--c-base);
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
-      box-shadow: 0 4px 24px rgba(226,168,75,0.3);
-    }
-    .btn-add-cart:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
-      box-shadow: 0 8px 32px rgba(226,168,75,0.42);
-    }
-    .btn-add-cart:active { transform: translateY(0); }
-    .btn-save {
-      width: 100%;
-      padding: 16px;
-      background: transparent;
-      color: var(--c-text-2);
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 15px;
-      border: 1px solid var(--c-border-2);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .btn-save:hover {
-      color: var(--c-text);
-      border-color: rgba(255,255,255,0.25);
-      background: rgba(255,255,255,0.04);
-    }
-
-    /* Trust badges */
-    .trust-row {
-      display: flex;
-      gap: 0;
-      border: 1px solid var(--c-border);
-      border-radius: 10px;
-      overflow: hidden;
-    }
-    .trust-item {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 5px;
-      padding: 12px 8px;
-      background: var(--c-card);
-      border-right: 1px solid var(--c-border);
-    }
-    .trust-item:last-child { border-right: none; }
-    .trust-icon { font-size: 18px; }
-    .trust-label {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 10px;
-      color: var(--c-text-3);
-      text-align: center;
-      line-height: 1.3;
-    }
-
-    /* Below fold sections */
-    .section-full {
-      max-width: 1440px;
-      margin: 0 auto;
-      padding: 0 32px;
-      margin-bottom: 72px;
-    }
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 28px;
-    }
-    .section-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      font-size: 28px;
-      letter-spacing: -0.02em;
-      color: var(--c-text);
-    }
-    .section-title em {
-      font-style: italic;
-      color: var(--c-text-2);
-    }
-    .see-all {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 12px;
-      color: var(--c-violet);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
-    .see-all:hover { opacity: 0.75; }
-
-    /* Horizontal scroll */
-    .h-scroll {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 8px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--c-border-2) transparent;
-    }
-    .h-scroll::-webkit-scrollbar { height: 4px; }
-    .h-scroll::-webkit-scrollbar-track { background: transparent; }
-    .h-scroll::-webkit-scrollbar-thumb { background: var(--c-border-2); border-radius: 2px; }
-
-    /* Product card */
-    .prod-card {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: 14px;
-      overflow: hidden;
-      flex-shrink: 0;
-      width: 220px;
-      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      cursor: pointer;
-    }
-    .prod-card:hover {
-      border-color: var(--c-border-2);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
-    }
-    .prod-card-thumb {
-      height: 160px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .prod-card-thumb .thumb-emoji { font-size: 44px; }
-    .prod-card-body { padding: 14px; }
-    .prod-card-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 13px;
-      color: var(--c-text);
-      line-height: 1.35;
-      margin-bottom: 6px;
-    }
-    .prod-card-price {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      font-size: 20px;
-      color: var(--c-text);
-    }
-    .prod-card-seller {
-      font-size: 11px;
-      color: var(--c-text-3);
-      margin-top: 4px;
-    }
-
-    /* Grid for "might also like" */
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-    .grid-3 .prod-card {
-      width: auto;
-      flex-shrink: unset;
-    }
-    .grid-3 .prod-card-thumb { height: 200px; }
-    .grid-3 .prod-card-thumb .thumb-emoji { font-size: 56px; }
-
-    /* Reviews section */
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 48px;
-      align-items: start;
-    }
-    .rating-summary { }
-    .rating-big {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      font-size: 72px;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      color: var(--c-text);
-    }
-    .rating-sub {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 6px;
-      margin-bottom: 20px;
-    }
-    .rating-bars { display: flex; flex-direction: column; gap: 7px; }
-    .rating-bar-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .bar-label {
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 11px;
-      color: var(--c-text-3);
-      width: 20px;
-      text-align: right;
-    }
-    .bar-track {
-      flex: 1;
-      height: 4px;
-      background: var(--c-elevated);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      background: var(--c-gold);
-      border-radius: 2px;
-      transition: width 0.8s ease;
-    }
-    .bar-pct {
-      font-size: 11px;
-      color: var(--c-text-3);
-      width: 28px;
-    }
-
-    .reviews-list { display: flex; flex-direction: column; gap: 20px; }
-    .review-card {
-      background: var(--c-card);
-      border: 1px solid var(--c-border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .review-header {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .review-avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      color: var(--c-base);
-      flex-shrink: 0;
-    }
-    .review-meta { flex: 1; }
-    .review-name {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      color: var(--c-text);
-    }
-    .review-date {
-      font-size: 12px;
-      color: var(--c-text-3);
-      margin-top: 1px;
-    }
-    .review-stars { color: var(--c-gold); font-size: 13px; }
-    .review-text { font-size: 14px; color: var(--c-text-2); line-height: 1.65; }
-
-    /* Footer */
-    .footer {
-      background: var(--c-card);
-      border-top: 1px solid var(--c-border);
-      padding: 40px 48px;
-    }
-    .footer-inner {
-      max-width: 1440px;
-      margin: 0 auto;
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 48px;
-    }
-    .footer-brand { max-width: 260px; }
-    .footer-logo {
-      font-family: 'Syne', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--c-text);
-      letter-spacing: -0.03em;
-      margin-bottom: 10px;
-    }
-    .footer-tagline {
-      font-size: 13px;
-      color: var(--c-text-3);
-      line-height: 1.6;
-    }
-    .footer-links {
-      display: flex;
-      gap: 56px;
-    }
-    .footer-col {}
-    .footer-col-title {
-      font-family: 'Syne', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--c-text-3);
-      margin-bottom: 14px;
-    }
-    .footer-col a {
-      display: block;
-      font-size: 13px;
-      color: var(--c-text-2);
-      text-decoration: none;
-      margin-bottom: 9px;
-      transition: color 0.2s;
-    }
-    .footer-col a:hover { color: var(--c-text); }
-    .footer-copy {
-      margin-top: 32px;
-      padding-top: 24px;
-      border-top: 1px solid var(--c-border);
-      font-size: 12px;
-      color: var(--c-text-3);
-      text-align: center;
-    }
-
-    /* Toast */
-    .toast {
-      position: fixed;
-      bottom: 32px;
-      left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: var(--c-float);
-      border: 1px solid var(--c-border-2);
-      color: var(--c-text);
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 14px;
-      padding: 14px 24px;
-      border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
-      z-index: 9998;
-      opacity: 0;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      white-space: nowrap;
-    }
-    .toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-    .toast-icon { font-size: 16px; }
-
-    /* Divider */
-    .section-divider {
-      max-width: 1440px;
-      margin: 0 auto 72px;
-      padding: 0 32px;
-      border: none;
-      border-top: 1px solid var(--c-border);
-    }
-
-    @media (max-width: 1024px) {
-      .product-grid { grid-template-columns: 1fr; gap: 40px; }
-      .media-col { position: static; }
-      .reviews-grid { grid-template-columns: 1fr; }
-      .grid-3 { grid-template-columns: repeat(2, 1fr); }
-      .nav-links { display: none; }
-    }
-    @media (max-width: 640px) {
-      .nav-inner { padding: 0 20px; }
-      .page-wrap { padding: 80px 20px 60px; }
-      .section-full { padding: 0 20px; }
-      .footer { padding: 32px 20px; }
-      .footer-inner { flex-direction: column; }
-      .footer-links { flex-wrap: wrap; gap: 32px; }
-      .grid-3 { grid-template-columns: 1fr; }
-    }
-  </style>
+  .toast { position: fixed; bottom: var(--s-6); left: 50%; transform: translateX(-50%); background: var(--c-text); color: var(--c-bg); padding: 10px 18px; border-radius: var(--r-3); font-size: 13px; font-weight: 500; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 240ms ease, transform 320ms cubic-bezier(0.2,0.8,0.2,1); }
+  .toast.is-open { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+</style>
 </head>
 <body>
 
-<!-- Noise overlay -->
-<div class="noise-overlay" aria-hidden="true"></div>
+<a href="#main" class="skip-link">Skip to content</a>
 
-<!-- Toast -->
-<div class="toast" id="toast">
-  <span class="toast-icon">🛒</span>
-  <span>Added to cart!</span>
-</div>
-
-<!-- Nav -->
-<nav class="nav" role="navigation" aria-label="Main navigation">
+<nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-inner">
-    <a href="home.html" class="nav-logo">✦ Charm</a>
+    <a href="home.html" class="nav-logo" aria-label="Charm — home">Charm</a>
     <ul class="nav-links">
       <li><a href="marketplace.html">Marketplace</a></li>
-      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
       <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="wishlist.html">Wishlist</a></li>
+      <li><a href="blog.html">Journal</a></li>
     </ul>
-    <div class="nav-actions">
-      <a href="search.html" class="nav-icon-btn" aria-label="Search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </a>
-      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      </a>
-      <a href="login.html" class="btn-ghost">Login</a>
-      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+    <div class="nav-right">
+      <a href="search.html" class="nav-icon" aria-label="Search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></a>
+      <a href="wishlist.html" class="nav-icon" aria-label="Wishlist"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></a>
+      <a href="login.html" class="btn btn--ghost btn--sm">Sign in</a>
+      <a href="create-listing.html" class="btn btn--primary btn--sm">List your gear</a>
     </div>
   </div>
 </nav>
 
-<!-- Main product section -->
-<main>
-  <div class="page-wrap">
+<main id="main" style="padding-top: 72px;">
+  <div class="container-wide">
 
-    <!-- Breadcrumb -->
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="home.html">Charm</a>
-      <span>›</span>
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="home.html">Home</a>
+      <span class="sep">/</span>
       <a href="marketplace.html">Marketplace</a>
-      <span>›</span>
-      <a href="marketplace.html">Cameras &amp; Lenses</a>
+      <span class="sep">/</span>
+      <a href="marketplace.html" id="crumb-cat">Category</a>
+      <span class="sep">/</span>
+      <span id="crumb-title" style="color:var(--c-text);">Listing</span>
     </nav>
 
-    <!-- Product grid -->
-    <div class="product-grid">
-
-      <!-- LEFT: Media -->
-      <div class="media-col">
-        <div class="main-thumbnail" id="mainThumb">
-          <div class="thumb-bg" id="mainThumbBg" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-            <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.35) 0%, transparent 70%);"></div>
-            <span class="thumb-emoji" id="mainEmoji">📷</span>
-          </div>
-          <span class="sale-badge">SALE</span>
-          <button class="wishlist-btn" id="wishlistBtn" aria-label="Add to wishlist" onclick="toggleWishlist()">🤍</button>
-        </div>
-
-        <!-- Gallery strip -->
-        <div class="gallery-strip" role="list" aria-label="Product gallery">
-          <div class="gallery-thumb active" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0a0720, #170f36)', '📷')" aria-label="View 1">
-            <div class="thumb-bg" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.3) 0%, transparent 70%);"></div>
-              <span class="thumb-emoji">📷</span>
-            </div>
-          </div>
-          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0c0825, #1d1240)', '📷')" aria-label="View 2">
-            <div class="thumb-bg" style="background: linear-gradient(135deg, #0c0825, #1d1240);">
-              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.25) 0%, transparent 70%);"></div>
-              <span class="thumb-emoji">📷</span>
-            </div>
-          </div>
-          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #06041a, #120a2c)', '📷')" aria-label="View 3">
-            <div class="thumb-bg" style="background: linear-gradient(135deg, #06041a, #120a2c);">
-              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.4) 0%, transparent 70%);"></div>
-              <span class="thumb-emoji">📷</span>
-            </div>
-          </div>
-          <div class="gallery-thumb" role="listitem" onclick="switchThumb(this, 'linear-gradient(135deg, #0e0b28, #1a143a)', '📷')" aria-label="View 4">
-            <div class="thumb-bg" style="background: linear-gradient(135deg, #0e0b28, #1a143a);">
-              <div class="thumb-glow" style="background: radial-gradient(circle, rgba(157,111,255,0.2) 0%, transparent 70%);"></div>
-              <span class="thumb-emoji">📷</span>
-            </div>
-          </div>
+    <section class="p-layout" aria-labelledby="p-title">
+      <div class="p-gallery">
+        <div class="p-hero-img"><img id="p-main-img" src="images/prod-camera.jpg" alt=""></div>
+        <div class="p-thumbs">
+          <div class="p-thumb is-active"><img src="images/prod-camera.jpg" alt=""></div>
+          <div class="p-thumb"><img src="images/creator-filming.jpg" alt=""></div>
+          <div class="p-thumb"><img src="images/hero-studio.jpg" alt=""></div>
+          <div class="p-thumb"><img src="images/prod-lens.jpg" alt=""></div>
         </div>
       </div>
 
-      <!-- RIGHT: Info -->
-      <div class="info-col">
-        <div class="cat-tag">CAMERAS &amp; LENSES</div>
+      <div class="p-details">
+        <div class="t-label p-label" id="p-label">— Listing</div>
+        <h1 class="p-title" id="p-title">Sony FX6 Cinema Camera Kit</h1>
 
-        <h1 class="product-title" data-appear data-appear-delay="0.1">Sony A7 IV Mirrorless Camera Body</h1>
-
-        <div class="rating-row">
-          <span class="stars">★★★★★</span>
-          <span class="rating-num">4.9</span>
-          <a href="#reviews" class="reviews-link">47 reviews</a>
-          <span class="verified-badge">✓ Verified Listing</span>
-        </div>
-
-        <div class="price-row">
-          <span class="price-main">£2,199</span>
-          <span class="price-orig">£2,499</span>
-          <span class="price-save">Save £300</span>
-        </div>
-
-        <!-- Condition -->
-        <div class="condition-row">
-          <div class="condition-dot"></div>
-          <div>
-            <div class="condition-label">Like new condition</div>
-            <div class="condition-desc">Barely used, original box included. Shutter count under 500. No cosmetic damage.</div>
+        <div class="p-meta-row">
+          <div class="p-rating">
+            <span>★ <span id="p-rating-num">4.9</span></span>
+            <span style="color:var(--c-text-4);">·</span>
+            <a href="#reviews" id="p-reviews-link">23 reviews</a>
           </div>
+          <div class="p-condition" id="p-condition">Excellent condition</div>
+          <div class="p-views">Viewed <strong id="p-views">342</strong> times</div>
         </div>
 
-        <!-- Seller -->
-        <div class="seller-card">
-          <div class="seller-avatar">PG</div>
-          <div class="seller-info">
-            <div class="seller-name">ProGear_Rentals</div>
-            <div class="seller-meta">
-              <span>⭐ 4.9</span>
-              <span>·</span>
-              <span>152 sales</span>
-              <span class="seller-badge">Verified Seller</span>
+        <div class="p-price-row">
+          <div class="p-price" id="p-price">£95 <span>/ day</span></div>
+          <div class="p-price-note" id="p-price-note">Deposit £200 · Insured up to £5,000</div>
+        </div>
+
+        <p class="p-desc" id="p-desc">Full-frame cinema camera with 24-70mm f/2.8 lens, V-mount battery plate, XLR handle, and Pelican case.</p>
+
+        <div class="p-actions">
+          <button class="btn btn--primary btn--lg btn--arrow" onclick="document.getElementById('p-book-start').focus(); document.getElementById('p-booking').scrollIntoView({behavior:'smooth', block:'center'});">Request booking</button>
+          <button class="btn btn--ghost btn--lg" id="p-save-btn" onclick="toggleFav()">♡ Save</button>
+        </div>
+
+        <div class="p-booking" id="p-booking">
+          <div class="p-booking-head">
+            <h3>Book this listing</h3>
+            <span class="t-label" style="margin:0;">— Real-time availability</span>
+          </div>
+          <div class="p-booking-grid">
+            <div class="p-booking-field">
+              <label for="p-book-start">Start date</label>
+              <input type="date" id="p-book-start" oninput="updateSummary()">
+            </div>
+            <div class="p-booking-field">
+              <label for="p-book-end">End date</label>
+              <input type="date" id="p-book-end" oninput="updateSummary()">
             </div>
           </div>
-          <a href="#" class="view-profile">View profile →</a>
+          <div class="p-booking-field" style="margin-bottom: var(--s-4);">
+            <label for="p-book-msg">Message (optional)</label>
+            <textarea id="p-book-msg" placeholder="Tell the seller what you're shooting — helps them prep the kit."></textarea>
+          </div>
+          <div class="p-booking-summary" id="p-book-summary">
+            <div class="p-booking-summary-row" id="p-book-rate"><span>—</span><span>—</span></div>
+            <div class="p-booking-summary-row" id="p-book-dep"><span>Deposit</span><span>—</span></div>
+            <div class="p-booking-summary-row total" id="p-book-total"><span>Total</span><span>—</span></div>
+          </div>
+          <div class="p-booking-error" id="p-book-err"></div>
+          <button class="btn btn--primary btn--arrow" style="width:100%; height: 48px;" onclick="submitBooking()">Request booking</button>
+          <p class="t-small" style="margin: var(--s-3) 0 0; text-align: center;" id="p-book-login-hint" hidden>You need to <a href="login.html" style="border-bottom:1px solid currentColor;">sign in</a> to book.</p>
         </div>
 
-        <!-- Specs -->
-        <div class="specs-grid">
-          <div class="spec-item">
-            <div class="spec-label">Sensor</div>
-            <div class="spec-value">33MP Full-Frame</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Mount</div>
-            <div class="spec-value">Sony E-mount</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Video</div>
-            <div class="spec-value">4K / 120p</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Stabilisation</div>
-            <div class="spec-value">5-axis IBIS</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Weight</div>
-            <div class="spec-value">659g (body)</div>
-          </div>
-          <div class="spec-item">
-            <div class="spec-label">Included</div>
-            <div class="spec-value">Body only</div>
-          </div>
+        <div class="p-specs" aria-label="Listing details">
+          <div class="p-spec"><div class="label">Seller</div><div class="value" id="p-seller-name">Sarah Chen</div></div>
+          <div class="p-spec"><div class="label">Location</div><div class="value" id="p-location">London, UK</div></div>
+          <div class="p-spec"><div class="label">Delivery</div><div class="value">City courier · £15</div></div>
+          <div class="p-spec"><div class="label">Insurance</div><div class="value">Included up to £5k</div></div>
+          <div class="p-spec"><div class="label">Availability</div><div class="value" id="p-avail">Available</div></div>
+          <div class="p-spec"><div class="label">Category</div><div class="value" id="p-category">Cameras</div></div>
         </div>
 
-        <!-- Description -->
-        <p class="description">
-          The Sony A7 IV is a versatile full-frame mirrorless camera that excels in both photography and videography. Built around a back-illuminated 33MP Exmor R CMOS sensor, it delivers exceptional image quality across a wide dynamic range. The real-time Eye AF and subject tracking system — covering humans, animals, and birds — is among the best in its class. Combined with 4K/120p video output, 10-bit S-Log3 internal recording, and Sony's renowned 5-axis in-body stabilisation, the A7 IV is the ideal all-in-one hybrid for working creatives. This unit has seen minimal use and is in pristine like-new condition.
-        </p>
+        <a class="p-seller-card" href="seller-profile.html">
+          <div class="p-seller-avatar-lg" id="p-seller-avatar">SC</div>
+          <div style="flex:1;">
+            <div class="name" id="p-seller-name-2">Sarah Chen</div>
+            <div class="meta"><span>Verified</span> · <span id="p-seller-rating">4.9★</span> · <span>12 listings</span></div>
+          </div>
+          <span style="color:var(--c-text-3); font-size: 14px;">View profile →</span>
+        </a>
+      </div>
+    </section>
 
-        <!-- Shipping -->
-        <div class="shipping-row">
-          <div class="shipping-icon">🚚</div>
-          <span>Ships worldwide · Estimated 2–4 business days</span>
+    <section class="p-reviews" id="reviews" aria-labelledby="reviews-heading">
+      <div class="section-head">
+        <div>
+          <div class="t-label">— Reviews</div>
+          <h2 class="t-headline" id="reviews-heading">What renters said.</h2>
         </div>
-
-        <!-- Booking section -->
-        <div id="booking-section" class="booking-section" style="display:none; background:var(--c-card); border:1px solid var(--c-border); border-radius:16px; padding:24px; margin-top:24px;">
-          <h3 style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-text); margin-bottom:16px; text-transform:uppercase; letter-spacing:0.06em;">Book This Item</h3>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+        <a href="reviews.html" class="btn btn--link">Read all reviews</a>
+      </div>
+      <div class="p-reviews-grid">
+        <div class="p-review">
+          <div class="p-review-head">
+            <div class="review-avatar">DH</div>
             <div>
-              <label style="font-family:'Syne',sans-serif; font-size:11px; font-weight:600; color:var(--c-text-3); text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:6px;">Start Date</label>
-              <input type="date" id="book-start" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px;" min="">
+              <div class="stars">★ ★ ★ ★ ★</div>
+              <div style="font-size:12px; color:var(--c-text-3);">Daniel H · London</div>
             </div>
+          </div>
+          <p class="p-review-body">"Rented for a two-day commercial shoot. Kit was immaculate, Sarah met me at the pickup, walked me through the settings. Will book again."</p>
+          <div class="p-review-foot">2026-03-22 · Rented for 2 days</div>
+        </div>
+        <div class="p-review">
+          <div class="p-review-head">
+            <div class="review-avatar">AO</div>
             <div>
-              <label style="font-family:'Syne',sans-serif; font-size:11px; font-weight:600; color:var(--c-text-3); text-transform:uppercase; letter-spacing:0.06em; display:block; margin-bottom:6px;">End Date</label>
-              <input type="date" id="book-end" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px;" min="">
+              <div class="stars">★ ★ ★ ★ ★</div>
+              <div style="font-size:12px; color:var(--c-text-3);">Amara O · Manchester</div>
             </div>
           </div>
-          <div id="booking-summary" style="display:none; background:rgba(226,168,75,0.06); border:1px solid rgba(226,168,75,0.15); border-radius:10px; padding:14px; margin-bottom:16px;">
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-              <span style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2);" id="booking-rate"></span>
-              <span style="font-family:'Syne',sans-serif; font-size:13px; font-weight:700; color:var(--c-text);" id="booking-subtotal"></span>
-            </div>
-            <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
-              <span style="font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2);">Refundable deposit</span>
-              <span style="font-family:'Syne',sans-serif; font-size:13px; font-weight:600; color:var(--c-text-2);" id="booking-deposit"></span>
-            </div>
-            <div style="border-top:1px solid var(--c-border); margin-top:8px; padding-top:8px; display:flex; justify-content:space-between;">
-              <span style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-gold);">Total</span>
-              <span style="font-family:'Syne',sans-serif; font-size:14px; font-weight:700; color:var(--c-gold);" id="booking-total"></span>
+          <p class="p-review-body">"First time using Charm — smooth. Kit arrived clean, fully charged, with the media formatted. Insurance quote was fair."</p>
+          <div class="p-review-foot">2026-03-10 · Rented for 4 days</div>
+        </div>
+        <div class="p-review">
+          <div class="p-review-head">
+            <div class="review-avatar">JK</div>
+            <div>
+              <div class="stars">★ ★ ★ ★ ☆</div>
+              <div style="font-size:12px; color:var(--c-text-3);">James K · Bristol</div>
             </div>
           </div>
-          <textarea id="book-message" placeholder="Add a message to the seller (optional)" style="width:100%; background:rgba(255,255,255,0.05); border:1px solid var(--c-border); border-radius:10px; padding:10px 14px; color:var(--c-text); font-family:'DM Sans',sans-serif; font-size:13px; resize:vertical; min-height:60px; margin-bottom:16px;"></textarea>
-          <div id="booking-error" style="display:none; color:var(--c-coral); font-size:13px; margin-bottom:12px; font-family:'DM Sans',sans-serif;"></div>
-          <button id="book-btn" class="btn-add-cart" data-magnetic style="width:100%;" onclick="submitBooking()">Request Booking</button>
-          <p id="booking-login-prompt" style="display:none; text-align:center; font-family:'DM Sans',sans-serif; font-size:13px; color:var(--c-text-2); margin-top:12px;">
-            <a href="login.html" style="color:var(--c-gold); text-decoration:underline; text-underline-offset:3px;">Log in</a> to book this item
-          </p>
+          <p class="p-review-body">"Great camera, responsive seller. One XLR handle screw was loose — nothing major. Would recommend."</p>
+          <div class="p-review-foot">2026-02-28 · Rented for 1 day</div>
         </div>
+      </div>
+    </section>
 
-        <!-- CTAs (for buy items) -->
-        <div id="buy-ctas" class="cta-stack" style="display:none;">
-          <button class="btn-add-cart" onclick="addToCart()">Add to Cart</button>
-          <button class="btn-save" onclick="toggleWishlist()">🤍 Save to Wishlist</button>
+    <section class="p-related" aria-labelledby="related-heading">
+      <div class="section-head">
+        <div>
+          <div class="t-label">— You may also like</div>
+          <h2 class="t-headline" id="related-heading">Similar listings.</h2>
         </div>
-
-        <!-- Trust badges -->
-        <div class="trust-row">
-          <div class="trust-item">
-            <span class="trust-icon">🔒</span>
-            <span class="trust-label">Secure Payment</span>
-          </div>
-          <div class="trust-item">
-            <span class="trust-icon">🛡</span>
-            <span class="trust-label">Buyer Protection</span>
-          </div>
-          <div class="trust-item">
-            <span class="trust-icon">↩️</span>
-            <span class="trust-label">Easy Returns</span>
-          </div>
-        </div>
+        <a href="marketplace.html" class="btn btn--link">Browse more</a>
       </div>
-    </div>
-  </div>
-
-  <!-- Seller's other listings -->
-  <div class="section-full" style="margin-top: 80px;">
-    <div class="section-header">
-      <h2 class="section-title" data-reveal="fade-up">Seller's <em>other listings</em></h2>
-      <a href="#" class="see-all">View all →</a>
-    </div>
-    <div class="h-scroll">
-      <!-- Tamron 28-75mm -->
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Tamron 28-75mm f/2.8 G2</div>
-          <div class="prod-card-price">£549</div>
-          <div class="prod-card-seller">ProGear_Rentals · Like new</div>
-        </div>
-      </div>
-      <!-- DJI Ronin -->
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">DJI Ronin-SC2 Gimbal</div>
-          <div class="prod-card-price">£279</div>
-          <div class="prod-card-seller">ProGear_Rentals · Good</div>
-        </div>
-      </div>
-      <!-- Peak Design strap -->
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #100618, #1c0e28);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">🎭</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Peak Design Slide Strap</div>
-          <div class="prod-card-price">£49</div>
-          <div class="prod-card-seller">ProGear_Rentals · Like new</div>
-        </div>
-      </div>
-      <!-- Sony FE 85mm -->
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:44px;position:relative;z-index:2;">📷</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Sony FE 85mm f/1.8</div>
-          <div class="prod-card-price">£449</div>
-          <div class="prod-card-seller">ProGear_Rentals · Very good</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="section-divider">
-
-  <!-- You might also like -->
-  <div class="section-full">
-    <div class="section-header">
-      <h2 class="section-title" data-reveal="fade-up">You might <em>also like</em></h2>
-    </div>
-    <div class="grid-3">
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #051410, #0a2018);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(0,212,200,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">🎙</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Rode VideoMic Pro+</div>
-          <div class="prod-card-price">£249</div>
-          <div class="prod-card-seller">SoundGear_UK · Like new</div>
-        </div>
-      </div>
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #1a1100, #281a04);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(226,168,75,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">💡</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Godox SL200W LED Panel</div>
-          <div class="prod-card-price">£189</div>
-          <div class="prod-card-seller">LightingPros · Good</div>
-        </div>
-      </div>
-      <div class="prod-card">
-        <div class="prod-card-thumb" style="background: linear-gradient(135deg, #0a0720, #170f36);">
-          <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%, rgba(157,111,255,0.3) 0%, transparent 65%);"></div>
-          <span class="thumb-emoji" style="font-size:56px;position:relative;z-index:2;">📷</span>
-        </div>
-        <div class="prod-card-body">
-          <div class="prod-card-name">Sony A6700 APS-C Body</div>
-          <div class="prod-card-price">£999</div>
-          <div class="prod-card-seller">CameraVault · Very good</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <hr class="section-divider">
-
-  <!-- Reviews -->
-  <div class="section-full" id="reviews">
-    <div class="section-header">
-      <h2 class="section-title" data-reveal="fade-up">Customer <em>reviews</em></h2>
-    </div>
-    <div class="reviews-grid">
-      <!-- Summary -->
-      <div class="rating-summary">
-        <div class="rating-big">4.9</div>
-        <div class="rating-sub">
-          <span class="stars" style="font-size:16px;">★★★★★</span>
-          <span style="font-size:13px; color: var(--c-text-3);">47 reviews</span>
-        </div>
-        <div class="rating-bars">
-          <div class="rating-bar-row">
-            <span class="bar-label">5★</span>
-            <div class="bar-track"><div class="bar-fill" style="width: 89%;"></div></div>
-            <span class="bar-pct">89%</span>
-          </div>
-          <div class="rating-bar-row">
-            <span class="bar-label">4★</span>
-            <div class="bar-track"><div class="bar-fill" style="width: 8%; background: var(--c-text-2);"></div></div>
-            <span class="bar-pct">8%</span>
-          </div>
-          <div class="rating-bar-row">
-            <span class="bar-label">3★</span>
-            <div class="bar-track"><div class="bar-fill" style="width: 2%; background: var(--c-text-3);"></div></div>
-            <span class="bar-pct">2%</span>
-          </div>
-          <div class="rating-bar-row">
-            <span class="bar-label">2★</span>
-            <div class="bar-track"><div class="bar-fill" style="width: 1%; background: var(--c-text-3);"></div></div>
-            <span class="bar-pct">1%</span>
-          </div>
-          <div class="rating-bar-row">
-            <span class="bar-label">1★</span>
-            <div class="bar-track"><div class="bar-fill" style="width: 0%; background: var(--c-coral);"></div></div>
-            <span class="bar-pct">0%</span>
-          </div>
-        </div>
-      </div>
-      <!-- Review cards -->
-      <div class="reviews-list">
-        <div class="review-card">
-          <div class="review-header">
-            <div class="review-avatar" style="background: var(--c-violet);">TM</div>
-            <div class="review-meta">
-              <div class="review-name">TravelMatthew</div>
-              <div class="review-date">March 2025</div>
-            </div>
-            <div class="review-stars">★★★★★</div>
-          </div>
-          <p class="review-text">Absolutely mint condition — couldn't tell it had been used at all. ProGear wrapped it incredibly well for shipping and it arrived in perfect shape. The A7 IV is already a stellar camera and getting one in this condition at this price point is a steal. Highly recommend this seller.</p>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <div class="review-avatar" style="background: var(--c-cyan); color: var(--c-base);">SL</div>
-            <div class="review-meta">
-              <div class="review-name">StudioLens_Amy</div>
-              <div class="review-date">February 2025</div>
-            </div>
-            <div class="review-stars">★★★★★</div>
-          </div>
-          <p class="review-text">Bought this for a commercial shoot. The seller was incredibly responsive and even included the original receipt. Shutter count was exactly as described. Eye AF is devastatingly good on this body — already booked three more jobs with it. Five stars without question.</p>
-        </div>
-        <div class="review-card">
-          <div class="review-header">
-            <div class="review-avatar" style="background: var(--c-gold);">KR</div>
-            <div class="review-meta">
-              <div class="review-name">KieronRoss_Photo</div>
-              <div class="review-date">January 2025</div>
-            </div>
-            <div class="review-stars">★★★★☆</div>
-          </div>
-          <p class="review-text">Great camera at a great price. Shipping took a day longer than estimated but ProGear kept me updated throughout. The body itself is exactly as described — like new with all original accessories. One less star only because I expected the battery to be fully charged!</p>
-        </div>
-      </div>
-    </div>
+      <div class="listing-grid" id="related-grid"></div>
+    </section>
   </div>
 </main>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="footer-logo">✦ Charm</div>
-      <p class="footer-tagline">The creative marketplace for every discipline.</p>
-      <div class="ft-social">
-        <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
-        <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
-        <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
-        <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
+<footer class="footer" aria-label="Site footer">
+  <div class="container-wide">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="nav-logo" style="margin-bottom: var(--s-5);">Charm</div>
+        <p class="t-small" style="max-width: 28ch;">A marketplace for the people who make the work.</p>
       </div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="marketplace.html">Marketplace</a></li><li><a href="cameras.html">Cameras</a></li><li><a href="audio.html">Audio</a></li><li><a href="lighting.html">Lighting</a></li></ul></div>
+      <div class="footer-col"><h4>Sell</h4><ul><li><a href="create-listing.html">List your gear</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="earnings.html">Earnings</a></li></ul></div>
+      <div class="footer-col"><h4>Community</h4><ul><li><a href="how-it-works.html">How it works</a></li><li><a href="blog.html">Journal</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="insurance.html">Insurance</a></li></ul></div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
     </div>
-    <div class="footer-links">
-      <div class="footer-col">
-        <div class="footer-col-title">Platform</div>
-        <a href="home.html">Home</a>
-        <a href="marketplace.html">Marketplace</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="how-it-works.html">How It Works</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Categories</div>
-        <a href="cameras.html">Cameras</a>
-        <a href="audio.html">Audio</a>
-        <a href="lighting.html">Lighting</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Sellers</div>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="analytics.html">Analytics</a>
-        <a href="create-listing.html">Create Listing</a>
-        <a href="earnings.html">Earnings</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Company</div>
-        <a href="about.html">About</a>
-        <a href="blog.html">Blog</a>
-        <a href="insurance.html">Insurance</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="footer-col">
-        <div class="footer-col-title">Legal</div>
-        <a href="terms.html">Terms</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="#">Cookies</a>
-      </div>
+    <div class="footer-bottom">
+      <div>© <span id="year">2026</span> Charm</div>
+      <div class="footer-lang"><button class="on">EN</button><button>PT</button><button>ES</button><button>FR</button><button>DE</button></div>
     </div>
   </div>
-  <div class="footer-copy">&copy; 2026 Charm. All rights reserved.</div>
 </footer>
 
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script src="charm-db.js"></script>
+<script src="shared.js"></script>
 <script>
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('nav--scrolled', window.scrollY > 40); }, { passive: true });
+  document.getElementById('year').textContent = new Date().getFullYear();
+
   let currentListing = null;
 
-  // Toast
-  let toastTimer;
-  function showToast(icon, msg) {
-    const toast = document.getElementById('toast');
-    toast.innerHTML = `<span class="toast-icon">${icon}</span><span>${msg}</span>`;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => { toast.classList.remove('show'); }, 2800);
+  const categoryImage = {
+    cameras: 'images/prod-camera.jpg', audio: 'images/prod-microphone.jpg',
+    lighting: 'images/prod-lighting.jpg', instruments: 'images/prod-instruments.jpg',
+    other: 'images/hero-studio.jpg',
+  };
+
+  function listingImage(l) {
+    if (l.images && l.images.length && l.images[0]) return l.images[0];
+    return categoryImage[l.category] || categoryImage.other;
   }
 
-  // Gallery switcher
-  function switchThumb(el, bg, emoji) {
-    document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-    const mainBg = document.getElementById('mainThumbBg');
-    mainBg.style.background = bg;
-    document.getElementById('mainEmoji').textContent = emoji;
-  }
+  $$('.p-thumb').forEach(t => t.addEventListener('click', () => {
+    $$('.p-thumb').forEach(x => x.classList.remove('is-active'));
+    t.classList.add('is-active');
+    const img = t.querySelector('img');
+    if (img) $('#p-main-img').src = img.src;
+  }));
 
-  // Wishlist toggle
-  let wishlisted = false;
-  function toggleWishlist() {
-    wishlisted = !wishlisted;
-    const btn = document.getElementById('wishlistBtn');
-    btn.textContent = wishlisted ? '❤️' : '🤍';
-    btn.style.transform = 'scale(1.2)';
-    setTimeout(() => { btn.style.transform = ''; }, 200);
-    if (currentListing && window.CharmWishlist) {
-      window.CharmWishlist.toggle(currentListing.id);
-    }
-    showToast(wishlisted ? '❤️' : '🤍', wishlisted ? 'Saved to wishlist!' : 'Removed from wishlist');
-  }
-
-  // Add to cart
-  function addToCart() {
-    if (currentListing && window.CharmCart) {
-      window.CharmCart.add({ id: currentListing.id, name: currentListing.title, price: currentListing.priceBuy || currentListing.priceRent, image: currentListing.images[0] || '' });
-    }
-    showToast('🛒', 'Added to cart!');
-  }
-
-  // Booking date change handler
-  function updateBookingSummary() {
+  function updateSummary() {
     if (!currentListing) return;
-    const start = document.getElementById('book-start').value;
-    const end = document.getElementById('book-end').value;
-    const summary = document.getElementById('booking-summary');
-    if (!start || !end) { summary.style.display = 'none'; return; }
-    const days = Math.ceil((new Date(end) - new Date(start)) / (1000*60*60*24));
-    if (days <= 0) { summary.style.display = 'none'; return; }
+    const start = $('#p-book-start').value;
+    const end = $('#p-book-end').value;
+    const summary = $('#p-book-summary');
+    if (!start || !end) { summary.classList.remove('is-open'); return; }
+    const s = new Date(start), e = new Date(end);
+    const days = Math.max(1, Math.ceil((e - s) / (1000 * 60 * 60 * 24)));
     const rate = currentListing.priceRent || 0;
-    const subtotal = days * rate;
+    const subtotal = rate * days;
     const deposit = currentListing.deposit || 0;
-    document.getElementById('booking-rate').textContent = `£${rate}/day × ${days} day${days>1?'s':''}`;
-    document.getElementById('booking-subtotal').textContent = `£${subtotal}`;
-    document.getElementById('booking-deposit').textContent = `£${deposit}`;
-    document.getElementById('booking-total').textContent = `£${subtotal + deposit}`;
-    summary.style.display = 'block';
+    $('#p-book-rate').innerHTML = `<span>£${rate} × ${days} day${days > 1 ? 's' : ''}</span><span>£${subtotal}</span>`;
+    $('#p-book-dep').innerHTML = `<span>Deposit (refundable)</span><span>£${deposit}</span>`;
+    $('#p-book-total').innerHTML = `<span>Total</span><span>£${(subtotal + deposit).toLocaleString()}</span>`;
+    summary.classList.add('is-open');
   }
 
-  // Submit booking
   async function submitBooking() {
     if (!currentListing) return;
     const user = window.CharmDB?.Auth.currentUser();
-    if (!user) {
-      document.getElementById('booking-login-prompt').style.display = 'block';
-      return;
-    }
-    const start = document.getElementById('book-start').value;
-    const end = document.getElementById('book-end').value;
-    const message = document.getElementById('book-message').value;
-    const errEl = document.getElementById('booking-error');
-    errEl.style.display = 'none';
-    if (!start || !end) { errEl.textContent = 'Please select start and end dates'; errEl.style.display = 'block'; return; }
+    if (!user) { $('#p-book-login-hint').hidden = false; return; }
+    const start = $('#p-book-start').value;
+    const end = $('#p-book-end').value;
+    const message = $('#p-book-msg').value;
+    const err = $('#p-book-err');
+    err.style.display = 'none';
+    if (!start || !end) { err.textContent = 'Pick a start and end date.'; err.style.display = 'block'; return; }
     try {
       await window.CharmDB.Bookings.create({ listingId: currentListing.id, startDate: start, endDate: end, message });
-      showToast('✅', 'Booking request sent!');
-      document.getElementById('book-btn').textContent = 'Request Sent ✓';
-      document.getElementById('book-btn').disabled = true;
-      document.getElementById('book-btn').style.opacity = '0.6';
-    } catch (e) {
-      errEl.textContent = e.message;
-      errEl.style.display = 'block';
-    }
+      toast('Booking request sent');
+    } catch (e) { err.textContent = e.message; err.style.display = 'block'; }
   }
 
-  // Load listing from URL param
-  async function loadListing() {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id');
-    if (!id || !window.CharmDB) return; // Keep static content if no ID
+  function toggleFav() {
+    if (!currentListing) return;
+    const wl = JSON.parse(localStorage.getItem('charm-wishlist') || '[]');
+    const idx = wl.indexOf(currentListing.id);
+    const btn = $('#p-save-btn');
+    if (idx > -1) { wl.splice(idx, 1); btn.innerHTML = '♡ Save'; toast('Removed from wishlist'); }
+    else { wl.push(currentListing.id); btn.innerHTML = '♥ Saved'; toast('Saved to wishlist'); }
+    localStorage.setItem('charm-wishlist', JSON.stringify(wl));
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
 
-    const listing = await window.CharmDB.Listings.getById(id);
+  let toastTimeout;
+  function toast(msg) {
+    const t = $('#toast'); t.textContent = msg; t.classList.add('is-open');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => t.classList.remove('is-open'), 2200);
+  }
+
+  async function load() {
+    if (!window.CharmDB) { setTimeout(load, 120); return; }
+    const id = new URLSearchParams(location.search).get('id');
+    let listing = id ? await window.CharmDB.Listings.getById(id) : null;
+    if (!listing) {
+      const all = await window.CharmDB.Listings.getAll({ limit: 1 });
+      listing = all.listings[0];
+    }
     if (!listing) return;
     currentListing = listing;
+    document.title = `${listing.title} — Charm`;
 
-    // Update page title
-    document.title = `${listing.title} — Charm Marketplace`;
+    $('#p-label').textContent = `— ${listing.category.toUpperCase()}`;
+    $('#p-title').textContent = listing.title;
+    $('#p-rating-num').textContent = (listing.rating || 0).toFixed(1);
+    $('#p-reviews-link').textContent = `${listing.reviewCount || 0} reviews`;
+    $('#p-condition').textContent = `${listing.condition} condition`;
+    $('#p-views').textContent = (listing.views || 0).toLocaleString();
+    $('#p-desc').textContent = listing.description || '';
+    $('#p-location').textContent = listing.location;
+    $('#p-category').textContent = listing.category.charAt(0).toUpperCase() + listing.category.slice(1);
+    $('#p-avail').textContent = listing.availability === 'available' ? 'Available' : listing.availability;
+    $('#p-seller-name').textContent = listing.sellerName;
+    $('#p-seller-name-2').textContent = listing.sellerName;
+    $('#p-seller-avatar').textContent = listing.sellerAvatar || 'CR';
+    $('#p-seller-rating').textContent = `${(listing.rating || 4.9).toFixed(1)}★`;
+    $('#crumb-title').textContent = listing.title;
+    $('#crumb-cat').textContent = listing.category;
+    $('#crumb-cat').href = `marketplace.html?category=${listing.category}`;
 
-    // Update product title
-    const titleEl = document.querySelector('.product-title');
-    if (titleEl) titleEl.textContent = listing.title;
+    const mainImg = listingImage(listing);
+    $('#p-main-img').src = mainImg;
+    $$('.p-thumb img')[0].src = mainImg;
 
-    // Update category tag
-    const catTag = document.querySelector('.cat-tag');
-    if (catTag) catTag.textContent = listing.category.toUpperCase();
+    const price = listing.priceRent ? `£${listing.priceRent} <span>/ day</span>` : `£${listing.priceBuy}`;
+    $('#p-price').innerHTML = price;
+    $('#p-price-note').textContent = listing.deposit ? `Deposit £${listing.deposit} · Insured up to £5,000` : 'Insured up to £5,000';
 
-    // Update price
-    const priceMain = document.querySelector('.price-main');
-    if (priceMain) {
-      if (listing.type === 'rent' || listing.type === 'both') {
-        priceMain.textContent = `£${listing.priceRent}/day`;
-      } else {
-        priceMain.textContent = `£${listing.priceBuy}`;
-      }
-    }
-    // Hide sale indicators
-    const priceOrig = document.querySelector('.price-orig');
-    const priceSave = document.querySelector('.price-save');
-    if (priceOrig) priceOrig.style.display = 'none';
-    if (priceSave) priceSave.style.display = 'none';
+    const wl = JSON.parse(localStorage.getItem('charm-wishlist') || '[]');
+    if (wl.includes(listing.id)) $('#p-save-btn').innerHTML = '♥ Saved';
 
-    // Update rating
-    const ratingNum = document.querySelector('.rating-num');
-    if (ratingNum) ratingNum.textContent = listing.rating || 'New';
-    const reviewsLink = document.querySelector('.reviews-link');
-    if (reviewsLink) reviewsLink.textContent = `${listing.reviewCount || 0} reviews`;
-
-    // Update condition
-    const condLabel = document.querySelector('.condition-label');
-    if (condLabel) condLabel.textContent = `${listing.condition.charAt(0).toUpperCase() + listing.condition.slice(1)} condition`;
-
-    // Update description
-    const desc = document.querySelector('.description');
-    if (desc) desc.textContent = listing.description;
-
-    // Update seller
-    const sellerAvatar = document.querySelector('.seller-avatar');
-    const sellerName = document.querySelector('.seller-name');
-    if (sellerAvatar) sellerAvatar.textContent = listing.sellerAvatar;
-    if (sellerName) sellerName.textContent = listing.sellerName;
-
-    // Update main image
-    if (listing.images && listing.images.length > 0) {
-      const mainThumb = document.getElementById('mainThumb');
-      if (mainThumb) {
-        const thumbBg = mainThumb.querySelector('.thumb-bg');
-        const emoji = mainThumb.querySelector('.thumb-emoji');
-        if (thumbBg) {
-          thumbBg.style.background = 'none';
-          thumbBg.style.backgroundImage = `url('${listing.images[0]}')`;
-          thumbBg.style.backgroundSize = 'cover';
-          thumbBg.style.backgroundPosition = 'center';
-        }
-        if (emoji) emoji.style.display = 'none';
-      }
-    }
-
-    // Show booking section for rentable items
-    if (listing.type === 'rent' || listing.type === 'both') {
-      document.getElementById('booking-section').style.display = 'block';
-      // Set min date to today
-      const today = new Date().toISOString().split('T')[0];
-      document.getElementById('book-start').min = today;
-      document.getElementById('book-end').min = today;
-      document.getElementById('book-start').addEventListener('change', () => {
-        document.getElementById('book-end').min = document.getElementById('book-start').value;
-        updateBookingSummary();
-      });
-      document.getElementById('book-end').addEventListener('change', updateBookingSummary);
-
-      // Check if logged in
-      const user = window.CharmDB?.Auth.currentUser();
-      if (!user) {
-        document.getElementById('booking-login-prompt').style.display = 'block';
-        document.getElementById('book-btn').style.display = 'none';
-      }
-      // Check if own listing
-      if (user && user.id === listing.sellerId) {
-        document.getElementById('book-btn').textContent = 'This is your listing';
-        document.getElementById('book-btn').disabled = true;
-        document.getElementById('book-btn').style.opacity = '0.5';
-      }
-    }
-    if (listing.type === 'buy' || listing.type === 'both') {
-      document.getElementById('buy-ctas').style.display = 'flex';
-    }
-
-    // Update shipping info for location
-    const shippingRow = document.querySelector('.shipping-row span');
-    if (shippingRow && listing.location) {
-      shippingRow.textContent = `📍 ${listing.location} · Collection or delivery available`;
-    }
+    const all = await window.CharmDB.Listings.getAll({ limit: 20 });
+    const related = all.listings.filter(l => l.id !== listing.id && l.category === listing.category);
+    const fallback = all.listings.filter(l => l.id !== listing.id);
+    const items = (related.length >= 4 ? related : fallback).slice(0, 4);
+    $('#related-grid').innerHTML = items.map(l => {
+      const p = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
+      const img = listingImage(l);
+      return `
+        <a class="card" href="product.html?id=${l.id}">
+          <div class="card-img card-img--tall">
+            <span class="card-tag">${l.type === 'buy' ? 'Buy' : 'Rent'}</span>
+            <img src="${img}" alt="${l.title}" loading="lazy">
+          </div>
+          <div class="card-meta">
+            <div class="card-label"><span>${l.location}</span><span>${(l.rating || 0).toFixed(1)} ★</span></div>
+            <h3 class="card-title">${l.title}</h3>
+            <p class="card-sub">${l.sellerName}</p>
+            <div class="card-price" style="margin-top:10px;">${p}</div>
+          </div>
+        </a>`;
+    }).join('');
   }
 
-  // Run on load
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadListing);
-  } else {
-    loadListing();
-  }
+  load();
 </script>
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="animations.js"></script>
-<script src="shared.js"></script>
 </body>
 </html>

@@ -1,555 +1,920 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Cameras — Charm</title>
-  <meta name="description" content="Rent cinema cameras, DSLRs, mirrorless bodies and film cameras from trusted creators. From £25/day on Charm.">
-  <meta property="og:title" content="Cameras — Charm">
-  <meta property="og:description" content="Rent cinema cameras, DSLRs, mirrorless bodies and film cameras from trusted creators. From £25/day on Charm.">
-  <meta property="og:type" content="website">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Cameras — Charm">
-  <meta name="twitter:description" content="Rent cinema cameras, DSLRs, mirrorless bodies and film cameras from trusted creators.">
-  <link rel="canonical" href="https://charm.equipment/cameras">
-  <meta name="theme-color" content="#07070e">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --c-base: #07070e;
-      --c-card: #0d0d1a;
-      --c-elevated: #131326;
-      --c-float: #1a1a32;
-      --c-gold: #e2a84b;
-      --c-gold-dim: rgba(226,168,75,0.14);
-      --c-violet: #9d6fff;
-      --c-coral: #ff6b57;
-      --c-cyan: #00d4c8;
-      --c-text: #f0ece3;
-      --c-text-2: #9896a8;
-      --c-text-3: #8886a0;
-      --c-border: rgba(255,255,255,0.07);
-      --c-border-2: rgba(255,255,255,0.13);
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; scroll-padding-top: 80px; -webkit-text-size-adjust: 100%; }
-    body { background: var(--c-base); color: var(--c-text); font-family: 'DM Sans', sans-serif; line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-    * { -webkit-tap-highlight-color: transparent; }
-    :focus { outline: none; }
-    :focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; border-radius: 3px; }
-    button, [role="button"], a, select, label[for] { cursor: pointer; }
-    h1, h2, h3, h4 { text-wrap: balance; }
-    p { text-wrap: pretty; }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
-    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-    ::-webkit-scrollbar { width: 5px; } ::-webkit-scrollbar-track { background: var(--c-base); } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
-    ::selection { background: rgba(226,168,75,0.3); color: var(--c-text); }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cameras — Charm</title>
+<meta name="description" content="Rent or buy cinema cameras, mirrorless bodies, DSLRs, drones and lenses from trusted creators. From £25/day on Charm.">
+<link rel="canonical" href="https://aireyai.github.io/charm/cameras.html">
 
-    .noise { position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.028;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px; }
+<meta property="og:title" content="Cameras — Charm">
+<meta property="og:description" content="Rent or buy cinema cameras, mirrorless bodies, DSLRs, drones and lenses from trusted creators. From £25/day.">
+<meta property="og:image" content="https://aireyai.github.io/charm/images/prod-camera.jpg">
+<meta property="og:url" content="https://aireyai.github.io/charm/cameras.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Charm">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cameras — Charm">
+<meta name="twitter:description" content="Rent or buy cinema cameras, mirrorless bodies, DSLRs and lenses from trusted creators.">
+<meta name="twitter:image" content="https://aireyai.github.io/charm/images/prod-camera.jpg">
 
-    /* NAV */
-    .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 14px 48px; background: rgba(7,7,14,0.88); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border-bottom: 1px solid var(--c-border); }
-    .nav-inner { max-width: 1440px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-    .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--c-text); text-decoration: none; display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .logo-gem { width: 28px; height: 28px; border-radius: 7px; background: linear-gradient(135deg, #e2a84b 0%, #f5d080 60%, #c98830 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 10px rgba(226,168,75,0.35); }
-    .nav-links { display: flex; align-items: center; gap: 2px; list-style: none; }
-    .nav-links a { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--c-text-3); text-decoration: none; padding: 7px 14px; border-radius: 8px; transition: color 0.2s, background 0.2s; }
-    .nav-links a:hover { color: var(--c-text-2); background: rgba(255,255,255,0.04); }
-    .nav-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-    .nav-icon-btn { font-size: 16px; color: var(--c-text-3); text-decoration: none; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 9px; border: 1px solid var(--c-border); transition: color 0.2s, background 0.2s; }
-    .nav-icon-btn:hover { color: var(--c-text-2); background: rgba(255,255,255,0.05); }
-    .btn-ghost { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 600; color: var(--c-text-2); background: transparent; border: 1px solid var(--c-border-2); border-radius: 9px; padding: 8px 16px; text-decoration: none; transition: color 0.2s, border-color 0.2s, background 0.2s; }
-    .btn-ghost:hover { color: var(--c-text); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.05); }
-    .btn-gold { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 9px; padding: 9px 18px; text-decoration: none; box-shadow: 0 2px 14px rgba(226,168,75,0.28); transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s, background 0.2s; }
-    .btn-gold:hover { background: #ebb850; transform: translateY(-1px); box-shadow: 0 5px 22px rgba(226,168,75,0.44); }
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    /* HERO */
-    .hero { padding: 140px 48px 80px; position: relative; overflow: hidden; border-bottom: 1px solid var(--c-border); }
-    .hero-orb-1 { position: absolute; width: 800px; height: 800px; border-radius: 50%; top: -300px; right: -200px; background: radial-gradient(circle, rgba(157,111,255,0.15) 0%, transparent 60%); pointer-events: none; filter: blur(60px); }
-    .hero-orb-2 { position: absolute; width: 500px; height: 500px; border-radius: 50%; bottom: -100px; left: -100px; background: radial-gradient(circle, rgba(157,111,255,0.08) 0%, transparent 60%); pointer-events: none; filter: blur(80px); }
-    .hero-inner { max-width: 1440px; margin: 0 auto; position: relative; z-index: 1; }
-    .hero-breadcrumb { display: flex; align-items: center; gap: 8px; font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 600; color: var(--c-text-3); letter-spacing: 0.04em; margin-bottom: 24px; }
-    .hero-breadcrumb a { color: inherit; text-decoration: none; transition: color 0.2s; }
-    .hero-breadcrumb a:hover { color: var(--c-text-2); }
-    .hero-headline { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 700; font-size: clamp(48px, 6vw, 88px); line-height: 1.0; letter-spacing: -0.03em; color: var(--c-text); margin-bottom: 20px; }
-    .hero-headline em { color: var(--c-violet); font-style: italic; }
-    .hero-sub { font-family: 'DM Sans', sans-serif; font-size: 16px; color: var(--c-text-2); line-height: 1.7; max-width: 520px; margin-bottom: 32px; }
-    .hero-stats { display: flex; gap: 0; flex-wrap: wrap; margin-bottom: 36px; }
-    .hero-stat-pill { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.04em; color: var(--c-text-2); background: var(--c-card); border: 1px solid var(--c-border-2); border-radius: 50px; padding: 8px 18px; margin-right: 8px; margin-bottom: 8px; }
-    .hero-stat-pill strong { color: var(--c-gold); }
-    .hero-search { display: flex; gap: 10px; max-width: 560px; }
-    .hero-search-input { flex: 1; background: var(--c-card); border: 1px solid var(--c-border-2); border-radius: 12px; padding: 14px 20px; font-family: 'DM Sans', sans-serif; font-size: 14.5px; color: var(--c-text); transition: border-color 0.2s, background 0.2s; }
-    .hero-search-input::placeholder { color: var(--c-text-3); }
-    .hero-search-input:focus { border-color: rgba(157,111,255,0.4); background: rgba(157,111,255,0.04); }
-    .hero-search-btn { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 12px; padding: 14px 24px; white-space: nowrap; transition: background 0.2s, transform 0.2s; }
-    .hero-search-btn:hover { background: #ebb850; transform: translateY(-1px); }
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="charm-v2.css">
 
-    /* FEATURED SECTION */
-    .section { padding: 64px 48px; }
-    .section-inner { max-width: 1440px; margin: 0 auto; }
-    .section-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; gap: 16px; }
-    .section-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--c-text); }
-    .section-link { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: var(--c-text-3); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
-    .section-link:hover { color: var(--c-gold); }
-    .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+<style>
+  /* Page-specific styles — shared with marketplace */
+  .mkt-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: var(--s-8);
+    padding-top: var(--s-7);
+  }
+  @media (max-width: 960px) {
+    .mkt-layout { grid-template-columns: 1fr; gap: var(--s-5); }
+    .mkt-sidebar { display: none; }
+    .mkt-sidebar.is-open { display: block; position: fixed; inset: 72px 0 0 0; background: var(--c-bg); z-index: 80; padding: var(--s-5); overflow-y: auto; }
+  }
 
-    /* SUBCATEGORY CHIPS */
-    .subcat-section { padding: 0 48px 48px; border-bottom: 1px solid var(--c-border); }
-    .subcat-inner { max-width: 1440px; margin: 0 auto; }
-    .subcat-label { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 14px; }
-    .subcat-chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; flex-wrap: wrap; }
-    .subcat-chips::-webkit-scrollbar { display: none; }
-    .subcat-chip { font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600; color: var(--c-text-3); background: transparent; border: 1px solid var(--c-border); border-radius: 50px; padding: 8px 18px; cursor: pointer; white-space: nowrap; transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.18s; }
-    .subcat-chip:hover { color: var(--c-text-2); border-color: var(--c-border-2); transform: translateY(-1px); }
-    .subcat-chip.active { color: var(--c-violet); background: rgba(157,111,255,0.1); border-color: rgba(157,111,255,0.3); }
+  .mkt-sidebar { position: sticky; top: 88px; align-self: start; max-height: calc(100dvh - 100px); overflow-y: auto; padding-right: var(--s-3); }
+  .mkt-sidebar::-webkit-scrollbar { width: 4px; }
+  .mkt-filter-group { padding: var(--s-5) 0; border-bottom: 1px solid var(--c-border); }
+  .mkt-filter-group:first-child { padding-top: 0; }
+  .mkt-filter-group:last-child { border-bottom: 0; }
+  .mkt-filter-title {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--c-text-3);
+    margin-bottom: var(--s-4);
+  }
+  .mkt-filter-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    cursor: pointer;
+    color: var(--c-text-2);
+    transition: color 180ms ease;
+  }
+  .mkt-filter-row:hover { color: var(--c-text); }
+  .mkt-filter-row input { margin: 0; accent-color: var(--c-text); width: 16px; height: 16px; }
+  .mkt-filter-row .count { color: var(--c-text-4); font-size: 12px; font-variant-numeric: tabular-nums; }
+  .mkt-filter-reset {
+    font-size: 13px;
+    color: var(--c-text-3);
+    text-align: left;
+    padding-top: var(--s-3);
+    border-bottom: 1px solid var(--c-border-2);
+    padding-bottom: 4px;
+    display: inline-block;
+    margin-top: var(--s-3);
+    transition: color 180ms ease;
+  }
+  .mkt-filter-reset:hover { color: var(--c-text); }
 
-    /* MAIN LAYOUT */
-    .cat-layout { max-width: 1440px; margin: 0 auto; padding: 40px 48px 80px; display: grid; grid-template-columns: 240px 1fr; gap: 36px; align-items: start; }
+  .price-slider-row { display: flex; align-items: center; gap: var(--s-2); font-size: 12px; color: var(--c-text-2); font-variant-numeric: tabular-nums; margin-top: var(--s-3); }
+  .price-slider-row input[type="range"] { accent-color: var(--c-text); width: 100%; }
 
-    /* SIDEBAR */
-    .sidebar { position: sticky; top: 80px; background: var(--c-card); border: 1px solid var(--c-border); border-radius: 16px; overflow: hidden; }
-    .sidebar-head { padding: 18px 20px; border-bottom: 1px solid var(--c-border); display: flex; align-items: center; justify-content: space-between; }
-    .sidebar-head h3 { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text); }
-    .btn-clear { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 600; color: var(--c-text-3); background: none; border: none; cursor: pointer; transition: color 0.2s; }
-    .btn-clear:hover { color: var(--c-coral); }
-    .filter-group { padding: 18px 20px; border-bottom: 1px solid var(--c-border); }
-    .filter-group:last-child { border-bottom: none; }
-    .filter-legend { font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 14px; display: block; }
-    .filter-group label { display: flex; align-items: center; gap: 10px; font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-2); padding: 5px 0; cursor: pointer; transition: color 0.2s; }
-    .filter-group label:hover { color: var(--c-text); }
-    .filter-group input[type="checkbox"] { accent-color: var(--c-violet); width: 14px; height: 14px; flex-shrink: 0; }
-    .filter-count { margin-left: auto; font-size: 11px; color: var(--c-text-3); background: rgba(255,255,255,0.06); border-radius: 4px; padding: 1px 6px; }
-    .price-range { display: flex; flex-direction: column; gap: 12px; }
-    .price-slider { width: 100%; accent-color: var(--c-gold); cursor: pointer; }
-    .price-labels { display: flex; justify-content: space-between; font-family: 'Syne', sans-serif; font-size: 11.5px; font-weight: 700; color: var(--c-gold); }
+  /* Toolbar */
+  .mkt-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: var(--s-4); padding: var(--s-4) 0 var(--s-5);
+    border-bottom: 1px solid var(--c-border); margin-bottom: var(--s-6); flex-wrap: wrap;
+  }
+  .mkt-result-count { font-size: 14px; color: var(--c-text-3); font-variant-numeric: tabular-nums; }
+  .mkt-sort {
+    font-size: 13px; padding: 8px 14px; padding-right: 32px;
+    background: transparent; border: 1px solid var(--c-border-2);
+    color: var(--c-text-2); border-radius: var(--r-2);
+  }
+  .mkt-view-toggle { display: flex; border: 1px solid var(--c-border-2); border-radius: var(--r-2); overflow: hidden; }
+  .mkt-view-toggle button {
+    padding: 8px 10px; color: var(--c-text-3); background: transparent;
+    border-right: 1px solid var(--c-border-2);
+    transition: background 180ms ease, color 180ms ease;
+  }
+  .mkt-view-toggle button:last-child { border-right: 0; }
+  .mkt-view-toggle button.is-active { background: var(--c-text); color: var(--c-bg); }
+  .mkt-filters-toggle-mobile { display: none; }
+  @media (max-width: 960px) {
+    .mkt-filters-toggle-mobile { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: var(--c-surface-2); border: 1px solid var(--c-border-2); border-radius: var(--r-2); color: var(--c-text-2); font-size: 13px; }
+    .mkt-filters-toggle-mobile .badge { background: var(--c-text); color: var(--c-bg); padding: 1px 6px; border-radius: 8px; font-size: 11px; font-weight: 500; }
+  }
 
-    /* SORT BAR */
-    .sort-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-    .sort-bar-left { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 600; color: var(--c-text-3); letter-spacing: 0.04em; }
-    .sort-bar-left strong { color: var(--c-text-2); }
-    .sort-select { font-family: 'Syne', sans-serif; font-size: 12.5px; font-weight: 600; color: var(--c-text-2); background: var(--c-elevated); border: 1px solid var(--c-border); border-radius: 8px; padding: 7px 30px 7px 14px; cursor: pointer; -webkit-appearance: none; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%235a586e' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-color: var(--c-elevated); }
+  /* Active filter chips */
+  .mkt-chips { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-5); }
+  .mkt-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 10px; border: 1px solid var(--c-border-2); border-radius: 2px;
+    font-size: 12px; color: var(--c-text-2); background: transparent;
+  }
+  .mkt-chip button { color: var(--c-text-3); font-size: 14px; line-height: 1; transition: color 180ms ease; }
+  .mkt-chip button:hover { color: var(--c-text); }
 
-    /* PRODUCT GRID */
-    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  /* Product grid */
+  .prod-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--s-7) var(--s-5); }
+  .prod-grid.is-list { grid-template-columns: 1fr; gap: var(--s-4); }
+  .prod-grid.is-list .prod-card {
+    display: grid; grid-template-columns: 240px 1fr; gap: var(--s-5); align-items: start;
+    padding: var(--s-4); border: 1px solid var(--c-border); border-radius: var(--r-4);
+  }
+  .prod-grid.is-list .prod-img { aspect-ratio: 4/3; }
+  .prod-grid.is-list .prod-meta { padding: 0; }
 
-    /* PRODUCT CARD */
-    .p-card { background: var(--c-card); border: 1px solid var(--c-border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: border-color 0.25s, transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.25s; }
-    @media (hover: hover) { .p-card:hover { border-color: var(--c-border-2); transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.3); } .p-card:hover .quick-view { opacity: 1; transform: translateX(-50%) translateY(0); } }
-    .p-card-media { position: relative; overflow: hidden; aspect-ratio: 4/3; }
-    .p-card-thumb { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-    .p-card-thumb-icon { font-size: 40px; position: relative; z-index: 1; filter: drop-shadow(0 4px 16px rgba(157,111,255,0.4)); }
-    .p-card-thumb-glow { position: absolute; width: 120px; height: 120px; border-radius: 50%; background: radial-gradient(circle, rgba(157,111,255,0.3) 0%, transparent 70%); filter: blur(20px); }
-    .p-badges { position: absolute; top: 10px; left: 10px; display: flex; flex-direction: column; gap: 4px; }
-    .p-badge { font-family: 'Syne', sans-serif; font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; }
-    .p-badge.rent { background: rgba(0,212,200,0.15); color: var(--c-cyan); border: 1px solid rgba(0,212,200,0.25); }
-    .p-badge.hot { background: rgba(226,168,75,0.15); color: var(--c-gold); border: 1px solid rgba(226,168,75,0.3); }
-    .p-badge.new { background: var(--c-elevated); color: var(--c-text); border: 1px solid var(--c-border-2); }
-    .p-wish { position: absolute; top: 10px; right: 10px; width: 34px; height: 34px; border-radius: 50%; background: rgba(7,7,14,0.7); backdrop-filter: blur(8px); border: 1px solid var(--c-border); display: flex; align-items: center; justify-content: center; font-size: 14px; color: var(--c-text-2); transition: transform 0.2s, background 0.2s; text-decoration: none; }
-    .p-wish:hover { transform: scale(1.1); }
-    .quick-view { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%) translateY(8px); opacity: 0; white-space: nowrap; background: rgba(7,7,14,0.9); backdrop-filter: blur(8px); color: var(--c-text); border: 1px solid var(--c-border-2); font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; padding: 6px 14px; border-radius: 50px; text-decoration: none; transition: opacity 0.2s, transform 0.2s; }
-    .p-card-body { padding: 14px 16px 16px; flex: 1; display: flex; flex-direction: column; }
-    .p-card-cat { font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 6px; }
-    .p-card-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--c-text); margin-bottom: 6px; letter-spacing: -0.01em; line-height: 1.3; text-decoration: none; display: block; }
-    .p-card-name:hover { color: var(--c-gold); }
-    .p-card-rating { display: flex; align-items: center; gap: 5px; margin-bottom: 4px; }
-    .p-stars { color: var(--c-gold); font-size: 11px; }
-    .p-rating-count { font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: var(--c-text-3); }
-    .p-seller { font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: var(--c-text-3); margin-bottom: 10px; }
-    .p-card-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--c-border); display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .p-price-col { display: flex; flex-direction: column; }
-    .p-price { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 16px; color: var(--c-text); }
-    .p-price-period { font-family: 'DM Sans', sans-serif; font-size: 11px; color: var(--c-text-3); }
-    .btn-rent { font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 700; color: #0f0800; background: var(--c-gold); border: none; border-radius: 9px; padding: 9px 16px; cursor: pointer; transition: background 0.2s, transform 0.2s cubic-bezier(0.34,1.56,0.64,1); text-decoration: none; white-space: nowrap; }
-    .btn-rent:hover { background: #ebb850; transform: translateY(-1px); }
+  .prod-card { display: block; cursor: pointer; transition: transform 400ms cubic-bezier(0.2,0.8,0.2,1); }
+  .prod-card:hover { transform: translateY(-4px); }
+  .prod-card:hover .prod-img img { transform: scale(1.04); }
+  .prod-img { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: var(--r-4); background: var(--c-surface-2); }
+  .prod-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 700ms cubic-bezier(0.2,0.8,0.2,1); }
+  .prod-meta { padding: var(--s-4) 0 var(--s-2); }
+  .prod-title {
+    font-family: var(--f-display); font-size: 16px; font-weight: 500;
+    letter-spacing: -0.2px; line-height: 1.25; color: var(--c-text); margin: 0 0 6px;
+  }
+  .prod-seller { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; font-size: 12px; color: var(--c-text-3); }
+  .prod-seller-avatar {
+    width: 20px; height: 20px; border-radius: 50%; background: var(--c-elevated); color: var(--c-text);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 500; letter-spacing: 0.5px;
+  }
+  .prod-footer { display: flex; align-items: baseline; justify-content: space-between; margin-top: 8px; }
+  .prod-price { font-family: var(--f-display); font-variant-numeric: tabular-nums; font-size: 16px; font-weight: 500; color: var(--c-text); }
+  .prod-price span { color: var(--c-text-3); font-weight: 400; font-size: 12px; margin-left: 2px; }
+  .prod-rating { font-size: 12px; color: var(--c-text-2); font-variant-numeric: tabular-nums; }
+  .prod-actions { position: absolute; top: var(--s-3); right: var(--s-3); display: flex; gap: 6px; z-index: 2; }
+  .prod-actions button {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(0,0,0,0.55); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    color: #fff; font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background 200ms ease, transform 200ms ease;
+  }
+  .prod-actions button:hover { background: rgba(0,0,0,0.75); transform: scale(1.06); }
+  .prod-actions button[aria-pressed="true"] { background: #fff; color: #000; }
+  .prod-badge {
+    position: absolute; top: var(--s-3); left: var(--s-3); z-index: 2;
+    padding: 4px 10px; background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--r-2); color: #fff; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.8px; text-transform: uppercase;
+  }
 
-    /* CROSS SELL */
-    .cross-sell { padding: 64px 48px; background: var(--c-card); border-top: 1px solid var(--c-border); }
-    .cross-sell-inner { max-width: 1440px; margin: 0 auto; }
-    .cross-sell-title { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 600; font-size: 36px; color: var(--c-text); margin-bottom: 8px; }
-    .cross-sell-sub { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--c-text-2); margin-bottom: 32px; }
-    .cross-sell-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 640px; }
-    .cross-sell-card { background: var(--c-elevated); border: 1px solid var(--c-border); border-radius: 14px; padding: 24px; text-decoration: none; display: flex; align-items: center; gap: 16px; transition: border-color 0.2s, transform 0.2s, background 0.2s; }
-    .cross-sell-card:hover { border-color: var(--c-border-2); transform: translateY(-2px); background: var(--c-float); }
-    .cross-sell-icon { font-size: 28px; }
-    .cross-sell-name { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; color: var(--c-text); margin-bottom: 3px; }
-    .cross-sell-count { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--c-text-3); }
+  .mkt-empty { padding: var(--s-10) var(--s-5); text-align: center; border: 1px dashed var(--c-border-2); border-radius: var(--r-4); }
+  .mkt-empty h3 { font-family: var(--f-display); font-size: 24px; letter-spacing: -0.4px; color: var(--c-text); margin: 0 0 var(--s-3); }
+  .mkt-empty p { color: var(--c-text-3); margin: 0 0 var(--s-5); }
 
-    @media (max-width: 768px) {
-      .nav { padding: 14px 20px; }
-      .nav-links { display: none; }
-      .hero { padding: 100px 20px 60px; }
-      .section { padding: 48px 20px; }
-      .subcat-section { padding: 0 20px 40px; }
-      .cat-layout { padding: 32px 20px 60px; grid-template-columns: 1fr; }
-      .sidebar { display: none; }
-      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-      .featured-grid { grid-template-columns: repeat(2, 1fr); }
-      .cross-sell { padding: 48px 20px; }
-      .cross-sell-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+  /* Cart drawer */
+  .cart-backdrop { position: fixed; inset: 0; z-index: 150; background: rgba(0,0,0,0.72); backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity 240ms ease; }
+  .cart-backdrop.is-open { opacity: 1; pointer-events: auto; }
+  .cart-drawer {
+    position: fixed; top: 0; right: 0; bottom: 0;
+    width: min(440px, 100vw); background: var(--c-surface);
+    border-left: 1px solid var(--c-border); z-index: 160;
+    transform: translateX(110%); transition: transform 320ms cubic-bezier(0.2,0.8,0.2,1);
+    display: flex; flex-direction: column;
+  }
+  .cart-drawer.is-open { transform: translateX(0); }
+  .cart-head { padding: var(--s-5) var(--s-6); border-bottom: 1px solid var(--c-border); display: flex; align-items: center; justify-content: space-between; }
+  .cart-head h3 { font-family: var(--f-display); font-size: 22px; font-weight: 400; letter-spacing: -0.4px; margin: 0; }
+  .cart-close { width: 40px; height: 40px; border-radius: var(--r-2); color: var(--c-text-2); transition: background 200ms ease, color 200ms ease; }
+  .cart-close:hover { background: var(--c-elevated); color: var(--c-text); }
+  .cart-body { flex: 1; overflow-y: auto; padding: var(--s-5) var(--s-6); }
+  .cart-item { display: grid; grid-template-columns: 72px 1fr auto; gap: var(--s-4); padding: var(--s-4) 0; border-bottom: 1px solid var(--c-border); align-items: start; }
+  .cart-item:last-child { border-bottom: 0; }
+  .cart-item-img { width: 72px; height: 80px; border-radius: var(--r-3); background: var(--c-elevated); background-size: cover; background-position: center; }
+  .cart-item-title { font-family: var(--f-display); font-size: 14px; margin: 0 0 4px; color: var(--c-text); line-height: 1.25; }
+  .cart-item-meta { font-size: 12px; color: var(--c-text-3); margin-bottom: 6px; }
+  .cart-item-controls { display: flex; align-items: center; gap: 6px; margin-top: 8px; }
+  .cart-item-controls button { width: 24px; height: 24px; border: 1px solid var(--c-border-2); border-radius: 3px; color: var(--c-text-2); font-size: 12px; transition: color 180ms ease, border-color 180ms ease; }
+  .cart-item-controls button:hover { color: var(--c-text); border-color: var(--c-text-3); }
+  .cart-item-controls .qty { width: 24px; text-align: center; font-size: 12px; color: var(--c-text); }
+  .cart-item-remove { font-size: 11px; color: var(--c-text-3); letter-spacing: 0.5px; margin-top: 4px; display: inline-block; }
+  .cart-item-remove:hover { color: var(--c-text); }
+  .cart-item-price { font-family: var(--f-display); font-variant-numeric: tabular-nums; font-weight: 500; font-size: 14px; }
+  .cart-foot { padding: var(--s-5) var(--s-6); border-top: 1px solid var(--c-border); }
+  .cart-total { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: var(--s-4); }
+  .cart-total span { font-size: 12px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--c-text-3); font-weight: 500; }
+  .cart-total strong { font-family: var(--f-display); font-variant-numeric: tabular-nums; font-size: 28px; font-weight: 400; letter-spacing: -0.6px; }
+  .cart-empty { text-align: center; padding: var(--s-9) var(--s-4); color: var(--c-text-3); }
+
+  /* Quick view */
+  .qv-backdrop { position: fixed; inset: 0; z-index: 150; background: rgba(0,0,0,0.80); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 240ms ease; display: flex; align-items: center; justify-content: center; padding: var(--s-5); }
+  .qv-backdrop.is-open { opacity: 1; pointer-events: auto; }
+  .qv-modal { width: min(880px, 100%); max-height: calc(100vh - 40px); background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-5); overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; transform: scale(0.96); transition: transform 320ms cubic-bezier(0.2,0.8,0.2,1); }
+  .qv-backdrop.is-open .qv-modal { transform: scale(1); }
+  @media (max-width: 760px) { .qv-modal { grid-template-columns: 1fr; overflow-y: auto; } }
+  .qv-img { background-size: cover; background-position: center; background-color: var(--c-elevated); min-height: 360px; position: relative; }
+  .qv-close { position: absolute; top: var(--s-3); right: var(--s-3); width: 36px; height: 36px; border-radius: 50%; background: rgba(0,0,0,0.55); color: #fff; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); font-size: 16px; display: inline-flex; align-items: center; justify-content: center; transition: background 180ms ease; }
+  .qv-close:hover { background: rgba(0,0,0,0.80); }
+  .qv-body { padding: var(--s-6); overflow-y: auto; }
+  .qv-title { font-family: var(--f-display); font-size: 28px; font-weight: 400; letter-spacing: -0.6px; line-height: 1.1; margin: 0 0 var(--s-3); color: var(--c-text); }
+  .qv-price { font-family: var(--f-display); font-variant-numeric: tabular-nums; font-size: 22px; letter-spacing: -0.3px; color: var(--c-text); margin-bottom: var(--s-4); }
+  .qv-price span { color: var(--c-text-3); font-size: 13px; margin-left: 4px; }
+  .qv-desc { font-size: 14px; color: var(--c-text-2); line-height: 1.55; margin-bottom: var(--s-5); }
+  .qv-specs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3); padding: var(--s-4); border: 1px solid var(--c-border); border-radius: var(--r-3); margin-bottom: var(--s-5); }
+  .qv-spec .label { font-size: 10px; font-weight: 500; letter-spacing: 1.2px; text-transform: uppercase; color: var(--c-text-3); margin-bottom: 4px; }
+  .qv-spec .value { font-size: 13px; color: var(--c-text); }
+  .qv-actions { display: flex; gap: var(--s-3); }
+
+  /* Sell CTA banner */
+  .sell-banner {
+    margin-top: var(--s-10); padding: clamp(48px, 6vw, 96px) clamp(24px, 4vw, 64px);
+    border: 1px solid var(--c-border-2); border-radius: var(--r-5);
+    background: var(--c-surface);
+    display: grid; grid-template-columns: 1.4fr 1fr; gap: var(--s-7); align-items: end;
+  }
+  @media (max-width: 760px) { .sell-banner { grid-template-columns: 1fr; } }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: var(--s-6); left: 50%; transform: translateX(-50%);
+    background: var(--c-text); color: var(--c-bg);
+    padding: 10px 18px; border-radius: var(--r-3);
+    font-size: 13px; font-weight: 500; letter-spacing: -0.1px;
+    z-index: 200; opacity: 0; pointer-events: none;
+    transition: opacity 240ms ease, transform 320ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .toast.is-open { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+
+  /* Category header */
+  .cat-header { padding: var(--s-10) 0 var(--s-6); border-bottom: 1px solid var(--c-border); }
+  .cat-crumb { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; letter-spacing: 1.4px; text-transform: uppercase; color: var(--c-text-3); margin-bottom: var(--s-5); }
+  .cat-crumb a { color: inherit; text-decoration: none; transition: color 180ms ease; }
+  .cat-crumb a:hover { color: var(--c-text); }
+  .cat-crumb .sep { color: var(--c-text-4); }
+  .cat-header h1 {
+    font-family: var(--f-display);
+    font-size: clamp(48px, 7vw, 96px);
+    font-weight: 400; line-height: 1.00; letter-spacing: -2.2px;
+    color: var(--c-text); margin: 0 0 var(--s-5);
+    max-width: 18ch; text-wrap: balance;
+  }
+  .cat-lede { font-size: 16px; color: var(--c-text-2); line-height: 1.55; max-width: 56ch; margin: 0 0 var(--s-6); }
+  .cat-meta { display: flex; gap: var(--s-6); color: var(--c-text-3); font-size: 13px; flex-wrap: wrap; }
+  .cat-meta strong { color: var(--c-text); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* Subcategory chips */
+  .sub-strip { display: flex; gap: var(--s-2); flex-wrap: wrap; padding: var(--s-5) 0; border-bottom: 1px solid var(--c-border); }
+  .sub-pill {
+    font-size: 13px; padding: 8px 16px;
+    border: 1px solid var(--c-border-2); border-radius: 999px;
+    color: var(--c-text-2); background: transparent;
+    transition: background 180ms ease, color 180ms ease, border-color 180ms ease;
+    letter-spacing: -0.1px;
+  }
+  .sub-pill:hover { color: var(--c-text); border-color: var(--c-text-3); }
+  .sub-pill.is-active { background: var(--c-text); color: var(--c-bg); border-color: var(--c-text); }
+
+  /* Cross-sell */
+  .xs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--s-4); margin-top: var(--s-7); }
+  .xs-card {
+    display: block; padding: var(--s-6); border: 1px solid var(--c-border);
+    border-radius: var(--r-4); background: var(--c-surface);
+    text-decoration: none; color: inherit;
+    transition: border-color 220ms ease, transform 400ms cubic-bezier(0.2,0.8,0.2,1);
+  }
+  .xs-card:hover { border-color: var(--c-text-3); transform: translateY(-2px); }
+  .xs-card .xs-label { font-size: 10px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--c-text-3); margin-bottom: var(--s-3); }
+  .xs-card h3 { font-family: var(--f-display); font-size: 22px; font-weight: 400; letter-spacing: -0.4px; line-height: 1.1; margin: 0 0 var(--s-2); color: var(--c-text); }
+  .xs-card p { font-size: 13px; color: var(--c-text-3); margin: 0; line-height: 1.5; }
+  .xs-card .xs-arrow { display: inline-block; margin-top: var(--s-4); font-size: 14px; color: var(--c-text); letter-spacing: -0.2px; }
+
+  .section-heading { font-family: var(--f-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 400; letter-spacing: -0.8px; line-height: 1.05; margin: 0 0 var(--s-2); color: var(--c-text); }
+  .section-sub { font-size: 14px; color: var(--c-text-3); margin: 0 0 var(--s-6); }
+
+  /* Cart button */
+  .cart-btn { position: relative; }
+  .cart-btn .cart-count { position: absolute; top: -4px; right: -4px; background: var(--c-text); color: var(--c-bg); min-width: 18px; height: 18px; border-radius: 9px; font-size: 10px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+  .cart-btn .cart-count.is-zero { display: none; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Cameras on Charm",
+  "url": "https://aireyai.github.io/charm/cameras.html",
+  "description": "Rent or buy cinema cameras, mirrorless bodies, DSLRs, drones and lenses from trusted creators."
+}
+</script>
 </head>
 <body>
-<div class="noise" aria-hidden="true"></div>
 
-<a href="#main" class="sr-only" style="position:absolute;top:-100%;left:1rem;background:var(--c-gold);color:#0f0800;padding:.5rem 1rem;z-index:9999;border-radius:0 0 6px 6px;font-weight:700;text-decoration:none;font-family:'Syne',sans-serif;">Skip to content</a>
+<a href="#main" class="skip-link">Skip to content</a>
 
-<nav class="nav" id="nav">
+<!-- Navigation -->
+<nav class="nav" id="nav" aria-label="Primary">
   <div class="nav-inner">
-    <a href="home.html" class="logo"><div class="logo-gem">✦</div>Charm</a>
+    <a href="home.html" class="nav-logo" aria-label="Charm — home">Charm</a>
     <ul class="nav-links">
       <li><a href="marketplace.html">Marketplace</a></li>
-      <li><a href="how-it-works.html">How It Works</a></li>
+      <li><a href="how-it-works.html">How it works</a></li>
       <li><a href="pricing.html">Pricing</a></li>
-      <li><a href="wishlist.html">Wishlist</a></li>
+      <li><a href="blog.html">Journal</a></li>
     </ul>
     <div class="nav-right">
-      <a href="search.html" class="nav-icon-btn" aria-label="Search">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <button class="nav-icon cart-btn" aria-label="Cart" onclick="openCart()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span class="cart-count is-zero" id="cart-count">0</span>
+      </button>
+      <a href="wishlist.html" class="nav-icon" aria-label="Wishlist">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
       </a>
-      <a href="notifications.html" class="nav-icon-btn" aria-label="Notifications">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-      </a>
-      <a href="login.html" class="btn-ghost">Login</a>
-      <a href="create-listing.html" class="btn-gold">+ Add Listing</a>
+      <a href="login.html" class="btn btn--ghost btn--sm">Sign in</a>
+      <a href="create-listing.html" class="btn btn--primary btn--sm">List your gear</a>
     </div>
   </div>
 </nav>
 
-<main id="main">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-orb-1" aria-hidden="true"></div>
-    <div class="hero-orb-2" aria-hidden="true"></div>
-    <div class="hero-inner">
-      <nav class="hero-breadcrumb" aria-label="Breadcrumb">
-        <a href="home.html">Charm</a>
-        <span class="sep" aria-hidden="true">›</span>
-        <a href="marketplace.html">Marketplace</a>
-        <span class="sep" aria-hidden="true">›</span>
-        <span aria-current="page">Cameras</span>
-      </nav>
-      <h1 class="hero-headline">Cinema Cameras<br><em>&amp; Bodies</em></h1>
-      <p class="hero-sub">From DSLRs to cinema rigs — rent the camera that fits your vision. Every listing verified, every rental insured.</p>
-      <div class="hero-stats">
-        <span class="hero-stat-pill"><strong>147</strong> listings</span>
-        <span class="hero-stat-pill">From <strong>£25</strong>/day</span>
-        <span class="hero-stat-pill"><strong>4.9★</strong> avg rating</span>
-        <span class="hero-stat-pill"><strong>48hr</strong> delivery</span>
-      </div>
-      <div class="hero-search">
-        <input class="hero-search-input" type="search" placeholder="Search cameras, e.g. Sony FX3, Canon C70…" aria-label="Search cameras">
-        <button class="hero-search-btn">Search</button>
-      </div>
-    </div>
-  </section>
+<main id="main" style="padding-top: 72px;">
 
-  <!-- FEATURED -->
-  <section class="section" aria-labelledby="featured-heading">
-    <div class="section-inner">
-      <div class="section-head">
-        <h2 class="section-title" id="featured-heading">Popular Right Now</h2>
-        <a href="marketplace.html" class="section-link">View all →</a>
-      </div>
-      <div class="featured-grid">
-        <!-- Card 1 -->
-        <article class="p-card" data-reveal data-delay="0">
-          <div class="p-card-media">
-            <div class="p-card-thumb" style="background: linear-gradient(135deg, #1a0a2e 0%, #0d1a3e 100%);">
-              <div class="p-card-thumb-glow"></div>
-              <span class="p-card-thumb-icon">📷</span>
-            </div>
-            <div class="p-badges"><span class="p-badge hot">HOT</span></div>
-            <a href="#" class="p-wish" aria-label="Add to wishlist">♡</a>
-            <a href="product.html" class="quick-view">Quick View</a>
-          </div>
-          <div class="p-card-body">
-            <span class="p-card-cat">Mirrorless</span>
-            <a href="product.html" class="p-card-name">Sony FX3 Cinema Line</a>
-            <div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(94)</span></div>
-            <span class="p-seller">by Marcus Webb</span>
-            <div class="p-card-footer">
-              <div class="p-price-col"><span class="p-price">£85</span><span class="p-price-period">per day</span></div>
-              <a href="product.html" class="btn-rent">Rent Now</a>
-            </div>
-          </div>
-        </article>
-        <!-- Card 2 -->
-        <article class="p-card" data-reveal data-delay="80">
-          <div class="p-card-media">
-            <div class="p-card-thumb" style="background: linear-gradient(135deg, #1a0a2e 0%, #0d1a3e 100%);">
-              <div class="p-card-thumb-glow"></div>
-              <span class="p-card-thumb-icon">📷</span>
-            </div>
-            <div class="p-badges"><span class="p-badge rent">RENT</span></div>
-            <a href="#" class="p-wish" aria-label="Add to wishlist">♡</a>
-            <a href="product.html" class="quick-view">Quick View</a>
-          </div>
-          <div class="p-card-body">
-            <span class="p-card-cat">Cinema</span>
-            <a href="product.html" class="p-card-name">Canon EOS C70</a>
-            <div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(67)</span></div>
-            <span class="p-seller">by Studio North</span>
-            <div class="p-card-footer">
-              <div class="p-price-col"><span class="p-price">£110</span><span class="p-price-period">per day</span></div>
-              <a href="product.html" class="btn-rent">Rent Now</a>
-            </div>
-          </div>
-        </article>
-        <!-- Card 3 -->
-        <article class="p-card" data-reveal data-delay="160">
-          <div class="p-card-media">
-            <div class="p-card-thumb" style="background: linear-gradient(135deg, #1a0a2e 0%, #0d1a3e 100%);">
-              <div class="p-card-thumb-glow"></div>
-              <span class="p-card-thumb-icon">📷</span>
-            </div>
-            <div class="p-badges"><span class="p-badge hot">HOT</span></div>
-            <a href="#" class="p-wish" aria-label="Add to wishlist">♡</a>
-            <a href="product.html" class="quick-view">Quick View</a>
-          </div>
-          <div class="p-card-body">
-            <span class="p-card-cat">Cinema</span>
-            <a href="product.html" class="p-card-name">RED Komodo 6K</a>
-            <div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(41)</span></div>
-            <span class="p-seller">by Prism Visual</span>
-            <div class="p-card-footer">
-              <div class="p-price-col"><span class="p-price">£195</span><span class="p-price-period">per day</span></div>
-              <a href="product.html" class="btn-rent">Rent Now</a>
-            </div>
-          </div>
-        </article>
-        <!-- Card 4 -->
-        <article class="p-card" data-reveal data-delay="240">
-          <div class="p-card-media">
-            <div class="p-card-thumb" style="background: linear-gradient(135deg, #1a0a2e 0%, #0d1a3e 100%);">
-              <div class="p-card-thumb-glow"></div>
-              <span class="p-card-thumb-icon">📷</span>
-            </div>
-            <div class="p-badges"><span class="p-badge new">NEW</span></div>
-            <a href="#" class="p-wish" aria-label="Add to wishlist">♡</a>
-            <a href="product.html" class="quick-view">Quick View</a>
-          </div>
-          <div class="p-card-body">
-            <span class="p-card-cat">Mirrorless</span>
-            <a href="product.html" class="p-card-name">Nikon Z9 Body</a>
-            <div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(28)</span></div>
-            <span class="p-seller">by Elara Kim</span>
-            <div class="p-card-footer">
-              <div class="p-price-col"><span class="p-price">£75</span><span class="p-price-period">per day</span></div>
-              <a href="product.html" class="btn-rent">Rent Now</a>
-            </div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- SUBCATEGORY FILTER -->
-  <div class="subcat-section">
-    <div class="subcat-inner">
-      <p class="subcat-label">Filter by type</p>
-      <div class="subcat-chips" role="group" aria-label="Camera subcategories">
-        <button class="subcat-chip active">All Cameras</button>
-        <button class="subcat-chip">DSLR</button>
-        <button class="subcat-chip">Mirrorless</button>
-        <button class="subcat-chip">Cinema</button>
-        <button class="subcat-chip">Action</button>
-        <button class="subcat-chip">Film / Analogue</button>
-        <button class="subcat-chip">Medium Format</button>
-      </div>
+<!-- Header -->
+<header class="cat-header">
+  <div class="container-wide">
+    <nav class="cat-crumb" aria-label="Breadcrumb">
+      <a href="home.html">Charm</a>
+      <span class="sep">/</span>
+      <a href="marketplace.html">Marketplace</a>
+      <span class="sep">/</span>
+      <span>Cameras</span>
+    </nav>
+    <h1>Cameras, lenses &amp; cinema kit.</h1>
+    <p class="cat-lede">Everything from mirrorless bodies and DSLRs to cinema rigs and aerial drones — rented or sold directly by the creators who use them. Every rental insured, every listing verified.</p>
+    <div class="cat-meta">
+      <div><strong id="cat-total">—</strong> listings</div>
+      <div>From <strong>£25</strong>/day</div>
+      <div>Rated <strong>4.9★</strong> by 98,000 creators</div>
+      <div><strong>48hr</strong> UK delivery</div>
     </div>
   </div>
+</header>
 
-  <!-- MAIN LISTINGS -->
-  <div class="cat-layout">
+<!-- Subcategory strip + search -->
+<section style="border-bottom: 1px solid var(--c-border);">
+  <div class="container-wide" style="display: flex; align-items: center; gap: var(--s-4); flex-wrap: wrap; padding: var(--s-5) 0;">
+    <div class="sub-strip" role="tablist" aria-label="Filter by type" style="flex: 1; padding: 0; border: 0;">
+      <button class="sub-pill is-active" role="tab" data-sub="all" aria-selected="true">All cameras</button>
+      <button class="sub-pill" role="tab" data-sub="cinema" aria-selected="false">Cinema</button>
+      <button class="sub-pill" role="tab" data-sub="mirrorless" aria-selected="false">Mirrorless</button>
+      <button class="sub-pill" role="tab" data-sub="dslr" aria-selected="false">DSLR</button>
+      <button class="sub-pill" role="tab" data-sub="drone" aria-selected="false">Drones</button>
+      <button class="sub-pill" role="tab" data-sub="lens" aria-selected="false">Lenses</button>
+    </div>
+    <div style="position: relative; min-width: 260px;">
+      <input id="mkt-search" type="search" class="input" placeholder="Search cameras…" aria-label="Search cameras" style="height: 40px;" oninput="onSearchInput(event)">
+    </div>
+  </div>
+</section>
+
+<div class="container-wide">
+  <div class="mkt-layout">
+
     <!-- Sidebar -->
-    <aside class="sidebar" aria-label="Filter options">
-      <div class="sidebar-head">
-        <h3>Filters</h3>
-        <button class="btn-clear">Clear all</button>
+    <aside class="mkt-sidebar" id="mkt-sidebar" aria-label="Filters">
+      <div class="mkt-filter-group">
+        <div class="mkt-filter-title">Listing type</div>
+        <label class="mkt-filter-row"><span>All listings</span><input type="radio" name="type" value="all" checked></label>
+        <label class="mkt-filter-row"><span>Rent only</span><input type="radio" name="type" value="rent"></label>
+        <label class="mkt-filter-row"><span>Buy only</span><input type="radio" name="type" value="buy"></label>
       </div>
-      <div class="filter-group">
-        <span class="filter-legend">Brand</span>
-        <label><input type="checkbox"> Sony <span class="filter-count">42</span></label>
-        <label><input type="checkbox"> Canon <span class="filter-count">31</span></label>
-        <label><input type="checkbox"> Nikon <span class="filter-count">18</span></label>
-        <label><input type="checkbox"> RED <span class="filter-count">12</span></label>
-        <label><input type="checkbox"> ARRI <span class="filter-count">7</span></label>
-        <label><input type="checkbox"> Blackmagic <span class="filter-count">15</span></label>
-        <label><input type="checkbox"> Fujifilm <span class="filter-count">11</span></label>
+      <div class="mkt-filter-group">
+        <div class="mkt-filter-title">Max price per day</div>
+        <input type="range" id="price-range" min="0" max="500" value="500" step="10" oninput="onPriceInput()">
+        <div class="price-slider-row"><span>£0</span><span style="flex:1;"></span><span id="price-display">£500</span></div>
       </div>
-      <div class="filter-group">
-        <span class="filter-legend">Price / day</span>
-        <div class="price-range">
-          <input type="range" class="price-slider" min="0" max="500" value="300" aria-label="Max price per day">
-          <div class="price-labels"><span>£0</span><span>£300</span></div>
-        </div>
+      <div class="mkt-filter-group">
+        <div class="mkt-filter-title">Condition</div>
+        <label class="mkt-filter-row"><span>New / excellent</span><input type="checkbox" value="excellent"></label>
+        <label class="mkt-filter-row"><span>Like-new</span><input type="checkbox" value="like-new"></label>
+        <label class="mkt-filter-row"><span>Good</span><input type="checkbox" value="good"></label>
+        <label class="mkt-filter-row"><span>Fair</span><input type="checkbox" value="fair"></label>
       </div>
-      <div class="filter-group">
-        <span class="filter-legend">Condition</span>
-        <label><input type="checkbox" checked> Mint <span class="filter-count">54</span></label>
-        <label><input type="checkbox" checked> Excellent <span class="filter-count">60</span></label>
-        <label><input type="checkbox"> Good <span class="filter-count">28</span></label>
-        <label><input type="checkbox"> Fair <span class="filter-count">5</span></label>
+      <div class="mkt-filter-group">
+        <div class="mkt-filter-title">Minimum rating</div>
+        <label class="mkt-filter-row"><span>4.5★ or higher</span><input type="radio" name="rating" value="4.5"></label>
+        <label class="mkt-filter-row"><span>4.0★ or higher</span><input type="radio" name="rating" value="4.0"></label>
+        <label class="mkt-filter-row"><span>Any rating</span><input type="radio" name="rating" value="0" checked></label>
       </div>
-      <div class="filter-group">
-        <span class="filter-legend">Availability</span>
-        <label><input type="checkbox" checked> Available now</label>
-        <label><input type="checkbox"> This week</label>
-        <label><input type="checkbox"> Next 30 days</label>
-      </div>
-    </aside>
-
-    <!-- Listings -->
-    <section aria-label="All camera listings">
-      <div class="sort-bar">
-        <span class="sort-bar-left"><strong>147</strong> cameras found</span>
-        <select class="sort-select" aria-label="Sort listings">
-          <option>Relevance</option>
-          <option>Newest</option>
-          <option>Price ↑</option>
-          <option>Price ↓</option>
-          <option>Rating</option>
+      <div class="mkt-filter-group">
+        <div class="mkt-filter-title">Location</div>
+        <select class="select" id="loc-select" aria-label="Location">
+          <option value="">Anywhere</option>
+          <option value="London">London</option>
+          <option value="Manchester">Manchester</option>
+          <option value="Berlin">Berlin</option>
+          <option value="Paris">Paris</option>
+          <option value="Barcelona">Barcelona</option>
         </select>
       </div>
-      <div class="product-grid">
-        <!-- 12 cards -->
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge hot">HOT</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Mirrorless</span><a href="product.html" class="p-card-name">Sony A7S III Body</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(112)</span></div><span class="p-seller">by Jamie Cole</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£65</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+      <button class="mkt-filter-reset" onclick="resetFilters()">Clear all filters</button>
+    </aside>
 
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge rent">RENT</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">DSLR</span><a href="product.html" class="p-card-name">Canon EOS R5</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(88)</span></div><span class="p-seller">by Anya Patel</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£55</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+    <!-- Main column -->
+    <section aria-label="Camera listings">
+      <div class="mkt-toolbar">
+        <div class="mkt-result-count"><span id="result-count">0</span> listings</div>
+        <div style="display: flex; gap: var(--s-3); align-items: center;">
+          <button class="mkt-filters-toggle-mobile" onclick="toggleSidebar()">
+            Filters <span class="badge" id="filter-badge">0</span>
+          </button>
+          <select class="mkt-sort" id="mkt-sort" aria-label="Sort">
+            <option value="newest">Newest</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="rating">Highest rated</option>
+          </select>
+          <div class="mkt-view-toggle" role="group" aria-label="View mode">
+            <button class="is-active" aria-label="Grid view" aria-pressed="true" onclick="setView('grid', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            </button>
+            <button aria-label="List view" aria-pressed="false" onclick="setView('list', this)">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge new">NEW</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Cinema</span><a href="product.html" class="p-card-name">Blackmagic Pocket 6K Pro</a><div class="p-card-rating"><span class="p-stars">★★★★☆</span><span class="p-rating-count">(54)</span></div><span class="p-seller">by Reel Room</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£70</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+      <div class="mkt-chips" id="mkt-chips"></div>
 
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Medium Format</span><a href="product.html" class="p-card-name">Hasselblad X2D 100C</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(22)</span></div><span class="p-seller">by Lux Studio</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£220</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+      <div class="prod-grid" id="prod-grid" role="list" aria-live="polite"></div>
 
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge hot">HOT</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Mirrorless</span><a href="product.html" class="p-card-name">Fujifilm GFX 100S</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(37)</span></div><span class="p-seller">by Claire Moss</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£180</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+      <!-- Cross-sell -->
+      <section style="margin-top: var(--s-10); padding-top: var(--s-8); border-top: 1px solid var(--c-border);">
+        <h2 class="section-heading">Complete the kit.</h2>
+        <p class="section-sub">Cameras rarely travel alone. Pair your body with sound, light and support.</p>
+        <div class="xs-grid">
+          <a href="audio.html" class="xs-card">
+            <div class="xs-label">Audio</div>
+            <h3>Shotgun mics, recorders, lavs</h3>
+            <p>Capture clean production sound with industry-standard kit from Rode, Sennheiser and Zoom.</p>
+            <div class="xs-arrow">Browse audio →</div>
+          </a>
+          <a href="lighting.html" class="xs-card">
+            <div class="xs-label">Lighting</div>
+            <h3>LED panels, strobes, modifiers</h3>
+            <p>Aputure, Godox and Profoto kits in full softbox and diffusion setups — ready to shoot.</p>
+            <div class="xs-arrow">Browse lighting →</div>
+          </a>
+          <a href="marketplace.html?category=other" class="xs-card">
+            <div class="xs-label">Support</div>
+            <h3>Tripods, gimbals, rigs</h3>
+            <p>Fluid heads, DJI RS gimbals, shoulder rigs and sliders — rented by the day or week.</p>
+            <div class="xs-arrow">Browse support →</div>
+          </a>
+        </div>
+      </section>
 
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Action</span><a href="product.html" class="p-card-name">GoPro Hero 12 Black</a><div class="p-card-rating"><span class="p-stars">★★★★☆</span><span class="p-rating-count">(145)</span></div><span class="p-seller">by Toby Grant</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£25</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge new">NEW</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Cinema</span><a href="product.html" class="p-card-name">ARRI Alexa Mini LF</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(18)</span></div><span class="p-seller">by Aperture House</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£450</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Film</span><a href="product.html" class="p-card-name">Contax T2 35mm</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(62)</span></div><span class="p-seller">by Grain & Silver</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£35</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge rent">RENT</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">DSLR</span><a href="product.html" class="p-card-name">Nikon D850 Body</a><div class="p-card-rating"><span class="p-stars">★★★★☆</span><span class="p-rating-count">(79)</span></div><span class="p-seller">by Frame & Click</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£45</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Mirrorless</span><a href="product.html" class="p-card-name">Sony ZV-E1 Vlog Camera</a><div class="p-card-rating"><span class="p-stars">★★★★☆</span><span class="p-rating-count">(91)</span></div><span class="p-seller">by Kit Lane</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£40</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><div class="p-badges"><span class="p-badge hot">HOT</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Cinema</span><a href="product.html" class="p-card-name">DJI Ronin 4D Cinema Kit</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(33)</span></div><span class="p-seller">by Motion Unit</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£280</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
-
-        <article class="p-card"><div class="p-card-media"><div class="p-card-thumb" style="background:linear-gradient(135deg,#1a0a2e 0%,#0d1a3e 100%)"><div class="p-card-thumb-glow"></div><span class="p-card-thumb-icon">📷</span></div><a href="#" class="p-wish">♡</a><a href="product.html" class="quick-view">Quick View</a></div><div class="p-card-body"><span class="p-card-cat">Film</span><a href="product.html" class="p-card-name">Mamiya RZ67 Pro IID</a><div class="p-card-rating"><span class="p-stars">★★★★★</span><span class="p-rating-count">(29)</span></div><span class="p-seller">by The Dark Room</span><div class="p-card-footer"><div class="p-price-col"><span class="p-price">£60</span><span class="p-price-period">per day</span></div><a href="product.html" class="btn-rent">Rent</a></div></div></article>
+      <!-- Sell banner -->
+      <div class="sell-banner">
+        <div>
+          <div class="t-label" style="margin-bottom: var(--s-3);">Sellers</div>
+          <h2 style="font-family: var(--f-display); font-size: clamp(28px, 3.5vw, 44px); font-weight: 400; letter-spacing: -0.8px; line-height: 1.05; margin: 0 0 var(--s-4); color: var(--c-text); max-width: 20ch;">Got a camera sitting on the shelf?</h2>
+          <p class="t-body" style="max-width: 48ch;">List it in five minutes. Every rental insured up to £5,000 automatically. 10% flat commission on rentals, 8% on sales.</p>
+        </div>
+        <div style="display: flex; gap: var(--s-3); justify-content: flex-end; flex-wrap: wrap;">
+          <a href="create-listing.html" class="btn btn--primary btn--lg btn--arrow">Start listing</a>
+          <a href="pricing.html" class="btn btn--ghost btn--lg">See pricing</a>
+        </div>
       </div>
     </section>
   </div>
+</div>
 
-  <!-- CROSS SELL -->
-  <section class="cross-sell" aria-labelledby="kit-heading">
-    <div class="cross-sell-inner">
-      <h2 class="cross-sell-title" id="kit-heading">Complete your kit</h2>
-      <p class="cross-sell-sub">Pair your camera rental with lights, lenses, and audio gear.</p>
-      <div class="cross-sell-grid">
-        <a href="marketplace.html" class="cross-sell-card">
-          <span class="cross-sell-icon">🔭</span>
-          <div>
-            <div class="cross-sell-name">Lenses</div>
-            <div class="cross-sell-count">203 listings from £18/day</div>
-          </div>
-        </a>
-        <a href="lighting.html" class="cross-sell-card">
-          <span class="cross-sell-icon">💡</span>
-          <div>
-            <div class="cross-sell-name">Lighting</div>
-            <div class="cross-sell-count">118 listings from £22/day</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </section>
 </main>
 
-<footer>
-  <div class="ft-inner">
-    <div class="ft-grid">
-      <div>
-        <div class="ft-logo"><span class="ft-logo-gem" aria-hidden="true">&#10022;</span> Charm</div>
-        <p class="ft-tagline">The creative marketplace for every discipline.</p>
-        <div class="ft-social">
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on X">&#120143;</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on LinkedIn">in</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on Instagram">&#128248;</a>
-          <a href="#" class="soc-btn" target="_blank" rel="noopener noreferrer" aria-label="Follow Charm on YouTube">&#9654;</a>
-        </div>
-      </div>
-      <div>
-        <div class="ft-col-ttl">Platform</div>
-        <ul class="ft-links">
-          <li><a href="home.html">Home</a></li>
-          <li><a href="marketplace.html">Marketplace</a></li>
-          <li><a href="pricing.html">Pricing</a></li>
-          <li><a href="how-it-works.html">How It Works</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="ft-col-ttl">Categories</div>
-        <ul class="ft-links">
-          <li><a href="cameras.html">Cameras</a></li>
-          <li><a href="audio.html">Audio</a></li>
-          <li><a href="lighting.html">Lighting</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="ft-col-ttl">Sellers</div>
-        <ul class="ft-links">
-          <li><a href="dashboard.html">Dashboard</a></li>
-          <li><a href="analytics.html">Analytics</a></li>
-          <li><a href="create-listing.html">Create Listing</a></li>
-          <li><a href="earnings.html">Earnings</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="ft-col-ttl">Company</div>
-        <ul class="ft-links">
-          <li><a href="about.html">About</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="insurance.html">Insurance</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
+<!-- Cart drawer -->
+<div class="cart-backdrop" id="cart-backdrop" onclick="closeCart()"></div>
+<aside class="cart-drawer" id="cart-drawer" aria-label="Cart" aria-hidden="true">
+  <div class="cart-head">
+    <h3>Your cart</h3>
+    <button class="cart-close" aria-label="Close cart" onclick="closeCart()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-body" id="cart-body"></div>
+  <div class="cart-foot" id="cart-foot" style="display:none;">
+    <div class="cart-total"><span>Subtotal</span><strong id="cart-total">£0</strong></div>
+    <a href="checkout.html" class="btn btn--primary btn--arrow" style="width: 100%; height: 48px;">Go to checkout</a>
+  </div>
+</aside>
+
+<!-- Quick view modal -->
+<div class="qv-backdrop" id="qv-backdrop" onclick="if(event.target.id==='qv-backdrop')closeQuickView()">
+  <div class="qv-modal" role="dialog" aria-modal="true" aria-labelledby="qv-title">
+    <div class="qv-img" id="qv-img">
+      <div class="qv-img-title" id="qv-img-title"></div>
+      <button class="qv-close" aria-label="Close" onclick="closeQuickView()">✕</button>
+    </div>
+    <div class="qv-body">
+      <div class="t-label" id="qv-label" style="margin-bottom: var(--s-3);">—</div>
+      <h2 class="qv-title" id="qv-title">—</h2>
+      <div class="qv-price" id="qv-price">—</div>
+      <p class="qv-desc" id="qv-desc">—</p>
+      <div class="qv-specs" id="qv-specs"></div>
+      <div class="qv-actions">
+        <button class="btn btn--primary btn--arrow" style="flex: 1;" onclick="qvAddToCart()">Add to cart</button>
+        <a href="#" id="qv-view-link" class="btn btn--ghost">Full details</a>
       </div>
     </div>
-    <div class="ft-bottom">
-      <span class="ft-copy">&copy; 2026 Charm. All rights reserved. &middot; <a href="terms.html">Terms</a> &middot; <a href="privacy.html">Privacy</a> &middot; <a href="#">Cookies</a></span>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<footer class="footer" aria-label="Site footer">
+  <div class="container-wide">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="nav-logo" style="margin-bottom: var(--s-5);">Charm</div>
+        <p class="t-small" style="max-width: 28ch;">A marketplace for the people who make the work.</p>
+      </div>
+      <div class="footer-col"><h4>Shop</h4><ul>
+        <li><a href="marketplace.html">All gear</a></li>
+        <li><a href="cameras.html">Cameras</a></li>
+        <li><a href="audio.html">Audio</a></li>
+        <li><a href="lighting.html">Lighting</a></li>
+        <li><a href="wishlist.html">Wishlist</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Sell</h4><ul>
+        <li><a href="create-listing.html">List your gear</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="earnings.html">Earnings</a></li>
+        <li><a href="analytics.html">Analytics</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Community</h4><ul>
+        <li><a href="how-it-works.html">How it works</a></li>
+        <li><a href="blog.html">Journal</a></li>
+        <li><a href="reviews.html">Reviews</a></li>
+        <li><a href="insurance.html">Insurance</a></li>
+      </ul></div>
+      <div class="footer-col"><h4>Company</h4><ul>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="terms.html">Terms</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <span id="year">2026</span> Charm</div>
+      <div class="footer-lang"><button class="on">EN</button><button>PT</button><button>ES</button><button>FR</button><button>DE</button></div>
     </div>
   </div>
 </footer>
 
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="animations.js"></script>
 <script src="charm-db.js"></script>
 <script src="shared.js"></script>
+
 <script>
-  // Subcategory chip filter
-  document.querySelectorAll('.subcat-chip').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.subcat-chip').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  // Category config — change these three lines to clone for other categories
+  const CATEGORY = 'cameras';
+  const SUB_TAG_MAP = {
+    all:        null,
+    cinema:     ['cinema', 'fx6', 'fx3', 'red', 'arri', 'c70', 'c300'],
+    mirrorless: ['mirrorless', 'a7', 'r5', 'r6', 'z6', 'z9', 'lumix', 'sony', 'canon'],
+    dslr:       ['dslr', '5d', '6d', 'd850', 'd780'],
+    drone:      ['drone', 'dji', 'inspire', 'mavic', 'air', 'aerial'],
+    lens:       ['lens', 'telephoto', 'prime', 'zoom', 'wide', 'rf', 'ef', 'gm'],
+  };
+
+  const state = {
+    sub: 'all',
+    type: 'all',
+    maxPrice: 500,
+    conditions: [],
+    minRating: 0,
+    location: '',
+    search: '',
+    sort: 'newest',
+    view: 'grid',
+  };
+
+  const $ = (s) => document.querySelector(s);
+  const $$ = (s) => Array.from(document.querySelectorAll(s));
+
+  // Nav scroll state
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('nav--scrolled');
+    else nav.classList.remove('nav--scrolled');
+  }, { passive: true });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Return the listing's own uploaded image, or null when there is none.
+  // A null value triggers a typographic no-image state — never a stock photo.
+  function listingImage(l) {
+    if (l.images && l.images.length && l.images[0]) return l.images[0];
+    return null;
+  }
+
+  let listings = [];
+
+  async function loadListings() {
+    const result = await CharmDB.Listings.getAll({ category: CATEGORY, limit: 100 });
+    listings = result.listings;
+    $('#cat-total').textContent = listings.length.toLocaleString();
+    applyFilters();
+  }
+
+  function matchesSub(l, sub) {
+    if (sub === 'all') return true;
+    const tags = SUB_TAG_MAP[sub] || [];
+    if (!tags.length) return true;
+    const haystack = ((l.tags || []).join(' ') + ' ' + (l.title || '') + ' ' + (l.description || '')).toLowerCase();
+    return tags.some(t => haystack.includes(t));
+  }
+
+  function applyFilters() {
+    let out = [...listings];
+
+    if (state.sub !== 'all') out = out.filter(l => matchesSub(l, state.sub));
+    if (state.type !== 'all') out = out.filter(l => l.type === state.type || l.type === 'both');
+    if (state.conditions.length) out = out.filter(l => state.conditions.includes(l.condition));
+    if (state.minRating > 0) out = out.filter(l => (l.rating || 0) >= state.minRating);
+    if (state.location) out = out.filter(l => l.location.toLowerCase().includes(state.location.toLowerCase()));
+    if (state.search) {
+      const q = state.search.toLowerCase();
+      out = out.filter(l => l.title.toLowerCase().includes(q)
+        || (l.description || '').toLowerCase().includes(q)
+        || (l.tags || []).some(t => t.toLowerCase().includes(q))
+        || (l.sellerName || '').toLowerCase().includes(q));
+    }
+    out = out.filter(l => (l.priceRent || l.priceBuy || 0) <= state.maxPrice);
+
+    if (state.sort === 'price-low') out.sort((a,b) => (a.priceRent||a.priceBuy||0) - (b.priceRent||b.priceBuy||0));
+    else if (state.sort === 'price-high') out.sort((a,b) => (b.priceRent||b.priceBuy||0) - (a.priceRent||a.priceBuy||0));
+    else if (state.sort === 'rating') out.sort((a,b) => (b.rating||0) - (a.rating||0));
+    else out.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    renderGrid(out);
+    renderChips();
+  }
+
+  function renderGrid(items) {
+    const grid = $('#prod-grid');
+    $('#result-count').textContent = items.length;
+    if (!items.length) {
+      grid.innerHTML = `
+        <div class="mkt-empty" style="grid-column: 1 / -1;">
+          <h3>No cameras match.</h3>
+          <p>Try clearing a filter or searching something broader.</p>
+          <button class="btn btn--ghost" onclick="resetFilters()">Clear all filters</button>
+        </div>`;
+      return;
+    }
+    grid.innerHTML = items.map(productCard).join('');
+  }
+
+  function productCard(l) {
+    const price = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
+    const img = listingImage(l);
+    const wishlist = JSON.parse(localStorage.getItem('charm-wishlist') || '[]');
+    const isFav = wishlist.includes(l.id);
+    const typeLabel = l.type === 'buy' ? 'Buy' : l.type === 'both' ? 'Buy or rent' : 'Rent';
+    return `
+      <article class="prod-card" role="listitem" data-id="${l.id}" onclick="openQuickView('${l.id}')">
+        <div class="prod-img">
+          <span class="prod-badge">${typeLabel}</span>
+          <div class="prod-actions">
+            <button aria-label="Save" aria-pressed="${isFav}" onclick="event.stopPropagation(); toggleFav('${l.id}', this);">${isFav ? '♥' : '♡'}</button>
+            <button aria-label="Quick view" onclick="event.stopPropagation(); openQuickView('${l.id}');">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+          ${img ? `<img src="${img}" alt="${l.title}" loading="lazy" width="400" height="500">` : `
+          <div class="prod-noimg">
+            <div class="prod-noimg__cat">— ${(l.category || 'Listing').toUpperCase()}</div>
+            <div class="prod-noimg__title">${l.title}</div>
+          </div>`}
+        </div>
+        <div class="prod-meta">
+          <h3 class="prod-title">${l.title}</h3>
+          <div class="prod-seller">
+            <span class="prod-seller-avatar">${l.sellerAvatar || 'CR'}</span>
+            <span>${l.sellerName} · ${l.location}</span>
+          </div>
+          <div class="prod-footer">
+            <div class="prod-price">${price}</div>
+            <div class="prod-rating">★ ${(l.rating || 0).toFixed(1)} <span style="color:var(--c-text-4);">(${l.reviewCount || 0})</span></div>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  // Sub-pill strip
+  $$('.sub-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      $$('.sub-pill').forEach(p => { p.classList.remove('is-active'); p.setAttribute('aria-selected', 'false'); });
+      pill.classList.add('is-active');
+      pill.setAttribute('aria-selected', 'true');
+      state.sub = pill.dataset.sub;
+      applyFilters();
     });
   });
-  // Wishlist toggle
-  document.querySelectorAll('.p-wish').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const pressed = btn.getAttribute('aria-pressed') === 'true';
-      btn.setAttribute('aria-pressed', String(!pressed));
-      btn.textContent = pressed ? '♡' : '♥';
-      btn.style.color = pressed ? '' : 'var(--c-coral)';
-    });
-  });
+
+  $$('input[name="type"]').forEach(i => i.addEventListener('change', (e) => { state.type = e.target.value; applyFilters(); }));
+  $$('input[name="rating"]').forEach(i => i.addEventListener('change', (e) => { state.minRating = parseFloat(e.target.value); applyFilters(); }));
+  $$('.mkt-filter-group input[type="checkbox"]').forEach(i => i.addEventListener('change', () => {
+    state.conditions = $$('.mkt-filter-group input[type="checkbox"]:checked').map(c => c.value);
+    applyFilters();
+  }));
+  $('#loc-select').addEventListener('change', (e) => { state.location = e.target.value; applyFilters(); });
+  $('#mkt-sort').addEventListener('change', (e) => { state.sort = e.target.value; applyFilters(); });
+
+  function onPriceInput() {
+    const v = +$('#price-range').value;
+    state.maxPrice = v;
+    $('#price-display').textContent = '£' + v;
+    applyFilters();
+  }
+
+  let searchDebounce;
+  function onSearchInput(e) {
+    clearTimeout(searchDebounce);
+    searchDebounce = setTimeout(() => { state.search = e.target.value; applyFilters(); }, 220);
+  }
+
+  function resetFilters() {
+    state.sub = 'all'; state.type = 'all'; state.maxPrice = 500;
+    state.conditions = []; state.minRating = 0; state.location = ''; state.search = '';
+    $('#price-range').value = 500; $('#price-display').textContent = '£500';
+    $$('.mkt-filter-group input[type="checkbox"]').forEach(c => c.checked = false);
+    $$('input[name="type"]').forEach((r, i) => r.checked = i === 0);
+    $$('input[name="rating"]').forEach(r => r.checked = r.value === '0');
+    $$('.sub-pill').forEach((p, i) => { p.classList.toggle('is-active', i === 0); p.setAttribute('aria-selected', i === 0 ? 'true' : 'false'); });
+    $('#mkt-search').value = '';
+    $('#mkt-sort').value = 'newest'; state.sort = 'newest';
+    $('#loc-select').value = '';
+    applyFilters();
+  }
+
+  function renderChips() {
+    const chips = [];
+    if (state.sub !== 'all') chips.push({ label: `Type: ${state.sub}`, fn: () => { $$('.sub-pill')[0].click(); } });
+    if (state.type !== 'all') chips.push({ label: `${state.type === 'rent' ? 'Rent' : 'Buy'} only`, fn: () => { state.type = 'all'; $$('input[name="type"]')[0].checked = true; applyFilters(); } });
+    if (state.conditions.length) chips.push({ label: `Condition: ${state.conditions.join(', ')}`, fn: () => { state.conditions = []; $$('.mkt-filter-group input[type="checkbox"]').forEach(c => c.checked = false); applyFilters(); } });
+    if (state.minRating > 0) chips.push({ label: `${state.minRating}★+`, fn: () => { state.minRating = 0; $$('input[name="rating"]').forEach(r => r.checked = r.value === '0'); applyFilters(); } });
+    if (state.maxPrice < 500) chips.push({ label: `Under £${state.maxPrice}`, fn: () => { state.maxPrice = 500; $('#price-range').value = 500; $('#price-display').textContent = '£500'; applyFilters(); } });
+    if (state.location) chips.push({ label: `Location: ${state.location}`, fn: () => { state.location = ''; $('#loc-select').value = ''; applyFilters(); } });
+    if (state.search) chips.push({ label: `"${state.search}"`, fn: () => { state.search = ''; $('#mkt-search').value = ''; applyFilters(); } });
+
+    $('#filter-badge').textContent = chips.length;
+    $('#mkt-chips').innerHTML = chips.length
+      ? chips.map((c, i) => `<span class="mkt-chip">${c.label} <button data-i="${i}" aria-label="Remove filter">✕</button></span>`).join('')
+        + `<button class="mkt-chip" style="color: var(--c-text); cursor: pointer;" onclick="resetFilters()">Clear all</button>`
+      : '';
+    $$('#mkt-chips button[data-i]').forEach(b => b.onclick = () => chips[+b.dataset.i].fn());
+  }
+
+  function toggleSidebar() { $('#mkt-sidebar').classList.toggle('is-open'); }
+
+  function setView(view, btn) {
+    state.view = view;
+    $('.prod-grid').classList.toggle('is-list', view === 'list');
+    $$('.mkt-view-toggle button').forEach(b => { b.classList.remove('is-active'); b.setAttribute('aria-pressed', 'false'); });
+    btn.classList.add('is-active');
+    btn.setAttribute('aria-pressed', 'true');
+  }
+
+  // Wishlist
+  function toggleFav(id, btn) {
+    const wl = JSON.parse(localStorage.getItem('charm-wishlist') || '[]');
+    const idx = wl.indexOf(id);
+    if (idx > -1) { wl.splice(idx, 1); btn.textContent = '♡'; btn.setAttribute('aria-pressed', 'false'); toast('Removed from wishlist'); }
+    else { wl.push(id); btn.textContent = '♥'; btn.setAttribute('aria-pressed', 'true'); toast('Saved to wishlist'); }
+    localStorage.setItem('charm-wishlist', JSON.stringify(wl));
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+
+  // Cart
+  function getCart() { return JSON.parse(localStorage.getItem('charm-cart') || '[]'); }
+  function setCart(c) { localStorage.setItem('charm-cart', JSON.stringify(c)); renderCart(); }
+  function addToCart(id) {
+    const cart = getCart();
+    const found = cart.find(i => i.id === id);
+    if (found) found.qty = (found.qty || 1) + 1;
+    else cart.push({ id, qty: 1 });
+    setCart(cart);
+    toast('Added to cart');
+    if (navigator.vibrate) navigator.vibrate(10);
+  }
+  function removeFromCart(id) { setCart(getCart().filter(i => i.id !== id)); }
+  function updateCartQty(id, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.id === id);
+    if (!item) return;
+    item.qty = Math.max(1, (item.qty || 1) + delta);
+    setCart(cart);
+  }
+  function renderCart() {
+    const cart = getCart();
+    const badge = $('#cart-count');
+    const totalQty = cart.reduce((s, i) => s + (i.qty || 1), 0);
+    badge.textContent = totalQty;
+    badge.classList.toggle('is-zero', totalQty === 0);
+
+    const body = $('#cart-body');
+    const foot = $('#cart-foot');
+    if (!cart.length) { body.innerHTML = '<div class="cart-empty">Your cart is empty.</div>'; foot.style.display = 'none'; return; }
+
+    let total = 0;
+    body.innerHTML = cart.map(c => {
+      const l = listings.find(x => x.id === c.id) || {};
+      const price = (l.priceRent || l.priceBuy || 0) * (c.qty || 1);
+      total += price;
+      const img = listingImage(l);
+      return `
+        <div class="cart-item">
+          ${img
+            ? `<div class="cart-item-img" style="background-image: url(${img});"></div>`
+            : `<div class="cart-item-img cart-item-img--none">${(l.category || 'item').slice(0,3).toUpperCase()}</div>`}
+          <div>
+            <h4 class="cart-item-title">${l.title || 'Listing'}</h4>
+            <div class="cart-item-meta">${l.sellerName || ''} · ${l.location || ''}</div>
+            <div class="cart-item-controls">
+              <button onclick="updateCartQty('${c.id}', -1)" aria-label="Decrease">−</button>
+              <span class="qty">${c.qty || 1}</span>
+              <button onclick="updateCartQty('${c.id}', 1)" aria-label="Increase">+</button>
+            </div>
+            <button class="cart-item-remove" onclick="removeFromCart('${c.id}')">Remove</button>
+          </div>
+          <div class="cart-item-price">£${price}</div>
+        </div>`;
+    }).join('');
+    $('#cart-total').textContent = '£' + total.toLocaleString();
+    foot.style.display = 'block';
+  }
+  function openCart() { $('#cart-drawer').classList.add('is-open'); $('#cart-backdrop').classList.add('is-open'); $('#cart-drawer').setAttribute('aria-hidden', 'false'); }
+  function closeCart() { $('#cart-drawer').classList.remove('is-open'); $('#cart-backdrop').classList.remove('is-open'); $('#cart-drawer').setAttribute('aria-hidden', 'true'); }
+
+  // Quick view
+  let qvCurrent = null;
+  function openQuickView(id) {
+    const l = listings.find(x => x.id === id);
+    if (!l) return;
+    qvCurrent = l;
+    const price = l.priceRent ? `£${l.priceRent} <span>/ day</span>` : `£${l.priceBuy}`;
+    const qvImg = $('#qv-img');
+    const qvImgTitle = $('#qv-img-title');
+    const qvImage = listingImage(l);
+    if (qvImage) {
+      qvImg.style.backgroundImage = `url(${qvImage})`;
+      qvImg.classList.remove('qv-img--none');
+      qvImgTitle.textContent = '';
+    } else {
+      qvImg.style.backgroundImage = 'none';
+      qvImg.classList.add('qv-img--none');
+      qvImgTitle.textContent = l.title;
+    }
+    $('#qv-label').textContent = `— ${(l.category || '').toUpperCase()}`;
+    $('#qv-title').textContent = l.title;
+    $('#qv-price').innerHTML = price;
+    $('#qv-desc').textContent = l.description || '';
+    $('#qv-view-link').href = `product.html?id=${l.id}`;
+    $('#qv-specs').innerHTML = `
+      <div class="qv-spec"><div class="label">Condition</div><div class="value">${l.condition}</div></div>
+      <div class="qv-spec"><div class="label">Type</div><div class="value">${l.type === 'buy' ? 'Buy' : l.type === 'both' ? 'Buy or rent' : 'Rent'}</div></div>
+      <div class="qv-spec"><div class="label">Seller</div><div class="value">${l.sellerName}</div></div>
+      <div class="qv-spec"><div class="label">Location</div><div class="value">${l.location}</div></div>`;
+    $('#qv-backdrop').classList.add('is-open');
+  }
+  function closeQuickView() { $('#qv-backdrop').classList.remove('is-open'); }
+  function qvAddToCart() { if (qvCurrent) { addToCart(qvCurrent.id); closeQuickView(); } }
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCart(); closeQuickView(); } });
+
+  // Toast
+  let toastTimeout;
+  function toast(msg) {
+    const t = $('#toast');
+    t.textContent = msg;
+    t.classList.add('is-open');
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => t.classList.remove('is-open'), 2200);
+  }
+
+  // Init
+  renderCart();
+  loadListings();
+
+  // Read ?sub=xxx
+  const urlSub = new URLSearchParams(location.search).get('sub');
+  if (urlSub) {
+    const pill = $$('.sub-pill').find(p => p.dataset.sub === urlSub);
+    if (pill) pill.click();
+  }
 </script>
+
 </body>
 </html>

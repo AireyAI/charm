@@ -1,0 +1,394 @@
+/* ============================================================
+   Charm v2 Compatibility Layer
+   Overrides the legacy dark-navy-gold token system
+   with Runway-inspired tokens. Apply AFTER legacy inline styles.
+   ============================================================ */
+
+/* --- Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap');
+
+:root {
+  /* Re-map legacy tokens to Runway palette */
+  --c-base:      #000000 !important;
+  --c-card:      #0a0a0a !important;
+  --c-elevated:  #111111 !important;
+  --c-float:     #1a1a1a !important;
+  --c-gold:      #ffffff !important;
+  --c-gold-dim:  rgba(255,255,255,0.05) !important;
+  --c-violet:    #ffffff !important;
+  --c-coral:     #ff7070 !important;
+  --c-cyan:      #ffffff !important;
+  --c-text:      #ffffff !important;
+  --c-text-2:    #a7a7a7 !important;
+  --c-text-3:    #767d88 !important;
+  --c-border:    #1f1f22 !important;
+  --c-border-2:  #27272a !important;
+
+  /* Non-prefixed variants some pages use */
+  --gold:        #ffffff !important;
+  --gold-dim:    rgba(255,255,255,0.05) !important;
+  --text:        #ffffff !important;
+  --text-2:      #a7a7a7 !important;
+  --text-3:      #767d88 !important;
+  --border:      #1f1f22 !important;
+  --bg:          #000000 !important;
+  --base:        #000000 !important;
+  --card:        #0a0a0a !important;
+  --elevated:    #111111 !important;
+}
+
+[data-theme="light"] {
+  --c-base:      #ffffff !important;
+  --c-card:      #f4f4f4 !important;
+  --c-elevated:  #e9ecf2 !important;
+  --c-text:      #0c0c0c !important;
+  --c-text-2:    #404040 !important;
+  --c-text-3:    #767d88 !important;
+  --c-border:    #e0e0e6 !important;
+  --c-border-2:  #d0d4d4 !important;
+}
+
+/* --- Typography: force single typeface for EVERYTHING --- */
+html, body, body * {
+  font-family: 'Inter Tight', 'Inter', 'DM Sans', system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body { letter-spacing: -0.16px; }
+
+h1, h2, h3, h4, h5, h6,
+.hero-hl, .sec-title, .l-name, .cat-name, .mod-title,
+.eyebrow, .about-hl, .cta-hl, .btt-hl,
+.blog-post-title, .post-title, .page-hero-h1, .page-hero-title,
+.stat-num, .stat-v, .price-main, .pricing-price {
+  font-weight: 400 !important;
+  font-style: normal !important;
+  letter-spacing: -0.04em !important;
+  line-height: 1.05 !important;
+  text-wrap: balance;
+}
+h1, .hero-hl { letter-spacing: -0.055em !important; line-height: 1.00 !important; }
+h2, .sec-title { letter-spacing: -0.045em !important; }
+
+/* Kill italic everywhere — Runway is never italic */
+*, *::before, *::after {
+  font-style: normal !important;
+}
+em, i {
+  font-style: normal !important;
+  color: var(--c-text-3) !important;
+}
+
+/* Kill bold weights beyond 600 */
+strong, b, .bold, [style*="font-weight: 700"], [style*="font-weight:700"],
+[style*="font-weight: 800"], [style*="font-weight:800"] {
+  font-weight: 500 !important;
+}
+
+/* --- Color overrides: convert gold highlights to white --- */
+[style*="color: var(--c-gold)"],
+[style*="color:var(--c-gold)"],
+[style*="color: #e2a84b"],
+[style*="color:#e2a84b"],
+[style*="color: #f5d080"],
+[style*="color:#f5d080"],
+[style*="color: #c98830"],
+[style*="color:#c98830"],
+.gold, .text-gold, .c-gold, .eyebrow, .welcome-text, .panel-eyebrow,
+.section-eyebrow, .kicker, .stat-v, .amount-v, .booking-total {
+  color: var(--c-text) !important;
+}
+[style*="background: var(--c-gold)"],
+[style*="background:var(--c-gold)"],
+[style*="background-color: var(--c-gold)"],
+[style*="background: #e2a84b"],
+[style*="background:#e2a84b"] {
+  background: var(--c-text) !important;
+  color: var(--c-bg, #000) !important;
+}
+[style*="border-color: var(--c-gold)"],
+[style*="border-color:var(--c-gold)"] {
+  border-color: var(--c-text-3) !important;
+}
+/* Gold gradient backgrounds → neutral white */
+[style*="linear-gradient(135deg, #e2a84b"],
+[style*="linear-gradient(135deg,#e2a84b"],
+[style*="#e2a84b"] {
+  background-image: none !important;
+}
+
+/* Gold accent colour hex family → white */
+[class*="gold"]:not(.footer-lang *):not(.toast),
+[class*="Gold"] {
+  color: var(--c-text) !important;
+}
+
+/* --- Primary buttons: white on black --- */
+.btn-gold, .btn-primary, .btn-cta, .btn-book, .btn-search,
+.btn-submit, .booking-submit, .cta-btn, .add-listing, .publish-btn,
+.checkout-btn, .continue-btn, .primary-btn, .signup-btn, .login-btn,
+.save-btn, .btn-next, .btn-enter, .btn-main, .btn-go,
+.accept-btn, .book-btn, button[type="submit"] {
+  background: #ffffff !important;
+  color: #000000 !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  letter-spacing: -0.1px !important;
+  box-shadow: none !important;
+  padding: 12px 22px !important;
+  transition: background 200ms ease, transform 180ms ease !important;
+}
+.btn-gold:hover, .btn-primary:hover, .btn-cta:hover,
+.btn-book:hover, .btn-search:hover, button[type="submit"]:hover {
+  background: #e5e5e5 !important;
+  transform: translateY(-1px);
+}
+
+/* Any white button — ensure inner text colour is black */
+.btn-gold *, .btn-primary *, .btn-cta *, .btn-next *,
+.btn-gold span, .btn-primary span {
+  color: inherit !important;
+}
+
+/* Nav "+ Add Listing" / .btn-cta-nav pattern */
+.nav .btn-gold, .nav-cta, .add-listing-btn, .nav-add-listing {
+  background: #ffffff !important;
+  color: #000000 !important;
+  padding: 8px 16px !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  border-radius: 4px !important;
+}
+.nav .btn-gold:hover, .nav-cta:hover { background: #e5e5e5 !important; }
+
+/* --- Ghost buttons: transparent with border --- */
+.btn-ghost, .btn-secondary, .btn-outline {
+  background: transparent !important;
+  color: var(--c-text) !important;
+  border: 1px solid var(--c-border-2) !important;
+  border-radius: 4px !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.1px !important;
+  box-shadow: none !important;
+}
+.btn-ghost:hover { background: var(--c-elevated) !important; }
+
+/* --- Card and container overrides --- */
+.sec, section, .block, .panel, .card, .l-card, .cat-card, .mod-card,
+.blog-card, .message-card, .notification-item, .booking-card,
+.listing-card, .filter-panel, .booking-section, .seller-card,
+.profile-hero, .settings-panel, .earnings-panel, .chart-panel {
+  box-shadow: none !important;
+}
+
+.l-card, .cat-card, .mod-card, .blog-card,
+.booking-card, .listing-card {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 8px !important;
+}
+
+.l-img, .cat-img, .prod-img, .blog-img, .listing-img, .card-img {
+  border-radius: 8px !important;
+}
+
+/* Badges */
+.l-badge, .cat-label, .badge, .l-tag, .listing-badge, .prod-badge {
+  background: rgba(0,0,0,0.55) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #fff !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.8px !important;
+  text-transform: uppercase !important;
+  border: 0 !important;
+  border-radius: 4px !important;
+  padding: 4px 10px !important;
+}
+
+/* --- Nav --- */
+.nav {
+  background: rgba(0,0,0,0.62) !important;
+  backdrop-filter: saturate(140%) blur(20px) !important;
+  -webkit-backdrop-filter: saturate(140%) blur(20px) !important;
+  border-bottom: 1px solid transparent !important;
+}
+.nav--scrolled, .nav.scrolled {
+  background: rgba(0,0,0,0.85) !important;
+  border-bottom-color: var(--c-border) !important;
+}
+.logo, .logo-gem, .brand-name {
+  color: var(--c-text) !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.4px !important;
+  font-style: normal !important;
+}
+.logo-gem {
+  background: var(--c-text) !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 1px !important;
+  transform: rotate(45deg) !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  margin-right: 8px !important;
+  vertical-align: middle !important;
+  box-shadow: none !important;
+  background-image: none !important;
+}
+.sidebar-logo, .logo { color: var(--c-text) !important; }
+.nav-links a { color: var(--c-text-2) !important; }
+.nav-links a:hover, .nav-links a.active { color: var(--c-text) !important; }
+
+/* --- Orbs / decorations: dampen --- */
+.orb, .hero-orb, .hero-glow, .bg-orb, .hero-grid-bg, .hero-pattern {
+  display: none !important;
+}
+.noise { display: none !important; }
+
+/* --- Hero: lose gold gradients --- */
+.hero-hl, .hero-title, .hero-heading, .page-hero-h1 {
+  color: var(--c-text) !important;
+  background: transparent !important;
+  -webkit-background-clip: unset !important;
+  -webkit-text-fill-color: currentColor !important;
+  text-shadow: none !important;
+}
+
+/* --- Form controls --- */
+input[type="text"], input[type="email"], input[type="password"],
+input[type="number"], input[type="date"], input[type="search"],
+input[type="tel"], input[type="url"], select, textarea {
+  background: #111111 !important;
+  color: var(--c-text) !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: 6px !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: 14px !important;
+  padding: 10px 14px !important;
+  letter-spacing: -0.1px !important;
+  color-scheme: dark;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none !important;
+  border-color: var(--c-text) !important;
+}
+input::placeholder, textarea::placeholder { color: #5a5d63 !important; }
+label { color: var(--c-text-3) !important; }
+
+/* --- Search cards / dropdowns --- */
+.search-card, .booking-section, .s-field {
+  background: #0a0a0a !important;
+  border: 1px solid var(--c-border) !important;
+  border-radius: 12px !important;
+}
+.s-tab.on, .tab.active, .filter-pill.active {
+  background: var(--c-text) !important;
+  color: var(--c-bg, #000) !important;
+  border-color: var(--c-text) !important;
+}
+
+/* --- Pills --- */
+.pill, .cat-pill, .tag-pill, .filter-pill {
+  background: transparent !important;
+  border: 1px solid var(--c-border-2) !important;
+  color: var(--c-text-2) !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  letter-spacing: -0.1px !important;
+  border-radius: 2px !important;
+  padding: 8px 14px !important;
+  text-transform: none !important;
+}
+.pill.on, .pill.active, .cat-pill.is-active, .filter-pill.active {
+  background: var(--c-text) !important;
+  color: var(--c-bg, #000) !important;
+  border-color: var(--c-text) !important;
+}
+
+/* --- Footer --- */
+.footer, footer.site-footer {
+  background: #000 !important;
+  border-top: 1px solid var(--c-border) !important;
+}
+.ft-col h4, .footer-col h4 {
+  color: var(--c-text-3) !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 11px !important;
+  letter-spacing: 1.2px !important;
+  text-transform: uppercase !important;
+}
+.ft-col a, .footer-col a { color: var(--c-text-2) !important; }
+.ft-col a:hover, .footer-col a:hover { color: var(--c-text) !important; }
+
+/* --- Misc color accents to neutral --- */
+.price, .stat-num, .rating-num, .amount, .price-main {
+  color: var(--c-text) !important;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  font-weight: 500 !important;
+}
+[style*="color: var(--c-gold)"] { color: var(--c-text) !important; }
+
+/* --- Scroll --- */
+::-webkit-scrollbar-thumb { background: var(--c-border-2) !important; }
+
+/* --- Selection --- */
+::selection { background: var(--c-text) !important; color: var(--c-bg, #000) !important; }
+
+/* --- Focus --- */
+:focus-visible {
+  outline: 2px solid var(--c-text) !important;
+  outline-offset: 3px !important;
+}
+
+/* --- Cookie banner (shared.js) --- */
+#cookie-banner {
+  background: #111 !important;
+  border: 1px solid var(--c-border-2) !important;
+  border-radius: 12px !important;
+  color: var(--c-text-2) !important;
+  font-family: 'Inter Tight', sans-serif !important;
+}
+#cookie-banner a { color: var(--c-text) !important; }
+#cookie-banner button[data-action="accept"],
+#cookie-banner .accept-btn {
+  background: #fff !important;
+  color: #000 !important;
+  border-radius: 4px !important;
+}
+
+/* --- Back-to-top button (shared.js) --- */
+#back-to-top {
+  background: rgba(0,0,0,0.72) !important;
+  border: 1px solid var(--c-border-2) !important;
+  color: var(--c-text-2) !important;
+  border-radius: 6px !important;
+  width: 40px !important;
+  height: 40px !important;
+}
+#back-to-top:hover { color: var(--c-text) !important; background: #111 !important; }
+
+/* --- Hide legacy theme toggle (Runway is single-aesthetic) --- */
+#theme-toggle { display: none !important; }
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

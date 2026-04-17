@@ -1,480 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Charm — Welcome</title>
-  <meta name="description" content="Charm — the global platform for creators. Find studios, venues, professionals and creative spaces worldwide.">
-  <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#07070e">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="format-detection" content="telephone=no">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,300;1,400;1,600;1,700&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Charm — Gear, Spaces, People for Creators</title>
+<meta name="description" content="Charm — a marketplace for creators. Buy and rent cameras, audio, lighting, instruments. Book studios, hire pros. One account, one platform.">
+<link rel="canonical" href="https://aireyai.github.io/charm/">
 
-    :root {
-      --gold: #e2a84b;
-      --violet: #9d6fff;
-      --cyan: #00d4c8;
-      --base: #07070e;
-    }
+<meta property="og:title" content="Charm">
+<meta property="og:description" content="A marketplace for creators. Gear, spaces, pros.">
+<meta property="og:image" content="https://aireyai.github.io/charm/images/hero-studio.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
 
-    html {
-      -webkit-text-size-adjust: 100%;
-      text-size-adjust: 100%;
-    }
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 
-    html, body {
-      width: 100%; height: 100%; height: 100dvh;
-      background: var(--base);
-      overflow: hidden;
-      -webkit-font-smoothing: antialiased;
-    }
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/hero-studio.jpg" fetchpriority="high">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;450;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="charm-v2.css">
 
-    /* iOS tap highlight */
-    * { -webkit-tap-highlight-color: transparent; }
-    /* Focus visible */
-    :focus { outline: none; }
-    :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; border-radius: 4px; }
+<style>
+  html, body { height: 100%; overflow: hidden; background: #000; }
+  .splash {
+    position: fixed;
+    inset: 0;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 1;
+  }
+  .splash-body { flex: 1; min-height: 0; }
+  .splash-media {
+    position: absolute; inset: 0; z-index: 0;
+    transform: scale(1.05);
+    animation: slow-zoom 14s ease-out forwards;
+  }
+  .splash-media img { width: 100%; height: 100%; object-fit: cover; }
+  .splash-media::after {
+    content: ''; position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.5) 45%, rgba(0,0,0,0.88) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0) 72%, rgba(0,0,0,0.85) 100%);
+  }
+  @keyframes slow-zoom {
+    0%   { transform: scale(1.05); }
+    100% { transform: scale(1.00); }
+  }
 
-    /* Reduced motion */
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        transition-duration: 0.01ms !important;
-      }
-    }
+  .splash-top, .splash-bottom {
+    position: relative; z-index: 2;
+    padding: var(--s-6) var(--s-7);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .splash-top { padding-top: var(--s-5); }
+  .splash-bottom { padding-bottom: var(--s-7); flex-wrap: wrap; gap: var(--s-4); }
 
-    /* ── Noise grain ── */
-    .grain {
-      position: fixed; inset: 0; z-index: 100; pointer-events: none;
-      opacity: 0.032;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px 200px;
-    }
+  .splash-brand {
+    font-family: var(--f-display);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.4px;
+    color: #fff;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .splash-brand::before {
+    content: ''; width: 10px; height: 10px; background: #fff;
+    transform: rotate(45deg); border-radius: 1px; display: inline-block;
+  }
 
-    /* ── Transition overlay ── */
-    .curtain {
-      position: fixed; inset: 0; z-index: 200;
-      background: var(--base);
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.8s ease;
-    }
-    .curtain.closing { opacity: 1; }
+  .splash-meta {
+    font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
 
-    /* ── Orbs ── */
-    .orbs {
-      position: fixed; inset: 0; z-index: 0;
-    }
-    .orb {
-      position: absolute; border-radius: 50%;
-      filter: blur(100px); opacity: 0;
-      animation: orb-in 3s ease forwards;
-    }
-    .o1 {
-      width: 70vw; height: 70vw; max-width: 800px; max-height: 800px;
-      background: radial-gradient(circle, rgba(157,111,255,0.18) 0%, transparent 65%);
-      top: -25%; right: -20%;
-      animation-delay: 0.3s;
-      animation: orb-in 3s ease 0.3s forwards, drift-1 20s ease-in-out 3.3s infinite;
-    }
-    .o2 {
-      width: 60vw; height: 60vw; max-width: 700px; max-height: 700px;
-      background: radial-gradient(circle, rgba(226,168,75,0.14) 0%, transparent 65%);
-      bottom: -20%; left: 5%;
-      animation: orb-in 3s ease 0.6s forwards, drift-2 24s ease-in-out 3.6s infinite;
-    }
-    .o3 {
-      width: 50vw; height: 50vw; max-width: 600px; max-height: 600px;
-      background: radial-gradient(circle, rgba(0,212,200,0.1) 0%, transparent 65%);
-      top: 40%; left: -15%;
-      animation: orb-in 3s ease 0.9s forwards, drift-3 16s ease-in-out 3.9s infinite;
-    }
-    @keyframes orb-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes drift-1 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      40%     { transform: translate(-30px, 40px) scale(1.06); }
-      70%     { transform: translate(20px,-20px) scale(0.96); }
-    }
-    @keyframes drift-2 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      35%     { transform: translate(40px,-30px) scale(0.94); }
-      65%     { transform: translate(-20px,20px) scale(1.05); }
-    }
-    @keyframes drift-3 {
-      0%,100% { transform: translate(0,0) scale(1); }
-      50%     { transform: translate(25px, 25px) scale(1.08); }
-    }
+  .splash-body {
+    position: relative; z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--s-7);
+    padding-bottom: var(--s-4);
+    max-width: 100%;
+    min-height: 0;
+  }
+  .splash-title {
+    font-family: var(--f-display);
+    font-size: clamp(44px, min(10vw, 14vh), 128px);
+    font-weight: 400;
+    line-height: 0.94;
+    letter-spacing: -2.6px;
+    margin: 0;
+    color: #fff;
+    text-wrap: balance;
+    animation: rise 1.8s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s backwards;
+    max-width: 14ch;
+  }
+  .splash-title em {
+    font-style: normal;
+    color: rgba(255,255,255,0.55);
+  }
 
-    /* ── Grid ── */
-    .grid-bg {
-      position: fixed; inset: 0; z-index: 1;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 10%, transparent 80%);
-      opacity: 0;
-      animation: fade-in 2.5s ease 1s forwards;
-    }
+  @keyframes rise {
+    0%   { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 
-    /* ── Stage ── */
-    .stage {
-      position: relative; z-index: 10;
-      width: 100%; height: 100vh; height: 100dvh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      gap: 0;
-      padding: 40px;
-      padding-top: max(40px, env(safe-area-inset-top) + 40px);
-      padding-bottom: max(40px, env(safe-area-inset-bottom) + 40px);
-    }
+  .splash-bottom-left { max-width: 48ch; animation: fade 1s ease 1.2s backwards; }
+  .splash-lede { font-size: 16px; line-height: 1.5; color: rgba(255,255,255,0.75); margin: 0; letter-spacing: -0.16px; }
 
-    /* ── Gem icon ── */
-    .gem-wrap {
-      opacity: 0;
-      animation: gem-appear 0.8s cubic-bezier(0.34,1.56,0.64,1) 1s forwards;
-      margin-bottom: 32px;
-      position: relative;
-    }
-    @keyframes gem-appear {
-      from { opacity: 0; transform: scale(0.4); }
-      to   { opacity: 1; transform: scale(1); }
-    }
-    .gem {
-      width: 52px; height: 52px; border-radius: 13px;
-      background: linear-gradient(135deg, #c98830 0%, #e2a84b 40%, #f5d080 65%, #c98830 100%);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 26px; line-height: 1;
-      box-shadow:
-        0 0 0 1px rgba(226,168,75,0.4),
-        0 4px 24px rgba(226,168,75,0.35),
-        0 0 60px rgba(226,168,75,0.15);
-      animation: gem-pulse 3s ease-in-out 2s infinite;
-    }
-    @keyframes gem-pulse {
-      0%,100% { box-shadow: 0 0 0 1px rgba(226,168,75,0.4), 0 4px 24px rgba(226,168,75,0.35), 0 0 60px rgba(226,168,75,0.15); }
-      50%     { box-shadow: 0 0 0 1px rgba(226,168,75,0.6), 0 6px 32px rgba(226,168,75,0.55), 0 0 100px rgba(226,168,75,0.28); }
-    }
-    /* Orbiting sparkle */
-    .gem-ring {
-      position: absolute; inset: -14px;
-      border-radius: 50%;
-      border: 1px solid rgba(226,168,75,0.2);
-      animation: ring-spin 8s linear infinite;
-    }
-    .gem-ring::before {
-      content: '✦';
-      position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
-      font-size: 10px; color: var(--gold); opacity: 0.8;
-    }
-    @keyframes ring-spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
+  .splash-cta-group { display: flex; gap: var(--s-3); animation: fade 1s ease 1.6s backwards; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
-    /* ── Wordmark ── */
-    .wordmark-wrap {
-      overflow: hidden;
-      margin-bottom: 0;
-    }
-    .wordmark {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-weight: 300;
-      font-size: clamp(72px, 14vw, 160px);
-      line-height: 0.9;
-      letter-spacing: -0.04em;
-      color: #f0ece3;
-      display: block;
-      transform: translateY(110%);
-      animation: word-rise 1s cubic-bezier(0.16,1,0.3,1) 1.5s forwards;
-    }
-    @keyframes word-rise {
-      from { transform: translateY(110%); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
+  .splash-bottom .btn--primary { background: #fff; color: #000; }
+  .splash-bottom .btn--primary:hover { background: #e8e8e8; }
+  .splash-bottom .btn--ghost { color: #fff; border-color: rgba(255,255,255,0.3); }
+  .splash-bottom .btn--ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.55); }
 
-    /* ── Rule ── */
-    .rule-wrap {
-      width: clamp(200px, 30vw, 400px);
-      margin: 28px 0 26px;
-      overflow: hidden;
-    }
-    .rule {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(226,168,75,0.6) 30%, rgba(226,168,75,0.6) 70%, transparent);
-      transform: scaleX(0);
-      transform-origin: center;
-      animation: rule-expand 0.8s cubic-bezier(0.16,1,0.3,1) 2.4s forwards;
-    }
-    @keyframes rule-expand {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
+  .splash-corner {
+    position: absolute;
+    width: 24px; height: 24px;
+    border: 1px solid rgba(255,255,255,0.45);
+    z-index: 2;
+    animation: fade 1.4s ease 0.2s backwards;
+  }
+  .splash-corner.tl { top: 24px; left: 24px; border-right: 0; border-bottom: 0; }
+  .splash-corner.tr { top: 24px; right: 24px; border-left: 0; border-bottom: 0; }
+  .splash-corner.bl { bottom: 24px; left: 24px; border-right: 0; border-top: 0; }
+  .splash-corner.br { bottom: 24px; right: 24px; border-left: 0; border-top: 0; }
 
-    /* ── Tagline ── */
-    .tagline {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(10px, 1.2vw, 13px);
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(152,150,168,0.8);
-      opacity: 0;
-      animation: fade-up 0.8s ease 2.8s forwards;
-      text-align: center;
-    }
+  .splash-enter-hint {
+    position: absolute;
+    left: 50%; transform: translateX(-50%);
+    bottom: var(--s-8);
+    z-index: 2;
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    animation: fade 1s ease 2.2s backwards;
+  }
+  .splash-enter-hint::before,
+  .splash-enter-hint::after {
+    content: ''; width: 32px; height: 1px; background: rgba(255,255,255,0.28);
+  }
 
-    /* ── Language pills ── */
-    .lang-row {
-      display: flex; gap: 8px; margin-top: 48px;
-      opacity: 0;
-      animation: fade-up 0.6s ease 3.2s forwards;
-    }
-    .lang {
-      font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 700;
-      color: rgba(152,150,168,0.5);
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 6px; padding: 5px 12px; cursor: pointer;
-      letter-spacing: 0.05em;
-      transition: color 0.2s ease, border-color 0.2s ease;
-    }
-    .lang:hover { color: rgba(240,236,227,0.7); border-color: rgba(255,255,255,0.15); }
-    .lang.active { color: var(--gold); border-color: rgba(226,168,75,0.35); }
+  /* Curtain transition */
+  .curtain {
+    position: fixed; inset: 0;
+    background: #000;
+    z-index: 9999;
+    transform: translateY(100%);
+    transition: transform 700ms cubic-bezier(0.76, 0, 0.24, 1);
+    pointer-events: none;
+  }
+  .curtain.is-closing { transform: translateY(0); pointer-events: auto; }
 
-    /* ── Enter button ── */
-    .enter-wrap {
-      margin-top: 52px;
-      opacity: 0;
-      animation: fade-up 0.8s ease 3.5s forwards;
-    }
-    .btn-enter {
-      position: relative;
-      font-family: 'Syne', sans-serif;
-      font-size: 13px; font-weight: 700;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--gold);
-      background: transparent;
-      border: 1px solid rgba(226,168,75,0.35);
-      border-radius: 50px;
-      padding: 14px 44px;
-      cursor: pointer;
-      overflow: hidden;
-      transition: border-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    .btn-enter::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 120%, rgba(226,168,75,0.14) 0%, transparent 65%);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .btn-enter:hover {
-      border-color: rgba(226,168,75,0.65);
-      color: #f5d080;
-      box-shadow: 0 0 32px rgba(226,168,75,0.18), 0 4px 16px rgba(0,0,0,0.4);
-      transform: translateY(-2px);
-    }
-    .btn-enter:hover::before { opacity: 1; }
-    .btn-enter:active { transform: translateY(0); }
+  @media (prefers-reduced-motion: reduce) {
+    .splash-media { animation: none; transform: scale(1); }
+    .splash-title, .splash-bottom-left, .splash-cta-group, .splash-corner, .splash-enter-hint { animation: none; opacity: 1; transform: none; }
+  }
 
-    /* Shimmer sweep on hover */
-    .btn-enter::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 60%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-      transition: left 0.5s ease;
-    }
-    .btn-enter:hover::after { left: 160%; }
-
-    /* ── Scroll hint ── */
-    .hint {
-      position: fixed; bottom: 36px; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-      opacity: 0;
-      animation: fade-in 0.8s ease 4.2s forwards;
-      z-index: 10;
-    }
-    .hint-text {
-      font-family: 'Syne', sans-serif; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      color: rgba(90,88,110,0.7);
-    }
-    .hint-line {
-      width: 1px; height: 32px;
-      background: linear-gradient(to bottom, rgba(226,168,75,0.5), transparent);
-      animation: hint-bob 2s ease-in-out 4.5s infinite;
-    }
-    @keyframes hint-bob {
-      0%,100% { transform: scaleY(1) translateY(0); opacity: 0.7; }
-      50%     { transform: scaleY(0.7) translateY(4px); opacity: 0.3; }
-    }
-
-    /* ── Corner accents ── */
-    .corner {
-      position: fixed; z-index: 10;
-      width: 40px; height: 40px;
-      opacity: 0;
-      animation: fade-in 1s ease 2s forwards;
-    }
-    .corner svg { width: 100%; height: 100%; }
-    .tl { top: 28px; left: 28px; }
-    .tr { top: 28px; right: 28px; transform: scaleX(-1); }
-    .bl { bottom: 28px; left: 28px; transform: scaleY(-1); }
-    .br { bottom: 28px; right: 28px; transform: scale(-1,-1); }
-
-    /* ── Shared keyframes ── */
-    @keyframes fade-in {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes fade-up {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 600px) {
-      .gem { width: 44px; height: 44px; font-size: 22px; }
-      .corner { display: none; }
-      .hint { bottom: 24px; }
-    }
-  </style>
+  @media (max-width: 760px) {
+    .splash-body { padding: var(--s-5); }
+    .splash-bottom { flex-direction: column; align-items: flex-start; gap: var(--s-5); padding: 0 var(--s-5) var(--s-6); }
+    .splash-title { letter-spacing: -2.4px; line-height: 0.95; }
+    .splash-enter-hint { display: none; }
+  }
+</style>
 </head>
 <body>
 
-<div class="grain"></div>
+<div class="splash" role="main">
+  <div class="splash-media" aria-hidden="true">
+    <img src="images/hero-studio.jpg" alt="">
+  </div>
+
+  <div class="splash-corner tl"></div>
+  <div class="splash-corner tr"></div>
+  <div class="splash-corner bl"></div>
+  <div class="splash-corner br"></div>
+
+  <header class="splash-top">
+    <div class="splash-brand">Charm</div>
+    <div class="splash-meta">— v2.0 · 2026</div>
+  </header>
+
+  <div class="splash-body">
+    <h1 class="splash-title">Made for<br>the people<br><em>making the work.</em></h1>
+  </div>
+
+  <footer class="splash-bottom">
+    <div class="splash-bottom-left">
+      <p class="splash-lede">
+        A marketplace for creators. Buy and rent gear, book the spaces, hire the pros.
+        One platform. One account.
+      </p>
+    </div>
+    <div class="splash-cta-group">
+      <a href="home.html" class="btn btn--primary btn--lg btn--arrow" id="enter-btn" onclick="enter(event)">Enter</a>
+      <a href="marketplace.html" class="btn btn--ghost btn--lg">Browse marketplace</a>
+    </div>
+  </footer>
+
+  <div class="splash-enter-hint">Press <span style="color:#fff;">Enter</span> or click to continue</div>
+</div>
+
 <div class="curtain" id="curtain"></div>
 
-<!-- Atmosphere -->
-<div class="orbs">
-  <div class="orb o1"></div>
-  <div class="orb o2"></div>
-  <div class="orb o3"></div>
-</div>
-<div class="grid-bg"></div>
-
-<!-- Corner accents -->
-<div class="corner tl">
-  <svg viewBox="0 0 40 40" fill="none">
-    <path d="M1 40 L1 1 L40 1" stroke="rgba(226,168,75,0.25)" stroke-width="1"/>
-  </svg>
-</div>
-<div class="corner tr">
-  <svg viewBox="0 0 40 40" fill="none">
-    <path d="M1 40 L1 1 L40 1" stroke="rgba(226,168,75,0.25)" stroke-width="1"/>
-  </svg>
-</div>
-<div class="corner bl">
-  <svg viewBox="0 0 40 40" fill="none">
-    <path d="M1 40 L1 1 L40 1" stroke="rgba(226,168,75,0.25)" stroke-width="1"/>
-  </svg>
-</div>
-<div class="corner br">
-  <svg viewBox="0 0 40 40" fill="none">
-    <path d="M1 40 L1 1 L40 1" stroke="rgba(226,168,75,0.25)" stroke-width="1"/>
-  </svg>
-</div>
-
-<!-- Stage -->
-<div class="stage">
-  <div class="gem-wrap">
-    <div class="gem-ring"></div>
-    <div class="gem">✦</div>
-  </div>
-
-  <div class="wordmark-wrap">
-    <span class="wordmark">Charm</span>
-  </div>
-
-  <div class="rule-wrap">
-    <div class="rule"></div>
-  </div>
-
-  <p class="tagline">The Global Creative Space Platform</p>
-
-  <div class="lang-row">
-    <button class="lang active">EN</button>
-    <button class="lang">PT</button>
-    <button class="lang">ES</button>
-    <button class="lang">FR</button>
-    <button class="lang">DE</button>
-  </div>
-
-  <div class="enter-wrap">
-    <button class="btn-enter" id="enterBtn" type="button" aria-label="Enter Charm — the creative platform">Enter the Platform</button>
-  </div>
-</div>
-
-<!-- Scroll hint -->
-<div class="hint">
-  <span class="hint-text">Enter</span>
-  <div class="hint-line"></div>
-</div>
-
 <script>
-  // Global error handling
-  window.onerror = (msg, src, line) => { console.error('Error:', msg); return false; };
+  const curtain = document.getElementById('curtain');
 
-  // Reduce motion check
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Language toggle
-  document.querySelectorAll('.lang').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.lang').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
-  });
-
-  // Enter transition
-  function enter() {
-    const curtain = document.getElementById('curtain');
-    curtain.style.pointerEvents = 'all';
-    curtain.classList.add('closing');
-    const delay = reducedMotion ? 50 : 850;
-    setTimeout(() => {
-      window.location.href = 'home.html';
-    }, delay);
+  function enter(e) {
+    if (e) e.preventDefault();
+    curtain.classList.add('is-closing');
+    setTimeout(() => { window.location.href = 'home.html'; }, 600);
   }
 
-  const enterBtn = document.getElementById('enterBtn');
-  enterBtn.addEventListener('click', enter);
-
-  // Keyboard support
-  document.addEventListener('keydown', e => {
-    // Only trigger if no input focused
-    if (document.activeElement.tagName !== 'INPUT' && (e.key === 'Enter' || e.key === ' ')) {
-      e.preventDefault();
-      enter();
-    }
+  // Keyboard shortcuts (not when focus is in a form field)
+  document.addEventListener('keydown', (e) => {
+    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) return;
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); enter(); }
   });
 
-  // Auto-advance after 8s (skip if reduced motion — don't force animation)
-  let autoTimer;
-  if (!reducedMotion) {
-    autoTimer = setTimeout(enter, 8000);
-  }
-  enterBtn.addEventListener('click', () => clearTimeout(autoTimer), { once: true });
+  // Auto-advance after 10s (can be skipped with any click/key)
+  let autoAdvance = setTimeout(enter, 10000);
 
-  // Page visibility — pause auto-advance when tab hidden
+  // Pause when tab hidden
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) clearTimeout(autoTimer);
-    else if (!reducedMotion) autoTimer = setTimeout(enter, 8000);
+    if (document.hidden) { clearTimeout(autoAdvance); }
+    else { autoAdvance = setTimeout(enter, 8000); }
   });
+
+  // Respect reduced motion — no auto-advance
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    clearTimeout(autoAdvance);
+  }
 </script>
-<script src="charm-db.js"></script>
-<script src="shared.js"></script>
+
 </body>
 </html>

@@ -3,3 +3,4 @@ temporary screenshots/
 generated-videos/
 .DS_Store
 *.log
+*.v1.bak.html

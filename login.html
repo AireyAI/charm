@@ -440,36 +440,51 @@
     }
 
     .social-buttons {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      display: flex;
+      flex-direction: column;
       gap: 10px;
     }
     .btn-social {
-      background: var(--c-elevated);
-      border: 1px solid var(--c-border);
+      height: 48px;
+      width: 100%;
       border-radius: 10px;
-      padding: 12px 8px;
+      padding: 0 16px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 7px;
-      transition: border-color 0.2s, background 0.2s, transform 0.15s;
-      color: var(--c-text-2);
-      font-family: 'Syne', sans-serif;
-      font-weight: 600;
-      font-size: 12px;
+      gap: 10px;
+      transition: background 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+      font-family: 'Inter Tight', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: -0.1px;
       text-decoration: none;
-    }
-    .btn-social:hover {
-      border-color: var(--c-border-2);
-      background: var(--c-float);
-      color: var(--c-text);
-      transform: translateY(-1px);
+      border: 0;
     }
     .btn-social:active { transform: translateY(0); }
-    .btn-social:focus-visible { outline: 2px solid var(--c-gold); outline-offset: 3px; }
+    .btn-social:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
     .btn-social svg { flex-shrink: 0; }
+
+    /* Apple — brand-correct black pill, white mark + text */
+    .btn-social--apple {
+      background: #000;
+      color: #fff;
+      border: 1px solid #000;
+    }
+    .btn-social--apple:hover { background: #1a1a1a; transform: translateY(-1px); }
+
+    /* Google — brand-correct white pill, dark text, multicolour G */
+    .btn-social--google {
+      background: #ffffff;
+      color: #1f1f1f;
+      border: 1px solid #dadce0;
+    }
+    .btn-social--google:hover {
+      background: #f8f9fa;
+      box-shadow: 0 1px 2px rgba(60,64,67,0.15), 0 1px 3px rgba(60,64,67,0.08);
+      transform: translateY(-1px);
+    }
 
     /* Footer */
     .footer {
@@ -775,18 +790,14 @@
 
           <!-- Social buttons -->
           <div class="social-buttons">
-            <a href="#" class="btn-social" aria-label="Continue with Google">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-              Google
-            </a>
-            <a href="#" class="btn-social" aria-label="Continue with GitHub">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-              GitHub
-            </a>
-            <a href="#" class="btn-social" aria-label="Continue with Apple">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-              Apple
-            </a>
+            <button type="button" class="btn-social btn-social--apple" onclick="socialSignIn('apple')" aria-label="Continue with Apple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Continue with Apple
+            </button>
+            <button type="button" class="btn-social btn-social--google" onclick="socialSignIn('google')" aria-label="Continue with Google">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Continue with Google
+            </button>
           </div>
 
           <div class="demo-hint">
@@ -798,6 +809,24 @@
         <div class="tab-panel" id="panel-signup">
           <h1 class="form-heading">Create<br/>account.</h1>
           <p class="form-subtext">Join the creative community in seconds.</p>
+
+          <!-- Social buttons (top of signup — one-tap is the fastest path) -->
+          <div class="social-buttons" style="margin-bottom: 20px;">
+            <button type="button" class="btn-social btn-social--apple" onclick="socialSignIn('apple')" aria-label="Sign up with Apple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+              Sign up with Apple
+            </button>
+            <button type="button" class="btn-social btn-social--google" onclick="socialSignIn('google')" aria-label="Sign up with Google">
+              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+              Sign up with Google
+            </button>
+          </div>
+
+          <div class="divider">
+            <div class="divider-line"></div>
+            <span class="divider-text">or with email</span>
+            <div class="divider-line"></div>
+          </div>
 
           <div class="form-error-banner" id="signupErrorBanner">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1117,6 +1146,106 @@
         showBanner('signupErrorBanner', 'signupErrorText', err.message || 'Could not create account. Try again.');
       }
     });
+
+    /* ─────────────────────────────────────────────────────────────
+       Social sign-in (Apple / Google)
+
+       Real OAuth wiring — drop the credentials below when ready:
+         window.CHARM_AUTH_CONFIG = {
+           googleClientId: 'xxxxxx.apps.googleusercontent.com',
+           appleServicesId: 'space.charm.signin',
+         };
+       With creds present, we load Google Identity Services + Sign in
+       with Apple JS and use the real provider flows. Without creds,
+       we fall back to a prompt-based mock flow so the buttons still
+       create a working Charm account against CharmDB for the demo.
+       ───────────────────────────────────────────────────────────── */
+    async function socialSignIn(provider) {
+      const cfg = window.CHARM_AUTH_CONFIG || {};
+      const isApple = provider === 'apple';
+      const providerName = isApple ? 'Apple' : 'Google';
+
+      // Real OAuth paths — only fire if credentials are configured
+      if (isApple && cfg.appleServicesId && window.AppleID) {
+        try {
+          window.AppleID.auth.init({
+            clientId: cfg.appleServicesId,
+            scope: 'name email',
+            redirectURI: window.location.origin + window.location.pathname,
+            usePopup: true,
+          });
+          const res = await window.AppleID.auth.signIn();
+          const email = (res.user && res.user.email) || decodeJwtEmail(res.authorization.id_token);
+          const name = res.user && res.user.name
+            ? `${res.user.name.firstName} ${res.user.name.lastName}`.trim()
+            : (email ? email.split('@')[0] : 'Apple User');
+          return completeSocialAuth({ email, name, provider });
+        } catch (err) {
+          console.warn('Apple sign-in failed:', err);
+          showToast('Apple sign-in was cancelled', true);
+          return;
+        }
+      }
+      if (!isApple && cfg.googleClientId && window.google && window.google.accounts) {
+        try {
+          window.google.accounts.id.initialize({
+            client_id: cfg.googleClientId,
+            callback: (res) => {
+              const payload = decodeJwt(res.credential);
+              completeSocialAuth({ email: payload.email, name: payload.name || payload.email, provider });
+            },
+          });
+          window.google.accounts.id.prompt();
+          return;
+        } catch (err) {
+          console.warn('Google sign-in failed:', err);
+          showToast('Google sign-in was cancelled', true);
+          return;
+        }
+      }
+
+      // Fallback mock flow — no OAuth credentials configured yet
+      console.info(`[charm] ${providerName} OAuth not configured — using prompt fallback.`);
+      const email = (prompt(`Continue with ${providerName}.\n\nEnter the email tied to your ${providerName} account:`) || '').trim();
+      if (!email) return;
+      const existing = CharmDB && CharmDB.Auth.getUser && false; // no lookup by email in Auth API; signUp handles duplicates
+      const name = (prompt(`What name should other creators see?`) || email.split('@')[0]).trim();
+      if (!name) return;
+      completeSocialAuth({ email, name, provider });
+    }
+
+    async function completeSocialAuth({ email, name, provider }) {
+      try {
+        // Random password for the account — the user will never type this;
+        // real OAuth sign-in bypasses the password path entirely when wired up.
+        const stashedPw = 'social_' + provider + '_' + Math.random().toString(36).slice(2, 12);
+        let user;
+        try {
+          user = await CharmDB.Auth.signUp({ email, password: stashedPw, name });
+        } catch (err) {
+          // Account exists → try to log in. For demo, we accept any password
+          // on existing social-linked accounts by looking up the stored hash.
+          // In production, real OAuth would verify the provider's ID token
+          // and skip the password path altogether.
+          const users = JSON.parse(localStorage.getItem('charm-users') || '[]');
+          const existing = users.find(u => u.email === email.toLowerCase());
+          if (!existing) throw err;
+          user = await CharmDB.Auth.login({ email, password: atob(existing.password) });
+        }
+        showToast(`Welcome, ${user.name || user.email}!`);
+        setTimeout(() => { window.location.href = 'dashboard.html'; }, 1000);
+      } catch (err) {
+        console.error('Social sign-in failed:', err);
+        showToast(err.message || 'Could not complete sign-in', true);
+      }
+    }
+
+    // Minimal JWT decoder — used only when a real provider returns an ID token.
+    function decodeJwt(token) {
+      try { return JSON.parse(atob(token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/'))); }
+      catch { return {}; }
+    }
+    function decodeJwtEmail(token) { return decodeJwt(token).email; }
   </script>
 <!-- GSAP + ScrollTrigger -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

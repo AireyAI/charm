@@ -517,13 +517,13 @@
     </a>
 
     <div class="sidebar-avatar-block">
-      <div class="avatar">
-        JM
+      <div class="avatar" id="sidebar-avatar">
+        —
         <span class="online-dot" aria-hidden="true"></span>
       </div>
       <div>
-        <div class="avatar-name">Jordan Miller</div>
-        <span class="pro-badge">✦ PRO SELLER</span>
+        <div class="avatar-name" id="sidebar-name">—</div>
+        <span class="pro-badge" id="sidebar-badge" style="display:none;">✦ PRO SELLER</span>
       </div>
     </div>
 
@@ -575,50 +575,48 @@
           <p class="s-card-desc">This is how others see you on Charm. Make it count.</p>
 
           <div class="avatar-upload">
-            <div class="avatar-preview">JM</div>
+            <div class="avatar-preview" id="avatarPreview">—</div>
             <div class="avatar-upload-actions">
-              <button class="btn-upload">Upload Photo</button>
+              <button class="btn-upload" type="button" id="uploadPhotoBtn">Upload photo</button>
               <span class="avatar-hint">JPG, PNG or WebP. Max 2MB.</span>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
-              <label class="form-label" for="firstName">First Name</label>
-              <input class="form-input" type="text" id="firstName" value="Jordan" placeholder="First name">
+              <label class="form-label" for="firstName">First name</label>
+              <input class="form-input" type="text" id="firstName" placeholder="First name" autocomplete="given-name">
             </div>
             <div class="form-group">
-              <label class="form-label" for="lastName">Last Name</label>
-              <input class="form-input" type="text" id="lastName" value="Miller" placeholder="Last name">
+              <label class="form-label" for="lastName">Last name</label>
+              <input class="form-input" type="text" id="lastName" placeholder="Last name" autocomplete="family-name">
             </div>
           </div>
 
           <div class="form-row full">
             <div class="form-group">
-              <label class="form-label" for="username">Username</label>
-              <div class="input-prefix">
-                <span class="input-prefix-label">charm.co/</span>
-                <input class="form-input" type="text" id="username" value="jordanmiller" placeholder="username">
-              </div>
+              <label class="form-label" for="location">Location</label>
+              <input class="form-input" type="text" id="location" placeholder="e.g. London, UK" autocomplete="address-level2">
             </div>
           </div>
 
           <div class="form-row full">
             <div class="form-group">
               <label class="form-label" for="bio">Bio</label>
-              <textarea class="form-input" id="bio" placeholder="Tell other creators about yourself...">London-based cinematographer and colourist. 8 years in the industry, specialising in music videos and commercial work.</textarea>
+              <textarea class="form-input" id="bio" placeholder="Tell other creators what you make, where you work, and what kind of gear you tend to list."></textarea>
             </div>
           </div>
 
           <div class="form-row full">
             <div class="form-group">
-              <label class="form-label" for="portfolio">Portfolio URL</label>
-              <input class="form-input" type="url" id="portfolio" value="https://jordanmiller.co" placeholder="https://yoursite.com">
+              <label class="form-label" for="portfolio">Portfolio URL <span style="color:var(--c-text-3);font-weight:400;">(optional)</span></label>
+              <input class="form-input" type="url" id="portfolio" placeholder="https://yoursite.com" autocomplete="url">
             </div>
           </div>
 
-          <div style="margin-top:24px;">
-            <button class="btn-gold" id="saveProfile">Save Changes</button>
+          <div style="margin-top:24px; display:flex; align-items:center; gap:16px;">
+            <button class="btn-gold" id="saveProfile" type="button">Save changes</button>
+            <span id="saveStatus" style="font-size:13px;color:var(--c-text-3);"></span>
           </div>
         </div>
       </div>
@@ -631,12 +629,12 @@
           <div class="form-row">
             <div class="form-group">
               <label class="form-label" for="email">Email</label>
-              <input class="form-input" type="email" id="email" value="jordan@example.com">
+              <input class="form-input" type="email" id="email" readonly>
             </div>
             <div class="form-group" style="justify-content:flex-end;">
               <div style="display:flex;gap:8px;align-items:center;">
-                <span style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--c-green);background:var(--c-green-dim);padding:3px 8px;border-radius:4px;letter-spacing:0.04em;">VERIFIED</span>
-                <button class="btn-outline">Change Email</button>
+                <span id="emailVerifiedBadge" style="font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--c-green);background:var(--c-green-dim);padding:3px 8px;border-radius:4px;letter-spacing:0.04em;display:none;">VERIFIED</span>
+                <button class="btn-outline" type="button">Change email</button>
               </div>
             </div>
           </div>
@@ -970,9 +968,83 @@
     setTimeout(() => toast.classList.remove('show'), 3000);
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // Wire the real user into the settings page.
+  // ─────────────────────────────────────────────────────────────
+  function initSettings() {
+    if (!window.CharmDB) return setTimeout(initSettings, 50);
+    const user = CharmDB.Auth.currentUser();
+    if (!user) { window.location.href = 'login.html'; return; }
+
+    const firstName = (user.name || '').split(' ').slice(0, -1).join(' ') || (user.name || '').split(' ')[0] || '';
+    const lastName = (user.name || '').split(' ').slice(-1).join(' ');
+    const initials = user.avatar || (user.name || user.email || 'U').split(/\s+/).map(s => s[0]).join('').slice(0, 2).toUpperCase();
+
+    // Sidebar
+    const sbAvatar = document.getElementById('sidebar-avatar');
+    if (sbAvatar) {
+      const dot = sbAvatar.querySelector('.online-dot');
+      sbAvatar.textContent = initials;
+      if (dot) sbAvatar.appendChild(dot);
+    }
+    const sbName = document.getElementById('sidebar-name');
+    if (sbName) sbName.textContent = user.name || user.email || 'You';
+    const sbBadge = document.getElementById('sidebar-badge');
+    if (sbBadge) sbBadge.style.display = (user.rating && user.reviewCount >= 5) ? '' : 'none';
+
+    // Profile form
+    const avatarPreview = document.getElementById('avatarPreview');
+    if (avatarPreview) avatarPreview.textContent = initials;
+    const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v || ''; };
+    // First/last: split the user's name. If there's only one word, it's the first name.
+    if (user.name && user.name.includes(' ')) {
+      setVal('firstName', firstName);
+      setVal('lastName', lastName);
+    } else {
+      setVal('firstName', user.name || '');
+      setVal('lastName', '');
+    }
+    setVal('location', user.location);
+    setVal('bio', user.bio);
+    setVal('portfolio', user.portfolio);
+    setVal('email', user.email);
+
+    // Email verified badge — mirror user.verified
+    const vb = document.getElementById('emailVerifiedBadge');
+    if (vb) vb.style.display = user.verified ? '' : 'none';
+  }
+
+  async function saveProfile() {
+    if (!window.CharmDB) return;
+    const first = document.getElementById('firstName').value.trim();
+    const last = document.getElementById('lastName').value.trim();
+    const name = [first, last].filter(Boolean).join(' ');
+    const location = document.getElementById('location').value.trim();
+    const bio = document.getElementById('bio').value.trim();
+    const portfolio = document.getElementById('portfolio').value.trim();
+    const avatar = name ? name.split(/\s+/).map(s => s[0]).join('').slice(0, 2).toUpperCase() : undefined;
+
+    const status = document.getElementById('saveStatus');
+    if (status) status.textContent = 'Saving…';
+    try {
+      await CharmDB.Auth.updateProfile({ name, location, bio, portfolio, avatar });
+      if (status) status.textContent = 'Saved.';
+      setTimeout(() => { if (status) status.textContent = ''; }, 2200);
+      showToast('Profile saved.');
+      // Refresh the sidebar avatar/name with new values
+      initSettings();
+    } catch (err) {
+      if (status) status.textContent = '';
+      showToast(err.message || 'Could not save. Try again.');
+    }
+  }
+
   // Save buttons
-  document.getElementById('saveProfile').addEventListener('click', () => showToast('Profile saved successfully.'));
-  document.getElementById('savePassword').addEventListener('click', () => showToast('Password updated successfully.'));
+  document.getElementById('saveProfile').addEventListener('click', saveProfile);
+  const savePwBtn = document.getElementById('savePassword');
+  if (savePwBtn) savePwBtn.addEventListener('click', () => showToast('Password update requires a backend — not available in demo.'));
+
+  initSettings();
 
   // Mobile sidebar toggle
   const mobileBtn = document.getElementById('mobileMenuBtn');

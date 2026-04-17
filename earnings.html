@@ -442,13 +442,13 @@
     </a>
 
     <div class="sidebar-avatar-block">
-      <div class="avatar">
-        JM
+      <div class="avatar" id="sidebar-avatar">
+        &mdash;
         <div class="online-dot"></div>
       </div>
       <div>
-        <div class="avatar-name">James Mitchell</div>
-        <div class="pro-badge">&#10022; Pro Seller</div>
+        <div class="avatar-name" id="sidebar-name">&mdash;</div>
+        <div class="pro-badge" id="sidebar-badge" style="display:none;">&#10022; Pro Seller</div>
       </div>
     </div>
 
@@ -490,9 +490,9 @@
         <div class="page-header-row">
           <div>
             <h1 class="page-title" style="font-style:italic;">Earnings</h1>
-            <p class="page-subtitle">Revenue overview &middot; Last 12 months ending 12 Apr 2026</p>
+            <p class="page-subtitle" id="page-subtitle">Revenue overview</p>
           </div>
-          <button class="btn-early-payout" aria-label="Request early payout">
+          <button class="btn-early-payout" id="btn-early-payout" aria-label="Request early payout" disabled>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M2 12h20"/></svg>
             Request Early Payout
           </button>
@@ -504,26 +504,26 @@
         <div class="kpi-card" style="--kpi-glow: rgba(226,168,75,0.07);" role="listitem">
           <div class="kpi-icon" style="background:var(--c-gold-dim); color:var(--c-gold);">&pound;</div>
           <div class="kpi-label">Total Earnings</div>
-          <div class="kpi-value">&pound;14,820</div>
-          <span class="kpi-change up">&uarr; 24%</span>
+          <div class="kpi-value" id="kpi-total">&pound;0</div>
+          <span class="kpi-change neutral" id="kpi-total-change">Lifetime</span>
         </div>
         <div class="kpi-card" style="--kpi-glow: rgba(157,111,255,0.08);" role="listitem">
           <div class="kpi-icon" style="background:var(--c-violet-dim); color:var(--c-violet);">&#9202;</div>
           <div class="kpi-label">Pending Payout</div>
-          <div class="kpi-value">&pound;1,340</div>
-          <span class="kpi-change gold">Processing</span>
+          <div class="kpi-value" id="kpi-pending">&pound;0</div>
+          <span class="kpi-change neutral" id="kpi-pending-change">No pending bookings</span>
         </div>
         <div class="kpi-card" style="--kpi-glow: rgba(54,217,138,0.08);" role="listitem">
           <div class="kpi-icon" style="background:var(--c-green-dim); color:var(--c-green);">&#10003;</div>
           <div class="kpi-label">Available Balance</div>
-          <div class="kpi-value">&pound;2,680</div>
-          <span class="kpi-change up">&uarr; 12%</span>
+          <div class="kpi-value" id="kpi-available">&pound;0</div>
+          <span class="kpi-change neutral" id="kpi-available-change">Nothing to withdraw yet</span>
         </div>
         <div class="kpi-card" style="--kpi-glow: rgba(0,212,200,0.07);" role="listitem">
           <div class="kpi-icon" style="background:var(--c-cyan-dim); color:var(--c-cyan);">&#128197;</div>
           <div class="kpi-label">Next Payout</div>
-          <div class="kpi-value" style="font-size:28px;">18 Apr</div>
-          <span class="kpi-change neutral">Weekly</span>
+          <div class="kpi-value" id="kpi-next" style="font-size:28px;">&mdash;</div>
+          <span class="kpi-change neutral" id="kpi-next-change">Weekly, when earning</span>
         </div>
       </div>
 
@@ -534,11 +534,16 @@
             <div class="panel-title">Monthly Earnings</div>
             <div class="panel-subtitle">Revenue over the last 12 months</div>
           </div>
-          <span class="panel-action" style="cursor:default;">&#8593; 24% vs prior year</span>
+          <span class="panel-action" id="chart-trend" style="cursor:default; display:none;"></span>
         </div>
         <div class="chart-container">
-          <div class="chart-wrap" style="height: 280px;">
+          <div class="chart-wrap" style="height: 280px; position:relative;">
             <canvas id="earningsChart" aria-label="Monthly earnings line chart" role="img"></canvas>
+            <div id="chart-empty" style="position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--c-text-3); font-size:13px; text-align:center; padding:0 24px;">
+              <div style="font-size:28px; margin-bottom:10px; opacity:0.5;">&#128202;</div>
+              <div style="font-family:'Syne',sans-serif; font-size:14px; font-weight:600; color:var(--c-text-2); margin-bottom:6px;">No earnings to chart yet</div>
+              <p style="margin:0; line-height:1.6; max-width:320px;">Your monthly revenue will graph here once you've got confirmed bookings.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -566,120 +571,29 @@
                   <th>Status</th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>12 Apr</td>
-                  <td class="td-name">Sony A7IV Body</td>
-                  <td>Sarah K.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;1,840</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>10 Apr</td>
-                  <td class="td-name">Rode NT1-A Mic</td>
-                  <td>Marcus T.</td>
-                  <td><span class="type-rental">Rental</span></td>
-                  <td class="td-amount">&pound;45</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>9 Apr</td>
-                  <td class="td-name">Aputure 600d Pro</td>
-                  <td>Elena M.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;1,420</td>
-                  <td><span class="status-badge status-pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>7 Apr</td>
-                  <td class="td-name">DJI RS 3 Pro Gimbal</td>
-                  <td>James L.</td>
-                  <td><span class="type-rental">Rental</span></td>
-                  <td class="td-amount">&pound;85</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>5 Apr</td>
-                  <td class="td-name">Canon RF 70-200mm</td>
-                  <td>Priya S.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;2,100</td>
-                  <td><span class="status-badge status-processing">Processing</span></td>
-                </tr>
-                <tr>
-                  <td>3 Apr</td>
-                  <td class="td-name">Shure SM7B</td>
-                  <td>Oliver W.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;340</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>1 Apr</td>
-                  <td class="td-name">Pioneer DDJ-1000</td>
-                  <td>Kai N.</td>
-                  <td><span class="type-rental">Rental</span></td>
-                  <td class="td-amount">&pound;120</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>28 Mar</td>
-                  <td class="td-name">Fender Stratocaster</td>
-                  <td>Ava R.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;890</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>25 Mar</td>
-                  <td class="td-name">Blackmagic 6K Pro</td>
-                  <td>Daniel F.</td>
-                  <td><span class="type-rental">Rental</span></td>
-                  <td class="td-amount">&pound;180</td>
-                  <td><span class="status-badge status-pending">Pending</span></td>
-                </tr>
-                <tr>
-                  <td>22 Mar</td>
-                  <td class="td-name">Godox AD600 Pro</td>
-                  <td>Mia C.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;680</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>19 Mar</td>
-                  <td class="td-name">Ableton Push 3</td>
-                  <td>Liam H.</td>
-                  <td><span class="type-sale">Sale</span></td>
-                  <td class="td-amount">&pound;1,550</td>
-                  <td><span class="status-badge status-completed">Completed</span></td>
-                </tr>
-                <tr>
-                  <td>15 Mar</td>
-                  <td class="td-name">Neewer 660 LED Panel</td>
-                  <td>Zoe B.</td>
-                  <td><span class="type-rental">Rental</span></td>
-                  <td class="td-amount">&pound;35</td>
-                  <td><span class="status-badge status-processing">Processing</span></td>
-                </tr>
-              </tbody>
+              <tbody id="transactions-body"></tbody>
             </table>
+            <div id="transactions-empty" style="display:none; padding: 40px 24px; text-align:center;">
+              <div style="font-size:28px; margin-bottom:10px; opacity:0.5;">&#128176;</div>
+              <div style="font-family:'Syne',sans-serif; font-size:14px; font-weight:600; color:var(--c-text-2); margin-bottom:6px;">No transactions yet</div>
+              <p style="margin:0 0 14px; line-height:1.6; color:var(--c-text-3); font-size:13px;">Every confirmed booking lands here with buyer, date, and amount.</p>
+              <a href="create-listing.html" style="font-family:'DM Sans','Inter Tight',sans-serif; font-size:13px; font-weight:500; color:var(--c-text); text-decoration:underline; text-underline-offset:3px;">Create your first listing &rarr;</a>
+            </div>
           </div>
         </div>
 
         <!-- Right column: Payout + Breakdown -->
         <div style="display:flex; flex-direction:column; gap:20px;">
           <!-- Payout Settings -->
-          <div class="payout-card">
+          <div class="payout-card" id="payout-card">
             <div class="payout-card-title">Payout Settings</div>
             <div class="payout-row">
               <span class="payout-label">Bank Account</span>
-              <span class="payout-value"><span class="masked">****</span> 4521</span>
+              <span class="payout-value" id="payout-bank" style="color:var(--c-text-3);">Not connected</span>
             </div>
             <div class="payout-row">
               <span class="payout-label">Next Payout</span>
-              <span class="payout-value">18 April 2026</span>
+              <span class="payout-value" id="payout-next">&mdash;</span>
             </div>
             <div class="payout-row">
               <span class="payout-label">Frequency</span>
@@ -687,9 +601,9 @@
             </div>
             <div class="payout-row">
               <span class="payout-label">Amount</span>
-              <span class="payout-value" style="color:var(--c-gold); font-family:'Syne',sans-serif; font-weight:700;">&pound;2,680.00</span>
+              <span class="payout-value" id="payout-amount" style="color:var(--c-gold); font-family:'Syne',sans-serif; font-weight:700;">&pound;0.00</span>
             </div>
-            <button class="btn-update-payout">Update Payout Settings</button>
+            <button class="btn-update-payout" id="btn-update-payout">Add Bank Account</button>
           </div>
 
           <!-- Earnings by Category -->
@@ -700,42 +614,10 @@
                 <div class="panel-subtitle">Revenue breakdown</div>
               </div>
             </div>
-            <div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">Cameras</span>
-                <div class="breakdown-bar-wrap">
-                  <div class="breakdown-bar" style="width:78%; background:linear-gradient(90deg, var(--c-gold), #f5d080);"></div>
-                </div>
-                <span class="breakdown-amount">&pound;5,360</span>
-              </div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">Audio</span>
-                <div class="breakdown-bar-wrap">
-                  <div class="breakdown-bar" style="width:52%; background:linear-gradient(90deg, var(--c-violet), #c4a0ff);"></div>
-                </div>
-                <span class="breakdown-amount">&pound;3,570</span>
-              </div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">Lighting</span>
-                <div class="breakdown-bar-wrap">
-                  <div class="breakdown-bar" style="width:40%; background:linear-gradient(90deg, var(--c-cyan), #66e8e0);"></div>
-                </div>
-                <span class="breakdown-amount">&pound;2,780</span>
-              </div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">Instruments</span>
-                <div class="breakdown-bar-wrap">
-                  <div class="breakdown-bar" style="width:33%; background:linear-gradient(90deg, var(--c-coral), #ff9d8f);"></div>
-                </div>
-                <span class="breakdown-amount">&pound;2,240</span>
-              </div>
-              <div class="breakdown-item">
-                <span class="breakdown-label">DJ</span>
-                <div class="breakdown-bar-wrap">
-                  <div class="breakdown-bar" style="width:12%; background:linear-gradient(90deg, var(--c-green), #7aedb5);"></div>
-                </div>
-                <span class="breakdown-amount">&pound;870</span>
-              </div>
+            <div id="breakdown-list"></div>
+            <div id="breakdown-empty" style="padding: 28px 4px 8px; text-align:center;">
+              <div style="font-size:24px; margin-bottom:8px; opacity:0.5;">&#128202;</div>
+              <p style="margin:0; line-height:1.6; color:var(--c-text-3); font-size:13px;">No category revenue yet. Once you sell or rent, the mix shows here.</p>
             </div>
           </div>
         </div>
@@ -745,19 +627,171 @@
   </main>
 </div>
 
+<!-- GSAP + ScrollTrigger -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="animations.js"></script>
+<script src="charm-db.js"></script>
+<script src="shared.js"></script>
 <script>
 (function() {
   'use strict';
 
-  // ── Date range selector ──
+  // ── Date range selector (UI only for now; wiring comes with real data volume) ──
   window.setRange = function(btn) {
     document.querySelectorAll('.drs-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   };
 
-  // ── Earnings Chart ──
-  const ctx = document.getElementById('earningsChart');
-  if (ctx) {
+  const CATEGORY_COLORS = {
+    Cameras:     ['var(--c-gold)',   '#f5d080'],
+    Audio:       ['var(--c-violet)', '#c4a0ff'],
+    Lighting:    ['var(--c-cyan)',   '#66e8e0'],
+    Instruments: ['var(--c-coral)',  '#ff9d8f'],
+    DJ:          ['var(--c-green)',  '#7aedb5'],
+    Other:       ['#8886a0',         '#c4c2d4'],
+  };
+
+  function titleCase(s) {
+    if (!s) return 'Other';
+    return s.charAt(0).toUpperCase() + s.slice(1);
+  }
+
+  function fmtGbp(n) { return '\u00A3' + Math.round(n).toLocaleString('en-GB'); }
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+  }
+
+  // Status mapping: CharmDB booking statuses → earnings table labels.
+  function statusLabel(status) {
+    if (status === 'confirmed') return { label: 'Completed', cls: 'status-completed' };
+    if (status === 'completed') return { label: 'Completed', cls: 'status-completed' };
+    if (status === 'pending')   return { label: 'Pending',   cls: 'status-pending' };
+    if (status === 'declined')  return { label: 'Declined',  cls: 'status-pending' };
+    if (status === 'cancelled') return { label: 'Cancelled', cls: 'status-pending' };
+    return { label: titleCase(status || 'Unknown'), cls: 'status-processing' };
+  }
+
+  async function initEarnings() {
+    if (!window.CharmDB) return setTimeout(initEarnings, 50);
+    const user = CharmDB.Auth.currentUser();
+    if (!user) { window.location.href = 'login.html'; return; }
+
+    // ── Sidebar ──
+    const firstName = (user.name || '').split(' ')[0] || (user.email || 'U')[0];
+    const initials = user.avatar || firstName[0].toUpperCase();
+    const sbAvatar = document.getElementById('sidebar-avatar');
+    if (sbAvatar) {
+      const dot = sbAvatar.querySelector('.online-dot');
+      sbAvatar.textContent = initials;
+      if (dot) sbAvatar.appendChild(dot);
+    }
+    const sbName = document.getElementById('sidebar-name');
+    if (sbName) sbName.textContent = user.name || user.email || 'You';
+    const sbBadge = document.getElementById('sidebar-badge');
+    if (sbBadge) sbBadge.style.display = (user.rating && user.reviewCount >= 5) ? '' : 'none';
+
+    // ── Load bookings + listings ──
+    const incoming = await CharmDB.Bookings.incomingBookings();
+    const myListings = await CharmDB.Listings.mine();
+    const listingById = Object.fromEntries(myListings.map(l => [l.id, l]));
+
+    const confirmed = incoming.filter(b => b.status === 'confirmed' || b.status === 'completed');
+    const pending   = incoming.filter(b => b.status === 'pending');
+
+    const totalEarnings = confirmed.reduce((s, b) => s + (b.total || 0), 0);
+    const pendingTotal  = pending.reduce((s, b) => s + (b.total || 0), 0);
+    const available     = totalEarnings; // No payout ledger yet — treat all confirmed as available.
+
+    // ── KPI cards ──
+    document.getElementById('kpi-total').textContent     = fmtGbp(totalEarnings);
+    document.getElementById('kpi-pending').textContent   = fmtGbp(pendingTotal);
+    document.getElementById('kpi-available').textContent = fmtGbp(available);
+
+    const totalChange = document.getElementById('kpi-total-change');
+    if (totalChange) totalChange.textContent = confirmed.length ? `${confirmed.length} confirmed booking${confirmed.length === 1 ? '' : 's'}` : 'Lifetime';
+
+    const pendingChange = document.getElementById('kpi-pending-change');
+    if (pendingChange) pendingChange.textContent = pending.length ? `${pending.length} awaiting confirmation` : 'No pending bookings';
+
+    const availChange = document.getElementById('kpi-available-change');
+    if (availChange) availChange.textContent = available ? 'Ready to withdraw' : 'Nothing to withdraw yet';
+
+    const kpiNext = document.getElementById('kpi-next');
+    const kpiNextChange = document.getElementById('kpi-next-change');
+    if (available > 0) {
+      // Next weekly payout: upcoming Friday.
+      const d = new Date();
+      const daysUntilFri = (5 - d.getDay() + 7) % 7 || 7;
+      d.setDate(d.getDate() + daysUntilFri);
+      kpiNext.textContent = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+      if (kpiNextChange) kpiNextChange.textContent = 'Weekly';
+    } else {
+      kpiNext.textContent = '\u2014';
+      if (kpiNextChange) kpiNextChange.textContent = 'Weekly, when earning';
+    }
+
+    // ── Page subtitle ──
+    const sub = document.getElementById('page-subtitle');
+    if (sub) {
+      const today = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      sub.textContent = confirmed.length
+        ? `Revenue overview \u00b7 as of ${today}`
+        : `Revenue overview \u00b7 no activity yet`;
+    }
+
+    // ── Early payout button ──
+    const btnEarly = document.getElementById('btn-early-payout');
+    if (btnEarly) btnEarly.disabled = available <= 0;
+
+    // ── Monthly chart ──
+    renderMonthlyChart(confirmed);
+
+    // ── Transactions table ──
+    renderTransactions(confirmed.concat(pending), listingById);
+
+    // ── Category breakdown ──
+    renderBreakdown(confirmed, listingById);
+
+    // ── Payout card ──
+    renderPayout(user, available);
+  }
+
+  function renderMonthlyChart(confirmed) {
+    const ctx = document.getElementById('earningsChart');
+    const empty = document.getElementById('chart-empty');
+    const trend = document.getElementById('chart-trend');
+    if (!ctx) return;
+
+    if (!confirmed.length) {
+      ctx.style.display = 'none';
+      if (empty) empty.style.display = '';
+      if (trend) trend.style.display = 'none';
+      return;
+    }
+
+    ctx.style.display = '';
+    if (empty) empty.style.display = 'none';
+
+    // Build 12-month rolling bucket ending this month.
+    const now = new Date();
+    const buckets = [];
+    for (let i = 11; i >= 0; i--) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+      buckets.push({ key: `${d.getFullYear()}-${d.getMonth()}`, label: d.toLocaleDateString('en-GB', { month: 'short' }), total: 0 });
+    }
+    const idx = Object.fromEntries(buckets.map((b, i) => [b.key, i]));
+    confirmed.forEach(b => {
+      const d = new Date(b.updatedAt || b.createdAt);
+      const k = `${d.getFullYear()}-${d.getMonth()}`;
+      if (k in idx) buckets[idx[k]].total += (b.total || 0);
+    });
+
+    const labels = buckets.map(b => b.label);
+    const data = buckets.map(b => b.total);
+
     const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 280);
     gradient.addColorStop(0, 'rgba(226,168,75,0.25)');
     gradient.addColorStop(1, 'rgba(226,168,75,0.01)');
@@ -765,10 +799,10 @@
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr'],
+        labels,
         datasets: [{
           label: 'Earnings',
-          data: [680, 920, 1100, 850, 1340, 1580, 1290, 1720, 1080, 1440, 1620, 1840],
+          data,
           borderColor: '#e2a84b',
           borderWidth: 2.5,
           backgroundColor: gradient,
@@ -798,20 +832,13 @@
             cornerRadius: 10,
             padding: 12,
             displayColors: false,
-            callbacks: {
-              label: function(context) {
-                return '\u00A3' + context.parsed.y.toLocaleString('en-GB');
-              }
-            }
+            callbacks: { label: (c) => '\u00A3' + c.parsed.y.toLocaleString('en-GB') }
           }
         },
         scales: {
           x: {
             grid: { color: 'rgba(255,255,255,0.04)', drawBorder: false },
-            ticks: {
-              font: { family: 'Syne', size: 11, weight: '600' },
-              color: '#5a586e',
-            },
+            ticks: { font: { family: 'Syne', size: 11, weight: '600' }, color: '#5a586e' },
             border: { display: false }
           },
           y: {
@@ -819,7 +846,7 @@
             ticks: {
               font: { family: 'Syne', size: 11, weight: '600' },
               color: '#5a586e',
-              callback: function(value) { return '\u00A3' + value.toLocaleString(); }
+              callback: (v) => '\u00A3' + v.toLocaleString()
             },
             border: { display: false },
             beginAtZero: true
@@ -827,38 +854,121 @@
         }
       }
     });
-  }
 
-  // ── Animate breakdown bars on scroll ──
-  const bars = document.querySelectorAll('.breakdown-bar');
-  if (bars.length) {
-    const widths = [];
-    bars.forEach(bar => {
-      widths.push(bar.style.width);
-      bar.style.width = '0%';
-    });
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          bars.forEach((bar, i) => {
-            setTimeout(() => { bar.style.width = widths[i]; }, i * 100);
-          });
-          obs.disconnect();
-        }
-      });
-    }, { threshold: 0.3 });
-    if (bars[0]?.closest('.panel')) {
-      obs.observe(bars[0].closest('.panel'));
+    // Trend: last-month vs previous month (if both exist)
+    const lastMonth = data[data.length - 1];
+    const prevMonth = data[data.length - 2];
+    if (trend && prevMonth > 0) {
+      const pct = Math.round(((lastMonth - prevMonth) / prevMonth) * 100);
+      const arrow = pct >= 0 ? '\u2191' : '\u2193';
+      trend.textContent = `${arrow} ${Math.abs(pct)}% vs last month`;
+      trend.style.display = '';
     }
   }
 
+  function renderTransactions(all, listingById) {
+    const body = document.getElementById('transactions-body');
+    const empty = document.getElementById('transactions-empty');
+    if (!body) return;
+
+    if (!all.length) {
+      body.innerHTML = '';
+      if (empty) empty.style.display = '';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+
+    const sorted = all.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 12);
+    body.innerHTML = sorted.map(b => {
+      const listing = listingById[b.listingId];
+      const type = listing && listing.type === 'buy' ? 'sale' : 'rental';
+      const typeLabel = type === 'sale' ? 'Sale' : 'Rental';
+      const typeCls = type === 'sale' ? 'type-sale' : 'type-rental';
+      const s = statusLabel(b.status);
+      return `
+        <tr>
+          <td>${fmtDate(b.updatedAt || b.createdAt)}</td>
+          <td class="td-name">${escapeHtml(b.listingTitle || '—')}</td>
+          <td>${escapeHtml(b.bookerName || '—')}</td>
+          <td><span class="${typeCls}">${typeLabel}</span></td>
+          <td class="td-amount">${fmtGbp(b.total || 0)}</td>
+          <td><span class="status-badge ${s.cls}">${s.label}</span></td>
+        </tr>`;
+    }).join('');
+  }
+
+  function renderBreakdown(confirmed, listingById) {
+    const host = document.getElementById('breakdown-list');
+    const empty = document.getElementById('breakdown-empty');
+    if (!host) return;
+
+    if (!confirmed.length) {
+      host.innerHTML = '';
+      if (empty) empty.style.display = '';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+
+    const totals = {};
+    confirmed.forEach(b => {
+      const listing = listingById[b.listingId];
+      const cat = titleCase(listing && listing.category);
+      totals[cat] = (totals[cat] || 0) + (b.total || 0);
+    });
+    const entries = Object.entries(totals).sort((a, b) => b[1] - a[1]);
+    const max = entries[0] ? entries[0][1] : 1;
+
+    host.innerHTML = entries.map(([cat, amount]) => {
+      const pct = Math.max(6, Math.round((amount / max) * 100));
+      const colors = CATEGORY_COLORS[cat] || CATEGORY_COLORS.Other;
+      return `
+        <div class="breakdown-item">
+          <span class="breakdown-label">${escapeHtml(cat)}</span>
+          <div class="breakdown-bar-wrap">
+            <div class="breakdown-bar" style="width:${pct}%; background:linear-gradient(90deg, ${colors[0]}, ${colors[1]});"></div>
+          </div>
+          <span class="breakdown-amount">${fmtGbp(amount)}</span>
+        </div>`;
+    }).join('');
+  }
+
+  function renderPayout(user, available) {
+    const bank = document.getElementById('payout-bank');
+    const nextEl = document.getElementById('payout-next');
+    const amountEl = document.getElementById('payout-amount');
+    const btn = document.getElementById('btn-update-payout');
+
+    const bankLast4 = user && user.bankLast4;
+    if (bank) {
+      if (bankLast4) {
+        bank.textContent = `**** ${bankLast4}`;
+        bank.style.color = '';
+      } else {
+        bank.textContent = 'Not connected';
+        bank.style.color = 'var(--c-text-3)';
+      }
+    }
+    if (btn) btn.textContent = bankLast4 ? 'Update Payout Settings' : 'Add Bank Account';
+
+    if (nextEl) {
+      if (available > 0 && bankLast4) {
+        const d = new Date();
+        const daysUntilFri = (5 - d.getDay() + 7) % 7 || 7;
+        d.setDate(d.getDate() + daysUntilFri);
+        nextEl.textContent = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      } else {
+        nextEl.textContent = '\u2014';
+      }
+    }
+    if (amountEl) amountEl.textContent = fmtGbp(available) + '.00';
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  initEarnings();
 })();
 </script>
-<!-- GSAP + ScrollTrigger -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="animations.js"></script>
-<script src="charm-db.js"></script>
-<script src="shared.js"></script>
 </body>
 </html>

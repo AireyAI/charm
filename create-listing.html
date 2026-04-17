@@ -772,7 +772,7 @@
       <p class="form-section-sub">Add up to 8 photos and describe your item in detail.</p>
 
       <div class="form-group">
-        <label class="form-label">Photos <span class="required">*</span> <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--c-text-3);">Up to 8 images</span></label>
+        <label class="form-label">Photos <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--c-text-3);">Optional — up to 8 images. Listings without photos show a typographic card.</span></label>
         <div class="upload-zone" id="upload-zone">
           <input type="file" multiple accept="image/*" id="photo-input" aria-label="Upload photos">
           <div class="upload-icon" aria-hidden="true">
@@ -1202,7 +1202,8 @@
       if (!getRadioValue('condition')) { showError('condition-error'); valid = false; }
       if (!getRadioValue('listing-type')) { showError('type-error'); valid = false; }
     } else if (step === 2) {
-      if (photos.length === 0) { showError('photo-error'); valid = false; }
+      // Photos are optional — listings without images render a typographic
+      // card on the browse surfaces.
       const title = document.getElementById('listing-title').value.trim();
       if (!title) { showError('title-error'); document.getElementById('listing-title').classList.add('error'); valid = false; }
       else { hideError('title-error'); document.getElementById('listing-title').classList.remove('error'); }
@@ -1386,7 +1387,7 @@
       btn.style.opacity = '1';
       showToast();
 
-      setTimeout(() => { window.location.href = 'marketplace.html'; }, 2000);
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 1400);
 
     } catch (err) {
       btn.innerHTML = '&#10022; Publish Listing';

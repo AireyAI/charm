@@ -519,6 +519,12 @@
       </div>
     </div>
     <div class="conv-list" id="convList" role="list" aria-label="Conversation list"></div>
+    <div class="conv-empty" id="convEmpty" style="display:none; padding: 40px 24px; text-align: center;">
+      <div style="font-size: 32px; margin-bottom: 12px; opacity: 0.6;">💬</div>
+      <div style="font-family:'DM Sans','Inter Tight',sans-serif; font-size: 15px; font-weight: 500; color: var(--c-text); margin-bottom: 8px;">No conversations yet</div>
+      <p style="font-size: 13px; color: var(--c-text-3); line-height: 1.5; margin: 0 0 16px;">When a creator asks about a listing or replies to one of yours, the conversation opens right here.</p>
+      <a href="marketplace.html" style="font-family:'DM Sans','Inter Tight',sans-serif; font-size: 13px; font-weight: 500; color: var(--c-text); text-decoration: underline; text-underline-offset: 3px;">Browse the marketplace →</a>
+    </div>
   </aside>
 
   <!-- RIGHT PANEL: Chat thread -->
@@ -580,118 +586,15 @@ const LISTING_ICONS = {
   camera: '📷', synth: '🎹', lights: '💡', lens: '🔭', drone: '🚁', mixer: '🎚️', monitor: '🖥️', bag: '🎒'
 };
 
-const MOCK_CONVS = [
-  {
-    id: 1, name: 'Sarah M.', avatar: 'SM', role: 'Seller',
-    listing: 'Sony A7 IV Body', listingIcon: 'camera', price: '£45/day',
-    unread: 2, lastMsg: 'Is it still available this weekend?', time: '2m',
-    online: true,
-    messages: [
-      { id: 1, from: 'them', text: 'Hi! I saw your listing for the Sony A7 IV. Looks incredible.', time: '10:02 AM', read: true },
-      { id: 2, from: 'me', text: 'Thanks! It\'s in perfect condition — barely used. Got it last year for a commercial shoot.', time: '10:04 AM', read: true },
-      { id: 3, from: 'them', text: 'Does it come with the original battery grip and any lenses?', time: '10:06 AM', read: true },
-      { id: 4, from: 'me', text: 'Body only for this listing, but I can include two spare batteries and the charger at no extra cost.', time: '10:07 AM', read: true },
-      { id: 5, from: 'them', text: 'Perfect. Is it still available this weekend?', time: '10:09 AM', read: false },
-      { id: 6, from: 'them', text: 'I have a portrait session Saturday morning.', time: '10:09 AM', read: false },
-    ]
-  },
-  {
-    id: 2, name: 'Tom K.', avatar: 'TK', role: 'Buyer',
-    listing: 'Moog Grandmother Synth', listingIcon: 'synth', price: '£60/day',
-    unread: 0, lastMsg: 'Payment confirmed! See you Thursday 🎹', time: '1h',
-    online: false,
-    messages: [
-      { id: 1, from: 'me', text: 'Hi Tom, thanks for enquiring about the Moog Grandmother. When are you looking to rent?', time: '9:00 AM', read: true },
-      { id: 2, from: 'them', text: 'Thursday through Sunday if possible? Recording an album and need the warmth of analogue.', time: '9:15 AM', read: true },
-      { id: 3, from: 'me', text: 'That works perfectly. I\'ll hold it for you — just complete the booking through Charm.', time: '9:17 AM', read: true },
-      { id: 4, from: 'them', text: 'Payment confirmed! See you Thursday 🎹', time: '9:45 AM', read: true },
-    ]
-  },
-  {
-    id: 3, name: 'Aisha J.', avatar: 'AJ', role: 'Seller',
-    listing: 'Aputure 300D II Studio Lights', listingIcon: 'lights', price: '£35/day',
-    unread: 1, lastMsg: 'Can you do a 3-day bundle rate?', time: '3h',
-    online: true,
-    messages: [
-      { id: 1, from: 'them', text: 'Hello! I\'m interested in the Aputure lights for a fashion shoot next week.', time: '8:30 AM', read: true },
-      { id: 2, from: 'me', text: 'Great choice! The 300D II is brilliant for fashion — soft and incredibly controllable.', time: '8:42 AM', read: true },
-      { id: 3, from: 'them', text: 'Can you do a 3-day bundle rate?', time: '9:00 AM', read: false },
-    ]
-  },
-  {
-    id: 4, name: 'Lucas R.', avatar: 'LR', role: 'Buyer',
-    listing: 'Zeiss Milvus 85mm f/1.4', listingIcon: 'lens', price: '£28/day',
-    unread: 0, lastMsg: 'Returned safe and sound, absolutely stunning lens.', time: 'Yesterday',
-    online: false,
-    messages: [
-      { id: 1, from: 'them', text: 'Just wanted to say thank you — the Zeiss was exceptional.', time: 'Yesterday 5:30 PM', read: true },
-      { id: 2, from: 'me', text: 'So glad it served you well! How did the shoot go?', time: 'Yesterday 5:45 PM', read: true },
-      { id: 3, from: 'them', text: 'Returned safe and sound, absolutely stunning lens.', time: 'Yesterday 6:00 PM', read: true },
-    ]
-  },
-  {
-    id: 5, name: 'Mia O.', avatar: 'MO', role: 'Seller',
-    listing: 'DJI Mavic 3 Pro Drone', listingIcon: 'drone', price: '£80/day',
-    unread: 0, lastMsg: 'I\'ll send over the insurance docs tonight.', time: 'Yesterday',
-    online: false,
-    messages: [
-      { id: 1, from: 'me', text: 'Hi Mia, I want to book the Mavic 3 for a real estate shoot.', time: 'Yesterday 2:00 PM', read: true },
-      { id: 2, from: 'them', text: 'Great! Do you have your remote pilot certificate? I need a copy before the booking.', time: 'Yesterday 2:10 PM', read: true },
-      { id: 3, from: 'me', text: 'Yes, fully certified. I\'ll attach it to the booking form.', time: 'Yesterday 2:15 PM', read: true },
-      { id: 4, from: 'them', text: 'I\'ll send over the insurance docs tonight.', time: 'Yesterday 2:20 PM', read: true },
-    ]
-  },
-  {
-    id: 6, name: 'Cal P.', avatar: 'CP', role: 'Buyer',
-    listing: 'SSL 2+ Audio Interface', listingIcon: 'mixer', price: '£22/day',
-    unread: 3, lastMsg: 'Does it work with Logic Pro on M2?', time: '2d',
-    online: true,
-    messages: [
-      { id: 1, from: 'them', text: 'Hey, quick question about the SSL 2+.', time: 'Mon 4:00 PM', read: true },
-      { id: 2, from: 'them', text: 'Does it work with Logic Pro on M2?', time: 'Mon 4:01 PM', read: false },
-      { id: 3, from: 'them', text: 'Need it for a mixing session this weekend.', time: 'Mon 4:02 PM', read: false },
-      { id: 4, from: 'them', text: 'Let me know asap please!', time: 'Mon 4:05 PM', read: false },
-    ]
-  },
-  {
-    id: 7, name: 'Dev W.', avatar: 'DW', role: 'Seller',
-    listing: 'LG UltraFine 27" 5K Monitor', listingIcon: 'monitor', price: '£18/day',
-    unread: 0, lastMsg: 'Available from next Monday onwards.', time: '3d',
-    online: false,
-    messages: [
-      { id: 1, from: 'me', text: 'Hi Dev, is the 5K monitor available for the last week of the month?', time: 'Sun 11:00 AM', read: true },
-      { id: 2, from: 'them', text: 'Available from next Monday onwards.', time: 'Sun 11:30 AM', read: true },
-    ]
-  },
-  {
-    id: 8, name: 'Fiona S.', avatar: 'FS', role: 'Buyer',
-    listing: 'Peak Design Camera Bag', listingIcon: 'bag', price: '£12/day',
-    unread: 0, lastMsg: 'Perfect for my trip, thanks so much!', time: '1w',
-    online: false,
-    messages: [
-      { id: 1, from: 'them', text: 'Just got the bag — it\'s in amazing condition!', time: 'Last week', read: true },
-      { id: 2, from: 'me', text: 'Glad it arrived safely! Have a great trip.', time: 'Last week', read: true },
-      { id: 3, from: 'them', text: 'Perfect for my trip, thanks so much!', time: 'Last week', read: true },
-    ]
-  }
-];
-
-// Mock auto-replies
-const AUTO_REPLIES = {
-  1: ['Yes, it\'s available Saturday! I can do an early morning drop-off if that helps.', 'What time works for you? I\'m flexible before 9am.'],
-  2: ['Can\'t wait — it\'s going to be a great session.', 'I\'ll bring a few patch cables too, no extra charge.'],
-  3: ['Absolutely — 3 days would be £90, saving you £15. Shall I update the listing?', 'I can also throw in a diffusion softbox for free.'],
-  4: ['We\'d love to have you back! Five-star review incoming 😊', 'Any time — see you on the next shoot.'],
-  5: ['Brilliant, I\'ll mark Thursday as confirmed on my end.', 'Will drop the case and remote controller too.'],
-  6: ['Yes, fully compatible with Logic Pro on M2 — plug and play, no drivers needed.', 'Happy to hold it for you. Just book when ready!'],
-  7: ['Great! I\'ll have it charged and ready. Comes with all original cables.', 'Let me know if you need the Thunderbolt cable too.'],
-  8: ['So glad it worked out! Safe travels wherever you\'re headed.', 'Do leave a review when you\'re back — really helps!'],
-};
-
-// State
+// State — conversations are empty for new users.
+// When real messaging is wired up, this will hydrate from CharmDB.
 let activeId = null;
-let conversations = JSON.parse(localStorage.getItem('charm-conversations') || 'null') || MOCK_CONVS;
+let conversations = JSON.parse(localStorage.getItem('charm-conversations') || '[]');
 let typingTimeout = null;
+
+// Auto-reply bank — keyed by conversation id. Kept empty until real
+// messaging is in place; a future wiring can drop canned replies here.
+const AUTO_REPLIES = {};
 
 function saveConversations() {
   localStorage.setItem('charm-conversations', JSON.stringify(conversations));
@@ -708,10 +611,16 @@ function renderAvatar(initials, size = 44) {
 
 function renderConvList(filter = '') {
   const list = document.getElementById('convList');
+  const empty = document.getElementById('convEmpty');
   const filtered = conversations.filter(c =>
     c.name.toLowerCase().includes(filter.toLowerCase()) ||
     c.listing.toLowerCase().includes(filter.toLowerCase())
   );
+  if (empty) {
+    empty.style.display = filtered.length ? 'none' : '';
+    list.style.display = filtered.length ? '' : 'none';
+  }
+  if (!filtered.length) { list.innerHTML = ''; return; }
   list.innerHTML = filtered.map(c => `
     <div class="conv-item ${c.id === activeId ? 'active' : ''}" data-id="${c.id}" role="listitem" tabindex="0" aria-label="Conversation with ${c.name}">
       <div class="conv-avatar" ${renderAvatar(c.avatar, 44)} aria-hidden="true">
@@ -911,6 +820,15 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
+// Auth guard — bounce anyone who isn't signed in
+(function authGuard() {
+  function check() {
+    if (!window.CharmDB) return setTimeout(check, 50);
+    if (!CharmDB.Auth.currentUser()) window.location.href = 'login.html';
+  }
+  check();
+})();
+
 // Init
 renderConvList();
 
@@ -952,8 +870,8 @@ document.getElementById('backBtn').addEventListener('click', () => {
   renderConvList();
 });
 
-// Open first conversation by default on desktop
-if (window.innerWidth > 768) {
+// Open first conversation by default on desktop (only when there is one)
+if (window.innerWidth > 768 && conversations.length > 0) {
   openConv(conversations[0].id);
 }
 </script>

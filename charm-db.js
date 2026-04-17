@@ -109,7 +109,7 @@
       const idx = users.findIndex(u => u.id === user.id);
       if (idx === -1) throw new Error('User not found');
       // Only allow safe fields
-      const allowed = ['name', 'bio', 'location', 'avatar'];
+      const allowed = ['name', 'bio', 'location', 'avatar', 'portfolio'];
       allowed.forEach(k => { if (updates[k] !== undefined) users[idx][k] = updates[k]; });
       store(USERS_KEY).set(users);
       const safeUser = { ...users[idx] };

@@ -100,7 +100,38 @@
 
   .toast { position: fixed; bottom: var(--s-6); left: 50%; transform: translateX(-50%); background: var(--c-text); color: var(--c-bg); padding: 10px 18px; border-radius: var(--r-3); font-size: 13px; font-weight: 500; z-index: 200; opacity: 0; pointer-events: none; transition: opacity 240ms ease, transform 320ms cubic-bezier(0.2,0.8,0.2,1); }
   .toast.is-open { opacity: 1; transform: translateX(-50%) translateY(-8px); }
+
+  /* ── Product location map ────────────────────────────────────── */
+  .p-map-section { margin: var(--s-7) 0; }
+  .p-map-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: var(--s-3); }
+  .p-map-head .t-label { color: var(--c-gold, #e2a84b); }
+  .p-map-address { font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--c-text-3, #9896a8); }
+  .p-map {
+    position: relative; height: 340px; border-radius: 14px; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.08); background: #07070e;
+  }
+  .p-map .leaflet-container { height: 100%; width: 100%; background: #07070e; }
+  .p-map .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.85); }
+  .p-map .leaflet-control-attribution {
+    background: rgba(13,13,26,0.85) !important; color: #7a7890 !important;
+    font-family: 'DM Sans', sans-serif !important; font-size: 10px !important;
+    padding: 2px 6px !important;
+  }
+  .p-map .leaflet-control-attribution a { color: rgba(226,168,75,0.8) !important; }
+  .p-map-pin {
+    width: 40px; height: 40px; border-radius: 50%; background: #e2a84b;
+    border: 2px solid #0f0800; display: flex; align-items: center; justify-content: center;
+    color: #0f0800; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px;
+    box-shadow: 0 8px 22px rgba(226,168,75,0.55), 0 0 0 5px rgba(226,168,75,0.18);
+  }
+  .p-map-note {
+    position: absolute; left: 14px; bottom: 14px; z-index: 400;
+    background: rgba(13,13,26,0.92); border: 1px solid rgba(255,255,255,0.08);
+    color: #c9c5d0; font-family: 'DM Sans', sans-serif; font-size: 11.5px;
+    padding: 6px 10px; border-radius: 999px; pointer-events: none;
+  }
 </style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 </head>
 <body>
 
@@ -181,14 +212,15 @@
           </div>
           <div class="p-booking-grid">
             <div class="p-booking-field">
-              <label for="p-book-start">Start date</label>
-              <input type="date" id="p-book-start" oninput="updateSummary()">
+              <label for="p-book-start">Pickup</label>
+              <input type="date" id="p-book-start" oninput="onDatesChange('start')">
             </div>
             <div class="p-booking-field">
-              <label for="p-book-end">End date</label>
-              <input type="date" id="p-book-end" oninput="updateSummary()">
+              <label for="p-book-end">Return</label>
+              <input type="date" id="p-book-end" oninput="onDatesChange('end')">
             </div>
           </div>
+          <div id="p-book-range" style="font-family:'DM Sans',sans-serif; font-size:12.5px; color:var(--c-text-3); margin:-4px 0 var(--s-4);"></div>
           <div class="p-booking-field" style="margin-bottom: var(--s-4);">
             <label for="p-book-msg">Message (optional)</label>
             <textarea id="p-book-msg" placeholder="Tell the seller what you're shooting — helps them prep the kit."></textarea>
@@ -220,6 +252,19 @@
           </div>
           <span style="color:var(--c-text-3); font-size: 14px;">View profile →</span>
         </a>
+      </div>
+    </section>
+
+    <section class="p-map-section" id="location" aria-labelledby="map-heading">
+      <div class="section-head">
+        <div>
+          <div class="t-label">— Where it is</div>
+          <h2 class="t-headline" id="map-heading">Pickup pin on the map.</h2>
+        </div>
+        <div class="p-map-address" id="p-map-address">—</div>
+      </div>
+      <div class="p-map" id="p-map" role="img" aria-label="Listing location on map">
+        <div class="p-map-note">Exact address shared after booking confirms</div>
       </div>
     </section>
 
@@ -288,7 +333,7 @@
         <div class="nav-logo" style="margin-bottom: var(--s-5);">Charm</div>
         <p class="t-small" style="max-width: 28ch;">A marketplace for the people who make the work.</p>
       </div>
-      <div class="footer-col"><h4>Shop</h4><ul><li><a href="marketplace.html">Marketplace</a></li><li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li><li><a href="marketplace.html?category=music-studios">Music Studios</a></li><li><a href="marketplace.html?category=marketplace">Gear</a></li></ul></div>
+      <div class="footer-col"><h4>Shop</h4><ul><li><a href="marketplace.html">Marketplace</a></li><li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li><li><a href="marketplace.html?category=music-studios">Music Studios</a></li><li><a href="marketplace.html">Gear</a></li></ul></div>
       <div class="footer-col"><h4>Sell</h4><ul><li><a href="create-listing.html">List your gear</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="earnings.html">Earnings</a></li></ul></div>
       <div class="footer-col"><h4>Community</h4><ul><li><a href="how-it-works.html">How it works</a></li><li><a href="blog.html">Journal</a></li><li><a href="reviews.html">Reviews</a></li><li><a href="insurance.html">Insurance</a></li></ul></div>
       <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul></div>
@@ -302,6 +347,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="charm-db.js"></script>
 <script src="shared.js"></script>
 <script>
@@ -342,14 +388,69 @@
     if (img) $('#p-main-img').src = img.src;
   }));
 
+  // Local-date-safe (no UTC shift). toISOString uses UTC which can bump the day
+  // across timezones — we treat the <input type="date"> value as a calendar date.
+  const ISO_DAY = (d) => {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  };
+  const addDays = (isoDate, n) => {
+    const [y, m, d] = isoDate.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    dt.setDate(dt.getDate() + n);
+    return ISO_DAY(dt);
+  };
+  const fmtDate = (iso) => {
+    const d = new Date(iso + 'T00:00:00');
+    return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' });
+  };
+
+  function initBookingDates() {
+    const today = ISO_DAY(new Date());
+    const startEl = $('#p-book-start');
+    const endEl = $('#p-book-end');
+    if (!startEl || !endEl) return;
+    startEl.min = today;
+    endEl.min = addDays(today, 1);
+  }
+
+  function onDatesChange(which) {
+    const startEl = $('#p-book-start');
+    const endEl = $('#p-book-end');
+    const err = $('#p-book-err');
+    err.style.display = 'none';
+
+    // Picking Pickup: pin Return's minimum to Pickup+1 and auto-fill if empty or invalid.
+    if (which === 'start' && startEl.value) {
+      const minEnd = addDays(startEl.value, 1);
+      endEl.min = minEnd;
+      if (!endEl.value || endEl.value <= startEl.value) {
+        endEl.value = minEnd;
+      }
+    }
+    // Picking Return that's before/equal to Pickup: snap back to Pickup+1.
+    if (which === 'end' && startEl.value && endEl.value && endEl.value <= startEl.value) {
+      endEl.value = addDays(startEl.value, 1);
+    }
+    updateSummary();
+  }
+
   function updateSummary() {
     if (!currentListing) return;
     const start = $('#p-book-start').value;
     const end = $('#p-book-end').value;
     const summary = $('#p-book-summary');
-    if (!start || !end) { summary.classList.remove('is-open'); return; }
+    const rangeEl = $('#p-book-range');
+    if (!start || !end) {
+      summary.classList.remove('is-open');
+      if (rangeEl) rangeEl.textContent = '';
+      return;
+    }
     const s = new Date(start), e = new Date(end);
     const days = Math.max(1, Math.ceil((e - s) / (1000 * 60 * 60 * 24)));
+    if (rangeEl) rangeEl.textContent = `${fmtDate(start)} → ${fmtDate(end)} · ${days} day${days > 1 ? 's' : ''}`;
     const rate = currentListing.priceRent || 0;
     const subtotal = rate * days;
     const deposit = currentListing.deposit || 0;
@@ -358,6 +459,7 @@
     $('#p-book-total').innerHTML = `<span>Total</span><span>£${(subtotal + deposit).toLocaleString()}</span>`;
     summary.classList.add('is-open');
   }
+  initBookingDates();
 
   async function submitBooking() {
     if (!currentListing) return;
@@ -368,7 +470,10 @@
     const message = $('#p-book-msg').value;
     const err = $('#p-book-err');
     err.style.display = 'none';
-    if (!start || !end) { err.textContent = 'Pick a start and end date.'; err.style.display = 'block'; return; }
+    if (!start || !end) { err.textContent = 'Pick a pickup and return date.'; err.style.display = 'block'; return; }
+    if (end <= start) { err.textContent = 'Return must be after pickup.'; err.style.display = 'block'; return; }
+    const today = ISO_DAY(new Date());
+    if (start < today) { err.textContent = 'Pickup can\'t be in the past.'; err.style.display = 'block'; return; }
     try {
       await window.CharmDB.Bookings.create({ listingId: currentListing.id, startDate: start, endDate: end, message });
       toast('Booking request sent');
@@ -414,6 +519,7 @@
     $('#p-views').textContent = (listing.views || 0).toLocaleString();
     $('#p-desc').textContent = listing.description || '';
     $('#p-location').textContent = listing.location;
+    renderListingMap(listing);
     $('#p-category').textContent = catLabel;
     $('#p-avail').textContent = listing.availability === 'available' ? 'Available' : listing.availability;
     $('#p-seller-name').textContent = listing.sellerName;
@@ -456,6 +562,51 @@
           </div>
         </a>`;
     }).join('');
+  }
+
+  // ── Listing location map ────────────────────────────────────
+  let listingMapInstance = null;
+  let listingMapMarker = null;
+  function renderListingMap(listing) {
+    const el = document.getElementById('p-map');
+    const addrEl = document.getElementById('p-map-address');
+    if (!el) return;
+    addrEl.textContent = listing.location || '—';
+    if (typeof L === 'undefined' || !window.CharmDB || !CharmDB.Location) return;
+    const coords = CharmDB.Location.coordsFor(listing);
+    if (!coords) {
+      el.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--c-text-3); font-family:DM Sans,sans-serif; font-size:13.5px; padding:24px; text-align:center;">Map unavailable for this location.</div>';
+      return;
+    }
+    // Small random jitter (~150m) so sellers don't reveal exact home address.
+    const jitter = () => (Math.random() - 0.5) * 0.003;
+    const pinCoords = [coords[0] + jitter(), coords[1] + jitter()];
+
+    if (listingMapInstance) {
+      listingMapInstance.remove();
+      listingMapInstance = null;
+    }
+    listingMapInstance = L.map(el, {
+      center: pinCoords,
+      zoom: 13,
+      scrollWheelZoom: false,
+      zoomControl: true,
+      attributionControl: true,
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(listingMapInstance);
+
+    const initials = (listing.sellerAvatar || (listing.sellerName || 'CR')).slice(0, 2).toUpperCase();
+    const icon = L.divIcon({
+      className: 'p-map-pin-wrap',
+      html: `<div class="p-map-pin">${initials}</div>`,
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
+    });
+    listingMapMarker = L.marker(pinCoords, { icon }).addTo(listingMapInstance);
+    setTimeout(() => listingMapInstance.invalidateSize(), 60);
   }
 
   load();

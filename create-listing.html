@@ -601,6 +601,75 @@
     }
   </style>
   <link rel="stylesheet" href="charm-v2-compat.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <style>
+    /* ── Location picker ─────────────────────────────────────────── */
+    .loc-picker { position: relative; }
+    .loc-picker-results {
+      position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+      background: #0d0d1a; border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; box-shadow: 0 18px 52px rgba(0,0,0,0.55);
+      z-index: 30; max-height: 280px; overflow-y: auto;
+      display: none; padding: 6px;
+    }
+    .loc-picker-results.open { display: block; }
+    .loc-picker-result {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding: 10px 12px; background: transparent;
+      border: 1px solid transparent; border-radius: 8px; cursor: pointer;
+      color: #f0ece3; font-family: 'DM Sans', sans-serif; font-size: 14px;
+      text-align: left; width: 100%; transition: background 0.15s, border-color 0.15s;
+    }
+    .loc-picker-result:hover { background: rgba(255,255,255,0.05); border-color: rgba(226,168,75,0.3); }
+    .loc-picker-result .loc-label { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .loc-picker-result .loc-label span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .loc-picker-result .loc-chevron { font-family: 'Syne', sans-serif; font-size: 10.5px; font-weight: 700; color: #e2a84b; letter-spacing: 0.06em; flex-shrink: 0; }
+
+    .loc-map-wrap {
+      position: relative; margin-top: 14px; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08); background: #07070e;
+      height: 260px;
+    }
+    .loc-map-wrap.empty { display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+    .loc-map-empty-text { color: #7a7890; font-family: 'DM Sans', sans-serif; font-size: 13px; max-width: 280px; line-height: 1.5; }
+    .loc-map-wrap .leaflet-container { height: 100%; width: 100%; background: #07070e; }
+    .loc-map-wrap .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) saturate(0.6) brightness(0.85); }
+    .loc-map-wrap .leaflet-control-attribution {
+      background: rgba(13,13,26,0.85) !important; color: #7a7890 !important;
+      font-family: 'DM Sans', sans-serif !important; font-size: 10px !important;
+      padding: 2px 6px !important;
+    }
+    .loc-map-wrap .leaflet-control-attribution a { color: rgba(226,168,75,0.8) !important; }
+    .loc-pin {
+      width: 36px; height: 36px; border-radius: 50%; background: #e2a84b;
+      border: 2px solid #0f0800; display: flex; align-items: center; justify-content: center;
+      color: #0f0800; font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px;
+      box-shadow: 0 6px 18px rgba(226,168,75,0.55), 0 0 0 4px rgba(226,168,75,0.18);
+    }
+    .loc-drag-hint {
+      position: absolute; top: 10px; left: 10px;
+      background: rgba(13,13,26,0.9); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px; padding: 6px 12px;
+      font-family: 'DM Sans', sans-serif; font-size: 11.5px; color: #c9c5d0;
+      z-index: 400; pointer-events: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .loc-summary {
+      margin-top: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      font-family: 'DM Sans', sans-serif; font-size: 12.5px; color: #9896a8;
+    }
+    .loc-summary .loc-coords {
+      font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11.5px;
+      color: #7a7890; letter-spacing: 0.02em;
+    }
+    .loc-summary .loc-use-current {
+      background: transparent; border: 1px solid rgba(255,255,255,0.12);
+      color: #c9c5d0; font-family: 'DM Sans', sans-serif; font-size: 11.5px;
+      padding: 6px 10px; border-radius: 8px; cursor: pointer;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .loc-summary .loc-use-current:hover { border-color: rgba(226,168,75,0.4); color: #e2a84b; }
+  </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to content</a>
@@ -829,8 +898,21 @@
 
       <div class="form-group">
         <label class="form-label" for="listing-location">Location <span class="required">*</span></label>
-        <input type="text" id="listing-location" class="form-input" placeholder="e.g. London, UK">
-        <div class="form-error" id="location-error">Please enter a location</div>
+        <p class="form-label" style="font-weight:400; color:var(--c-text-3); font-size:12.5px; margin:-4px 0 8px; letter-spacing:0;">Buyers see this pin on the map. Search a city or address, then drag to fine-tune.</p>
+        <div class="loc-picker">
+          <input type="text" id="listing-location" class="form-input" autocomplete="off" spellcheck="false" placeholder="Search any city worldwide (e.g. Barcelona, Tokyo, Austin)">
+          <div class="loc-picker-results" id="loc-picker-results" role="listbox"></div>
+        </div>
+        <div class="form-error" id="location-error">Please pick a location</div>
+        <div class="loc-map-wrap empty" id="loc-map-wrap">
+          <div class="loc-map-empty-text" id="loc-map-empty">Pick a city above to drop a pin. You can drag it to the exact spot buyers should collect from.</div>
+          <div id="loc-map" style="display:none; height:100%; width:100%;"></div>
+          <div class="loc-drag-hint" id="loc-drag-hint" style="display:none;">✋ Drag the pin to refine</div>
+        </div>
+        <div class="loc-summary" id="loc-summary" style="display:none;">
+          <span class="loc-coords" id="loc-coords-label">—</span>
+          <button type="button" class="loc-use-current" id="loc-use-current">Use my current location</button>
+        </div>
       </div>
 
       <div class="step-actions">
@@ -966,10 +1048,13 @@
   document.getElementById('role-gate').style.display = 'none';
   document.getElementById('form-content').style.display = 'block';
 
-  // ── Prefill location from user profile ──
+  // ── Prefill location from user profile (picker hydrates coords on pick) ──
   if (user.location) {
     document.getElementById('listing-location').value = user.location;
   }
+
+  // ── Listing coords (set by the location picker; null until chosen) ──
+  let listingCoords = null;
 
   // ── Load saved data ──
   function loadDraft() {
@@ -997,6 +1082,9 @@
       if (saved.rentPrice) document.getElementById('rent-price').value = saved.rentPrice;
       if (saved.deposit) document.getElementById('deposit-amount').value = saved.deposit;
       if (saved.location) document.getElementById('listing-location').value = saved.location;
+      if (Array.isArray(saved.coords) && saved.coords.length === 2) {
+        listingCoords = saved.coords;
+      }
       if (saved.tags && saved.tags.length) {
         tags = saved.tags;
         renderTags();
@@ -1019,6 +1107,7 @@
       rentPrice: document.getElementById('rent-price').value,
       deposit: document.getElementById('deposit-amount').value,
       location: document.getElementById('listing-location').value,
+      coords: listingCoords,
       tags: tags,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
@@ -1088,6 +1177,161 @@
       cat.subs.map(s => `<option value="${s.slug}"${preselect === s.slug ? ' selected' : ''}>${s.label}</option>`).join('');
   }
   populateCategoryGrid();
+
+  // ── Location picker (worldwide search + draggable pin) ──
+  (function initLocationPicker() {
+    const input = document.getElementById('listing-location');
+    const resultsEl = document.getElementById('loc-picker-results');
+    const mapWrap = document.getElementById('loc-map-wrap');
+    const mapEl = document.getElementById('loc-map');
+    const emptyEl = document.getElementById('loc-map-empty');
+    const hintEl = document.getElementById('loc-drag-hint');
+    const summary = document.getElementById('loc-summary');
+    const coordsLabel = document.getElementById('loc-coords-label');
+    const useCurrentBtn = document.getElementById('loc-use-current');
+    if (!input || !resultsEl || !mapEl) return;
+
+    let mapInstance = null;
+    let pinMarker = null;
+    let searchTimer = null;
+    let searchSeq = 0;
+
+    function formatCoords(c) {
+      if (!c) return '—';
+      return `${c[0].toFixed(4)}, ${c[1].toFixed(4)}`;
+    }
+
+    function ensureMap() {
+      if (mapInstance || typeof L === 'undefined') return mapInstance;
+      mapWrap.classList.remove('empty');
+      emptyEl.style.display = 'none';
+      mapEl.style.display = 'block';
+      hintEl.style.display = 'flex';
+      mapInstance = L.map(mapEl, {
+        zoomControl: true,
+        scrollWheelZoom: false,
+        attributionControl: true,
+      }).setView([51.5074, -0.1278], 5);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors',
+      }).addTo(mapInstance);
+      return mapInstance;
+    }
+
+    function setPin(coords, opts = {}) {
+      const map = ensureMap();
+      if (!map) return;
+      listingCoords = [coords[0], coords[1]];
+      const icon = L.divIcon({
+        className: 'loc-pin-wrap',
+        html: `<div class="loc-pin">📍</div>`,
+        iconSize: [36, 36],
+        iconAnchor: [18, 18],
+      });
+      if (!pinMarker) {
+        pinMarker = L.marker(coords, { icon, draggable: true }).addTo(map);
+        pinMarker.on('dragend', () => {
+          const ll = pinMarker.getLatLng();
+          listingCoords = [ll.lat, ll.lng];
+          coordsLabel.textContent = formatCoords(listingCoords);
+          saveDraftData();
+        });
+      } else {
+        pinMarker.setLatLng(coords);
+      }
+      const zoom = opts.zoom != null ? opts.zoom : 12;
+      map.setView(coords, zoom, { animate: true });
+      setTimeout(() => map.invalidateSize(), 50);
+      summary.style.display = 'flex';
+      coordsLabel.textContent = formatCoords(listingCoords);
+    }
+
+    function renderResults(list) {
+      resultsEl.innerHTML = '';
+      if (!list || list.length === 0) {
+        resultsEl.classList.remove('open');
+        return;
+      }
+      list.forEach(r => {
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'loc-picker-result';
+        row.innerHTML = `
+          <span class="loc-label">
+            <span style="font-size:14px;">🌍</span>
+            <span>${r.label}</span>
+          </span>
+          <span class="loc-chevron">PICK →</span>
+        `;
+        row.addEventListener('click', () => {
+          input.value = r.label;
+          setPin(r.coords, { zoom: 12 });
+          resultsEl.classList.remove('open');
+          hideError('location-error');
+          saveDraftData();
+        });
+        resultsEl.appendChild(row);
+      });
+      resultsEl.classList.add('open');
+    }
+
+    async function runSearch(q) {
+      const seq = ++searchSeq;
+      if (!q || q.trim().length < 2) { resultsEl.classList.remove('open'); return; }
+      if (!window.CharmDB || !CharmDB.Location || !CharmDB.Location.search) return;
+      const results = await CharmDB.Location.search(q);
+      if (seq !== searchSeq) return;
+      renderResults(results);
+    }
+
+    input.addEventListener('input', () => {
+      // Typing invalidates the previous pin until a new pick is made.
+      listingCoords = null;
+      summary.style.display = 'none';
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => runSearch(input.value), 260);
+    });
+    input.addEventListener('focus', () => {
+      if (resultsEl.children.length) resultsEl.classList.add('open');
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.loc-picker') && !e.target.closest('.loc-picker-results')) {
+        resultsEl.classList.remove('open');
+      }
+    });
+
+    useCurrentBtn?.addEventListener('click', () => {
+      if (!navigator.geolocation) {
+        if (window.CharmToast) CharmToast.error('Your browser blocked geolocation.');
+        return;
+      }
+      useCurrentBtn.disabled = true;
+      useCurrentBtn.textContent = 'Locating…';
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const coords = [pos.coords.latitude, pos.coords.longitude];
+          input.value = input.value || 'My current location';
+          setPin(coords, { zoom: 14 });
+          useCurrentBtn.disabled = false;
+          useCurrentBtn.textContent = 'Use my current location';
+          hideError('location-error');
+          saveDraftData();
+        },
+        () => {
+          useCurrentBtn.disabled = false;
+          useCurrentBtn.textContent = 'Use my current location';
+          if (window.CharmToast) CharmToast.error('Couldn\'t read your location.');
+        },
+        { enableHighAccuracy: true, timeout: 8000 }
+      );
+    });
+
+    // Hydrate from draft if coords were restored before the picker mounted.
+    if (listingCoords) {
+      setPin(listingCoords, { zoom: 12 });
+    }
+  })();
 
   // ── Toggle selection ──
   window.selectToggle = function(el, name) {
@@ -1245,7 +1489,14 @@
         const r = parseFloat(document.getElementById('rent-price').value);
         if (!r || r <= 0) { showError('rent-error'); valid = false; } else { hideError('rent-error'); }
       }
-      if (!document.getElementById('listing-location').value.trim()) { showError('location-error'); valid = false; } else { hideError('location-error'); }
+      const locVal = document.getElementById('listing-location').value.trim();
+      if (!locVal || !listingCoords) {
+        document.getElementById('location-error').textContent = !locVal ? 'Please pick a location' : 'Choose a city from the list so we can pin it on the map';
+        showError('location-error');
+        valid = false;
+      } else {
+        hideError('location-error');
+      }
     }
     return valid;
   }
@@ -1405,6 +1656,7 @@
         priceBuy: parseFloat(document.getElementById('buy-price').value) || 0,
         deposit: parseFloat(document.getElementById('deposit-amount').value) || 0,
         location: document.getElementById('listing-location').value.trim(),
+        coords: listingCoords,
         images: photos,
         tags: tags,
       };
@@ -1483,7 +1735,7 @@
         <ul class="ft-links">
           <li><a href="marketplace.html?category=photography-studios">Photo Studios</a></li>
           <li><a href="marketplace.html?category=music-studios">Music Studios</a></li>
-          <li><a href="marketplace.html?category=marketplace">Gear</a></li>
+          <li><a href="marketplace.html">Gear</a></li>
         </ul>
       </div>
       <div>
@@ -1512,6 +1764,7 @@
 </footer>
 
 <!-- GSAP + ScrollTrigger -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="animations.js"></script>

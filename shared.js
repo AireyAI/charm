@@ -463,10 +463,10 @@
       opacity:0; transition:opacity 0.25s ease; padding:24px;
     `;
 
-    const heading = firstVisit ? "Where are you based?" : "Change location";
+    const heading = firstVisit ? "Where in the world?" : "Change location";
     const sub = firstVisit
-      ? "Charm shows listings near you by default. You can change this anytime from the nav."
-      : "Pick a city to see nearby listings, or switch to all locations.";
+      ? "Charm is worldwide — type a few letters and we'll find your city. You can change this anytime from the nav."
+      : "Search any city worldwide, or pick one with listings below.";
 
     modal.innerHTML = `
       <div style="
@@ -476,10 +476,25 @@
         transform:translateY(12px); opacity:0;
         transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s;
       " id="charm-loc-card">
-        <div style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#e2a84b; margin-bottom:8px;">📍 Location</div>
+        <div style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#e2a84b; margin-bottom:8px;">🌍 Location</div>
         <h2 style="font-family:'Cormorant Garamond',serif; font-size:28px; font-weight:500; color:#f0ece3; margin:0 0 8px; line-height:1.1; letter-spacing:-0.3px;">${heading}</h2>
-        <p style="font-family:'DM Sans',sans-serif; font-size:13.5px; color:#9896a8; line-height:1.55; margin:0 0 22px;">${sub}</p>
-        <div id="charm-loc-options" style="display:flex; flex-direction:column; gap:6px; margin-bottom:18px; max-height:320px; overflow-y:auto;"></div>
+        <p style="font-family:'DM Sans',sans-serif; font-size:13.5px; color:#9896a8; line-height:1.55; margin:0 0 18px;">${sub}</p>
+        <div style="position:relative; margin-bottom:14px;">
+          <span style="position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:14px; opacity:0.7; pointer-events:none;">🔎</span>
+          <input type="text" id="charm-loc-search" autocomplete="off" spellcheck="false"
+            placeholder="Try 'Barcelona', 'Tokyo', 'Austin'…"
+            style="
+              width:100%; box-sizing:border-box;
+              background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12);
+              border-radius:10px; padding:12px 14px 12px 36px; color:#f0ece3;
+              font-family:'DM Sans',sans-serif; font-size:15px; outline:none;
+              transition:border-color 0.15s, background 0.15s;
+            " />
+          <div id="charm-loc-search-status" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); font-family:'DM Sans',sans-serif; font-size:11px; color:#9896a8; pointer-events:none; display:none;"></div>
+        </div>
+        <div id="charm-loc-search-results" style="display:none; flex-direction:column; gap:6px; margin-bottom:14px; max-height:260px; overflow-y:auto;"></div>
+        <div id="charm-loc-cities-label" style="font-family:'Syne',sans-serif; font-size:10.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#9896a8; margin-bottom:8px;">Cities with listings</div>
+        <div id="charm-loc-options" style="display:flex; flex-direction:column; gap:6px; margin-bottom:18px; max-height:240px; overflow-y:auto;"></div>
         <div style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
           <button type="button" id="charm-loc-all" style="
             font-family:'DM Sans',sans-serif; font-size:13px; font-weight:500; color:#9896a8;
@@ -495,6 +510,10 @@
     `;
 
     const optionsWrap = modal.querySelector('#charm-loc-options');
+    const citiesLabel = modal.querySelector('#charm-loc-cities-label');
+    if (cities.length === 0) {
+      citiesLabel.style.display = 'none';
+    }
     cities.forEach(({ city, count }) => {
       const selected = current === city;
       const btn = document.createElement('button');
@@ -522,6 +541,81 @@
       optionsWrap.appendChild(btn);
     });
 
+    // ── Worldwide typeahead ────────────────────────────────────────────
+    const searchInput = modal.querySelector('#charm-loc-search');
+    const resultsWrap = modal.querySelector('#charm-loc-search-results');
+    const statusEl = modal.querySelector('#charm-loc-search-status');
+    let searchSeq = 0;
+    let searchTimer = null;
+
+    const setStatus = (text) => {
+      if (!text) { statusEl.style.display = 'none'; statusEl.textContent = ''; return; }
+      statusEl.style.display = 'block';
+      statusEl.textContent = text;
+    };
+
+    const renderResults = (results) => {
+      resultsWrap.innerHTML = '';
+      if (results.length === 0) {
+        resultsWrap.style.display = 'none';
+        return;
+      }
+      resultsWrap.style.display = 'flex';
+      results.forEach(r => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.style.cssText = `
+          display:flex; align-items:center; justify-content:space-between; gap:12px;
+          padding:12px 14px; background:rgba(255,255,255,0.03);
+          border:1px solid rgba(255,255,255,0.08); border-radius:10px;
+          color:#f0ece3; font-family:'DM Sans',sans-serif; font-size:14px;
+          text-align:left; cursor:pointer; transition:background 0.15s, border-color 0.15s;
+        `;
+        btn.innerHTML = `
+          <span style="display:flex; align-items:center; gap:10px; min-width:0;">
+            <span style="font-size:15px; flex-shrink:0;">🌍</span>
+            <span style="font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${r.label}</span>
+          </span>
+          <span style="font-family:'Syne',sans-serif; font-size:11px; font-weight:700; color:#e2a84b; letter-spacing:0.06em; flex-shrink:0;">SELECT →</span>
+        `;
+        btn.addEventListener('mouseenter', () => { btn.style.background = 'rgba(255,255,255,0.06)'; btn.style.borderColor = 'rgba(226,168,75,0.35)'; });
+        btn.addEventListener('mouseleave', () => { btn.style.background = 'rgba(255,255,255,0.03)'; btn.style.borderColor = 'rgba(255,255,255,0.08)'; });
+        btn.addEventListener('click', () => {
+          CharmDB.Location.set(r.label, r.coords);
+          closeLocationModal();
+        });
+        resultsWrap.appendChild(btn);
+      });
+    };
+
+    const runSearch = async (query) => {
+      const seq = ++searchSeq;
+      const q = query.trim();
+      if (q.length < 2) {
+        renderResults([]);
+        setStatus('');
+        return;
+      }
+      setStatus('Searching…');
+      const results = await CharmDB.Location.search(q);
+      if (seq !== searchSeq) return; // stale
+      setStatus(results.length === 0 ? 'No matches' : '');
+      renderResults(results);
+    };
+
+    searchInput.addEventListener('input', () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => runSearch(searchInput.value), 260);
+    });
+    searchInput.addEventListener('focus', () => {
+      searchInput.style.borderColor = 'rgba(226,168,75,0.45)';
+      searchInput.style.background = 'rgba(255,255,255,0.06)';
+    });
+    searchInput.addEventListener('blur', () => {
+      searchInput.style.borderColor = 'rgba(255,255,255,0.12)';
+      searchInput.style.background = 'rgba(255,255,255,0.04)';
+    });
+
     modal.querySelector('#charm-loc-all').addEventListener('click', () => {
       CharmDB.Location.set(null);
       closeLocationModal();
@@ -534,6 +628,11 @@
       modal.style.opacity = '1';
       const card = modal.querySelector('#charm-loc-card');
       if (card) { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }
+      // Desktop: jump straight into search. Skip on mobile so the keyboard
+      // doesn't obscure the list of cities-with-listings on first open.
+      if (window.innerWidth >= 640) {
+        setTimeout(() => searchInput && searchInput.focus(), 220);
+      }
     });
   }
 
@@ -545,33 +644,11 @@
   }
 
   function renderLocationPill() {
-    const navRight = document.querySelector('.nav-right, .nav .btn-ghost')?.parentElement;
-    if (!navRight) return;
-    let pill = document.getElementById('charm-loc-pill');
-    const city = CharmDB.Location.get();
-    const label = city || 'All locations';
-
-    if (!pill) {
-      pill = document.createElement('button');
-      pill.id = 'charm-loc-pill';
-      pill.setAttribute('aria-label', 'Change location');
-      pill.style.cssText = `
-        display:inline-flex; align-items:center; gap:6px;
-        height:34px; padding:0 12px; border-radius:8px;
-        border:1px solid rgba(255,255,255,0.13);
-        background:rgba(255,255,255,0.05); color:#9896a8;
-        font-family:'DM Sans',sans-serif; font-size:12.5px; font-weight:500;
-        cursor:pointer; transition:color 0.2s, background 0.2s, border-color 0.2s;
-        flex-shrink:0; max-width:180px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
-      `;
-      pill.addEventListener('mouseenter', () => { pill.style.color = '#e2a84b'; pill.style.borderColor = 'rgba(226,168,75,0.35)'; });
-      pill.addEventListener('mouseleave', () => { pill.style.color = '#9896a8'; pill.style.borderColor = 'rgba(255,255,255,0.13)'; });
-      pill.addEventListener('click', () => openLocationModal());
-      const themeToggle = document.getElementById('theme-toggle');
-      if (themeToggle) navRight.insertBefore(pill, themeToggle);
-      else navRight.insertBefore(pill, navRight.firstChild);
-    }
-    pill.innerHTML = `<span style="font-size:13px;">📍</span><span>${label}</span>`;
+    // The nav pill was intentionally removed — location is still accessible
+    // via the first-visit modal and any call to window.openCharmLocationModal().
+    // If a stale pill remains in the DOM from a previous render, clean it up.
+    const existing = document.getElementById('charm-loc-pill');
+    if (existing) existing.remove();
   }
 
   function initLocation() {

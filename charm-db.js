@@ -138,7 +138,9 @@
   //  LOCATION — the user's city preference (drives default filtering)
   // ═══════════════════════════════════════════════════════════════════════
   const LOCATION_KEY = 'charm-location';
+  const LOCATION_COORDS_KEY = 'charm-location-coords';
   const LOCATION_PROMPTED_KEY = 'charm-location-prompted';
+  const LOCATION_SEARCH_CACHE_KEY = 'charm-location-search-cache';
 
   // Approximate coordinates per city so listings can be plotted on a map
   // without calling a geocoding service. Each entry is [lat, lon].
@@ -166,12 +168,30 @@
       const v = localStorage.getItem(LOCATION_KEY);
       return v && v !== 'all' ? v : null;
     },
-    /** Set city to a string, or null/'all' for no filter. Emits a change event. */
-    set(city) {
-      if (!city || city === 'all') localStorage.removeItem(LOCATION_KEY);
-      else localStorage.setItem(LOCATION_KEY, city);
+    /**
+     * Set city to a string (or null/'all' for no filter). Optional `coords`
+     * is [lat, lon] — used for worldwide picks where we can't derive coords
+     * from the built-in CITY_COORDS table.
+     */
+    set(city, coords) {
+      if (!city || city === 'all') {
+        localStorage.removeItem(LOCATION_KEY);
+        localStorage.removeItem(LOCATION_COORDS_KEY);
+      } else {
+        localStorage.setItem(LOCATION_KEY, city);
+        if (Array.isArray(coords) && coords.length === 2) {
+          localStorage.setItem(LOCATION_COORDS_KEY, JSON.stringify(coords));
+        } else {
+          localStorage.removeItem(LOCATION_COORDS_KEY);
+        }
+      }
       localStorage.setItem(LOCATION_PROMPTED_KEY, '1');
       window.dispatchEvent(new CustomEvent('charm:location-change', { detail: this.get() }));
+    },
+    /** Stored coords for the current pick (if it came from the geocoder). */
+    storedCoords() {
+      try { return JSON.parse(localStorage.getItem(LOCATION_COORDS_KEY)); }
+      catch { return null; }
     },
     /** Has the user ever been asked? First visit triggers the prompt. */
     hasPrompted() { return !!localStorage.getItem(LOCATION_PROMPTED_KEY); },
@@ -231,8 +251,16 @@
         return am - bm;
       });
     },
-    /** Approximate [lat, lon] for a listing based on its location string. */
+    /**
+     * [lat, lon] for a listing. Prefers the exact coords the seller pinned
+     * at publish time; falls back to a city-name match in the built-in
+     * CITY_COORDS table for seed listings that don't carry coords.
+     */
     coordsFor(listing) {
+      if (listing && Array.isArray(listing.coords) && listing.coords.length === 2) {
+        const [lat, lon] = listing.coords;
+        if (typeof lat === 'number' && typeof lon === 'number') return [lat, lon];
+      }
       const loc = (listing.location || '').toLowerCase();
       for (const key in CITY_COORDS) {
         if (loc.includes(key)) return CITY_COORDS[key];
@@ -242,11 +270,115 @@
     /** Coords for a city name (used to center the map). */
     coordsForCity(city) {
       if (!city) return null;
+      // Prefer coords stored alongside the pick (works for anywhere in the world).
+      const stored = this.storedCoords();
+      if (stored && this.get() === city) return stored;
       const needle = city.toLowerCase();
       for (const key in CITY_COORDS) {
         if (needle.includes(key)) return CITY_COORDS[key];
       }
       return null;
+    },
+    /**
+     * Worldwide typeahead via Photon (Komoot's OSM-backed autocomplete API).
+     * Photon understands prefix queries properly — "barc" → Barcelona — where
+     * Nominatim only returns literal matches. Free, no API key required.
+     * Results cached per query in localStorage.
+     * Returns [{ label, city, country, coords: [lat, lon] }, ...].
+     */
+    async search(query) {
+      const q = (query || '').trim();
+      if (q.length < 2) return [];
+
+      const cache = (() => {
+        try { return JSON.parse(localStorage.getItem(LOCATION_SEARCH_CACHE_KEY)) || {}; }
+        catch { return {}; }
+      })();
+      const key = q.toLowerCase();
+      if (cache[key]) return cache[key];
+
+      // No layer filter — Photon's importance scoring ranks big cities
+      // (Barcelona, Tokyo, NYC) above tiny villages when unfiltered.
+      const url = `https://photon.komoot.io/api/?q=${encodeURIComponent(q)}&limit=20&lang=en`;
+      let results = [];
+      try {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) return [];
+        const data = await res.json();
+        const features = Array.isArray(data.features) ? data.features : [];
+        // Place-type priority — bigger places outrank tinier ones so that
+        // typing "barc" surfaces Barcelona (city) above Barc (village).
+        const tier = v => {
+          switch (v) {
+            case 'city': return 0;
+            case 'town': return 1;
+            case 'state':
+            case 'region':
+            case 'province': return 2;
+            case 'county': return 3;
+            case 'municipality': return 4;
+            case 'village': return 5;
+            case 'suburb':
+            case 'district':
+            case 'neighbourhood': return 6;
+            case 'hamlet':
+            case 'locality':
+            case 'island': return 7;
+            default: return 8;
+          }
+        };
+        const allowedValues = new Set(['city','town','village','hamlet','municipality','suburb','neighbourhood','district','locality','county','state','region','province','island']);
+        results = features.map((f, i) => {
+          const p = f.properties || {};
+          const c = (f.geometry && Array.isArray(f.geometry.coordinates)) ? f.geometry.coordinates : null;
+          if (!c) return null;
+          // Only keep place-like results — drop streets, buildings, shops.
+          const osmKey = p.osm_key || '';
+          const osmValue = p.osm_value || '';
+          const isPlace = osmKey === 'place' || (osmKey === 'boundary' && osmValue === 'administrative');
+          if (!isPlace && !allowedValues.has(osmValue)) return null;
+          // Photon returns [lon, lat] — flip to [lat, lon] to match CITY_COORDS.
+          const coords = [c[1], c[0]];
+          const name = p.name || p.city || p.locality || '';
+          const country = p.country || '';
+          const region = p.state || p.county || '';
+          if (!name) return null;
+          const labelParts = [name];
+          if (region && region !== name) labelParts.push(region);
+          if (country) labelParts.push(country);
+          return {
+            label: labelParts.join(', '),
+            city: name,
+            country,
+            coords,
+            _tier: tier(osmValue),
+            _idx: i,
+          };
+        }).filter(Boolean);
+
+        // Sort: place-type tier first, then Photon's original order within tier.
+        results.sort((a, b) => a._tier - b._tier || a._idx - b._idx);
+
+        // De-dupe by label, strip internals.
+        const seen = new Set();
+        results = results.filter(r => {
+          const k = r.label.toLowerCase();
+          if (seen.has(k)) return false;
+          seen.add(k);
+          return true;
+        }).slice(0, 6).map(({ _tier, _idx, ...rest }) => rest);
+      } catch {
+        return [];
+      }
+
+      cache[key] = results;
+      // Keep cache lean (last ~60 queries)
+      const keys = Object.keys(cache);
+      if (keys.length > 60) {
+        keys.slice(0, keys.length - 60).forEach(k => delete cache[k]);
+      }
+      try { localStorage.setItem(LOCATION_SEARCH_CACHE_KEY, JSON.stringify(cache)); } catch {}
+      return results;
     },
   };
 

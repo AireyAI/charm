@@ -118,9 +118,9 @@ strong, b, .bold, [style*="font-weight: 700"], [style*="font-weight:700"],
   background-image: none !important;
 }
 
-/* Gold accent colour hex family → white */
-[class*="gold"]:not(.footer-lang *):not(.toast),
-[class*="Gold"] {
+/* Gold accent colour hex family → white (but not buttons — they're restyled below) */
+[class*="gold"]:not(.footer-lang *):not(.toast):not(button):not([class*="btn"]),
+[class*="Gold"]:not(button):not([class*="btn"]) {
   color: var(--c-text) !important;
 }
 
